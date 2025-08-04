@@ -1,0 +1,7 @@
+[data-view-name="ResultsBodyView"] {
+    display: none;
+    height: 100%;
+}
+[data-view-name="RootView"][data-state-key="results"] [data-view-name="ResultsBodyView"] {
+    display: flex;
+}

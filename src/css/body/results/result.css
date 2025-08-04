@@ -1,0 +1,60 @@
+[data-view-name="ResultFoundResultsBodyView"] {
+    display: block;
+    padding: 6px 8px 6px 8px;
+    border-radius: 4px 4px 4px 4px;
+    cursor: pointer;
+    user-select: none;
+    margin: 0 0 4px 0;
+    outline: 1px solid transparent;
+    transition: background-color 250ms, outline 150ms;
+}
+[data-view-name="ResultFoundResultsBodyView"] > div.title {
+    height: 16px;
+    line-height: 16px;
+    color: var(--annex-ts-result-title-color);
+    font-size: 13px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+[data-view-name="ResultFoundResultsBodyView"] > div.body {
+    padding: 4px 0 0 0;
+    color: var(--annex-ts-result-body-color);
+    font-size: 12px;
+    line-height: 1.25em;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+[data-view-name="ResultFoundResultsBodyView"] > div.uri {
+    padding: 2px 0 0 0;
+    height: 20px;
+    line-height: 20px;
+    color: var(--annex-ts-result-uri-color);
+    font-size: 11px;
+}
+/*[data-view-name="ResultFoundResultsBodyView"] > div.title,
+[data-view-name="ResultFoundResultsBodyView"] > div.body {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}*/
+[data-view-name="ResultFoundResultsBodyView"] mark {
+    color: var(--annex-ts-mark-color);
+    padding: 0 2px 0 2px;
+    border-radius: 2px 2px 2px 2px;
+    background-color: var(--annex-ts-mark-background-color);
+}
+[data-view-name="ResultFoundResultsBodyView"]:hover {
+    background-color: var(--annex-ts-result-hover-background-color);
+    outline: 1px solid var(--annex-ts-border-color);
+}
+[data-view-name="ResultFoundResultsBodyView"]:focus {
+    outline: 2px solid var(--annex-ts-result-focus-outline-color);
+    background-color: var(--annex-ts-result-focus-background-color);
+}

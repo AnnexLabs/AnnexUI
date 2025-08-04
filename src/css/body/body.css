@@ -1,0 +1,8 @@
+[data-view-name="BodyView"] {
+    background-color: var(--annex-ts-body-background-color);
+    height: calc(100% - var(--annex-ts-header-height) - var(--annex-ts-footer-height));
+    border-bottom: 1px solid var(--annex-ts-border-color);
+}
+[data-view-name="RootView"][data-state-key="results"] [data-view-name="BodyView"] {
+    height: calc(100% - var(--annex-ts-header-height) - var(--annex-ts-footer-height) - var(--annex-ts-metaBar-height));
+}

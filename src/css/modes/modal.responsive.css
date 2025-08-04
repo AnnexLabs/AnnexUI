@@ -1,0 +1,19 @@
+@media only screen 
+    and (min-device-width: 320px)
+    and (max-device-width: 960px) {
+    :host([data-mode="modal"]) [data-view-name="RootView"] > div.content {
+        width: 90%;
+        max-width: 640px;
+        height: 90%;
+        max-height: 70%;
+    }
+    :host([data-mode="modal"]) [data-view-name="RootView"][data-state-key="results"] > div.content {
+        max-height: 70%;
+    }
+    :host([data-mode="modal"]) [data-view-name="HeaderView"] {
+        border-radius: 6px 6px 0 0;
+    }
+    :host([data-mode="modal"]) [data-view-name="FooterView"] {
+        border-radius: 0 0 6px 6px;
+    }
+}

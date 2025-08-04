@@ -1,0 +1,24 @@
+[data-view-name="ErrorBodyView"] {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+}
+[data-view-name="RootView"][data-state-key="error"] [data-view-name="ErrorBodyView"] {
+    display: flex;
+}
+[data-view-name="ErrorBodyView"] > div.graphic {
+    background-repeat: no-repeat;
+    width: 128px;
+    height: 104px;
+    background-position: center center;
+    background-size: contain;
+    background-image: var(--annex-ts-image-broken-robot);
+}
+[data-view-name="ErrorBodyView"] > div.message {
+    font-size: 19px;
+    font-weight: 100;
+    color: var(--annex-ts-body-message-color);
+    padding: 12px 0 0 0;
+}

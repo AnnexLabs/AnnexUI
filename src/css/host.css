@@ -1,0 +1,34 @@
+
+/**
+ * (root)
+ * 
+ */
+:host {
+    all: initial;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2147483647;
+}
+
+/**
+ * States
+ * 
+ */
+:host([data-open="1"]) {
+    opacity: 1;
+    pointer-events: auto;
+}
+:host([data-open="0"]) {
+/*    opacity: 1;*/
+/*    pointer-events: auto;*/
+}
+:host([data-ready="1"]) {
+    transition: opacity var(--annex-ts-open-duration);
+}

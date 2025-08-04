@@ -1,0 +1,296 @@
+
+/**
+ * /src/js/views/body/results/Found.js
+ * 
+ */
+window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.BaseView'], function() {
+
+    /**
+     * window.typesenseInstantSearch.FoundResultsBodyView
+     * 
+     * @access  public
+     * @extends window.typesenseInstantSearch.BaseView
+     */
+    window.typesenseInstantSearch.FoundResultsBodyView = window.typesenseInstantSearch.FoundResultsBodyView || class FoundResultsBodyView extends window.typesenseInstantSearch.BaseView {
+
+        /**
+         * _scrollDebounceDuration
+         * 
+         * @access  protected
+         * @var     Number (default: 60)
+         */
+        _scrollDebounceDuration = 60;
+
+        /**
+         * _scrollRatio
+         * 
+         * @access  protected
+         * @var     Number (default: 0.65)
+         */
+        _scrollRatio = 0.65;
+
+        /**
+         * _focusedIndex
+         * 
+         * @access  protected
+         * @var     null|Number (default: null)
+         */
+        _focusedIndex = null;
+
+        /**
+         * _results
+         * 
+         * @access  protected
+         * @var     Array (default: [])
+         */
+        _results = [];
+
+        /**
+         * constructor
+         * 
+         * @access  public
+         * @param   HTMLElement $element
+         * @return  void
+         */
+        constructor($element) {
+            super($element);
+        }
+
+        /**
+         * _addEvents
+         * 
+         * @access  protected
+         * @return  Boolean
+         */
+        _addEvents() {
+            this._addScrollEventListener();
+            return true;
+        }
+
+        /**
+         * _addScrollEventListener
+         * 
+         * @access  protected
+         * @return  Boolean
+         */
+        _addScrollEventListener() {
+            let $element = this._$element,
+                handler = this._handleScrollEvent.bind(this),
+                scrollDebounceDuration = this._scrollDebounceDuration,
+                debounced = window.typesenseInstantSearch.DataUtils.debounce(handler, scrollDebounceDuration);
+            $element.addEventListener('scroll', debounced);
+            return true;
+        }
+
+        /**
+         * _drawResult
+         * 
+         * @access  protected
+         * @param   Object hit
+         * @return  Boolean
+         */
+        _drawResult(hit) {
+            let view = window.typesenseInstantSearch.ElementUtils.renderTemplate('resultFoundResultsBody', this._$element);
+            view.set('hit', hit);
+            view.render();
+            this._results.push(view);
+            return true;
+        }
+
+        /**
+         * _handleScrollEvent
+         * 
+         * @access  protected
+         * @param   Object event
+         * @return  Boolean
+         */
+        _handleScrollEvent(event) {
+            
+// console.log(
+//     this.getWebComponent().getView('root.header')
+// );
+            let scrollPosition = this._$element.scrollTop + this._$element.clientHeight,
+                threshold = this._$element.scrollHeight * this._scrollRatio;
+            if (scrollPosition >= threshold) {
+                // let $element = this._$element;
+                // this.freezeScrolling();
+                this.getWebComponent().getView('root').getView('header').getView('field').loadMore();//.then(function() {
+                //     $element.style.overflow = '';
+                // });
+                return true;
+            }
+            return false;
+        }
+
+//         /**
+//          * freezeScrolling
+//          * 
+//          * @access  public
+//          * @return  Boolean
+//          */
+//         freezeScrolling() {
+//             // this._$element.style.overflow = 'hidden';
+// window.test = this._$element.scrollTop;
+//             console.log(this._$element.scrollTop);
+//             return true;
+//         }
+
+//         /**
+//          * unfreezeScrolling
+//          * 
+//          * @access  public
+//          * @return  Boolean
+//          */
+//         unfreezeScrolling() {
+//             // this._$element.style.overflow = '';
+// window.test = this._$element.scrollTop;
+//             this._$element.scrollTop = window.test;
+//             // console.log(this._$element.scrollTop);
+// console.log('unfreezeScrolling');
+//             return true;
+//         }
+
+        /**
+         * clearResults
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        clearResults() {
+            this._results = [];
+            while (this._$element.firstChild) {
+                this._$element.removeChild(this._$element.firstChild);
+            }
+            this._$element.scrollTop = 0;
+            return true;
+        }
+
+        /**
+         * drawResults
+         * 
+         * @access  public
+         * @param   Object typesenseResponse
+         * @return  Boolean
+         */
+        drawResults(typesenseResponse) {
+            let hits = typesenseResponse.hits || [];
+            if (hits.length === 0) {
+                return false;
+            }
+            for (var hit of hits) {
+                this._drawResult(hit);
+            }
+            // this._focusedIndex = null;
+            return true;
+        }
+
+        /**
+         * getFocusedIndex
+         * 
+         * @access  public
+         * @return  null|Number
+         */
+        getFocusedIndex() {
+            let focusedIndex = this._focusedIndex;
+            return focusedIndex;
+        }
+
+        /**
+         * getResults
+         * 
+         * @access  public
+         * @return  Array
+         */
+        getResults() {
+            let results = this._results;
+            return results;
+        }
+
+        /**
+         * next
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        next() {
+            if (this._results.length === 0) {
+                return false;
+            }
+            if (this._focusedIndex === null) {
+                this._focusedIndex = 0;
+                let result = this._results[this._focusedIndex];
+                result.focus();
+                return true;
+            }
+            if (this._focusedIndex === (this._results.length - 1)) {
+                return false;
+            }
+            ++this._focusedIndex;
+            let result = this._results[this._focusedIndex];
+            result.focus();
+            return true;
+        }
+
+        /**
+         * previous
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        previous() {
+            if (this._results.length === 0) {
+                return false;
+            }
+            if (this._focusedIndex === null) {
+                return false;
+            }
+            if (this._focusedIndex === 0) {
+                this._focusedIndex = null;
+                return false;
+            }
+            --this._focusedIndex;
+            let result = this._results[this._focusedIndex];
+            result.focus();
+            return true;
+        }
+
+        /**
+         * setFocusedIndex
+         * 
+         * @access  public
+         * @param   null|Number focusedIndex
+         * @return  Boolean
+         */
+        setFocusedIndex(focusedIndex) {
+            this._focusedIndex = focusedIndex;
+            return true;
+        }
+
+        /**
+         * setFocusedIndexByResultView
+         * 
+         * @access  public
+         * @param   window.typesenseInstantSearch.ResultFoundResultsBodyView result
+         * @return  Boolean
+         */
+        setFocusedIndexByResultView(result) {
+            let index = this._results.indexOf(result);
+            this.setFocusedIndex(index);
+            return true;
+        }
+
+        /**
+         * smoothScrollToTop
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        smoothScrollToTop() {
+            this._$element.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            return true;
+        }
+    }
+});

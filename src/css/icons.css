@@ -1,0 +1,57 @@
+
+/**
+ * Colors
+ * 
+ */
+:host .icon:not(img) {
+    background-color: #000000;
+}
+:host .icon:not(img).icon-black {
+    background-color: #000000;
+}
+
+/**
+ * Properties
+ * 
+ */
+:host .icon:not(img).original {
+    background-color: transparent;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+:host .icon:not(img):not(.original) {
+    -webkit-mask-size: contain;
+            mask-size: contain;
+    -webkit-mask-position: center center;
+            mask-position: center center;
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+}
+/*:host .icon.icon-size-14:not(img):not(.original) {
+    -webkit-mask-size: 14px;
+            mask-size: 14px;
+}
+:host .icon.icon-size-16:not(img):not(.original) {
+    -webkit-mask-size: 16px;
+            mask-size: 16px;
+}*/
+
+/**
+ * Icons (general)
+ * 
+ */
+:host .icon:not(img).icon-plus.original {
+    background-image: var(--annex-ts-icon-plus);
+}
+:host .icon:not(img).icon-plus:not(.original) {
+    -webkit-mask-image: var(--annex-ts-icon-plus);
+    mask-image: var(--annex-ts-icon-plus);
+}
+:host .icon:not(img).icon-spinner.original {
+    background-image: var(--annex-ts-icon-spinner);
+}
+:host .icon:not(img).icon-spinner:not(.original) {
+    -webkit-mask-image: var(--annex-ts-icon-spinner);
+    mask-image: var(--annex-ts-icon-spinner);
+}

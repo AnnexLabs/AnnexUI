@@ -1,0 +1,10 @@
+[data-view-name="FooterView"] {
+    background-color: var(--annex-ts-footer-background-color);
+    height: var(--annex-ts-footer-height);
+/*    position: fixed;*/
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0 0 12px 12px;
+}

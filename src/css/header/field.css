@@ -1,0 +1,36 @@
+[data-view-name="FieldHeaderView"] {
+    height: var(--annex-ts-header-height);
+    padding: calc((var(--annex-ts-header-height) - 20px) / 2) 0 0 12px;
+    border-bottom: 1px solid var(--annex-ts-border-color);
+}
+[data-view-name="FieldHeaderView"]  > div.label {
+    height: 20px;
+    width: 28px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 14px;
+    color: var(--annex-ts-header-label-color);
+    float: left;
+    opacity: 0.50;
+}
+[data-view-name="FieldHeaderView"]  > div.input {
+    height: 20px;
+    float: left;
+    margin: 0 0 0 12px;
+    width: calc(100% - 28px - 12px);
+}
+[data-view-name="FieldHeaderView"]  > div.input > input {
+    display: block;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    color: var(--annex-ts-header-input-color);
+}
+[data-view-name="FieldHeaderView"]  > div.input > input::placeholder {
+    color: var(--annex-ts-header-input-placeholder-color);
+}
+[data-view-name="FieldHeaderView"]  > div.input > input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+}

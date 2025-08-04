@@ -1,0 +1,20 @@
+:host([data-mode^="panel"]) [data-view-name="RootView"] > div.content {
+    width: 80%;
+    max-width: 640px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    box-shadow: 0 20px 25px -5px #0000001a, 0 10px 10px -5px #0000000a;
+}
+:host([data-mode^="panel"]) [data-view-name="HeaderView"] {
+    border-radius: 0;
+}
+:host([data-mode^="panel"]) [data-view-name="FooterView"] {
+    border-radius: 0;
+}
+:host([data-mode="panel-left"]) [data-view-name="RootView"] > div.content {
+    left: 0;
+}
+:host([data-mode="panel-right"]) [data-view-name="RootView"] > div.content {
+    right: 0;
+}

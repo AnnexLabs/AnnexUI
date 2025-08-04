@@ -1,0 +1,14 @@
+:host([data-mode="modal"]) [data-view-name="RootView"] > div.content {
+    width: 80%;
+    max-width: 640px;
+    height: 70%;
+    max-height: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 20px 25px -5px #0000001a, 0 10px 10px -5px #0000000a;
+}
+:host([data-mode="modal"]) [data-view-name="RootView"][data-state-key="results"] > div.content {
+    max-height: 540px;
+}

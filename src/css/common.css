@@ -1,0 +1,17 @@
+:host * {
+    all: unset;
+    display: revert;
+    font-family: -apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+}
+:host .clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+:host .truncate {
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

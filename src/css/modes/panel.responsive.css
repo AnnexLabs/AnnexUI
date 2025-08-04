@@ -1,0 +1,8 @@
+@media only screen 
+    and (min-device-width: 320px)
+    and (max-device-width: 960px) {
+    :host([data-mode^="panel"]) [data-view-name="RootView"] > div.content {
+        width: 85%;
+        max-width: 640px;
+    }
+}
