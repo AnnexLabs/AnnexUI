@@ -66,6 +66,18 @@ window.typesenseInstantSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * log
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        log() {
+            let scope = window.typesenseInstantSearch.LoggingUtils,
+                response = window.typesenseInstantSearch.LoggingUtils.log.apply(scope, arguments);
+            return response;
+        }
+
+        /**
          * set
          * 
          * @access  public

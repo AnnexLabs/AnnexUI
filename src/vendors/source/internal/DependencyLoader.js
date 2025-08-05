@@ -61,7 +61,7 @@ window.typesenseInstantSearch.DependencyLoader = (function() {
         if (__attempts > 10000) {
             var msg = 'Could not complete an attempt: [';
             msg += dependencies.join(', ') + ']';
-            console.log(msg);
+            window.typesenseInstantSearch && window.typesenseInstantSearch.LoggingUtils && window.typesenseInstantSearch.LoggingUtils.log(msg);
             throw new Error(msg);
         }
     };

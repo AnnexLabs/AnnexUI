@@ -8,12 +8,6 @@ window.typesenseInstantSearch.DependencyLoader.push([], function() {
     /**
      * window.typesenseInstantSearch.AnnexSearchWidgetWebComponent
      * 
-     * @todo    - pdf search (long body)
-     * 
-     * @todo    - debouncing of requests (and/or throttling)
-     * @todo    -- TypesenseSearchQueryHelper
-     * 
-     * @todo    - bug where previous search doesn't get triggered (when changed)
      * @todo    - loadMore bug re:adding and not clearing
      * 
      * @todo    - typesense query param (e.g. w/o preset)
@@ -32,6 +26,13 @@ window.typesenseInstantSearch.DependencyLoader.push([], function() {
      * @todo    [NOPE] - Missing quopte? https://416.io/ss/f/9uicm1?bp=1
      * @todo    [NOPE] -- Data submission bug
      * @todo    [DONE] - keyboard shortcut cleanup
+     * @todo    [DONE] - pdf search (long body)
+     * @todo    [DONE] - debouncing of requests (and/or throttling)
+     * @todo    [DONE] -- TypesenseSearchRequest
+     * @todo    [DONE] - bug where previous search doesn't get triggered (when changed)
+     * @todo    [PUNT] - Error handling for failed XHRs
+     * @todo    [PUNT] -- Tooltip class for communicating error messages
+     * @todo    [PUNT] -- https://claude.ai/chat/b775bedd-d31a-464e-8e10-49c42a5a3644
      * @extends HTMLElement
      */
     window.typesenseInstantSearch.AnnexSearchWidgetWebComponent = window.typesenseInstantSearch.AnnexSearchWidgetWebComponent || class AnnexSearchWidgetWebComponent extends HTMLElement {
@@ -95,8 +96,8 @@ this.show();
          * @return  Boolean
          */
         _handleStylesheetErrorLoadEvent(reject, event) {
-            var msg = 'Could not load stylesheet.';
-            console && console.log(msg, event);
+            let msg = 'Could not load stylesheet.';
+            window.typesenseInstantSearch.LoggingUtils.log(msg, event);
             reject();
             return true;
         }
@@ -166,21 +167,7 @@ this.show();
          */
         getView(viewKey) {
             let view = this._views[viewKey];
-            // if (view !== undefined) {
-                return view;
-//             }
-//             let keys = viewKey.split('.'),
-//                 value = this._views;
-//             for (const key of keys) {
-// console.log(key, value);
-//                 if (value && typeof value === 'object' && key in value) {
-//                     value = value[key];
-//                     continue;
-//                 }
-//                 let msg = 'Invaild view';
-//                 throw new Error(msg);
-//             }
-//             return value;
+            return view;
         }
 
         /**

@@ -18,9 +18,7 @@ window.typesenseInstantSearch.DataUtils = window.typesenseInstantSearch.DataUtil
      */
     static debounce(func, delay) {
         let timeout;
-// console.log(func);
         return function (...args) {
-// console.log(timeout);
             clearTimeout(timeout);
             timeout = setTimeout(function() {
                 func.apply(this, args);

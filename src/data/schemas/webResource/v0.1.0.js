@@ -1,5 +1,7 @@
 {
-    "key": "webResource-v0.1.0.js",
+    "key": "webResource-v0.1.0",
+    "type": "webResource",
+    "name": "Web Resource",
     "version": "0.1.0",
     "schema": {
         "fields": [

@@ -14,20 +14,12 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
     window.typesenseInstantSearch.FieldHeaderView = window.typesenseInstantSearch.FieldHeaderView || class FieldHeaderView extends window.typesenseInstantSearch.BaseView {
 
         /**
-         * _debounceInterval
-         * 
-         * @access  protected
-         * @var     Number (default: 60)
-         */
-        _debounceInterval = 60;
-
-        /**
-         * _lastTypesenseResponse
+         * _lastTypesenseSearchResponse
          * 
          * @access  protected
          * @var     null|Object (default: null)
          */
-        _lastTypesenseResponse = null;
+        _lastTypesenseSearchResponse = null;
 
         /**
          * _loadingMore
@@ -36,6 +28,14 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @var     Boolean (default: false)
          */
         _loadingMore = false;
+
+        /**
+         * _searchDebounceDuration
+         * 
+         * @access  protected
+         * @var     Number (default: 60)
+         */
+        _searchDebounceDuration = 60;
 
         /**
          * _timeout
@@ -122,31 +122,6 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
         };
 
         /**
-         * _handleInputEscapeKeydownEvent
-         * 
-         * @access  protected
-         * @param   Object event
-         * @return  Boolean
-         */
-        _handleInputEscapeKeydownEvent(event) {
-            let key = event.key.toLowerCase();
-            if (key === 'escape') {
-                event.preventDefault();
-                event.stopPropagation();
-                let value = this.first('input').value.trim();
-                if (value === '') {
-                    this.hideWebComponent();
-                    return true;
-                }
-                this.first('input').value = '';
-                this.getWebComponent().getView('root').getView('body').getView('results').getView('found').clearResults();
-                this.setState('idle');
-                return true;
-            }
-            return false;
-        };
-
-        /**
          * _handleFailedTypesenseSearchEvent
          * 
          * @access  protected
@@ -155,8 +130,8 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _handleFailedTypesenseSearchEvent(options, response) {
-console.log('_handleFailedTypesenseSearchEvent', response);
-            this._lastTypesenseResponse = response;
+            this.log('_handleFailedTypesenseSearchEvent', response, arguments);
+            this._lastTypesenseSearchResponse = response;
             this.setState('error');
             return true;
         };
@@ -170,17 +145,16 @@ console.log('_handleFailedTypesenseSearchEvent', response);
          */
         _handleInputInputEvent(event) {
             let value = this.first('input').value.trim();
-// console.log(value);
             if (value === '') {
+                this.clear();
                 this.setState('idle');
-                // this.setState('idle');
                 return false;
             }
-            if (value === this._lastTypesenseResponse?.request_params?.q) {
+            if (value === this._lastTypesenseSearchResponse?.request_params?.q) {
                 return false;
             }
             clearTimeout(this._timeout);
-            this._timeout = setTimeout(this._searchTypesense.bind(this), this._debounceInterval);
+            this._timeout = setTimeout(this._searchTypesense.bind(this), this._searchDebounceDuration);
             return true;
         };
 
@@ -193,13 +167,12 @@ console.log('_handleFailedTypesenseSearchEvent', response);
          * @return  Boolean
          */
         _handleLoadMoreSuccessfulTypesenseSearchEvent(options, response) {
-console.log('_handleLoadMoreSuccessfulTypesenseSearchEvent', response);
-            this._lastTypesenseResponse = response;
+            this.log('_handleLoadMoreSuccessfulTypesenseSearchEvent', response);
+            this._lastTypesenseSearchResponse = response;
+            this._loadingMore = false;
             if (response.hits.length === 0) {
-                this._loadingMore = false;
                 return false;
             }
-            this._loadingMore = false;
             let found = this.getWebComponent().getView('root').getView('body').getView('results').getView('found');
             found.drawResults(response);
             let metaBar = this.getWebComponent().getView('root').getView('header').getView('metaBar');
@@ -217,13 +190,14 @@ console.log('_handleLoadMoreSuccessfulTypesenseSearchEvent', response);
          * @return  Boolean
          */
         _handleSuccessfulTypesenseSearchEvent(options, response) {
-// console.log('_handleSuccessfulTypesenseSearchEvent', response);
+            this.log('_handleSuccessfulTypesenseSearchEvent', response);
             if (this._loadingMore === true) {
+console.log('wtf');
                 let loadMoreResponse = this._handleLoadMoreSuccessfulTypesenseSearchEvent(options, response);
                 return loadMoreResponse;
             }
-            this._lastTypesenseResponse = response;
-// console.log('a22')
+            this._lastTypesenseSearchResponse = response;
+console.log('ummm.');
             this.getWebComponent().getView('root').getView('body').getView('results').getView('found').clearResults();
             if (response.hits.length === 0) {
                 this.setState('empty');
@@ -236,6 +210,39 @@ console.log('_handleLoadMoreSuccessfulTypesenseSearchEvent', response);
             let metaBar = this.getWebComponent().getView('root').getView('header').getView('metaBar');
             metaBar.set('typesenseResponse', response);
             metaBar.render();
+            return true;
+        };
+
+        /**
+         * _renderKeyboardShortcutLabel
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        _renderKeyboardShortcutLabel() {
+            let keyboardShortcut = this._getKeyboardShortcut();
+            if (keyboardShortcut === null) {
+                return false;
+            }
+            this.first('.label').innerHTML = keyboardShortcut.toUpperCase();
+            return true;
+        }
+
+        /**
+         * _renderPlaceholder
+         * 
+         * @access  protected
+         * @return  Boolean
+         */
+        _renderPlaceholder() {
+            let placeholder = window.typesenseInstantSearch.ConfigUtils.get('copy').placeholder;
+            if (placeholder === null) {
+                return false;
+            }
+            if (placeholder === undefined) {
+                return false;
+            }
+            this.first('input').setAttribute('placeholder', placeholder);
             return true;
         };
 
@@ -258,24 +265,6 @@ console.log('_handleLoadMoreSuccessfulTypesenseSearchEvent', response);
                 }).catch(failed);
             return promise;
         }
-
-        /**
-         * _setPlaceholder
-         * 
-         * @access  protected
-         * @return  Boolean
-         */
-        _setPlaceholder() {
-            let placeholder = window.typesenseInstantSearch.ConfigUtils.get('copy').placeholder;
-            if (placeholder === null) {
-                return false;
-            }
-            if (placeholder === undefined) {
-                return false;
-            }
-            this.first('input').setAttribute('placeholder', placeholder);
-            return true;
-        };
 
         /**
          * append
@@ -309,6 +298,7 @@ console.log('_handleLoadMoreSuccessfulTypesenseSearchEvent', response);
          * @return  Boolean
          */
         clear() {
+            this._lastTypesenseSearchResponse = null;
             let $input = this.first('input');
             $input.value = '';
             return true;
@@ -355,25 +345,20 @@ console.log('_handleLoadMoreSuccessfulTypesenseSearchEvent', response);
                 return false;
             }
             this._loadingMore = true;
-// console.log('ummm');
             let found = this.getWebComponent().getView('root').getView('body').getView('results').getView('found'),
                 results = found.getResults();
-            if (results.length >= this._lastTypesenseResponse.found) {
+            if (results.length >= this._lastTypesenseSearchResponse.found) {
                 return false;
             }
-            let page = this._lastTypesenseResponse?.page ?? null;
+            let page = this._lastTypesenseSearchResponse?.page ?? null;
             if (page === null) {
                 return false;
             }
+            page = parseInt(page, 10);
             ++page;
             let options = {};
             options.page = page;
-// console.log(this._lastTypesenseResponse);
-            this._searchTypesense(options).then(function() {
-                // requestAnimationFrame(function() {
-                    // found.unfreezeScrolling();
-                // });
-            });
+            this._searchTypesense(options);
             return true;
         }
 
@@ -383,14 +368,10 @@ console.log('_handleLoadMoreSuccessfulTypesenseSearchEvent', response);
          * @access  public
          * @return  Boolean
          */
-        render($element) {
+        render() {
             super.render();
-            let keyboardShortcut = this._getKeyboardShortcut();
-            if (keyboardShortcut === null) {
-                return false;
-            }
-            this.first('.label').innerHTML = keyboardShortcut.toUpperCase();
-            this._setPlaceholder();
+            this._renderPlaceholder();
+            this._renderKeyboardShortcutLabel();
             return true;
         }
 

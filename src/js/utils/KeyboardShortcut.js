@@ -16,6 +16,7 @@ window.typesenseInstantSearch.KeyboardShortcutUtils = window.typesenseInstantSea
     static _active = {
         catchAll: true,
         delete: true,
+        documentPaste: true,
         escapeDocument: true,
         escapeField: true,
         enterField: true,
@@ -23,7 +24,7 @@ window.typesenseInstantSearch.KeyboardShortcutUtils = window.typesenseInstantSea
         keyboardShortcut: true,
         selectAll: true,
         slash: true,
-    }
+    };
 
     /**
      * __validKeydownEvent
@@ -46,6 +47,20 @@ window.typesenseInstantSearch.KeyboardShortcutUtils = window.typesenseInstantSea
         if (validKeys.includes(key) === false) {
             return false;
         }
+        return true;
+    }
+
+    /**
+     * _addDocumentPasteEventListener
+     * 
+     * @access  protected
+     * @static
+     * @return  Boolean
+     */
+    static _addDocumentPasteEventListener() {
+        let $element = document,
+            handler = this._handleDocumentPasteEvent.bind(this);
+        $element.addEventListener('paste', handler);
         return true;
     }
 
@@ -117,6 +132,7 @@ window.typesenseInstantSearch.KeyboardShortcutUtils = window.typesenseInstantSea
             field = window.typesenseInstantSearch.webComponent.getView('root').getView('header').getView('field');
         if ($activeElement === null) {
             field.focus();
+console.log('clearing');
             field.clear();
             field.append(event.key);
             field.first('input').dispatchEvent(new Event('input', {
@@ -128,6 +144,7 @@ window.typesenseInstantSearch.KeyboardShortcutUtils = window.typesenseInstantSea
         if ($activeElement.matches('input') === true) {
             return false;
         }
+console.log('clearing2');
         field.focus();
         field.clear();
         field.append(key);
@@ -220,7 +237,6 @@ window.typesenseInstantSearch.KeyboardShortcutUtils = window.typesenseInstantSea
         let key = event.key.toLowerCase();
         event.preventDefault();
         let direction = 'previous';
-console.log(direction);
         if (key === 'arrowdown') {
             direction = 'next';
         }
@@ -268,6 +284,57 @@ console.log(direction);
             return true;
         }
         return false;
+    }
+
+    /**
+     * _handleDocumentPasteEvent
+     * 
+     * @see     https://chatgpt.com/c/688abab5-f678-8330-9aff-e43c24768100
+     * @access  protected
+     * @static
+     * @param   Object event
+     * @return  Boolean
+     */
+    static _handleDocumentPasteEvent(event) {
+        if (window.typesenseInstantSearch.webComponent.showing() === false) {
+            return false;
+        }
+        let configKey = 'documentPaste';
+        if (this._active[configKey] === false) {
+            return false;
+        }
+        let pastedText = event.clipboardData.getData('text');
+        if (pastedText.length === 0) {
+            return false;
+        }
+        pastedText = pastedText.trim();
+        if (pastedText.length === 0) {
+            return false;
+        }
+        let $activeElement = window.typesenseInstantSearch.webComponent.shadow.activeElement;
+        if ($activeElement === null) {
+            let field = window.typesenseInstantSearch.webComponent.getView('root').getView('header').getView('field');
+            field.focus();
+            field.clear();
+            field.append(pastedText);
+            field.first('input').dispatchEvent(new Event('input', {
+                bubbles: true,
+                shiftKey: event.shiftKey
+            }));
+            return true;
+        }
+        if ($activeElement.matches('input') === true) {
+            return false;
+        }
+        let field = window.typesenseInstantSearch.webComponent.getView('root').getView('header').getView('field');
+        field.focus();
+        field.clear();
+        field.append(pastedText);
+        field.first('input').dispatchEvent(new Event('input', {
+            bubbles: true,
+            shiftKey: event.shiftKey
+        }));
+        return true;
     }
 
     /**
@@ -373,7 +440,9 @@ console.log(direction);
                 found.hideWebComponent();
                 return true;
             }
-            $activeElement.value = '';
+            let field = window.typesenseInstantSearch.webComponent.getView('root').getView('header').getView('field');
+            field.clear();
+            // $activeElement.value = '';
             found.clearResults();
             found.setState('idle');
             return true;
@@ -429,6 +498,7 @@ console.log(direction);
      * @return  Promise
      */
     static setup() {
+        this._addDocumentPasteEventListener();
         this._addKeydownEventListener();
         return true;
     }

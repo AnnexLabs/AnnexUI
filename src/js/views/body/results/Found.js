@@ -14,22 +14,6 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
     window.typesenseInstantSearch.FoundResultsBodyView = window.typesenseInstantSearch.FoundResultsBodyView || class FoundResultsBodyView extends window.typesenseInstantSearch.BaseView {
 
         /**
-         * _scrollDebounceDuration
-         * 
-         * @access  protected
-         * @var     Number (default: 60)
-         */
-        _scrollDebounceDuration = 60;
-
-        /**
-         * _scrollRatio
-         * 
-         * @access  protected
-         * @var     Number (default: 0.65)
-         */
-        _scrollRatio = 0.65;
-
-        /**
          * _focusedIndex
          * 
          * @access  protected
@@ -44,6 +28,22 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @var     Array (default: [])
          */
         _results = [];
+
+        /**
+         * _scrollDebounceDuration
+         * 
+         * @access  protected
+         * @var     Number (default: 60)
+         */
+        _scrollDebounceDuration = 60;
+
+        /**
+         * _scrollRatio
+         * 
+         * @access  protected
+         * @var     Number (default: 0.65)
+         */
+        _scrollRatio = 0.65;
 
         /**
          * constructor
@@ -105,50 +105,14 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _handleScrollEvent(event) {
-            
-// console.log(
-//     this.getWebComponent().getView('root.header')
-// );
             let scrollPosition = this._$element.scrollTop + this._$element.clientHeight,
                 threshold = this._$element.scrollHeight * this._scrollRatio;
-            if (scrollPosition >= threshold) {
-                // let $element = this._$element;
-                // this.freezeScrolling();
-                this.getWebComponent().getView('root').getView('header').getView('field').loadMore();//.then(function() {
-                //     $element.style.overflow = '';
-                // });
-                return true;
+            if (scrollPosition < threshold) {
+                return false;
             }
-            return false;
+            this.getWebComponent().getView('root').getView('header').getView('field').loadMore();
+            return true;
         }
-
-//         /**
-//          * freezeScrolling
-//          * 
-//          * @access  public
-//          * @return  Boolean
-//          */
-//         freezeScrolling() {
-//             // this._$element.style.overflow = 'hidden';
-// window.test = this._$element.scrollTop;
-//             console.log(this._$element.scrollTop);
-//             return true;
-//         }
-
-//         /**
-//          * unfreezeScrolling
-//          * 
-//          * @access  public
-//          * @return  Boolean
-//          */
-//         unfreezeScrolling() {
-//             // this._$element.style.overflow = '';
-// window.test = this._$element.scrollTop;
-//             this._$element.scrollTop = window.test;
-//             // console.log(this._$element.scrollTop);
-// console.log('unfreezeScrolling');
-//             return true;
-//         }
 
         /**
          * clearResults
@@ -180,7 +144,6 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
             for (var hit of hits) {
                 this._drawResult(hit);
             }
-            // this._focusedIndex = null;
             return true;
         }
 

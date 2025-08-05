@@ -16,9 +16,18 @@ window.typesenseInstantSearch.ConfigUtils = window.typesenseInstantSearch.Config
     static _data = {
 
         /**
+         * $parent
+         * 
+         * @var     null|EventTarget (default: null)
+         */
+        $parent: null,
+
+        /**
          * callbacks
          * 
          * Map of callbacks that can be used for custom logic.
+         * 
+         * @var     Object
          */
         callbacks: {
             results: {
@@ -32,6 +41,8 @@ window.typesenseInstantSearch.ConfigUtils = window.typesenseInstantSearch.Config
          * 
          * Authentication and configuration details specifically for the
          * Typesense cluster.
+         * 
+         * @var     Object
          */
         cluster: {
             apiKey: null,
@@ -46,6 +57,8 @@ window.typesenseInstantSearch.ConfigUtils = window.typesenseInstantSearch.Config
          * Series of copy variables which are dotted throughout the UI. For more
          * comprehensive updates, templates may need to be defined. Supports
          * HTML.
+         * 
+         * @var     Object
          */
         copy: {
             empty: {
@@ -68,9 +81,19 @@ window.typesenseInstantSearch.ConfigUtils = window.typesenseInstantSearch.Config
          * 
          * The keyboard combination which when pressed, toggles the widget to
          * open or close. If null, no listener is created.
+         * 
+         * @var     null|String (default: '⌘k')
          */
         keyboardShortcut: '⌘k',
         // keyboardShortcut: null,
+
+        /**
+         * logging
+         * 
+         * @var     Boolean (default: false)
+         */
+        // logging: false,
+        logging: true,
 
         /**
          * mode
@@ -79,8 +102,9 @@ window.typesenseInstantSearch.ConfigUtils = window.typesenseInstantSearch.Config
          * - modal
          * - panel-left
          * - panel-right
+         * 
+         * @var     String (default: 'modal')
          */
-        // mode: 'panel-right',
         mode: 'modal',
 
         /**
@@ -89,6 +113,8 @@ window.typesenseInstantSearch.ConfigUtils = window.typesenseInstantSearch.Config
          * Whether an overlay should be shown. Currently doesn't effect the
          * click listener which when detected outside of the widget, triggers it
          * to be closed.
+         * 
+         * @var     Boolean (default: true)
          */
         overlay: true,
 
@@ -98,6 +124,8 @@ window.typesenseInstantSearch.ConfigUtils = window.typesenseInstantSearch.Config
          * Map of arrays which are loaded into memory upon each page load. Core
          * to the functionality, but extensible for being able to define custom
          * styles and templating systems.
+         * 
+         * @var     Object
          */
         paths: {
             css: [
@@ -107,22 +135,24 @@ window.typesenseInstantSearch.ConfigUtils = window.typesenseInstantSearch.Config
         },
 
         /**
-         * resultTruncationLimit
+         * searchRequestMethod
          * 
-         * 
+         * @var     String (default: 'lifo')
          */
-        // resultTruncationLimit: 240,
-        resultTruncationLimit: 40,
+        // searchRequestMethod: 'fifo',
+        searchRequestMethod: 'lifo',
 
         /**
          * templates
          * 
          * Map of strings corresponding to all the available templates used in
          * the widget.
+         * 
+         * @var     Object
          */
         templates: {
         }
-    }
+    };
 
     /**
      * _handleLoadTemplates
@@ -154,10 +184,11 @@ window.typesenseInstantSearch.ConfigUtils = window.typesenseInstantSearch.Config
      * @return  Promise
      */
     static _loadTemplates() {
-        let handler = this._handleLoadTemplates.bind(this);
-        return fetch(this._data.paths.templates).then(function(response) {
-            return response.text();
-        }).then(handler);
+        let handler = this._handleLoadTemplates.bind(this),
+            promise = fetch(this._data.paths.templates).then(function(response) {
+                    return response.text();
+                }).then(handler);
+        return promise
     }
 
     /**
