@@ -4,7 +4,7 @@
  * 
  * @abstract
  */
-window.typesenseInstantSearch.DependencyLoader = (function() {
+window.annexSearch.DependencyLoader = (function() {
 
     /**
      * Properties (private)
@@ -44,7 +44,7 @@ window.typesenseInstantSearch.DependencyLoader = (function() {
         ++__attempts;
         __checkForFailure(dependencies);
         if (__dependenciesAvailable(dependencies) === true) {
-            callback.apply(window.typesenseInstantSearch.DependencyLoader);
+            callback.apply(window.annexSearch.DependencyLoader);
             return true;
         }
         return false;
@@ -61,7 +61,7 @@ window.typesenseInstantSearch.DependencyLoader = (function() {
         if (__attempts > 10000) {
             var msg = 'Could not complete an attempt: [';
             msg += dependencies.join(', ') + ']';
-            window.typesenseInstantSearch && window.typesenseInstantSearch.LoggingUtils && window.typesenseInstantSearch.LoggingUtils.log(msg);
+            window.annexSearch && window.annexSearch.LoggingUtils && window.annexSearch.LoggingUtils.log(msg);
             throw new Error(msg);
         }
     };
@@ -122,7 +122,7 @@ window.typesenseInstantSearch.DependencyLoader = (function() {
             var attempt;
             while (__attemptClosures.length > 0) {
                 attempt = __attemptClosures.shift();
-                if (attempt.apply(window.typesenseInstantSearch.DependencyLoader) === false) {
+                if (attempt.apply(window.annexSearch.DependencyLoader) === false) {
                     __attemptClosures.push(attempt);
                 }
             }
@@ -143,7 +143,7 @@ window.typesenseInstantSearch.DependencyLoader = (function() {
             }
             var args = [dependencies, callback],
                 attempt = function() {
-                    var response = __attempt.apply(window.typesenseInstantSearch.DependencyLoader, args);
+                    var response = __attempt.apply(window.annexSearch.DependencyLoader, args);
                     return response;
                 };
             __attemptClosures.push(attempt);

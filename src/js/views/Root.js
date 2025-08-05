@@ -3,15 +3,15 @@
  * /src/js/views/RootView.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * window.typesenseInstantSearch.RootView
+     * window.annexSearch.RootView
      * 
      * @access  public
-     * @extends window.typesenseInstantSearch.BaseView
+     * @extends window.annexSearch.BaseView
      */
-    window.typesenseInstantSearch.RootView = window.typesenseInstantSearch.RootView || class RootView extends window.typesenseInstantSearch.BaseView {
+    window.annexSearch.RootView = window.annexSearch.RootView || class RootView extends window.annexSearch.BaseView {
 
         /**
          * constructor
@@ -31,7 +31,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _addEvents() {
-            window.typesenseInstantSearch.KeyboardShortcutUtils.setup();
+            window.annexSearch.KeyboardShortcutUtils.setup();
             this._addOverlayClickEventListener();
             return true;
         }
@@ -57,7 +57,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          */
         _drawBody() {
             let $content = this.first('.content'),
-                view = window.typesenseInstantSearch.ElementUtils.renderTemplate('body', $content);
+                view = window.annexSearch.ElementUtils.renderTemplate('body', $content);
             this.setView('body', view);
             return true;
         }
@@ -70,7 +70,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          */
         _drawFooter() {
             let $content = this.first('.content'),
-                view = window.typesenseInstantSearch.ElementUtils.renderTemplate('footer', $content);
+                view = window.annexSearch.ElementUtils.renderTemplate('footer', $content);
             this.setView('footer', view);
             return true;
         }
@@ -83,7 +83,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          */
         _drawHeader() {
             let $content = this.first('.content'),
-                view = window.typesenseInstantSearch.ElementUtils.renderTemplate('header', $content);
+                view = window.annexSearch.ElementUtils.renderTemplate('header', $content);
             this.setView('header', view);
             return true;
         }

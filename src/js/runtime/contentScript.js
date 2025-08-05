@@ -1,13 +1,13 @@
-window.typesenseInstantSearch.DependencyLoader.load(function() {
-    window.typesenseInstantSearch.ConfigUtils.setup().then(function() {
+window.annexSearch.DependencyLoader.load(function() {
+    window.annexSearch.ConfigUtils.setup().then(function() {
         let $annexSearchWidget = document.createElement('annex-search-widget'),
-            $parent = window?.typesenseInstantSearchConfig?.$parent || (document.body || document.head || document.documentElement);
+            $parent = window?.annexSearchConfig?.$parent || (document.body || document.head || document.documentElement);
         $parent && $parent.appendChild($annexSearchWidget);
         if ($parent === undefined) {
             console.log && console.log('Could not find valid $parent element');
             return false;
         }
-        window.typesenseInstantSearch.ElementUtils.registerComponent('annex-search-widget', window.typesenseInstantSearch.AnnexSearchWidgetWebComponent);
+        window.annexSearch.ElementUtils.registerComponent('annex-search-widget', window.annexSearch.AnnexSearchWidgetWebComponent);
         return true;
     });
 });

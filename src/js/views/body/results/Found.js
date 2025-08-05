@@ -3,15 +3,15 @@
  * /src/js/views/body/results/Found.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * window.typesenseInstantSearch.FoundResultsBodyView
+     * window.annexSearch.FoundResultsBodyView
      * 
      * @access  public
-     * @extends window.typesenseInstantSearch.BaseView
+     * @extends window.annexSearch.BaseView
      */
-    window.typesenseInstantSearch.FoundResultsBodyView = window.typesenseInstantSearch.FoundResultsBodyView || class FoundResultsBodyView extends window.typesenseInstantSearch.BaseView {
+    window.annexSearch.FoundResultsBodyView = window.annexSearch.FoundResultsBodyView || class FoundResultsBodyView extends window.annexSearch.BaseView {
 
         /**
          * _focusedIndex
@@ -77,7 +77,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
             let $element = this._$element,
                 handler = this._handleScrollEvent.bind(this),
                 scrollDebounceDuration = this._scrollDebounceDuration,
-                debounced = window.typesenseInstantSearch.DataUtils.debounce(handler, scrollDebounceDuration);
+                debounced = window.annexSearch.DataUtils.debounce(handler, scrollDebounceDuration);
             $element.addEventListener('scroll', debounced);
             return true;
         }
@@ -90,7 +90,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _drawResult(hit) {
-            let view = window.typesenseInstantSearch.ElementUtils.renderTemplate('resultFoundResultsBody', this._$element);
+            let view = window.annexSearch.ElementUtils.renderTemplate('resultFoundResultsBody', this._$element);
             view.set('hit', hit);
             view.render();
             this._results.push(view);
@@ -233,7 +233,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * setFocusedIndexByResultView
          * 
          * @access  public
-         * @param   window.typesenseInstantSearch.ResultFoundResultsBodyView result
+         * @param   window.annexSearch.ResultFoundResultsBodyView result
          * @return  Boolean
          */
         setFocusedIndexByResultView(result) {

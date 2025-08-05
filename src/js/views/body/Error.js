@@ -3,15 +3,15 @@
  * /src/js/views/body/Error.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * window.typesenseInstantSearch.ErrorBodyView
+     * window.annexSearch.ErrorBodyView
      * 
      * @access  public
-     * @extends window.typesenseInstantSearch.BaseView
+     * @extends window.annexSearch.BaseView
      */
-    window.typesenseInstantSearch.ErrorBodyView = window.typesenseInstantSearch.ErrorBodyView || class ErrorBodyView extends window.typesenseInstantSearch.BaseView {
+    window.annexSearch.ErrorBodyView = window.annexSearch.ErrorBodyView || class ErrorBodyView extends window.annexSearch.BaseView {
 
         /**
          * constructor
@@ -31,7 +31,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _setMessage() {
-            let value = window.typesenseInstantSearch.ConfigUtils.get('copy').error.message;
+            let value = window.annexSearch.ConfigUtils.get('copy').error.message;
             if (value === null) {
                 return false;
             }

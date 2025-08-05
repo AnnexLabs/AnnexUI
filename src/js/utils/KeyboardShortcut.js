@@ -1,92 +1,154 @@
 
 /**
- * window.typesenseInstantSearch.KeyboardShortcutUtils
+ * window.annexSearch.KeyboardShortcutUtils
  * 
  * @access  public
  */
-window.typesenseInstantSearch.KeyboardShortcutUtils = window.typesenseInstantSearch.KeyboardShortcutUtils || class KeyboardShortcutUtils {
+window.annexSearch.KeyboardShortcutUtils = window.annexSearch.KeyboardShortcutUtils || class KeyboardShortcutUtils {
 
     /**
-     * _active
+     * #__active
      * 
      * @static
-     * @access  protected
+     * @access  private
      * @var     Object
      */
-    static _active = {
-        catchAll: true,
-        delete: true,
+    static #__active = {
+
+        /**
+         * documentCatchAll
+         * 
+         * Whether any keyboard keydown event against the document should be
+         * "caught" and processed as if it was entered into the $input field.
+         * 
+         * @static
+         * @access  private
+         * @var     Boolean (default: true)
+         */
+        documentCatchAll: true,
+
+        /**
+         * documentDelete
+         * 
+         * Whether any keyboard keydown event against the document should be
+         * "caught" and processed as if it was entered into the $input field.
+         * 
+         * @static
+         * @access  private
+         * @var     Boolean (default: true)
+         */
+        documentDelete: true,
+
+        /**
+         * documentPaste
+         * 
+         * @static
+         * @access  private
+         * @var     Boolean (default: true)
+         */
         documentPaste: true,
-        escapeDocument: true,
-        escapeField: true,
-        enterField: true,
-        keyboardNavigation: true,
-        keyboardShortcut: true,
-        selectAll: true,
-        slash: true,
+
+        /**
+         * documentEscape
+         * 
+         * @static
+         * @access  private
+         * @var     Boolean (default: true)
+         */
+        documentEscape: true,
+
+        /**
+         * documentKeyboardNavigation
+         * 
+         * @static
+         * @access  private
+         * @var     Boolean (default: true)
+         */
+        documentKeyboardNavigation: true,
+
+        /**
+         * documentKeyboardShortcut
+         * 
+         * @static
+         * @access  private
+         * @var     Boolean (default: true)
+         */
+        documentKeyboardShortcut: true,
+
+        /**
+         * documentSelectAll
+         * 
+         * @static
+         * @access  private
+         * @var     Boolean (default: true)
+         */
+        documentSelectAll: true,
+
+        /**
+         * documentSlash
+         * 
+         * @static
+         * @access  private
+         * @var     Boolean (default: true)
+         */
+        documentSlash: true,
+
+        /**
+         * fieldEnter
+         * 
+         * @static
+         * @access  private
+         * @var     Boolean (default: true)
+         */
+        fieldEnter: true,
+
+        /**
+         * fieldEscape
+         * 
+         * @static
+         * @access  private
+         * @var     Boolean (default: true)
+         */
+        fieldEscape: true,
     };
 
     /**
-     * __validKeydownEvent
+     * #__addDocumentPasteEventListener
      * 
      * @access  private
-     * @param   Object event
-     * @param   String configKey
-     * @param   String|Array validKeys
-     * @return  Boolean
-     */
-    static __validKeydownEvent(event, configKey, validKeys) {
-        if (window.typesenseInstantSearch.webComponent.showing() === false) {
-            return false;
-        }
-        if (this._active[configKey] === false) {
-            return false;
-        }
-        validKeys = [].concat(validKeys);
-        let key = event.key.toLowerCase();
-        if (validKeys.includes(key) === false) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * _addDocumentPasteEventListener
-     * 
-     * @access  protected
      * @static
      * @return  Boolean
      */
-    static _addDocumentPasteEventListener() {
+    static #__addDocumentPasteEventListener() {
         let $element = document,
-            handler = this._handleDocumentPasteEvent.bind(this);
+            handler = this.#__handleDocumentPasteEvent.bind(this);
         $element.addEventListener('paste', handler);
         return true;
     }
 
     /**
-     * _addKeydownEventListener
+     * #__addKeydownEventListener
      * 
-     * @access  protected
+     * @access  private
      * @static
      * @return  Boolean
      */
-    static _addKeydownEventListener() {
+    static #__addKeydownEventListener() {
         let $element = document,
-            handler = this._handleKeydownEvent.bind(this);
+            handler = this.#__handleKeydownEvent.bind(this);
         $element.addEventListener('keydown', handler);
         return true;
     }
 
     /**
-     * _getKeyboardShortcut
+     * #__getKeyboardShortcut
      * 
-     * @access  protected
+     * @access  private
      * @static
      * @return  null|String
      */
-    static _getKeyboardShortcut() {
-        let value = window.typesenseInstantSearch.ConfigUtils.get('keyboardShortcut');
+    static #__getKeyboardShortcut() {
+        let value = window.annexSearch.ConfigUtils.get('keyboardShortcut');
         if (value === null) {
             return null;
         }
@@ -98,21 +160,21 @@ window.typesenseInstantSearch.KeyboardShortcutUtils = window.typesenseInstantSea
     }
 
     /**
-     * _handleDocumentCatchAllKeydownEvent
+     * #__handleDocumentCatchAllKeydownEvent
      * 
      * @note    The key length check is to handle things like the "Meta" key
      *          etc.
      * @see     https://chatgpt.com/c/688abab5-f678-8330-9aff-e43c24768100
-     * @access  protected
+     * @access  private
      * @static
      * @param   Object event
      * @return  Boolean
      */
-    static _handleDocumentCatchAllKeydownEvent(event) {
-        if (this._active.catchAll === false) {
+    static #__handleDocumentCatchAllKeydownEvent(event) {
+        if (this.#__active.documentCatchAll === false) {
             return false;
         }
-        if (window.typesenseInstantSearch.webComponent.showing() === false) {
+        if (window.annexSearch.webComponent.showing() === false) {
             return false;
         }
         if (event.metaKey === true) {
@@ -128,8 +190,8 @@ window.typesenseInstantSearch.KeyboardShortcutUtils = window.typesenseInstantSea
         if (key === ' ') {
             return false;
         }
-        let $activeElement = window.typesenseInstantSearch.webComponent.shadow.activeElement,
-            field = window.typesenseInstantSearch.webComponent.getView('root').getView('header').getView('field');
+        let $activeElement = window.annexSearch.webComponent.shadow.activeElement,
+            field = window.annexSearch.webComponent.getView('root').getView('header').getView('field');
         if ($activeElement === null) {
             field.focus();
 console.log('clearing');
@@ -156,19 +218,19 @@ console.log('clearing2');
     }
 
     /**
-     * _handleDocumentDeleteKeydownEvent
+     * #__handleDocumentDeleteKeydownEvent
      * 
-     * @access  protected
+     * @access  private
      * @static
      * @param   Object event
      * @return  Boolean
      */
-    static _handleDocumentDeleteKeydownEvent(event) {
-        if (this.__validKeydownEvent(event, 'delete', 'backspace') === false) {
+    static #__handleDocumentDeleteKeydownEvent(event) {
+        if (this.#__validKeydownEvent(event, 'documentDelete', 'backspace') === false) {
             return false;
         }
-        let $activeElement = window.typesenseInstantSearch.webComponent.shadow.activeElement,
-            field = window.typesenseInstantSearch.webComponent.getView('root').getView('header').getView('field');
+        let $activeElement = window.annexSearch.webComponent.shadow.activeElement,
+            field = window.annexSearch.webComponent.getView('root').getView('header').getView('field');
         if ($activeElement === null) {
             field.focus();
             field.decrement();
@@ -191,30 +253,30 @@ console.log('clearing2');
     }
 
     /**
-     * _handleDocumentEscapeKeydownEvent
+     * #__handleDocumentEscapeKeydownEvent
      * 
-     * @access  protected
+     * @access  private
      * @static
      * @param   Object event
      * @return  Boolean
      */
-    static _handleDocumentEscapeKeydownEvent(event) {
-        if (this.__validKeydownEvent(event, 'escapeDocument', 'escape') === false) {
+    static #__handleDocumentEscapeKeydownEvent(event) {
+        if (this.#__validKeydownEvent(event, 'documentEscape', 'escape') === false) {
             return false;
         }
-        let $activeElement = window.typesenseInstantSearch.webComponent.shadow.activeElement;
+        let $activeElement = window.annexSearch.webComponent.shadow.activeElement;
         if ($activeElement === null) {
-            window.typesenseInstantSearch.webComponent.hide();
+            window.annexSearch.webComponent.hide();
             return true;
         }
         if ($activeElement.matches('input') === true) {
             return false;
         }
-        let field = window.typesenseInstantSearch.webComponent.getView('root').getView('header').getView('field'),
+        let field = window.annexSearch.webComponent.getView('root').getView('header').getView('field'),
             $inut = field.first('input'),
             value = $inut.value.trim();
         if (value === '') {
-            window.typesenseInstantSearch.webComponent.hide();
+            window.annexSearch.webComponent.hide();
             return true;
         }
         field.focus();
@@ -222,16 +284,16 @@ console.log('clearing2');
     }
 
     /**
-     * _handleDocumentKeyboardNavigationKeydownEvent
+     * #__handleDocumentKeyboardNavigationKeydownEvent
      * 
-     * @access  protected
+     * @access  private
      * @static
      * @param   Object event
      * @return  Boolean
      */
-    static _handleDocumentKeyboardNavigationKeydownEvent(event) {
+    static #__handleDocumentKeyboardNavigationKeydownEvent(event) {
         let validKeys = ['tab', 'arrowdown', 'arrowup'];
-        if (this.__validKeydownEvent(event, 'keyboardNavigation', validKeys) === false) {
+        if (this.#__validKeydownEvent(event, 'documentKeyboardNavigation', validKeys) === false) {
             return false;
         }
         let key = event.key.toLowerCase();
@@ -245,28 +307,28 @@ console.log('clearing2');
                 direction = 'next';
             }
         }
-        let found = window.typesenseInstantSearch.webComponent.getView('root').getView('body').getView('results').getView('found');
+        let found = window.annexSearch.webComponent.getView('root').getView('body').getView('results').getView('found');
         if (direction === 'next') {
             found.next();
             return true;
         }
-        found.previous() || window.typesenseInstantSearch.webComponent.getView('root').focus();
+        found.previous() || window.annexSearch.webComponent.getView('root').focus();
         return true;
     }
 
     /**
-     * _handleDocumentKeyboardShortcutKeydownEvent
+     * #__handleDocumentKeyboardShortcutKeydownEvent
      * 
-     * @access  protected
+     * @access  private
      * @static
      * @param   Object event
      * @return  Boolean
      */
-    static _handleDocumentKeyboardShortcutKeydownEvent(event) {
-        if (this._active.keyboardShortcut === false) {
+    static #__handleDocumentKeyboardShortcutKeydownEvent(event) {
+        if (this.#__active.documentKeyboardShortcut === false) {
             return false;
         }
-        let keyboardShortcut = this._getKeyboardShortcut();
+        let keyboardShortcut = this.#__getKeyboardShortcut();
         if (keyboardShortcut === null) {
             return false;
         }
@@ -280,27 +342,27 @@ console.log('clearing2');
             (!isMac && event.ctrlKey && event.key.toLowerCase() === character)
         ) {
             event.preventDefault();
-            window.typesenseInstantSearch.webComponent.toggle();
+            window.annexSearch.webComponent.toggle();
             return true;
         }
         return false;
     }
 
     /**
-     * _handleDocumentPasteEvent
+     * #__handleDocumentPasteEvent
      * 
      * @see     https://chatgpt.com/c/688abab5-f678-8330-9aff-e43c24768100
-     * @access  protected
+     * @access  private
      * @static
      * @param   Object event
      * @return  Boolean
      */
-    static _handleDocumentPasteEvent(event) {
-        if (window.typesenseInstantSearch.webComponent.showing() === false) {
+    static #__handleDocumentPasteEvent(event) {
+        if (window.annexSearch.webComponent.showing() === false) {
             return false;
         }
         let configKey = 'documentPaste';
-        if (this._active[configKey] === false) {
+        if (this.#__active[configKey] === false) {
             return false;
         }
         let pastedText = event.clipboardData.getData('text');
@@ -311,9 +373,9 @@ console.log('clearing2');
         if (pastedText.length === 0) {
             return false;
         }
-        let $activeElement = window.typesenseInstantSearch.webComponent.shadow.activeElement;
+        let $activeElement = window.annexSearch.webComponent.shadow.activeElement;
         if ($activeElement === null) {
-            let field = window.typesenseInstantSearch.webComponent.getView('root').getView('header').getView('field');
+            let field = window.annexSearch.webComponent.getView('root').getView('header').getView('field');
             field.focus();
             field.clear();
             field.append(pastedText);
@@ -326,7 +388,7 @@ console.log('clearing2');
         if ($activeElement.matches('input') === true) {
             return false;
         }
-        let field = window.typesenseInstantSearch.webComponent.getView('root').getView('header').getView('field');
+        let field = window.annexSearch.webComponent.getView('root').getView('header').getView('field');
         field.focus();
         field.clear();
         field.append(pastedText);
@@ -338,66 +400,66 @@ console.log('clearing2');
     }
 
     /**
-     * _handleDocumentSelectAllKeydownEvent
+     * #__handleDocumentSelectAllKeydownEvent
      * 
-     * @access  protected
+     * @access  private
      * @static
      * @param   Object event
      * @return  Boolean
      */
-    static _handleDocumentSelectAllKeydownEvent(event) {
-        if (this.__validKeydownEvent(event, 'selectAll', 'a') === false) {
+    static #__handleDocumentSelectAllKeydownEvent(event) {
+        if (this.#__validKeydownEvent(event, 'documentSelectAll', 'a') === false) {
             return false;
         }
         if (event.metaKey === false) {
             return false;
         }
-        window.typesenseInstantSearch.webComponent.getView('root').getView('header').getView('field').focus();
-        window.typesenseInstantSearch.webComponent.getView('root').getView('header').getView('field').select();
+        window.annexSearch.webComponent.getView('root').getView('header').getView('field').focus();
+        window.annexSearch.webComponent.getView('root').getView('header').getView('field').select();
         return true;
     }
 
     /**
-     * _handleDocumentSlashKeydownEvent
+     * #__handleDocumentSlashKeydownEvent
      * 
-     * @access  protected
+     * @access  private
      * @static
      * @param   Object event
      * @return  Boolean
      */
-    static _handleDocumentSlashKeydownEvent(event) {
-        if (this.__validKeydownEvent(event, 'slash', '/') === false) {
+    static #__handleDocumentSlashKeydownEvent(event) {
+        if (this.#__validKeydownEvent(event, 'documentSlash', '/') === false) {
             return false;
         }
-        let $activeElement = window.typesenseInstantSearch.webComponent.shadow.activeElement;
+        let $activeElement = window.annexSearch.webComponent.shadow.activeElement;
         if ($activeElement === null) {
-            window.typesenseInstantSearch.webComponent.getView('root').getView('header').getView('field').focus();
+            window.annexSearch.webComponent.getView('root').getView('header').getView('field').focus();
             return true;
         }
         if ($activeElement.matches('input') === true) {
             return false;
         }
-        window.typesenseInstantSearch.webComponent.getView('root').getView('header').getView('field').focus();
+        window.annexSearch.webComponent.getView('root').getView('header').getView('field').focus();
         return true;
     }
 
     /**
-     * _handleFieldEnterKeydownEvent
+     * #__handleFieldEnterKeydownEvent
      * 
-     * @access  protected
+     * @access  private
      * @param   Object event
      * @return  Boolean
      */
-    static _handleFieldEnterKeydownEvent(event) {
-        if (this.__validKeydownEvent(event, 'enterField', 'enter') === false) {
+    static #__handleFieldEnterKeydownEvent(event) {
+        if (this.#__validKeydownEvent(event, 'fieldEnter', 'enter') === false) {
             return false;
         }
-        let $activeElement = window.typesenseInstantSearch.webComponent.shadow.activeElement;
+        let $activeElement = window.annexSearch.webComponent.shadow.activeElement;
         if ($activeElement === null) {
             return false;
         }
         if ($activeElement.matches('input') === true) {
-            let found = window.typesenseInstantSearch.webComponent.getView('root').getView('body').getView('results').getView('found'),
+            let found = window.annexSearch.webComponent.getView('root').getView('body').getView('results').getView('found'),
                 focusedIndex = found.getFocusedIndex();
             if (focusedIndex === null) {
                 let results = found.getResults(),
@@ -416,18 +478,18 @@ console.log('clearing2');
     }
 
     /**
-     * _handleFieldEscapeKeydownEvent
+     * #__handleFieldEscapeKeydownEvent
      * 
-     * @access  protected
+     * @access  private
      * @static
      * @param   Object event
      * @return  Boolean
      */
-    static _handleFieldEscapeKeydownEvent(event) {
-        if (this.__validKeydownEvent(event, 'escapeField', 'escape') === false) {
+    static #__handleFieldEscapeKeydownEvent(event) {
+        if (this.#__validKeydownEvent(event, 'fieldEscape', 'escape') === false) {
             return false;
         }
-        let $activeElement = window.typesenseInstantSearch.webComponent.shadow.activeElement;
+        let $activeElement = window.annexSearch.webComponent.shadow.activeElement;
         if ($activeElement === null) {
             return false;
         }
@@ -435,12 +497,12 @@ console.log('clearing2');
             event.preventDefault();
             event.stopPropagation();
             let value = $activeElement.value.trim(),
-                found = window.typesenseInstantSearch.webComponent.getView('root').getView('body').getView('results').getView('found');
+                found = window.annexSearch.webComponent.getView('root').getView('body').getView('results').getView('found');
             if (value === '') {
                 found.hideWebComponent();
                 return true;
             }
-            let field = window.typesenseInstantSearch.webComponent.getView('root').getView('header').getView('field');
+            let field = window.annexSearch.webComponent.getView('root').getView('header').getView('field');
             field.clear();
             // $activeElement.value = '';
             found.clearResults();
@@ -451,41 +513,65 @@ console.log('clearing2');
     }
 
     /**
-     * _handleKeydownEvent
+     * #__handleKeydownEvent
      * 
      * @note    Ordered
-     * @access  protected
+     * @access  private
      * @static
      * @param   Object event
      * @return  Boolean
      */
-    static _handleKeydownEvent(event) {
-        if (this._handleDocumentKeyboardShortcutKeydownEvent(event) === true) {
+    static #__handleKeydownEvent(event) {
+        if (this.#__handleDocumentKeyboardShortcutKeydownEvent(event) === true) {
             return true;
         }
-        if (this._handleDocumentKeyboardNavigationKeydownEvent(event) === true) {
+        if (this.#__handleDocumentKeyboardNavigationKeydownEvent(event) === true) {
             return true;
         }
-        if (this._handleDocumentEscapeKeydownEvent(event) === true) {
+        if (this.#__handleDocumentEscapeKeydownEvent(event) === true) {
             return true;
         }
-        if (this._handleFieldEscapeKeydownEvent(event) === true) {
+        if (this.#__handleFieldEscapeKeydownEvent(event) === true) {
             return true;
         }
-        if (this._handleFieldEnterKeydownEvent(event) === true) {
+        if (this.#__handleFieldEnterKeydownEvent(event) === true) {
             return true;
         }
-        if (this._handleDocumentSlashKeydownEvent(event) === true) {
+        if (this.#__handleDocumentSlashKeydownEvent(event) === true) {
             return true;
         }
-        if (this._handleDocumentSelectAllKeydownEvent(event) === true) {
+        if (this.#__handleDocumentSelectAllKeydownEvent(event) === true) {
             return true;
         }
-        if (this._handleDocumentDeleteKeydownEvent(event) === true) {
+        if (this.#__handleDocumentDeleteKeydownEvent(event) === true) {
             return true;
         }
-        if (this._handleDocumentCatchAllKeydownEvent(event) === true) {
+        if (this.#__handleDocumentCatchAllKeydownEvent(event) === true) {
             return true;
+        }
+        return true;
+    }
+
+    /**
+     * #__validKeydownEvent
+     * 
+     * @access  private
+     * @param   Object event
+     * @param   String configKey
+     * @param   String|Array validKeys
+     * @return  Boolean
+     */
+    static #__validKeydownEvent(event, configKey, validKeys) {
+        if (window.annexSearch.webComponent.showing() === false) {
+            return false;
+        }
+        if (this.#__active[configKey] === false) {
+            return false;
+        }
+        validKeys = [].concat(validKeys);
+        let key = event.key.toLowerCase();
+        if (validKeys.includes(key) === false) {
+            return false;
         }
         return true;
     }
@@ -498,8 +584,8 @@ console.log('clearing2');
      * @return  Promise
      */
     static setup() {
-        this._addDocumentPasteEventListener();
-        this._addKeydownEventListener();
+        this.#__addDocumentPasteEventListener();
+        this.#__addKeydownEventListener();
         return true;
     }
 }

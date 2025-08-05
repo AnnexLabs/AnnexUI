@@ -1,19 +1,19 @@
 
 /**
- * window.typesenseInstantSearch.ConfigUtils
+ * window.annexSearch.ConfigUtils
  * 
  * @access  public
  */
-window.typesenseInstantSearch.ConfigUtils = window.typesenseInstantSearch.ConfigUtils || class ConfigUtils {
+window.annexSearch.ConfigUtils = window.annexSearch.ConfigUtils || class ConfigUtils {
 
     /**
-     * _data
+     * #__data
      * 
      * @static
-     * @access  protected
+     * @access  private
      * @var     Object
      */
-    static _data = {
+    static #__data = {
 
         /**
          * $parent
@@ -88,6 +88,13 @@ window.typesenseInstantSearch.ConfigUtils = window.typesenseInstantSearch.Config
         // keyboardShortcut: null,
 
         /**
+         * highlightTagName
+         * 
+         * @var     String (default: 'MARK')
+         */
+        highlightTagName: 'MARK',
+
+        /**
          * logging
          * 
          * @var     Boolean (default: false)
@@ -155,14 +162,14 @@ window.typesenseInstantSearch.ConfigUtils = window.typesenseInstantSearch.Config
     };
 
     /**
-     * _handleLoadTemplates
+     * #__handleLoadTemplates
      * 
-     * @access  protected
+     * @access  private
      * @static
      * @param   String templatesContent
      * @return  Boolean
      */
-    static _handleLoadTemplates(templatesContent) {
+    static #__handleLoadTemplates(templatesContent) {
         var expression = /<script\b[^>]*>[\s\S]*?<\/script>/gi,
             matches = templatesContent.match(expression);
         for (var match of matches) {
@@ -171,21 +178,21 @@ window.typesenseInstantSearch.ConfigUtils = window.typesenseInstantSearch.Config
             if (id === null) {
                 continue;
             }
-            this._data.templates[id] = match;
+            this.#__data.templates[id] = match;
         }
         return true;
     }
 
     /**
-     * _loadTemplates
+     * #__loadTemplates
      * 
-     * @access  protected
+     * @access  private
      * @static
      * @return  Promise
      */
-    static _loadTemplates() {
-        let handler = this._handleLoadTemplates.bind(this),
-            promise = fetch(this._data.paths.templates).then(function(response) {
+    static #__loadTemplates() {
+        let handler = this.#__handleLoadTemplates.bind(this),
+            promise = fetch(this.#__data.paths.templates).then(function(response) {
                     return response.text();
                 }).then(handler);
         return promise
@@ -201,10 +208,10 @@ window.typesenseInstantSearch.ConfigUtils = window.typesenseInstantSearch.Config
      */
     static get(key) {
         if (key === undefined) {
-            let data = this._data;
+            let data = this.#__data;
             return data;
         }
-        let value = this._data[key];
+        let value = this.#__data[key];
         return value;
     }
 
@@ -216,11 +223,11 @@ window.typesenseInstantSearch.ConfigUtils = window.typesenseInstantSearch.Config
      * @return  Promise
      */
     static setup() {
-        this._data = window.typesenseInstantSearch.DataUtils.deepMerge(
-            this._data,
-            window.typesenseInstantSearchConfig || {}
+        this.#__data = window.annexSearch.DataUtils.deepMerge(
+            this.#__data,
+            window.annexSearchConfig || {}
         );
-        let promise = this._loadTemplates();
+        let promise = this.#__loadTemplates();
         return promise;
     }
 }

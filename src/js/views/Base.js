@@ -3,15 +3,15 @@
  * /src/js/views/Base.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.Base'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function() {
 
     /**
-     * window.typesenseInstantSearch.BaseView
+     * window.annexSearch.BaseView
      * 
      * @access  public
-     * @extends window.typesenseInstantSearch.Base
+     * @extends window.annexSearch.Base
      */
-    window.typesenseInstantSearch.BaseView = window.typesenseInstantSearch.BaseView || class BaseView extends window.typesenseInstantSearch.Base {
+    window.annexSearch.BaseView = window.annexSearch.BaseView || class BaseView extends window.annexSearch.Base {
 
         /**
          * _$element

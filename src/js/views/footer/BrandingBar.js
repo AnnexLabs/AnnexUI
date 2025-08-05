@@ -3,15 +3,15 @@
  * /src/js/views/footer/BrandingBar.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * window.typesenseInstantSearch.BrandingBarFooterView
+     * window.annexSearch.BrandingBarFooterView
      * 
      * @access  public
-     * @extends window.typesenseInstantSearch.BaseView
+     * @extends window.annexSearch.BaseView
      */
-    window.typesenseInstantSearch.BrandingBarFooterView = window.typesenseInstantSearch.BrandingBarFooterView || class BrandingBarFooterView extends window.typesenseInstantSearch.BaseView {
+    window.annexSearch.BrandingBarFooterView = window.annexSearch.BrandingBarFooterView || class BrandingBarFooterView extends window.annexSearch.BaseView {
 
         /**
          * constructor

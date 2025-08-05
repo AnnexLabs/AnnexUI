@@ -3,15 +3,15 @@
  * /src/js/views/footer/Footer.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * window.typesenseInstantSearch.FooterView
+     * window.annexSearch.FooterView
      * 
      * @access  public
-     * @extends window.typesenseInstantSearch.BaseView
+     * @extends window.annexSearch.BaseView
      */
-    window.typesenseInstantSearch.FooterView = window.typesenseInstantSearch.FooterView || class FooterView extends window.typesenseInstantSearch.BaseView {
+    window.annexSearch.FooterView = window.annexSearch.FooterView || class FooterView extends window.annexSearch.BaseView {
 
         /**
          * constructor
@@ -31,7 +31,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _drawBrandingBar() {
-            let view = window.typesenseInstantSearch.ElementUtils.renderTemplate('brandingBarFooter', this._$element);
+            let view = window.annexSearch.ElementUtils.renderTemplate('brandingBarFooter', this._$element);
             this.setView('brandingBar', view);
             return true;
         }
@@ -43,7 +43,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _drawStatusBar() {
-            let view = window.typesenseInstantSearch.ElementUtils.renderTemplate('statusBarFooter', this._$element);
+            let view = window.annexSearch.ElementUtils.renderTemplate('statusBarFooter', this._$element);
             this.setView('statusBar', view);
             return true;
         }

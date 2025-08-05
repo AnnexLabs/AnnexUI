@@ -3,10 +3,10 @@
  * /src/js/helpers/AnnexSearchWidgetWebComponent.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push([], function() {
 
     /**
-     * window.typesenseInstantSearch.AnnexSearchWidgetWebComponent
+     * window.annexSearch.AnnexSearchWidgetWebComponent
      * 
      * @todo    - loadMore bug re:adding and not clearing
      * 
@@ -33,25 +33,26 @@ window.typesenseInstantSearch.DependencyLoader.push([], function() {
      * @todo    [PUNT] - Error handling for failed XHRs
      * @todo    [PUNT] -- Tooltip class for communicating error messages
      * @todo    [PUNT] -- https://claude.ai/chat/b775bedd-d31a-464e-8e10-49c42a5a3644
+     * @todo    [PUNT] - On toggle, restore $input focus state if focused
      * @extends HTMLElement
      */
-    window.typesenseInstantSearch.AnnexSearchWidgetWebComponent = window.typesenseInstantSearch.AnnexSearchWidgetWebComponent || class AnnexSearchWidgetWebComponent extends HTMLElement {
+    window.annexSearch.AnnexSearchWidgetWebComponent = window.annexSearch.AnnexSearchWidgetWebComponent || class AnnexSearchWidgetWebComponent extends HTMLElement {
 
         /**
-         * _showing
+         * #__showing
          * 
-         * @access  protected
+         * @access  private
          * @var     Boolean (default: false)
          */
-        _showing = false;
+        #__showing = false;
 
         /**
-         * _views
+         * #__views
          * 
-         * @access  protected
+         * @access  private
          * @var     Object (default: {})
          */
-        _views = {};
+        #__views = {};
 
         /**
          * constructor
@@ -61,25 +62,25 @@ window.typesenseInstantSearch.DependencyLoader.push([], function() {
          */
         constructor() {
             super();
-            window.typesenseInstantSearch.webComponent = this;
+            window.annexSearch.webComponent = this;
             this.shadow = this.attachShadow({
                 mode: 'closed'
             });
-            this._render();
+            this.#__render();
         }
 
         /**
-         * _drawRoot
+         * #__drawRoot
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _drawRoot() {
+        #__drawRoot() {
             let $shadow = this.shadow,
-                view = window.typesenseInstantSearch.ElementUtils.renderTemplate('root', $shadow),
-                mode = window.typesenseInstantSearch.ConfigUtils.get('mode'),
-                overlay = String(+window.typesenseInstantSearch.ConfigUtils.get('overlay'));
-            this._views.root = view;
+                view = window.annexSearch.ElementUtils.renderTemplate('root', $shadow),
+                mode = window.annexSearch.ConfigUtils.get('mode'),
+                overlay = String(+window.annexSearch.ConfigUtils.get('overlay'));
+            this.#__views.root = view;
             this.setAttribute('data-mode', mode);
             this.setAttribute('data-overlay', overlay);
             this.setAttribute('data-ready', '1');
@@ -88,45 +89,45 @@ this.show();
         }
 
         /**
-         * _handleStylesheetErrorLoadEvent
+         * #__handleStylesheetErrorLoadEvent
          * 
-         * @access  protected
+         * @access  private
          * @param   Function reject
          * @param   Object event
          * @return  Boolean
          */
-        _handleStylesheetErrorLoadEvent(reject, event) {
+        #__handleStylesheetErrorLoadEvent(reject, event) {
             let msg = 'Could not load stylesheet.';
-            window.typesenseInstantSearch.LoggingUtils.log(msg, event);
+            window.annexSearch.LoggingUtils.log(msg, event);
             reject();
             return true;
         }
 
         /**
-         * _handleStylesheetSuccessfulLoadEvent
+         * #__handleStylesheetSuccessfulLoadEvent
          * 
-         * @access  protected
+         * @access  private
          * @param   Function resolve
          * @return  Boolean
          */
-        _handleStylesheetSuccessfulLoadEvent(resolve) {
-            window.typesenseInstantSearch.DataUtils.waitForAnimation().then(resolve);
+        #__handleStylesheetSuccessfulLoadEvent(resolve) {
+            window.annexSearch.DataUtils.waitForAnimation().then(resolve);
             return true;
         }
 
         /**
-         * _loadStylesheets
+         * #__loadStylesheets
          * 
          * @see     https://claude.ai/chat/3683f5e2-b3b9-4cbb-846f-ac1a2d2cb64b
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _loadStylesheets() {
+        #__loadStylesheets() {
             let $shadow = this.shadow,
-                errorHandler = this._handleStylesheetErrorLoadEvent.bind(this),
-                successfulHandler = this._handleStylesheetSuccessfulLoadEvent.bind(this),
+                errorHandler = this.#__handleStylesheetErrorLoadEvent.bind(this),
+                successfulHandler = this.#__handleStylesheetSuccessfulLoadEvent.bind(this),
                 paths = Array.from(
-                    new Set(window.typesenseInstantSearch.ConfigUtils.get('paths').css)
+                    new Set(window.annexSearch.ConfigUtils.get('paths').css)
                 ),
                 promises = paths.map(function(href) {
                     return new Promise(function(resolve, reject) {
@@ -146,14 +147,14 @@ this.show();
         }
 
         /**
-         * _render
+         * #__render
          * 
-         * @access  protected
+         * @access  private
          * @return  Promise
          */
-        _render() {
-            let handler = this._drawRoot.bind(this),
-                promise = this._loadStylesheets().then(handler).catch(function() {});
+        #__render() {
+            let handler = this.#__drawRoot.bind(this),
+                promise = this.#__loadStylesheets().then(handler).catch(function() {});
             return promise;
         }
 
@@ -163,10 +164,10 @@ this.show();
          * @throws  Error
          * @access  public
          * @param   String viewKey
-         * @return  window.typesenseInstantSearch.BaseView
+         * @return  window.annexSearch.BaseView
          */
         getView(viewKey) {
-            let view = this._views[viewKey];
+            let view = this.#__views[viewKey];
             return view;
         }
 
@@ -178,11 +179,11 @@ this.show();
          * @return  Boolean
          */
         hide() {
-            if (this._showing === false) {
+            if (this.#__showing === false) {
                 return false;
             }
-            this._showing = false;
-            this._views.root.blur();
+            this.#__showing = false;
+            this.#__views.root.blur();
             this.setAttribute('data-open', '0');
             this.setAttribute('inert', '');
             return true;
@@ -191,20 +192,22 @@ this.show();
         /**
          * show
          * 
+         * @note    The logic below is to ensure state is preserved between
+         *          openings.
          * @access  public
          * @return  Boolean
          */
         show() {
-            if (this._showing === true) {
+            if (this.#__showing === true) {
                 return false;
             }
-            this._showing = true;
+            this.#__showing = true;
             this.setAttribute('data-open', '1');
             this.removeAttribute('inert');
-            let found = window.typesenseInstantSearch.webComponent.getView('root').getView('body').getView('results').getView('found'),
+            let found = window.annexSearch.webComponent.getView('root').getView('body').getView('results').getView('found'),
                 results = found.getResults();
             if (results.length === 0) {
-                this._views.root.focus();
+                this.#__views.root.focus();
                 return true;
             }
             let focusedIndex = found.getFocusedIndex();
@@ -226,7 +229,7 @@ this.show();
          * @return  Boolean
          */
         showing() {
-            let showing = this._showing;
+            let showing = this.#__showing;
             return showing;
         }
 
@@ -237,7 +240,7 @@ this.show();
          * @return  Boolean
          */
         toggle() {
-            if (this._showing === true) {
+            if (this.#__showing === true) {
                 let response = this.hide();
                 return response;
             }

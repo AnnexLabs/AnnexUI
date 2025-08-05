@@ -3,15 +3,15 @@
  * /src/js/views/header/MetaBar.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * window.typesenseInstantSearch.MetaBarHeaderView
+     * window.annexSearch.MetaBarHeaderView
      * 
      * @access  public
-     * @extends window.typesenseInstantSearch.BaseView
+     * @extends window.annexSearch.BaseView
      */
-    window.typesenseInstantSearch.MetaBarHeaderView = window.typesenseInstantSearch.MetaBarHeaderView || class MetaBarHeaderView extends window.typesenseInstantSearch.BaseView {
+    window.annexSearch.MetaBarHeaderView = window.annexSearch.MetaBarHeaderView || class MetaBarHeaderView extends window.annexSearch.BaseView {
 
         /**
          * constructor

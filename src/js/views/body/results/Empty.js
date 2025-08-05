@@ -3,15 +3,15 @@
  * /src/js/views/body/results/Empty.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * window.typesenseInstantSearch.EmptyResultsBodyView
+     * window.annexSearch.EmptyResultsBodyView
      * 
      * @access  public
-     * @extends window.typesenseInstantSearch.BaseView
+     * @extends window.annexSearch.BaseView
      */
-    window.typesenseInstantSearch.EmptyResultsBodyView = window.typesenseInstantSearch.EmptyResultsBodyView || class EmptyResultsBodyView extends window.typesenseInstantSearch.BaseView {
+    window.annexSearch.EmptyResultsBodyView = window.annexSearch.EmptyResultsBodyView || class EmptyResultsBodyView extends window.annexSearch.BaseView {
 
         /**
          * constructor
@@ -31,7 +31,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _setMessage() {
-            let value = window.typesenseInstantSearch.ConfigUtils.get('copy').empty.message;
+            let value = window.annexSearch.ConfigUtils.get('copy').empty.message;
             if (value === null) {
                 return false;
             }

@@ -3,22 +3,22 @@
  * /src/js/helpers/Base.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push([], function() {
 
     /**
-     * window.typesenseInstantSearch.Base
+     * window.annexSearch.Base
      * 
      * @access  public
      */
-    window.typesenseInstantSearch.Base = window.typesenseInstantSearch.Base || class Base {
+    window.annexSearch.Base = window.annexSearch.Base || class Base {
 
         /**
-         * _data
+         * #__data
          * 
-         * @access  protected
+         * @access  private
          * @var     Object (default:{})
          */
-        _data = {};
+        #__data = {};
 
 
         /**
@@ -38,7 +38,7 @@ window.typesenseInstantSearch.DependencyLoader.push([], function() {
          * @return  undefined|mixed
          */
         get(key) {
-            let value = this._data[key] || undefined;
+            let value = this.#__data[key] || undefined;
             return value;
         }
 
@@ -46,10 +46,10 @@ window.typesenseInstantSearch.DependencyLoader.push([], function() {
          * getWebComponent
          * 
          * @access  public
-         * @return  window.typesenseInstantSearch.AnnexSearchWidgetWebComponent
+         * @return  window.annexSearch.AnnexSearchWidgetWebComponent
          */
         getWebComponent() {
-            let value = window.typesenseInstantSearch.webComponent;
+            let value = window.annexSearch.webComponent;
             return value;
         }
 
@@ -72,8 +72,8 @@ window.typesenseInstantSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         log() {
-            let scope = window.typesenseInstantSearch.LoggingUtils,
-                response = window.typesenseInstantSearch.LoggingUtils.log.apply(scope, arguments);
+            let scope = window.annexSearch.LoggingUtils,
+                response = window.annexSearch.LoggingUtils.log.apply(scope, arguments);
             return response;
         }
 
@@ -86,7 +86,7 @@ window.typesenseInstantSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         set(key, value) {
-            this._data[key] = value;
+            this.#__data[key] = value;
             return true;
         }
 

@@ -3,15 +3,15 @@
  * /src/js/views/header/Header.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * window.typesenseInstantSearch.HeaderView
+     * window.annexSearch.HeaderView
      * 
      * @access  public
-     * @extends window.typesenseInstantSearch.BaseView
+     * @extends window.annexSearch.BaseView
      */
-    window.typesenseInstantSearch.HeaderView = window.typesenseInstantSearch.HeaderView || class HeaderView extends window.typesenseInstantSearch.BaseView {
+    window.annexSearch.HeaderView = window.annexSearch.HeaderView || class HeaderView extends window.annexSearch.BaseView {
 
         /**
          * _showingSpinner
@@ -77,7 +77,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _drawField() {
-            let view = window.typesenseInstantSearch.ElementUtils.renderTemplate('fieldHeader', this._$element);
+            let view = window.annexSearch.ElementUtils.renderTemplate('fieldHeader', this._$element);
             this.setView('field', view);
             return true;
         }
@@ -89,7 +89,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _drawMetaBar() {
-            let view = window.typesenseInstantSearch.ElementUtils.renderTemplate('metaBarHeader', this._$element);
+            let view = window.annexSearch.ElementUtils.renderTemplate('metaBarHeader', this._$element);
             this.setView('metaBar', view);
             return true;
         }

@@ -3,15 +3,15 @@
  * /src/js/views/footer/StatusBar.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * window.typesenseInstantSearch.StatusBarFooterView
+     * window.annexSearch.StatusBarFooterView
      * 
      * @access  public
-     * @extends window.typesenseInstantSearch.BaseView
+     * @extends window.annexSearch.BaseView
      */
-    window.typesenseInstantSearch.StatusBarFooterView = window.typesenseInstantSearch.StatusBarFooterView || class StatusBarFooterView extends window.typesenseInstantSearch.BaseView {
+    window.annexSearch.StatusBarFooterView = window.annexSearch.StatusBarFooterView || class StatusBarFooterView extends window.annexSearch.BaseView {
 
         /**
          * constructor
@@ -31,7 +31,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _setMessage() {
-            let value = window.typesenseInstantSearch.ConfigUtils.get('copy').statusBar.message;
+            let value = window.annexSearch.ConfigUtils.get('copy').statusBar.message;
             if (value === null) {
                 return false;
             }

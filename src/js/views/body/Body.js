@@ -3,15 +3,15 @@
  * /src/js/views/body/Body.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * window.typesenseInstantSearch.BodyView
+     * window.annexSearch.BodyView
      * 
      * @access  public
-     * @extends window.typesenseInstantSearch.BaseView
+     * @extends window.annexSearch.BaseView
      */
-    window.typesenseInstantSearch.BodyView = window.typesenseInstantSearch.BodyView || class BodyView extends window.typesenseInstantSearch.BaseView {
+    window.annexSearch.BodyView = window.annexSearch.BodyView || class BodyView extends window.annexSearch.BaseView {
 
         /**
          * constructor
@@ -31,7 +31,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _drawError() {
-            let view = window.typesenseInstantSearch.ElementUtils.renderTemplate('errorBody', this._$element);
+            let view = window.annexSearch.ElementUtils.renderTemplate('errorBody', this._$element);
             this.setView('error', view);
             return true;
         }
@@ -43,7 +43,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _drawIdle() {
-            let view = window.typesenseInstantSearch.ElementUtils.renderTemplate('idleBody', this._$element);
+            let view = window.annexSearch.ElementUtils.renderTemplate('idleBody', this._$element);
             this.setView('idle', view);
             return true;
         }
@@ -55,7 +55,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _drawResults() {
-            let view = window.typesenseInstantSearch.ElementUtils.renderTemplate('resultsBody', this._$element);
+            let view = window.annexSearch.ElementUtils.renderTemplate('resultsBody', this._$element);
             this.setView('results', view);
             return true;
         }

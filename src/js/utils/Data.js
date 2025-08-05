@@ -1,10 +1,10 @@
 
 /**
- * window.typesenseInstantSearch.DataUtils
+ * window.annexSearch.DataUtils
  * 
  * @access  public
  */
-window.typesenseInstantSearch.DataUtils = window.typesenseInstantSearch.DataUtils || class DataUtils {
+window.annexSearch.DataUtils = window.annexSearch.DataUtils || class DataUtils {
 
     /**
      * debounce
@@ -60,13 +60,18 @@ window.typesenseInstantSearch.DataUtils = window.typesenseInstantSearch.DataUtil
      * @see     https://chatgpt.com/c/682aa846-11c4-800f-acc4-2b556cf72595
      * @access  public
      * @static
+     * @param   Boolean resolve
      * @param   Number delay
      * @return  Promise
      */
-    static getDelayedPromise(delay, ... args) {
-        let promise = new Promise(function(resolve, reject) {
+    static getDelayedPromise(resolve, delay, ... args) {
+        var promise = new Promise(function(resolve, reject) {
             setTimeout(function() {
-                resolve(args[0]);
+                if (resolve === true) {
+                    resolve(args[0]);
+                } else {
+                    reject(args[0]);
+                }
             }, delay);
         });
         return promise;

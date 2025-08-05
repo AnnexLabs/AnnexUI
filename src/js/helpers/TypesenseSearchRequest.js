@@ -3,63 +3,61 @@
  * /src/js/helpers/TypesenseSearchRequest.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.Base'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function() {
 
     /**
-     * window.typesenseInstantSearch.TypesenseSearchRequest
+     * window.annexSearch.TypesenseSearchRequest
      * 
-     * @extends window.typesenseInstantSearch.Base
+     * @extends window.annexSearch.Base
      */
-    window.typesenseInstantSearch.TypesenseSearchRequest = window.typesenseInstantSearch.TypesenseSearchRequest || class TypesenseSearchRequest extends window.typesenseInstantSearch.Base {
+    window.annexSearch.TypesenseSearchRequest = window.annexSearch.TypesenseSearchRequest || class TypesenseSearchRequest extends window.annexSearch.Base {
 
         /**
-         * _abortController
+         * #__abortController
          * 
-         * @access  protected
+         * @access  private
          * @var     AbortController|null (default: null)
          */
-        _abortController = null;
+        #__abortController = null;
 
         /**
-         * _aborted
+         * #__aborted
          * 
-         * @access  protected
+         * @access  private
          * @var     Boolean (default: false)
          */
-        _aborted = false;
+        #__aborted = false;
 
         /**
-         * _options
+         * #__options
          * 
-         * @access  protected
+         * @access  private
          * @var     Object
          */
-        _options = {
-            // highlight_start_tag: '%3Cmark%3E',
-            // highlight_end_tag: '%3C%2Fmark%3E',
-            // use_cache: true,
+        #__options = {
             page: 1,
             per_page: 10
+            // use_cache: true,
             // query_by: options.query_by || 'title,content',
             // filter_by: options.filter_by || '',
             // sort_by: options.sort_by || '_text_match:desc',
         };
 
         /**
-         * _query
+         * #__query
          * 
-         * @access  protected
+         * @access  private
          * @var     String|null (default: null)
          */
-        _query = null;
+        #__query = null;
 
         /**
-         * _response
+         * #__response
          * 
-         * @access  protected
+         * @access  private
          * @var     Object|null (default: null)
          */
-        _response = null;
+        #__response = null;
 
         /**
          * constructor
@@ -70,46 +68,49 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          */
         constructor(query) {
             super();
-            this._query = query;
+            this.#__query = query;
+            this.#__options.q = query;
+            this.#__options.highlight_end_tag = window.annexSearch.TypesenseUtils.getHighlightEndTag();
+            this.#__options.highlight_start_tag = window.annexSearch.TypesenseUtils.getHighlightStartTag();
         }
 
         /**
-         * _getAuth
+         * #__getAuth
          * 
-         * @access  protected
+         * @access  private
          * @return  Object
          */
-        _getAuth() {
+        #__getAuth() {
             let auth = {
-                hostname: window.typesenseInstantSearchConfig.cluster.hostname,
+                hostname: window.annexSearchConfig.cluster.hostname,
                 protocol: 'https',
-                apiKey: window.typesenseInstantSearchConfig.cluster.apiKey,
-                collectionName: window.typesenseInstantSearchConfig.cluster.collectionName,
-                presetName: window.typesenseInstantSearchConfig.cluster.presetName
+                apiKey: window.annexSearchConfig.cluster.apiKey,
+                collectionName: window.annexSearchConfig.cluster.collectionName,
+                presetName: window.annexSearchConfig.cluster.presetName
             };
             return auth;
         }
 
         /**
-         * _getBaseURL
+         * #__getBaseURL
          * 
-         * @access  protected
+         * @access  private
          * @return  String
          */
-        _getBaseURL() {
-            let auth = this._getAuth(),
+        #__getBaseURL() {
+            let auth = this.#__getAuth(),
                 baseURL = (auth.protocol) + '://' + (auth.hostname);
             return baseURL;
         }
 
         /**
-         * _getFetchHeaders
+         * #__getFetchHeaders
          * 
-         * @access  protected
+         * @access  private
          * @return  Object
          */
-        _getFetchHeaders() {
-            let auth = this._getAuth(),
+        #__getFetchHeaders() {
+            let auth = this.#__getAuth(),
                 headers = {
                     'X-TYPESENSE-API-KEY': auth.apiKey,
                     'Content-Type': 'application/json'
@@ -118,46 +119,45 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
         }
 
         /**
-         * _getFetchOptions
+         * #__getFetchOptions
          * 
-         * @access  protected
+         * @access  private
          * @return  Object
          */
-        _getFetchOptions() {
+        #__getFetchOptions() {
             let controller = new AbortController(),
-                headers = this._getFetchHeaders(),
+                headers = this.#__getFetchHeaders(),
                 options = {
                     method: 'GET',
                     signal: controller.signal,
                     headers: headers
                 };
-            this._abortController = controller;
+            this.#__abortController = controller;
             return options;
         }
 
         /**
-         * _getSearchOptions
+         * #__getSearchOptions
          * 
-         * @access  protected
+         * @access  private
          * @return  Object
          */
-        _getSearchOptions() {
-            let auth = this._getAuth(),
-                options = this._options;
-            options.q = this._query;
+        #__getSearchOptions() {
+            let auth = this.#__getAuth(),
+                options = this.#__options;
             options.preset = auth.presetName || null;
             return options;
         }
 
         /**
-         * _getSearchParams
+         * #__getSearchParams
          * 
-         * @access  protected
+         * @access  private
          * @param   String query
          * @return  Object
          */
-        _getSearchParams() {
-            let searchOptions = this._getSearchOptions(),
+        #__getSearchParams() {
+            let searchOptions = this.#__getSearchOptions(),
                 params = new URLSearchParams(searchOptions);
             for (const [key, value] of params.entries()) {
                 if (!value) {
@@ -168,15 +168,15 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
         }
 
         /**
-         * _getSearchURL
+         * #__getSearchURL
          * 
-         * @access  protected
+         * @access  private
          * @return  String
          */
-        _getSearchURL() {
-            let baseURL = this._getBaseURL(),
-                auth = this._getAuth(),
-                params = this._getSearchParams(),
+        #__getSearchURL() {
+            let baseURL = this.#__getBaseURL(),
+                auth = this.#__getAuth(),
+                params = this.#__getSearchParams(),
                 searchParams = new URLSearchParams(params).toString(),
                 searchURL = (baseURL) + '/collections/' + (auth.collectionName) + '/documents/search?' + (searchParams);
             return searchURL;
@@ -189,11 +189,11 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         abort() {
-            if (this._aborted === true) {
+            if (this.#__aborted === true) {
                 return false;
             }
-            this._aborted = true;
-            this._abortController.abort();
+            this.#__aborted = true;
+            this.#__abortController.abort();
             return true;
         }
 
@@ -204,7 +204,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  null|Object
          */
         getResponse() {
-            let response = this._response;
+            let response = this.#__response;
             return response;
         }
 
@@ -215,8 +215,8 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Promise
          */
         run() {
-            let url = this._getSearchURL(),
-                options = this._getFetchOptions(),
+            let url = this.#__getSearchURL(),
+                options = this.#__getFetchOptions(),
                 promise = new Promise(async function(resolve, reject) {
                     try {
                         let response = await fetch(url, options);
@@ -242,10 +242,10 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         setOptions(options) {
-            this._options = Object.assign(
+            this.#__options = Object.assign(
                 {},
-                this._options,
-                window.typesenseInstantSearchConfig.searchOptions,
+                this.#__options,
+                window.annexSearchConfig.searchOptions,
                 options,
             );
             return true;

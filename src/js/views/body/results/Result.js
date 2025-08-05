@@ -3,15 +3,15 @@
  * /src/js/views/body/results/Result.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * window.typesenseInstantSearch.ResultFoundResultsBodyView
+     * window.annexSearch.ResultFoundResultsBodyView
      * 
      * @access  public
-     * @extends window.typesenseInstantSearch.BaseView
+     * @extends window.annexSearch.BaseView
      */
-    window.typesenseInstantSearch.ResultFoundResultsBodyView = window.typesenseInstantSearch.ResultFoundResultsBodyView || class ResultFoundResultsBodyView extends window.typesenseInstantSearch.BaseView {
+    window.annexSearch.ResultFoundResultsBodyView = window.annexSearch.ResultFoundResultsBodyView || class ResultFoundResultsBodyView extends window.annexSearch.BaseView {
 
         /**
          * constructor
@@ -70,7 +70,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _handleClickEvent(event) {
-            let callback = window.typesenseInstantSearch.ConfigUtils.get('callbacks')?.results?.click,
+            let callback = window.annexSearch.ConfigUtils.get('callbacks')?.results?.click,
                 hit = this.get('hit');
             callback && callback(event, hit);
             let found = this.getWebComponent().getView('root').getView('body').getView('results').getView('found');
@@ -86,7 +86,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _handleFocusEvent(event) {
-            let callback = window.typesenseInstantSearch.ConfigUtils.get('callbacks')?.results?.focus,
+            let callback = window.annexSearch.ConfigUtils.get('callbacks')?.results?.focus,
                 hit = this.get('hit');
             callback && callback(event, hit);
             let found = this.getWebComponent().getView('root').getView('body').getView('results').getView('found');
@@ -106,7 +106,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
                 map = {
                     hit: hit
                 };
-            html = window.typesenseInstantSearch.ElementUtils.renderTemplateVariables(html, map);
+            html = window.annexSearch.ElementUtils.renderTemplateVariables(html, map);
             this._$element = this._replaceOuterHTML(html);
             return true;
         }

@@ -3,15 +3,15 @@
  * /src/js/views/header/Field.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * window.typesenseInstantSearch.FieldHeaderView
+     * window.annexSearch.FieldHeaderView
      * 
      * @access  public
-     * @extends window.typesenseInstantSearch.BaseView
+     * @extends window.annexSearch.BaseView
      */
-    window.typesenseInstantSearch.FieldHeaderView = window.typesenseInstantSearch.FieldHeaderView || class FieldHeaderView extends window.typesenseInstantSearch.BaseView {
+    window.annexSearch.FieldHeaderView = window.annexSearch.FieldHeaderView || class FieldHeaderView extends window.annexSearch.BaseView {
 
         /**
          * _lastTypesenseSearchResponse
@@ -101,7 +101,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  null|String
          */
         _getKeyboardShortcut() {
-            let value = window.typesenseInstantSearch.ConfigUtils.get('keyboardShortcut');
+            let value = window.annexSearch.ConfigUtils.get('keyboardShortcut');
             if (value === null) {
                 return null;
             }
@@ -235,7 +235,7 @@ console.log('ummm.');
          * @return  Boolean
          */
         _renderPlaceholder() {
-            let placeholder = window.typesenseInstantSearch.ConfigUtils.get('copy').placeholder;
+            let placeholder = window.annexSearch.ConfigUtils.get('copy').placeholder;
             if (placeholder === null) {
                 return false;
             }
@@ -259,7 +259,7 @@ console.log('ummm.');
             let value = this.first('input').value.trim(),
                 successful = this._handleSuccessfulTypesenseSearchEvent.bind(this, options),
                 failed = this._handleFailedTypesenseSearchEvent.bind(this, options),
-                promise = window.typesenseInstantSearch.TypesenseUtils.search(value, options).then(function(json) {
+                promise = window.annexSearch.TypesenseUtils.search(value, options).then(function(json) {
                     header.hideSpinner();
                     return successful(json);
                 }).catch(failed);
@@ -326,7 +326,7 @@ console.log('ummm.');
         focus() {//scrollToTop = true) {
             let $input = this.first('input'),
                 found = this.getWebComponent().getView('root').getView('body').getView('results').getView('found');
-            window.typesenseInstantSearch.DataUtils.waitForAnimation().then(function() {
+            window.annexSearch.DataUtils.waitForAnimation().then(function() {
                 $input.focus();
                 // scrollToTop && found.smoothScrollToTop();
                 found.smoothScrollToTop();
@@ -383,7 +383,7 @@ console.log('ummm.');
          */
         select() {
             let $input = this.first('input');
-            window.typesenseInstantSearch.DataUtils.waitForAnimation().then(function() {
+            window.annexSearch.DataUtils.waitForAnimation().then(function() {
                 $input.select();
             })
             return true;

@@ -3,15 +3,15 @@
  * /src/js/views/body/results/Results.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * window.typesenseInstantSearch.ResultsBodyView
+     * window.annexSearch.ResultsBodyView
      * 
      * @access  public
-     * @extends window.typesenseInstantSearch.BaseView
+     * @extends window.annexSearch.BaseView
      */
-    window.typesenseInstantSearch.ResultsBodyView = window.typesenseInstantSearch.ResultsBodyView || class ResultsBodyView extends window.typesenseInstantSearch.BaseView {
+    window.annexSearch.ResultsBodyView = window.annexSearch.ResultsBodyView || class ResultsBodyView extends window.annexSearch.BaseView {
 
         /**
          * constructor
@@ -31,7 +31,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _drawEmpty() {
-            let view = window.typesenseInstantSearch.ElementUtils.renderTemplate('emptyResultsBody', this._$element);
+            let view = window.annexSearch.ElementUtils.renderTemplate('emptyResultsBody', this._$element);
             this.setView('empty', view);
             return true;
         }
@@ -43,7 +43,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _drawFound() {
-            let view = window.typesenseInstantSearch.ElementUtils.renderTemplate('foundResultsBody', this._$element);
+            let view = window.annexSearch.ElementUtils.renderTemplate('foundResultsBody', this._$element);
             this.setView('found', view);
             return true;
         }

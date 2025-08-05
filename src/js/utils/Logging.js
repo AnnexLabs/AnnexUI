@@ -1,10 +1,10 @@
 
 /**
- * window.typesenseInstantSearch.LoggingUtils
+ * window.annexSearch.LoggingUtils
  * 
  * @access  public
  */
-window.typesenseInstantSearch.LoggingUtils = window.typesenseInstantSearch.LoggingUtils || class LoggingUtils {
+window.annexSearch.LoggingUtils = window.annexSearch.LoggingUtils || class LoggingUtils {
 
     /**
      * log
@@ -14,7 +14,7 @@ window.typesenseInstantSearch.LoggingUtils = window.typesenseInstantSearch.Loggi
      * @return  Boolean
      */
     static log() {
-        let logging = window.typesenseInstantSearch.ConfigUtils.get('logging');
+        let logging = window.annexSearch.ConfigUtils.get('logging');
         if (logging === false) {
             return false;
         }
@@ -31,7 +31,7 @@ window.typesenseInstantSearch.LoggingUtils = window.typesenseInstantSearch.Loggi
      * @return  Boolean
      */
     // static time(label) {
-    //     let logging = window.typesenseInstantSearch.ConfigUtils.get('logging');
+    //     let logging = window.annexSearch.ConfigUtils.get('logging');
     //     if (logging === false) {
     //         return false;
     //     }

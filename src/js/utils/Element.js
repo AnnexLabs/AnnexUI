@@ -1,10 +1,10 @@
 
 /**
- * window.typesenseInstantSearch.ElementUtils
+ * window.annexSearch.ElementUtils
  * 
  * @access  public
  */
-window.typesenseInstantSearch.ElementUtils = window.typesenseInstantSearch.ElementUtils || class ElementUtils {
+window.annexSearch.ElementUtils = window.annexSearch.ElementUtils || class ElementUtils {
 
     /**
      * getEscapedHTML
@@ -16,10 +16,16 @@ window.typesenseInstantSearch.ElementUtils = window.typesenseInstantSearch.Eleme
      * @return  String
      */
     static getEscapedHTML(str) {
-        let $div = document.createElement('div');
+        let $div = document.createElement('div'),
+            tagName = window.annexSearch.ConfigUtils.get('highlightTagName'),
+            tagNameLowerCase = tagName.toLowerCase(),
+            startTag = '<' + (tagNameLowerCase) + '>',
+            endTag = '</' + (tagNameLowerCase) + '>',
+            escapedStartTag = startTag.replace('<', '&lt;').replace('>', '&gt;'),
+            escapedEndTag = endTag.replace('<', '&lt;').replace('>', '&gt;');
         $div.textContent = str;
-        $div.innerHTML = $div.innerHTML.replace(/&lt;mark&gt;/g, '<mark>');
-        $div.innerHTML = $div.innerHTML.replace(/&lt;\/mark&gt;/g, '</mark>');
+        $div.innerHTML = $div.innerHTML.replaceAll(escapedStartTag, startTag);
+        $div.innerHTML = $div.innerHTML.replaceAll(escapedEndTag, endTag);
         let html = $div.innerHTML;
         return html;
     }
@@ -34,7 +40,7 @@ window.typesenseInstantSearch.ElementUtils = window.typesenseInstantSearch.Eleme
      * @return  HTMLElement
      */
     static getTemplateElement(templateId) {
-        let templateContent = window.typesenseInstantSearch.ConfigUtils.get('templates')[templateId],
+        let templateContent = window.annexSearch.ConfigUtils.get('templates')[templateId],
             parser = new DOMParser(),
             $document = parser.parseFromString(templateContent, 'text/html'),
             $script = $document.querySelector('script[type]'),
@@ -102,13 +108,13 @@ window.typesenseInstantSearch.ElementUtils = window.typesenseInstantSearch.Eleme
      * @static
      * @param   String templateId
      * @param   EventTarget $parent
-     * @return  window.typesenseInstantSearch.BaseView
+     * @return  window.annexSearch.BaseView
      */
     static renderTemplate(templateId, $parent) {
         let $element = this.getTemplateElement(templateId);
         $parent.appendChild($element);
         let viewName = $element.getAttribute('data-view-name'),
-            view = new window.typesenseInstantSearch[viewName]($element);
+            view = new window.annexSearch[viewName]($element);
         $element.data = $element.data || {};
         $element.data.view = view;
         view.render();
@@ -132,21 +138,21 @@ window.typesenseInstantSearch.ElementUtils = window.typesenseInstantSearch.Eleme
                     return piece.trim();
                 });
                 for (const path of paths) {
-                    let value = window.typesenseInstantSearch.ElementUtils.getValueFromPath(path, map);
+                    let value = window.annexSearch.ElementUtils.getValueFromPath(path, map);
                     if (value === null) {
                         continue;
                     }
-                    value = window.typesenseInstantSearch.ElementUtils.getEscapedHTML(value);
+                    value = window.annexSearch.ElementUtils.getEscapedHTML(value);
                     return value;
                 }
                 return '';
             }
             expression = expression.trim();
-            let value = window.typesenseInstantSearch.ElementUtils.getValueFromPath(expression, map);
+            let value = window.annexSearch.ElementUtils.getValueFromPath(expression, map);
             if (value === null) {
                 return '';
             }
-            value = window.typesenseInstantSearch.ElementUtils.getEscapedHTML(value);
+            value = window.annexSearch.ElementUtils.getEscapedHTML(value);
             return value;
         });
         return html;

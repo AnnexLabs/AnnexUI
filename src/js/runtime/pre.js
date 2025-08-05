@@ -1,3 +1,3 @@
 (function() {
     'use strict';
-    window.typesenseInstantSearch = window.typesenseInstantSearch || {};
+    window.annexSearch = window.annexSearch || {};

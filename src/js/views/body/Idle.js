@@ -3,15 +3,15 @@
  * /src/js/views/body/Idle.js
  * 
  */
-window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * window.typesenseInstantSearch.IdleBodyView
+     * window.annexSearch.IdleBodyView
      * 
      * @access  public
-     * @extends window.typesenseInstantSearch.BaseView
+     * @extends window.annexSearch.BaseView
      */
-    window.typesenseInstantSearch.IdleBodyView = window.typesenseInstantSearch.IdleBodyView || class IdleBodyView extends window.typesenseInstantSearch.BaseView {
+    window.annexSearch.IdleBodyView = window.annexSearch.IdleBodyView || class IdleBodyView extends window.annexSearch.BaseView {
 
         /**
          * constructor
@@ -31,7 +31,7 @@ window.typesenseInstantSearch.DependencyLoader.push(['window.typesenseInstantSea
          * @return  Boolean
          */
         _setMessage() {
-            let value = window.typesenseInstantSearch.ConfigUtils.get('copy').idle.message;
+            let value = window.annexSearch.ConfigUtils.get('copy').idle.message;
             if (value === null) {
                 return false;
             }
