@@ -21,14 +21,14 @@
  * States
  * 
  */
-:host([data-open="1"]) {
+:host([data-annex-search-open="1"]) {
     opacity: 1;
     pointer-events: auto;
 }
-:host([data-open="0"]) {
+:host([data-annex-search-open="0"]) {
 /*    opacity: 1;*/
 /*    pointer-events: auto;*/
 }
-:host([data-ready="1"]) {
+:host([data-annex-search-ready="1"]) {
     transition: opacity var(--annex-ts-open-duration);
 }

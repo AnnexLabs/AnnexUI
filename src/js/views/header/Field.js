@@ -35,6 +35,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @access  protected
          * @var     Number (default: 60)
          */
+        // _searchDebounceDelay = 600;
         _searchDebounceDelay = 60;
 
         /**
@@ -153,6 +154,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             if (value === this._lastTypesenseSearchResponse?.request_params?.q) {
                 return false;
             }
+            // let handler = this._searchTypesense;//.bind(this);
+            // window.annexSearch.FunctionUtils.debounce(handler, this._searchDebounceDelay)();
             clearTimeout(this._timeout);
             this._timeout = setTimeout(this._searchTypesense.bind(this), this._searchDebounceDelay);
             return true;

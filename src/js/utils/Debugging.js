@@ -9,6 +9,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.DebuggingUtils = window.annexSearch.DebuggingUtils || class DebuggingUtils extends window.annexSearch.BaseView {
 
         /**
+         * _requests
+         * 
+         * @access  private
+         * @var     Array (default [])
+         */
+        // #__requests = [];
+
+        /**
          * log
          * 
          * @access  public

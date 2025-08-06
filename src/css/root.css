@@ -17,6 +17,6 @@
 [data-view-name="RootView"][data-state-key="results"] > div.content {
 /*    max-height: 540px;*/
 }
-:host([data-overlay="0"]) [data-view-name="RootView"]:before {
+:host([data-annex-search-overlay="0"]) [data-view-name="RootView"]:before {
     display: none;
 }

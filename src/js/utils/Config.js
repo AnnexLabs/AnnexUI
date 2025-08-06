@@ -104,16 +104,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             highlightTagName: 'MARK',
 
             /**
-             * mode
+             * layout
              * 
-             * The UI mode for the widget. Currently supports:
+             * The UI layout for the widget. Currently supports:
              * - modal
              * - panel-left
              * - panel-right
              * 
              * @var     String (default: 'modal')
              */
-            mode: 'modal',
+            layout: 'modal',
 
             /**
              * overlay

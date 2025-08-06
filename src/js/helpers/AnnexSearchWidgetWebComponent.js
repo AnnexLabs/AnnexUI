@@ -78,12 +78,12 @@ window.annexSearch.DependencyLoader.push([], function() {
         #__drawRoot() {
             let $shadow = this.shadow,
                 view = window.annexSearch.ElementUtils.renderTemplate('root', $shadow),
-                mode = window.annexSearch.ConfigUtils.get('mode'),
+                layout = window.annexSearch.ConfigUtils.get('layout'),
                 overlay = String(+window.annexSearch.ConfigUtils.get('overlay'));
             this.#__views.root = view;
-            this.setAttribute('data-mode', mode);
-            this.setAttribute('data-overlay', overlay);
-            this.setAttribute('data-ready', '1');
+            this.setAttribute('data-annex-search-layout', layout);
+            this.setAttribute('data-annex-search-overlay', overlay);
+            this.setAttribute('data-annex-search-ready', '1');
 this.show();
             return true;
         }
@@ -185,7 +185,7 @@ this.show();
             }
             this.#__showing = false;
             this.#__views.root.blur();
-            this.setAttribute('data-open', '0');
+            this.setAttribute('data-annex-search-open', '0');
             this.setAttribute('inert', '');
             return true;
         }
@@ -203,7 +203,7 @@ this.show();
                 return false;
             }
             this.#__showing = true;
-            this.setAttribute('data-open', '1');
+            this.setAttribute('data-annex-search-open', '1');
             this.removeAttribute('inert');
             let found = window.annexSearch.webComponent.getView('root').getView('body').getView('results').getView('found'),
                 results = found.getResults();
