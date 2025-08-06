@@ -25,12 +25,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * _setMessage
+         * #__setMessage
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _setMessage() {
+        #__setMessage() {
             let value = window.annexSearch.ConfigUtils.get('copy').idle.message;
             if (value === null) {
                 return false;
@@ -50,7 +50,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         render() {
-            this._setMessage();
+            this.#__setMessage();
             super.render();
             return true;
         }

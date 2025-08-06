@@ -1,3 +1,8 @@
+
+/**
+ * /src/js/utils/Element.js
+ * 
+ */
 window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
@@ -163,8 +168,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         waitForAnimation() {
             let promise = new Promise(function(resolve, reject) {
-                requestAnimationFrame(function() {
-                    requestAnimationFrame(function() {
+                window.requestAnimationFrame(function() {
+                    window.requestAnimationFrame(function() {
                         resolve();
                     });
                 });

@@ -25,101 +25,88 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * _addEvents
+         * #__addClickEventListener
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _addEvents() {
-            this._addClickEventListener();
-            this._addFocusEventListener();
-            return true;
-        }
-
-        /**
-         * _addClickEventListener
-         * 
-         * @access  protected
-         * @return  Boolean
-         */
-        _addClickEventListener() {
+        #__addClickEventListener() {
             let $element = this._$element,
-                handler = this._handleClickEvent.bind(this);
+                handler = this.#__handleClickEvent.bind(this);
             $element.addEventListener('click', handler);
             return true;
         }
 
         /**
-         * _addFocusEventListener
+         * #__addFocusEventListener
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _addFocusEventListener() {
+        #__addFocusEventListener() {
             let $element = this._$element,
-                handler = this._handleFocusEvent.bind(this);
+                handler = this.#__handleFocusEvent.bind(this);
             $element.addEventListener('focus', handler);
             return true;
         }
 
         /**
-         * _handleClickEvent
+         * #__handleClickEvent
          * 
-         * @access  protected
+         * @access  private
          * @param   Object event
          * @return  Boolean
          */
-        _handleClickEvent(event) {
+        #__handleClickEvent(event) {
             let callback = window.annexSearch.ConfigUtils.get('callbacks')?.results?.click,
                 hit = this.get('hit');
             callback && callback(event, hit);
-            let found = this.getWebComponent().getView('root').getView('body').getView('results').getView('found');
-            found.setFocusedIndexByResultView(this);
+            this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             return true;
         }
 
         /**
-         * _handleFocusEvent
+         * #__handleFocusEvent
          * 
-         * @access  protected
+         * @access  private
          * @param   Object event
          * @return  Boolean
          */
-        _handleFocusEvent(event) {
+        #__handleFocusEvent(event) {
             let callback = window.annexSearch.ConfigUtils.get('callbacks')?.results?.focus,
                 hit = this.get('hit');
             callback && callback(event, hit);
-            let found = this.getWebComponent().getView('root').getView('body').getView('results').getView('found');
-            found.setFocusedIndexByResultView(this);
+            this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             return true;
         }
 
         /**
-         * _renderTemplateVariables
+         * #__renderTemplateVariables
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _renderTemplateVariables() {
+        #__renderTemplateVariables() {
             let html = this._$element.outerHTML,
                 hit = this.get('hit'),
                 map = {
                     hit: hit
                 };
+// console.log(hit);
             html = window.annexSearch.ElementUtils.renderTemplateVariables(html, map);
-            this._$element = this._replaceOuterHTML(html);
+            this._$element = this.#__replaceOuterHTML(html);
             return true;
         }
 
         /**
-         * _replaceOuterHTML
+         * #__replaceOuterHTML
          * 
          * @see     https://chatgpt.com/c/68886a45-7668-8328-84b2-40f3673282e3
-         * @access  protected
+         * @access  private
          * @param   String html
          * @return  HTMLElement
          */
-        _replaceOuterHTML(html) {
+        #__replaceOuterHTML(html) {
             let $template = document.createElement('template');
             $template.innerHTML = html.trim();
             let $new = $template.content.firstChild,
@@ -127,6 +114,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this._$element.replaceWith($new);
             $new.data = data;
             return $new;
+        }
+
+        /**
+         * _addEvents
+         * 
+         * @access  protected
+         * @return  Boolean
+         */
+        _addEvents() {
+            this.#__addClickEventListener();
+            this.#__addFocusEventListener();
+            return true;
         }
 
         /**
@@ -141,6 +140,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 behavior: 'smooth',
                 // block: 'end',
                 block: 'center',
+                // block: 'nearest',
                 inline: 'nearest'
             });
             return true;
@@ -158,7 +158,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             if (hit === undefined) {
                 return false;
             }
-            this._renderTemplateVariables();
+            this.#__renderTemplateVariables();
             super.render();
             return true;
         }

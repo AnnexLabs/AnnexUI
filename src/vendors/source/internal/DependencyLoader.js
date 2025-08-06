@@ -53,6 +53,7 @@ window.annexSearch.DependencyLoader = (function() {
     /**
      * __checkForFailure
      * 
+     * @throws  Error
      * @access  private
      * @param   Array dependencies
      * @return  void

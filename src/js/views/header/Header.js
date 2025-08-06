@@ -14,12 +14,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.HeaderView = window.annexSearch.HeaderView || class HeaderView extends window.annexSearch.BaseView {
 
         /**
-         * _showingSpinner
+         * #__showingSpinner
          * 
-         * @access  protected
+         * @access  private
          * @var     Boolean (default: false)
          */
-        _showingSpinner = false;
+        #__showingSpinner = false;
 
         /**
          * constructor
@@ -33,75 +33,63 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * _addClickEventListener
+         * #__addClickEventListener
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _addClickEventListener() {
-            let handler = this._handleClickEvent.bind(this),
+        #__addClickEventListener() {
+            let handler = this.#__handleClickEvent.bind(this),
                 $element = this._$element;
             $element.addEventListener('click', handler);
             return true;
         };
 
         /**
-         * _addCloseClickEventListener
+         * #__addCloseClickEventListener
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _addCloseClickEventListener() {
-            let handler = this._handleCloseClickEvent.bind(this),
+        #__addCloseClickEventListener() {
+            let handler = this.#__handleCloseClickEvent.bind(this),
                 $element = this.first('.close');
             $element.addEventListener('click', handler);
             return true;
         };
 
         /**
-         * _addEvents
+         * #__drawField
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _addEvents() {
-            this._addClickEventListener();
-            this._addCloseClickEventListener();
-            return true;
-        }
-
-        /**
-         * _drawField
-         * 
-         * @access  protected
-         * @return  Boolean
-         */
-        _drawField() {
+        #__drawField() {
             let view = window.annexSearch.ElementUtils.renderTemplate('fieldHeader', this._$element);
             this.setView('field', view);
             return true;
         }
 
         /**
-         * _drawMetaBar
+         * #__drawMetaBar
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _drawMetaBar() {
+        #__drawMetaBar() {
             let view = window.annexSearch.ElementUtils.renderTemplate('metaBarHeader', this._$element);
             this.setView('metaBar', view);
             return true;
         }
 
         /**
-         * _handleClickEvent
+         * #__handleClickEvent
          * 
-         * @access  protected
+         * @access  private
          * @param   Object event
          * @return  Boolean
          */
-        _handleClickEvent(event) {
+        #__handleClickEvent(event) {
             let $target = event.target,
                 $close = this.first('.close');
             if ($target === $close) {
@@ -112,16 +100,28 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         };
 
         /**
-         * _handleCloseClickEvent
+         * #__handleCloseClickEvent
          * 
-         * @access  protected
+         * @access  private
          * @param   Object event
          * @return  Boolean
          */
-        _handleCloseClickEvent(event) {
+        #__handleCloseClickEvent(event) {
             this.hideWebComponent();
             return false;
         };
+
+        /**
+         * _addEvents
+         * 
+         * @access  protected
+         * @return  Boolean
+         */
+        _addEvents() {
+            this.#__addClickEventListener();
+            this.#__addCloseClickEventListener();
+            return true;
+        }
 
         /**
          * blur
@@ -152,8 +152,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         render() {
-            this._drawField();
-            this._drawMetaBar();
+            this.#__drawField();
+            this.#__drawMetaBar();
             super.render();
             return true;
         }
@@ -165,11 +165,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         hideSpinner() {
-            if (this._showingSpinner === false) {
+            if (this.#__showingSpinner === false) {
                 return false;
             }
-            this._showingSpinner = false;
-            this.getWebComponent().getView('root').setAttribute('data-searching', '0');
+            this.#__showingSpinner = false;
+            this.getView('root').setAttribute('data-searching', '0');
             return true;
         }
 
@@ -180,11 +180,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         showSpinner() {
-            if (this._showingSpinner === true) {
+            if (this.#__showingSpinner === true) {
                 return false;
             }
-            this._showingSpinner = true;
-            this.getWebComponent().getView('root').setAttribute('data-searching', '1');
+            this.#__showingSpinner = true;
+            this.getView('root').setAttribute('data-searching', '1');
             return true;
         }
 
@@ -195,7 +195,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         toggleSpinner() {
-            if (this._showingSpinner === true) {
+            if (this.#__showingSpinner === true) {
                 let response = this.hideSpinner();
                 return response;
             }

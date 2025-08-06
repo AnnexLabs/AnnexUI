@@ -25,23 +25,35 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * #__setContent
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__setContent() {
+            let typesenseSearchResponse = this.get('typesenseSearchResponse'),
+                found = this.getView('root.body.results.found'),
+                results = found.getResults(),
+                showing = results.length;
+            this.first('.showing').innerHTML = showing;
+            this.first('.found').innerHTML = typesenseSearchResponse.found;
+            // this.first('.total').innerHTML = typesenseSearchResponse.out_of;
+            // this.first('.duration').innerHTML = (typesenseSearchResponse.search_time_ms) + 'ms';
+            return true;
+        }
+
+        /**
          * render
          * 
          * @access  public
          * @return  Boolean
          */
         render() {
-            let typesenseResponse = this.get('typesenseResponse');
-            if (typesenseResponse === undefined) {
+            let typesenseSearchResponse = this.get('typesenseSearchResponse');
+            if (typesenseSearchResponse === undefined) {
                 return false;
             }
-            let found = this.getWebComponent().getView('root').getView('body').getView('results').getView('found'),
-                results = found.getResults(),
-                showing = results.length;
-            this.first('.showing').innerHTML = showing;
-            this.first('.found').innerHTML = typesenseResponse.found;
-            // this.first('.total').innerHTML = typesenseResponse.out_of;
-            // this.first('.duration').innerHTML = (typesenseResponse.search_time_ms) + 'ms';
+            this.#__setContent();
             return true;
         }
     }

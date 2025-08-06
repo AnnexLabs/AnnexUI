@@ -14,36 +14,36 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.FoundResultsBodyView = window.annexSearch.FoundResultsBodyView || class FoundResultsBodyView extends window.annexSearch.BaseView {
 
         /**
-         * _focusedIndex
+         * #__focusedIndex
          * 
-         * @access  protected
+         * @access  private
          * @var     null|Number (default: null)
          */
-        _focusedIndex = null;
+        #__focusedIndex = null;
 
         /**
-         * _results
+         * #__results
          * 
-         * @access  protected
+         * @access  private
          * @var     Array (default: [])
          */
-        _results = [];
+        #__results = [];
 
         /**
-         * _scrollDebounceDelay
+         * #__scrollDebounceDelay
          * 
-         * @access  protected
+         * @access  private
          * @var     Number (default: 60)
          */
-        _scrollDebounceDelay = 60;
+        #__scrollDebounceDelay = 60;
 
         /**
-         * _scrollRatio
+         * #__scrollRatio
          * 
-         * @access  protected
+         * @access  private
          * @var     Number (default: 0.65)
          */
-        _scrollRatio = 0.65;
+        #__scrollRatio = 0.65;
 
         /**
          * constructor
@@ -57,60 +57,60 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * _addEvents
+         * #__addScrollEventListener
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _addEvents() {
-            this._addScrollEventListener();
-            return true;
-        }
-
-        /**
-         * _addScrollEventListener
-         * 
-         * @access  protected
-         * @return  Boolean
-         */
-        _addScrollEventListener() {
+        #__addScrollEventListener() {
             let $element = this._$element,
-                handler = this._handleScrollEvent.bind(this),
-                scrollDebounceDelay = this._scrollDebounceDelay,
+                handler = this.#__handleScrollEvent.bind(this),
+                scrollDebounceDelay = this.#__scrollDebounceDelay,
                 debounced = window.annexSearch.FunctionUtils.debounce(handler, scrollDebounceDelay);
             $element.addEventListener('scroll', debounced);
             return true;
         }
 
         /**
-         * _drawResult
+         * #__drawResult
          * 
-         * @access  protected
+         * @access  private
          * @param   Object hit
          * @return  Boolean
          */
-        _drawResult(hit) {
+        #__drawResult(hit) {
             let view = window.annexSearch.ElementUtils.renderTemplate('resultFoundResultsBody', this._$element);
             view.set('hit', hit);
             view.render();
-            this._results.push(view);
+            this.#__results.push(view);
             return true;
         }
 
         /**
-         * _handleScrollEvent
+         * #__handleScrollEvent
          * 
-         * @access  protected
+         * @access  private
          * @param   Object event
          * @return  Boolean
          */
-        _handleScrollEvent(event) {
+        #__handleScrollEvent(event) {
             let scrollPosition = this._$element.scrollTop + this._$element.clientHeight,
-                threshold = this._$element.scrollHeight * this._scrollRatio;
+                threshold = this._$element.scrollHeight * this.#__scrollRatio;
             if (scrollPosition < threshold) {
                 return false;
             }
-            this.getWebComponent().getView('root').getView('header').getView('field').loadMore();
+            this.getView('root.header.field').loadMore();
+            return true;
+        }
+
+        /**
+         * _addEvents
+         * 
+         * @access  protected
+         * @return  Boolean
+         */
+        _addEvents() {
+            this.#__addScrollEventListener();
             return true;
         }
 
@@ -121,11 +121,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         clearResults() {
-            this._results = [];
+            this.#__results = [];
             while (this._$element.firstChild) {
                 this._$element.removeChild(this._$element.firstChild);
             }
-            this._$element.scrollTop = 0;
+            this.scrollToTop();
             return true;
         }
 
@@ -142,7 +142,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 return false;
             }
             for (var hit of hits) {
-                this._drawResult(hit);
+                this.#__drawResult(hit);
             }
             return true;
         }
@@ -154,7 +154,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  null|Number
          */
         getFocusedIndex() {
-            let focusedIndex = this._focusedIndex;
+            let focusedIndex = this.#__focusedIndex;
             return focusedIndex;
         }
 
@@ -165,7 +165,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Array
          */
         getResults() {
-            let results = this._results;
+            let results = this.#__results;
             return results;
         }
 
@@ -176,20 +176,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         next() {
-            if (this._results.length === 0) {
+            if (this.#__results.length === 0) {
                 return false;
             }
-            if (this._focusedIndex === null) {
-                this._focusedIndex = 0;
-                let result = this._results[this._focusedIndex];
+            if (this.#__focusedIndex === null) {
+                this.#__focusedIndex = 0;
+                let result = this.#__results[this.#__focusedIndex];
                 result.focus();
                 return true;
             }
-            if (this._focusedIndex === (this._results.length - 1)) {
+            if (this.#__focusedIndex === (this.#__results.length - 1)) {
                 return false;
             }
-            ++this._focusedIndex;
-            let result = this._results[this._focusedIndex];
+            ++this.#__focusedIndex;
+            let result = this.#__results[this.#__focusedIndex];
             result.focus();
             return true;
         }
@@ -201,20 +201,31 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         previous() {
-            if (this._results.length === 0) {
+            if (this.#__results.length === 0) {
                 return false;
             }
-            if (this._focusedIndex === null) {
+            if (this.#__focusedIndex === null) {
                 return false;
             }
-            if (this._focusedIndex === 0) {
-                this._focusedIndex = null;
+            if (this.#__focusedIndex === 0) {
+                this.#__focusedIndex = null;
                 return false;
             }
-            --this._focusedIndex;
-            let result = this._results[this._focusedIndex];
+            --this.#__focusedIndex;
+            let result = this.#__results[this.#__focusedIndex];
             result.focus();
             return true;
+        }
+
+        /**
+         * reetFocusedIndex
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        reetFocusedIndex() {
+            let response = this.setFocusedIndex(null);
+            return response;
         }
 
         /**
@@ -225,7 +236,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         setFocusedIndex(focusedIndex) {
-            this._focusedIndex = focusedIndex;
+            this.#__focusedIndex = focusedIndex;
             return true;
         }
 
@@ -237,8 +248,22 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         setFocusedIndexByResultView(result) {
-            let index = this._results.indexOf(result);
+            let index = this.#__results.indexOf(result);
             this.setFocusedIndex(index);
+            return true;
+        }
+
+        /**
+         * scrollToTop
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        scrollToTop() {
+            let $element = this._$element;
+            window.annexSearch.ElementUtils.waitForAnimation().then(function() {
+                $element.scrollTop = 0;
+            });
             return true;
         }
 
@@ -249,9 +274,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         smoothScrollToTop() {
-            this._$element.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+            let $element = this._$element;
+            window.annexSearch.ElementUtils.waitForAnimation().then(function() {
+                $element.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
             return true;
         }

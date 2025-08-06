@@ -25,6 +25,10 @@
     height: 100%;
     font-size: 14px;
     color: var(--annex-ts-header-input-color);
+    transition: 250ms color;
+}
+[data-view-name="FieldHeaderView"]  > div.input > input:focus {
+    color: var(--annex-ts-header-input-focus-color);
 }
 [data-view-name="FieldHeaderView"]  > div.input > input::placeholder {
     color: var(--annex-ts-header-input-placeholder-color);

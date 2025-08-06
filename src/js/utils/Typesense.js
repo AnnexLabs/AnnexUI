@@ -1,3 +1,8 @@
+
+/**
+ * /src/js/utils/Typesense.js
+ * 
+ */
 window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
@@ -50,12 +55,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         /**
          * _validSearchOptions
          * 
+         * @see     https://416.io/ss/f/fm0aua
          * @access  private
          * @param   Object options (default: {})
          * @return  Boolean
          */
         #__validSearchOptions(options = {}) {
-    // return false;
+            // if (options.query === undefined) {
+            //     return false;
+            // }
+            // if (options.query_by === undefined) {
+            //     return false;
+            // }
             return true;
         }
 

@@ -67,6 +67,34 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * getView
+         * 
+         * @access  public
+         * @param   String key
+         * @return  undefined|BaseView
+         */
+        getView(key) {
+            let views = this.get('views') || {},
+                view = views[key] || undefined;
+            if (view !== undefined) {
+                return view;
+            }
+            if (key === 'root') {
+                view = this.getWebComponent().getView('root');
+                return view;
+            }
+            let pieces = key.split('.');
+            view = this.getWebComponent().getView('root');
+            for (let piece of pieces) {
+                if (piece === 'root') {
+                    continue;
+                }
+                view = view.getView(piece);
+            }
+            return view;
+        }
+
+        /**
          * getWebComponent
          * 
          * @access  public
@@ -115,14 +143,14 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * setState
+         * setStateKey
          * 
          * @access  public
          * @param   String stateKey
          * @return  Boolean
          */
-        setState(stateKey) {
-            this.getWebComponent().getView('root').setState(stateKey);
+        setStateKey(stateKey) {
+            this.getView('root').setStateKey(stateKey);
             return true;
         }
     }

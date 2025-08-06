@@ -12,7 +12,8 @@
     --annex-ts-root-overlay-color:                          rgba(0, 0, 0, 0.30);
     --annex-ts-header-background-color:                     #ffffff;
     --annex-ts-header-label-color:                          rgba(0, 0, 0, 0.60);
-    --annex-ts-header-input-color:                          rgba(0, 0, 0, 1.00);
+    --annex-ts-header-input-color:                          rgba(0, 0, 0, 0.75);
+    --annex-ts-header-input-focus-color:                    rgba(0, 0, 0, 1.00);
     --annex-ts-header-input-placeholder-color:              rgba(0, 0, 0, 0.40);
     --annex-ts-header-close-button-color:                   rgba(0, 0, 0, 1.00);
     --annex-ts-header-spinner-color:                        rgba(0, 0, 0, 1.00);
@@ -71,8 +72,9 @@
     :host {
         --annex-ts-root-overlay-color:                      var(--annex-ts-dm-root-overlay-color,                       rgba(0, 0, 0, 0.30));
         --annex-ts-header-background-color:                 var(--annex-ts-dm-header-background-color,                  #1a1b25);
-        --annex-ts-header-label-color:                      var(--annex-ts-dm-header-label-color,                       rgba(255, 255, 255, 0.50));
-        --annex-ts-header-input-color:                      var(--annex-ts-dm-header-input-color,                       rgba(255, 255, 255, 1.00));
+        --annex-ts-header-label-color:                      var(--annex-ts-dm-header-label-color,                       rgba(255, 255, 255, 0.80));
+        --annex-ts-header-input-color:                      var(--annex-ts-dm-header-input-color,                       rgba(255, 255, 255, 0.75));
+        --annex-ts-header-input-focus-color:                var(--annex-ts-dm-header-input-focus-color,                 rgba(255, 255, 255, 1.00));
         --annex-ts-header-input-placeholder-color:          var(--annex-ts-dm-header-input-placeholder-color,           rgba(255, 255, 255, 0.30));
         --annex-ts-header-close-button-color:               var(--annex-ts-dm-header-close-button-color,                rgba(255, 255, 255, 1.00));
         --annex-ts-header-spinner-color:                    var(--annex-ts-dm-header-spinner-color,                     rgba(255, 255, 255, 1.00));

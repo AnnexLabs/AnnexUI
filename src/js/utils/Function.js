@@ -1,3 +1,8 @@
+
+/**
+ * /src/js/utils/Function.js
+ * 
+ */
 window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
@@ -37,7 +42,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Promise
          */
         getDelayedPromise(resolve, delay, ... args) {
-            var promise = new Promise(function(resolve, reject) {
+            let promise = new Promise(function(resolve, reject) {
                 setTimeout(function() {
                     if (resolve === true) {
                         resolve(args[0]);

@@ -29,6 +29,21 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         #__aborted = false;
 
         /**
+         * #__encodingExemptFields
+         * 
+         * @see     https://typesense.org/docs/0.20.0/api/documents.html#arguments
+         * @access  private
+         * @var     Array
+         */
+        // #__encodingExemptFields = [
+        //     'include_fields',
+        //     'exclude_fields',
+        //     'highlight_full_fields',
+        //     'pinned_hits',
+        //     'hidden_hits'
+        // ];
+
+        /**
          * #__options
          * 
          * @access  private
@@ -37,7 +52,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         #__options = {
             page: 1,
             per_page: 10
-            // use_cache: true,
             // query_by: options.query_by || 'title,content',
             // filter_by: options.filter_by || '',
             // sort_by: options.sort_by || '_text_match:desc',
@@ -146,6 +160,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
             let auth = this.#__getAuth(),
                 options = this.#__options;
             options.preset = auth.presetName || null;
+            for (let key in options) {
+                if (options[key] === null) {
+                    delete options[key];
+                }
+            }
             return options;
         }
 
@@ -159,7 +178,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         #__getSearchParams() {
             let searchOptions = this.#__getSearchOptions(),
                 params = new URLSearchParams(searchOptions);
+// console.log(__encodingExemptFields);
             for (const [key, value] of params.entries()) {
+                // if (key === 'highlight_full_fields') {
+                //     console.log('yep', key, value);
+                //     // params.set(key, value.replaceAll('%2C', ','));
+                // }
                 if (!value) {
                     params.delete(key);
                 }
@@ -179,6 +203,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
                 params = this.#__getSearchParams(),
                 searchParams = new URLSearchParams(params).toString(),
                 searchURL = (baseURL) + '/collections/' + (auth.collectionName) + '/documents/search?' + (searchParams);
+// searchURL = searchURL.replaceAll('%2C', ',');
+// console.log(searchParams);
             return searchURL;
         }
 
@@ -245,6 +271,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
             this.#__options = Object.assign(
                 {},
                 this.#__options,
+                window.annexSearch.ConfigUtils.get('searchOptions'),
                 window.annexSearchConfig.searchOptions,
                 options,
             );

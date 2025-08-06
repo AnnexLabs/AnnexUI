@@ -25,24 +25,24 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * _drawEmpty
+         * #__drawEmpty
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _drawEmpty() {
+        #__drawEmpty() {
             let view = window.annexSearch.ElementUtils.renderTemplate('emptyResultsBody', this._$element);
             this.setView('empty', view);
             return true;
         }
 
         /**
-         * _drawFound
+         * #__drawFound
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _drawFound() {
+        #__drawFound() {
             let view = window.annexSearch.ElementUtils.renderTemplate('foundResultsBody', this._$element);
             this.setView('found', view);
             return true;
@@ -55,8 +55,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         render() {
-            this._drawEmpty();
-            this._drawFound();
+            this.#__drawEmpty();
+            this.#__drawFound();
             super.render();
             return true;
         }

@@ -8,15 +8,12 @@ window.annexSearch.DependencyLoader.push([], function() {
     /**
      * window.annexSearch.AnnexSearchWidgetWebComponent
      * 
-     * @todo    - loadMore bug re:adding and not clearing
-     * 
+     * @todo    - Missing truncation dots: https://416.io/ss/f/7wtusv
      * @todo    - typesense query param (e.g. w/o preset)
      * 
      * @todo    - config functions re:modifications
      * @todo    - variable templating
      * @todo    - custom templates
-     * 
-     * @todo    - thumbnails (?)
      * 
      * @todo    [DONE] - dark mode
      * @todo    [DONE] - mobile
@@ -34,6 +31,9 @@ window.annexSearch.DependencyLoader.push([], function() {
      * @todo    [PUNT] -- Tooltip class for communicating error messages
      * @todo    [PUNT] -- https://claude.ai/chat/b775bedd-d31a-464e-8e10-49c42a5a3644
      * @todo    [PUNT] - On toggle, restore $input focus state if focused
+     * @todo    [PUNT] - thumbnails
+     * @todo    [PUNT] - Look into CSV fields and commas being encoded in XHRs
+     * @todo    [DONE] - loadMore bug re:adding and not clearing
      * @extends HTMLElement
      */
     window.annexSearch.AnnexSearchWidgetWebComponent = window.annexSearch.AnnexSearchWidgetWebComponent || class AnnexSearchWidgetWebComponent extends HTMLElement {
@@ -155,14 +155,15 @@ this.show();
          */
         #__render() {
             let handler = this.#__drawRoot.bind(this),
-                promise = this.#__loadStylesheets().then(handler).catch(function() {});
+                promise = this.#__loadStylesheets().then(handler).catch(function(error) {
+                    window.annexSearch.LoggingUtils.error(error);
+                });
             return promise;
         }
 
         /**
          * getView
          * 
-         * @throws  Error
          * @access  public
          * @param   String viewKey
          * @return  window.annexSearch.BaseView
@@ -205,7 +206,7 @@ this.show();
             this.#__showing = true;
             this.setAttribute('data-annex-search-open', '1');
             this.removeAttribute('inert');
-            let found = window.annexSearch.webComponent.getView('root').getView('body').getView('results').getView('found'),
+            let found = this.#__views.root.getView('root.body.results.found'),
                 results = found.getResults();
             if (results.length === 0) {
                 this.#__views.root.focus();

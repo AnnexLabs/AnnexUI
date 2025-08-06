@@ -1,6 +1,6 @@
 
 /**
- * /src/js/views/RootView.js
+ * /src/js/views/Root.js
  * 
  */
 window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
@@ -25,37 +25,25 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * _addEvents
+         * #__addOverlayClickEventListener
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _addEvents() {
-            window.annexSearch.KeyboardShortcutUtils.setup();
-            this._addOverlayClickEventListener();
-            return true;
-        }
-
-        /**
-         * _addOverlayClickEventListener
-         * 
-         * @access  protected
-         * @return  Boolean
-         */
-        _addOverlayClickEventListener() {
+        #__addOverlayClickEventListener() {
             let $element = this._$element,
-                handler = this._handleOverlayClickEvent.bind(this);
+                handler = this.#__handleOverlayClickEvent.bind(this);
             $element.addEventListener('click', handler);
             return true;
         };
 
         /**
-         * _drawBody
+         * #__drawBody
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _drawBody() {
+        #__drawBody() {
             let $content = this.first('.content'),
                 view = window.annexSearch.ElementUtils.renderTemplate('body', $content);
             this.setView('body', view);
@@ -63,12 +51,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * _drawFooter
+         * #__drawFooter
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _drawFooter() {
+        #__drawFooter() {
             let $content = this.first('.content'),
                 view = window.annexSearch.ElementUtils.renderTemplate('footer', $content);
             this.setView('footer', view);
@@ -76,12 +64,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * _drawHeader
+         * #__drawHeader
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _drawHeader() {
+        #__drawHeader() {
             let $content = this.first('.content'),
                 view = window.annexSearch.ElementUtils.renderTemplate('header', $content);
             this.setView('header', view);
@@ -89,21 +77,31 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * _handleOverlayClickEvent
+         * #__handleOverlayClickEvent
          * 
-         * @access  public
+         * @access  private
          * @param   Object event
          * @return  Boolean
          */
-        _handleOverlayClickEvent(event) {
+        #__handleOverlayClickEvent(event) {
             let $target = event.target;
             if ($target === this._$element) {
-                // event.preventDefault();
-                // event.stopPropagation();
                 this.getWebComponent().hide();
                 return true;
             }
             return false;
+        }
+
+        /**
+         * _addEvents
+         * 
+         * @access  protected
+         * @return  Boolean
+         */
+        _addEvents() {
+            window.annexSearch.KeyboardShortcutUtils.setup();
+            this.#__addOverlayClickEventListener();
+            return true;
         }
 
         /**
@@ -135,22 +133,22 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         render() {
-            this._drawHeader();
-            this._drawBody();
-            this._drawFooter();
+            this.#__drawHeader();
+            this.#__drawBody();
+            this.#__drawFooter();
             super.render();
-            this.setState('idle');
+            this.setStateKey('idle');
             return true;
         }
 
         /**
-         * setState
+         * setStateKey
          * 
          * @access  public
          * @param   String stateKey
          * @return  Boolean
          */
-        setState(stateKey) {
+        setStateKey(stateKey) {
             this._$element.setAttribute('data-state-key', stateKey);
             return true;
         }

@@ -25,36 +25,36 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * _drawError
+         * #__drawError
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _drawError() {
+        #__drawError() {
             let view = window.annexSearch.ElementUtils.renderTemplate('errorBody', this._$element);
             this.setView('error', view);
             return true;
         }
 
         /**
-         * _drawIdle
+         * #__drawIdle
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _drawIdle() {
+        #__drawIdle() {
             let view = window.annexSearch.ElementUtils.renderTemplate('idleBody', this._$element);
             this.setView('idle', view);
             return true;
         }
 
         /**
-         * _drawResults
+         * #__drawResults
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _drawResults() {
+        #__drawResults() {
             let view = window.annexSearch.ElementUtils.renderTemplate('resultsBody', this._$element);
             this.setView('results', view);
             return true;
@@ -67,9 +67,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         render() {
-            this._drawError();
-            this._drawIdle();
-            this._drawResults();
+            this.#__drawError();
+            this.#__drawIdle();
+            this.#__drawResults();
             super.render();
             return true;
         }

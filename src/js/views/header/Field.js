@@ -14,37 +14,37 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.FieldHeaderView = window.annexSearch.FieldHeaderView || class FieldHeaderView extends window.annexSearch.BaseView {
 
         /**
-         * _lastTypesenseSearchResponse
+         * #__lastTypesenseSearchResponse
          * 
-         * @access  protected
+         * @access  private
          * @var     null|Object (default: null)
          */
-        _lastTypesenseSearchResponse = null;
+        #__lastTypesenseSearchResponse = null;
 
         /**
-         * _loadingMore
+         * #__loadingMore
          * 
-         * @access  protected
+         * @access  private
          * @var     Boolean (default: false)
          */
-        _loadingMore = false;
+        #__loadingMore = false;
 
         /**
-         * _searchDebounceDelay
+         * #__searchDebounceDelay
          * 
-         * @access  protected
+         * @access  private
          * @var     Number (default: 60)
          */
-        // _searchDebounceDelay = 600;
-        _searchDebounceDelay = 60;
+        // #__searchDebounceDelay = 600;
+        #__searchDebounceDelay = 60;
 
         /**
-         * _timeout
+         * #__timeout
          * 
-         * @access  protected
+         * @access  private
          * @var     null|Number (default: null)
          */
-        _timeout = null;
+        #__timeout = null;
 
         /**
          * constructor
@@ -58,50 +58,25 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * _addEvents
+         * #__addInputInputEventListener
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _addEvents() {
-            this._addInputFocusEventListener();
-            this._addInputInputEventListener();
-            return true;
-        }
-
-        /**
-         * _addInputFocusEventListener
-         * 
-         * @access  protected
-         * @return  Boolean
-         */
-        _addInputFocusEventListener() {
-            let handler = this._handleInputFocusEvent.bind(this),
-                $element = this.first('input');
-            $element.addEventListener('focus', handler);
-            return true;
-        };
-
-        /**
-         * _addInputInputEventListener
-         * 
-         * @access  protected
-         * @return  Boolean
-         */
-        _addInputInputEventListener() {
-            let handler = this._handleInputInputEvent.bind(this),
+        #__addInputInputEventListener() {
+            let handler = this.#__handleInputInputEvent.bind(this),
                 $element = this.first('input');
             $element.addEventListener('input', handler);
             return true;
         };
 
         /**
-         * _getKeyboardShortcut
+         * #__getKeyboardShortcut
          * 
-         * @access  protected
+         * @access  private
          * @return  null|String
          */
-        _getKeyboardShortcut() {
+        #__getKeyboardShortcut() {
             let value = window.annexSearch.ConfigUtils.get('keyboardShortcut');
             if (value === null) {
                 return null;
@@ -111,119 +86,124 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * _handleInputFocusEvent
+         * #__handleFailedTypesenseSearchEvent
          * 
-         * @access  protected
-         * @param   Object event
-         * @return  Boolean
-         */
-        _handleInputFocusEvent(event) {
-            this.getWebComponent().getView('root').getView('body').getView('results').getView('found').setFocusedIndex(null);
-            return true;
-        };
-
-        /**
-         * _handleFailedTypesenseSearchEvent
-         * 
-         * @access  protected
+         * @access  private
          * @param   Object options
          * @param   Object response
          * @return  Boolean
          */
-        _handleFailedTypesenseSearchEvent(options, response) {
-            this.debug('_handleFailedTypesenseSearchEvent', response, arguments);
-            this._lastTypesenseSearchResponse = response;
-            this.setState('error');
+        #__handleFailedTypesenseSearchEvent(options, response) {
+            this.debug('#__handleFailedTypesenseSearchEvent', response, arguments);
+            this.#__lastTypesenseSearchResponse = response;
+            this.setStateKey('error');
             return true;
         };
 
         /**
-         * _handleInputInputEvent
+         * #__handleInputInputEvent
          * 
-         * @access  protected
+         * @access  private
          * @param   Object event
          * @return  Boolean
          */
-        _handleInputInputEvent(event) {
+        #__handleInputInputEvent(event) {
             let value = this.first('input').value.trim();
             if (value === '') {
+                this.nullifyLastTypesenseSearchResponse();
                 this.clear();
-                this.setState('idle');
+                this.setStateKey('idle');
                 return false;
             }
-            if (value === this._lastTypesenseSearchResponse?.request_params?.q) {
+            if (value === this.#__lastTypesenseSearchResponse?.request_params?.q) {
                 return false;
             }
-            // let handler = this._searchTypesense;//.bind(this);
-            // window.annexSearch.FunctionUtils.debounce(handler, this._searchDebounceDelay)();
-            clearTimeout(this._timeout);
-            this._timeout = setTimeout(this._searchTypesense.bind(this), this._searchDebounceDelay);
+            this.nullifyLastTypesenseSearchResponse();
+            this.#__loadingMore = false;
+            let found = this.getView('root.body.results.found');
+            found.scrollToTop();
+            clearTimeout(this.#__timeout);
+            this.#__timeout = setTimeout(this.#__searchTypesense.bind(this), this.#__searchDebounceDelay);
             return true;
         };
 
         /**
-         * _handleLoadMoreSuccessfulTypesenseSearchEvent
+         * #__handleLoadMoreSuccessfulTypesenseSearchEvent
          * 
-         * @access  protected
+         * @access  private
          * @param   Object options
          * @param   Object response
          * @return  Boolean
          */
-        _handleLoadMoreSuccessfulTypesenseSearchEvent(options, response) {
-            this.debug('_handleLoadMoreSuccessfulTypesenseSearchEvent', response);
-            this._lastTypesenseSearchResponse = response;
-            this._loadingMore = false;
+        #__handleLoadMoreSuccessfulTypesenseSearchEvent(options, response) {
+            this.debug('#__handleLoadMoreSuccessfulTypesenseSearchEvent', response);
+            this.#__lastTypesenseSearchResponse = response;
+            this.#__loadingMore = false;
             if (response.hits.length === 0) {
                 return false;
             }
-            let found = this.getWebComponent().getView('root').getView('body').getView('results').getView('found');
+            let found = this.getView('root.body.results.found');
             found.drawResults(response);
-            let metaBar = this.getWebComponent().getView('root').getView('header').getView('metaBar');
-            metaBar.set('typesenseResponse', response);
-            metaBar.render();
+            this.#__updateMetaBar();
             return true;
         }
 
         /**
-         * _handleSuccessfulTypesenseSearchEvent
+         * #__handleSuccessfulTypesenseSearchEvent
          * 
-         * @access  protected
+         * @access  private
          * @param   Object options
          * @param   Object response
          * @return  Boolean
          */
-        _handleSuccessfulTypesenseSearchEvent(options, response) {
-            this.debug('_handleSuccessfulTypesenseSearchEvent', response);
-            if (this._loadingMore === true) {
-console.log('wtf');
-                let loadMoreResponse = this._handleLoadMoreSuccessfulTypesenseSearchEvent(options, response);
+        #__handleSuccessfulTypesenseSearchEvent(options, response) {
+            this.debug('#__handleSuccessfulTypesenseSearchEvent', response);
+            if (this.#__loadingMore === true) {
+                let loadMoreResponse = this.#__handleLoadMoreSuccessfulTypesenseSearchEvent(options, response);
                 return loadMoreResponse;
             }
-            this._lastTypesenseSearchResponse = response;
-console.log('ummm.');
-            this.getWebComponent().getView('root').getView('body').getView('results').getView('found').clearResults();
+            this.#__lastTypesenseSearchResponse = response;
+            this.getView('root.body.results.found').clearResults();
             if (response.hits.length === 0) {
-                this.setState('empty');
+                this.setStateKey('empty');
                 return false;
             }
-            this.setState('results');
-            let found = this.getWebComponent().getView('root').getView('body').getView('results').getView('found');
+            this.setStateKey('results');
+            let found = this.getView('root.body.results.found');
             found.drawResults(response);
-            found.setFocusedIndex(null);
-            let metaBar = this.getWebComponent().getView('root').getView('header').getView('metaBar');
-            metaBar.set('typesenseResponse', response);
-            metaBar.render();
+            found.reetFocusedIndex();
+            this.#__updateMetaBar();
             return true;
         };
 
         /**
-         * _renderKeyboardShortcutLabel
+         * #__searchTypesense
+         * 
+         * @access  private
+         * @param   Object options (default: {})
+         * @return  Promise
+         */
+        #__searchTypesense(options = {}) {
+            let header = this.getView('root.header');
+            header.showSpinner();
+            let value = this.first('input').value.trim(),
+                successful = this.#__handleSuccessfulTypesenseSearchEvent.bind(this, options),
+                failed = this.#__handleFailedTypesenseSearchEvent.bind(this, options),
+                promise = window.annexSearch.TypesenseUtils.search(value, options).then(function(json) {
+                    header.hideSpinner();
+                    return successful(json);
+                }).catch(failed);
+            return promise;
+        }
+
+        /**
+         * #__setKeyboardShortcutLabel
          * 
          * @access  public
          * @return  Boolean
          */
-        _renderKeyboardShortcutLabel() {
-            let keyboardShortcut = this._getKeyboardShortcut();
+        #__setKeyboardShortcutLabel() {
+            let keyboardShortcut = this.#__getKeyboardShortcut();
             if (keyboardShortcut === null) {
                 return false;
             }
@@ -232,12 +212,12 @@ console.log('ummm.');
         }
 
         /**
-         * _renderPlaceholder
+         * #__setInputPlaceholder
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _renderPlaceholder() {
+        #__setInputPlaceholder() {
             let placeholder = window.annexSearch.ConfigUtils.get('copy').placeholder;
             if (placeholder === null) {
                 return false;
@@ -250,23 +230,28 @@ console.log('ummm.');
         };
 
         /**
-         * _searchTypesense
+         * #__updateMetaBar
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__updateMetaBar() {
+            let typesenseSearchResponse = this.#__lastTypesenseSearchResponse,
+                metaBar = this.getView('root.header.metaBar');
+            metaBar.set('typesenseSearchResponse', typesenseSearchResponse);
+            metaBar.render();
+            return true;
+        }
+
+        /**
+         * _addEvents
          * 
          * @access  protected
-         * @param   Object options (default: {})
-         * @return  Promise
+         * @return  Boolean
          */
-        _searchTypesense(options = {}) {
-            let header = this.getWebComponent().getView('root').getView('header');
-            header.showSpinner();
-            let value = this.first('input').value.trim(),
-                successful = this._handleSuccessfulTypesenseSearchEvent.bind(this, options),
-                failed = this._handleFailedTypesenseSearchEvent.bind(this, options),
-                promise = window.annexSearch.TypesenseUtils.search(value, options).then(function(json) {
-                    header.hideSpinner();
-                    return successful(json);
-                }).catch(failed);
-            return promise;
+        _addEvents() {
+            this.#__addInputInputEventListener();
+            return true;
         }
 
         /**
@@ -301,9 +286,21 @@ console.log('ummm.');
          * @return  Boolean
          */
         clear() {
-            this._lastTypesenseSearchResponse = null;
+            // this.nullifyLastTypesenseSearchResponse();
+            // this.#__lastTypesenseSearchResponse = null;
             let $input = this.first('input');
             $input.value = '';
+            return true;
+        }
+
+        /**
+         * nullifyLastTypesenseSearchResponse
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        nullifyLastTypesenseSearchResponse() {
+            this.#__lastTypesenseSearchResponse = null;
             return true;
         }
 
@@ -326,11 +323,9 @@ console.log('ummm.');
          * @return  Boolean
          */
         focus() {
-            let $input = this.first('input'),
-                found = this.getWebComponent().getView('root').getView('body').getView('results').getView('found');
+            let $input = this.first('input');
             window.annexSearch.ElementUtils.waitForAnimation().then(function() {
                 $input.focus();
-                found.smoothScrollToTop();
             })
             return true;
         }
@@ -342,16 +337,16 @@ console.log('ummm.');
          * @return  Boolean
          */
         loadMore() {
-            if (this._loadingMore === true) {
+            if (this.#__loadingMore === true) {
                 return false;
             }
-            this._loadingMore = true;
-            let found = this.getWebComponent().getView('root').getView('body').getView('results').getView('found'),
+            this.#__loadingMore = true;
+            let found = this.getView('root.body.results.found'),
                 results = found.getResults();
-            if (results.length >= this._lastTypesenseSearchResponse.found) {
+            if (results.length >= this.#__lastTypesenseSearchResponse.found) {
                 return false;
             }
-            let page = this._lastTypesenseSearchResponse?.page ?? null;
+            let page = this.#__lastTypesenseSearchResponse?.page ?? null;
             if (page === null) {
                 return false;
             }
@@ -359,7 +354,7 @@ console.log('ummm.');
             ++page;
             let options = {};
             options.page = page;
-            this._searchTypesense(options);
+            this.#__searchTypesense(options);
             return true;
         }
 
@@ -371,8 +366,8 @@ console.log('ummm.');
          */
         render() {
             super.render();
-            this._renderPlaceholder();
-            this._renderKeyboardShortcutLabel();
+            this.#__setInputPlaceholder();
+            this.#__setKeyboardShortcutLabel();
             return true;
         }
 
@@ -389,5 +384,31 @@ console.log('ummm.');
             })
             return true;
         }
+
+        /**
+         * select
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        // select() {
+        //     let $input = this.first('input');
+        //     window.annexSearch.ElementUtils.waitForAnimation().then(function() {
+        //         $input.select();
+        //     })
+        //     return true;
+        // }
+
+        /**
+         * smoothScrollToTop
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        // smoothScrollToTop() {
+        //     let found = this.getView('root.body.results.found');
+        //     found.smoothScrollToTop();
+        //     return true;
+        // }
     }
 });

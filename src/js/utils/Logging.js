@@ -1,3 +1,8 @@
+
+/**
+ * /src/js/utils/Logging.js
+ * 
+ */
 window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**

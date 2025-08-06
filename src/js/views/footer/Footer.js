@@ -25,24 +25,24 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * _drawBrandingBar
+         * #__drawBrandingBar
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _drawBrandingBar() {
+        #__drawBrandingBar() {
             let view = window.annexSearch.ElementUtils.renderTemplate('brandingBarFooter', this._$element);
             this.setView('brandingBar', view);
             return true;
         }
 
         /**
-         * _drawStatusBar
+         * #__drawStatusBar
          * 
-         * @access  protected
+         * @access  private
          * @return  Boolean
          */
-        _drawStatusBar() {
+        #__drawStatusBar() {
             let view = window.annexSearch.ElementUtils.renderTemplate('statusBarFooter', this._$element);
             this.setView('statusBar', view);
             return true;
@@ -55,8 +55,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         render() {
-            this._drawBrandingBar();
-            this._drawStatusBar();
+            this.#__drawBrandingBar();
+            this.#__drawStatusBar();
             super.render();
             return true;
         }

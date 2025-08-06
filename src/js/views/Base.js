@@ -22,14 +22,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         _$element = null;
 
         /**
-         * _views
-         * 
-         * @access  protected
-         * @var     Object (default: {})
-         */
-        _views = {};
-
-        /**
          * constructor
          * 
          * @access  public
@@ -90,18 +82,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         }
 
         /**
-         * getView
-         * 
-         * @access  public
-         * @param   String key
-         * @return  undefined|BaseView
-         */
-        getView(key) {
-            let view = this._views[key] || undefined;
-            return view;
-        }
-
-        /**
          * hide
          * 
          * @access  public
@@ -132,7 +112,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          */
         render() {
             this._addEvents();
-            this.show();
+            // this.show();
             return true;
         }
 
@@ -158,7 +138,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * @return  Boolean
          */
         setView(key, view) {
-            this._views[key] = view;
+            let views = this.get('views');
+            if (views === undefined) {
+                views = {};
+            }
+            views[key] = view;
+            this.set('views', views);
             return true;
         }
 
@@ -168,9 +153,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * @access  public
          * @return  Boolean
          */
-        show() {
-            // this._$element.classList.remove('hidden');
-            return true;
-        }
+        // show() {
+        //     // this._$element.classList.remove('hidden');
+        //     return true;
+        // }
     }
 });

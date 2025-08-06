@@ -1,3 +1,8 @@
+
+/**
+ * /src/js/utils/Config.js
+ * 
+ */
 window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
@@ -17,11 +22,15 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__data = {
 
             /**
-             * $parent
+             * $parentContainer
+             * 
+             * The container that the UI should be inserted into. If null, it'll
+             * be appened to the either the $body, $head or $documentElement (in
+             * that order).
              * 
              * @var     null|EventTarget (default: null)
              */
-            $parent: null,
+            $parentContainer: null,
 
             /**
              * callbacks
@@ -140,6 +149,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                     'https://local.annexsearch.com/ts/css',
                 ],
                 templates: 'https://local.annexsearch.com/ts/templates',
+            },
+
+            /**
+             * searchOptions
+             * 
+             * @var     Object
+             */
+            searchOptions: {
+                highlight_full_fields: null,
+                highlight_affix_num_tokens: null,
+                snippet_threshold: null,
             },
 
             /**
