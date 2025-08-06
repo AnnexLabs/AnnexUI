@@ -97,8 +97,9 @@ this.show();
          * @return  Boolean
          */
         #__handleStylesheetErrorLoadEvent(reject, event) {
-            let msg = 'Could not load stylesheet.';
-            window.annexSearch.LoggingUtils.message(msg, event);
+            let msg = 'Could not load stylesheets.';
+            // window.annexSearch.LoggingUtils.error(msg, event);
+            window.annexSearch.LoggingUtils.error(msg);
             reject();
             return true;
         }

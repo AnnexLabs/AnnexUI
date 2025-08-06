@@ -43,6 +43,18 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * error
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        error() {
+            let scope = window.annexSearch.LoggingUtils,
+                response = window.annexSearch.LoggingUtils.error.apply(scope, arguments);
+            return response;
+        }
+
+        /**
          * get
          * 
          * @access  public
@@ -83,11 +95,11 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @access  public
          * @return  Boolean
          */
-        log() {
-            let scope = window.annexSearch.LoggingUtils,
-                response = window.annexSearch.LoggingUtils.message.apply(scope, arguments);
-            return response;
-        }
+        // log() {
+        //     let scope = window.annexSearch.LoggingUtils,
+        //         response = window.annexSearch.LoggingUtils.info.apply(scope, arguments);
+        //     return response;
+        // }
 
         /**
          * set

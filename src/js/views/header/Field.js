@@ -130,7 +130,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         _handleFailedTypesenseSearchEvent(options, response) {
-console.log(this, this.log, this.debug, this.get);
             this.debug('_handleFailedTypesenseSearchEvent', response, arguments);
             this._lastTypesenseSearchResponse = response;
             this.setState('error');

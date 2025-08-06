@@ -1,27 +1,30 @@
-
-/**
- * window.annexSearch.DebuggingUtils
- * 
- * @access  public
- */
-window.annexSearch.DebuggingUtils = window.annexSearch.DebuggingUtils || class DebuggingUtils {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * log
+     * window.annexSearch.DebuggingUtils
      * 
      * @access  public
-     * @static
-     * @return  Boolean
+     * @extends window.annexSearch.BaseView
      */
-    static log() {
-        let debug = window.annexSearch.ConfigUtils.get('debug');
-        if (debug === false) {
-            return false;
+    window.annexSearch.DebuggingUtils = window.annexSearch.DebuggingUtils || class DebuggingUtils extends window.annexSearch.BaseView {
+
+        /**
+         * log
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        log() {
+            let debug = window.annexSearch.ConfigUtils.get('debug');
+            if (debug === false) {
+                return false;
+            }
+            let response = window.annexSearch.LoggingUtils.debug.apply(
+                window.annexSearch.LoggingUtils,
+                arguments
+            );
+            return response;
         }
-        let response = window.annexSearch.LoggingUtils.debug.apply(
-            window.annexSearch.LoggingUtils,
-            arguments
-        );
-        return response;
     }
-}
+    window.annexSearch.DebuggingUtils = new window.annexSearch.DebuggingUtils();
+});

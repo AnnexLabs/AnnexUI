@@ -61,7 +61,7 @@ window.annexSearch.DependencyLoader = (function() {
         if (__attempts > 10000) {
             var msg = 'Could not complete an attempt: [';
             msg += dependencies.join(', ') + ']';
-            window.annexSearch && window.annexSearch.LoggingUtils && window.annexSearch.LoggingUtils.debug(msg);
+            window.annexSearch && window.annexSearch.LoggingUtils && window.annexSearch.LoggingUtils.error(msg);
             throw new Error(msg);
         }
     };

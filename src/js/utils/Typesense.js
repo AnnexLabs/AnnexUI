@@ -6,35 +6,33 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @see     https://claude.ai/chat/47f3434d-203d-45a8-a8ac-f52ad7505b0a
      * @see     https://typesense.org/docs/29.0/api/search.html
      * @access  public
+     * @extends window.annexSearch.BaseView
      */
     window.annexSearch.TypesenseUtils = window.annexSearch.TypesenseUtils || class TypesenseUtils extends window.annexSearch.BaseView {
 
         /**
          * _lastRequest
          * 
-         * @static
          * @access  private
          * @var     null|window.annexSearch.TypesenseSearchRequest (default null)
          */
-        static #__lastRequest = null;
+        #__lastRequest = null;
 
         /**
          * _requests
          * 
-         * @static
          * @access  private
          * @var     Array (default [])
          */
-        static #__requests = [];
+        #__requests = [];
 
         /**
          * _abortLastRequest
          * 
          * @access  private
-         * @static
          * @return  Boolean
          */
-        static #__abortLastRequest() {
+        #__abortLastRequest() {
             if (this.#__lastRequest === null) {
                 return false;
             }
@@ -53,11 +51,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * _validSearchOptions
          * 
          * @access  private
-         * @static
          * @param   Object options (default: {})
          * @return  Boolean
          */
-        static #__validSearchOptions(options = {}) {
+        #__validSearchOptions(options = {}) {
     // return false;
             return true;
         }
@@ -66,10 +63,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * getHighlightEndTag
          * 
          * @access  public
-         * @static
          * @return  String
          */
-        static getHighlightEndTag() {
+        getHighlightEndTag() {
             let tagName = window.annexSearch.ConfigUtils.get('highlightTagName'),
                 tagNameLowerCase = tagName.toLowerCase(),
                 endTag = '</' + (tagNameLowerCase) + '>';
@@ -80,10 +76,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * getHighlightStartTag
          * 
          * @access  public
-         * @static
          * @return  String
          */
-        static getHighlightStartTag() {
+        getHighlightStartTag() {
             let tagName = window.annexSearch.ConfigUtils.get('highlightTagName'),
                 tagNameLowerCase = tagName.toLowerCase(),
                 startTag = '<' + (tagNameLowerCase) + '>';
@@ -94,14 +89,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * search
          * 
          * @access  public
-         * @static
          * @param   String query
          * @param   Object options (default: {})
          * @return  Promise
          */
-        static search(query, options = {}) {
-            // this.debug('Invalid search $options');
+        search(query, options = {}) {
             if (this.#__validSearchOptions(options) === false) {
+                this.error('Invalid search $options');
                 let resolve = false,
                     promise = window.annexSearch.FunctionUtils.getDelayedPromise(resolve);
                 return promise;
@@ -115,4 +109,5 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             return promise;
         }
     }
+    window.annexSearch.TypesenseUtils = new window.annexSearch.TypesenseUtils();
 });

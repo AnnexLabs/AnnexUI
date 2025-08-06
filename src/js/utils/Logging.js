@@ -1,63 +1,89 @@
-
-/**
- * window.annexSearch.LoggingUtils
- * 
- * @access  public
- */
-window.annexSearch.LoggingUtils = window.annexSearch.LoggingUtils || class LoggingUtils {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * #__colorCodes
-     * 
-     * @static
-     * @access  private
-     * @var     Object
-     */
-    static #__colorCodes = {
-        green: '\x1b[32m',
-        red: '\x1b[31m',
-        reset: '\x1b[0m',
-    };
-
-    /**
-     * #__labels
-     * 
-     * @static
-     * @access  private
-     * @var     String (default: 'Annex Search')
-     */
-    static #__labels = {
-        debug: '🐞 Annex Search',
-        message: 'Annex Search'
-    };
-
-    /**
-     * debug
+     * window.annexSearch.LoggingUtils
      * 
      * @access  public
-     * @static
-     * @return  Boolean
+     * @extends window.annexSearch.BaseView
      */
-    static debug() {
-        for (let arg of arguments) {
-            let message = (this.#__colorCodes.red) + '[' + (this.#__labels.debug) + '] ' + (this.#__colorCodes.reset);
-            window.console && window.console.log && window.console.log(message, arg);
-        }
-        return true;
-    }
+    window.annexSearch.LoggingUtils = window.annexSearch.LoggingUtils || class LoggingUtils extends window.annexSearch.BaseView {
 
-    /**
-     * message
-     * 
-     * @access  public
-     * @static
-     * @return  Boolean
-     */
-    static message() {
-        for (let arg of arguments) {
-            let message = (this.#__colorCodes.green) + '[' + (this.#__labels.message) + '] ' + (this.#__colorCodes.reset);
-            window.console && window.console.log && window.console.log(message, arg);
+        /**
+         * #__colorCodes
+         * 
+         * @access  private
+         * @var     Object
+         */
+        // #__colorCodes = {
+        //     green: '\x1b[32m',
+        //     red: '\x1b[31m',
+        //     reset: '\x1b[0m',
+        // };
+
+        /**
+         * #__labels
+         * 
+         * @access  private
+         * @var     String (default: 'Annex Search')
+         */
+        #__labels = {
+            // debug: '🐞 Annex Search',
+            // message: '📣 Annex Search'
+            debug: 'Annex Search',
+            error: 'Annex Search',
+            message: 'Annex Search'
+        };
+
+        /**
+         * debug
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        debug() {
+            let message = '%c[' + (this.#__labels.debug) + ']',
+                styles = 'color: green; font-weight: bold; font-family: monospace;',
+                args = [];
+            args.push(message);
+            args.push(styles);
+            args = args.concat(Array.from(arguments));
+            window.console && window.console.log && window.console.log.apply(window, args);
+            return true;
         }
-        return true;
+
+        /**
+         * error
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        error() {
+            let message = '%c[' + (this.#__labels.error) + ']',
+                styles = 'color: red; font-weight: bold; font-family: monospace;',
+                args = [];
+            args.push(message);
+            args.push(styles);
+            args = args.concat(Array.from(arguments));
+            window.console && window.console.log && window.console.log.apply(window, args);
+            return true;
+        }
+
+        /**
+         * info
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        // info() {
+        //     let message = '%c[' + (this.#__labels.message) + ']',
+        //         styles = 'color: blue; font-weight: bold; font-family: monospace;',
+        //         args = [];
+        //     args.push(message);
+        //     args.push(styles);
+        //     args = args.concat(Array.from(arguments));
+        //     window.console && window.console.log && window.console.log.apply(window, args);
+        //     return true;
+        // }
     }
-}
+    window.annexSearch.LoggingUtils = new window.annexSearch.LoggingUtils();
+});
