@@ -30,12 +30,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         _loadingMore = false;
 
         /**
-         * _searchDebounceDuration
+         * _searchDebounceDelay
          * 
          * @access  protected
          * @var     Number (default: 60)
          */
-        _searchDebounceDuration = 60;
+        _searchDebounceDelay = 60;
 
         /**
          * _timeout
@@ -130,7 +130,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         _handleFailedTypesenseSearchEvent(options, response) {
-            this.log('_handleFailedTypesenseSearchEvent', response, arguments);
+console.log(this, this.log, this.debug, this.get);
+            this.debug('_handleFailedTypesenseSearchEvent', response, arguments);
             this._lastTypesenseSearchResponse = response;
             this.setState('error');
             return true;
@@ -154,7 +155,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 return false;
             }
             clearTimeout(this._timeout);
-            this._timeout = setTimeout(this._searchTypesense.bind(this), this._searchDebounceDuration);
+            this._timeout = setTimeout(this._searchTypesense.bind(this), this._searchDebounceDelay);
             return true;
         };
 
@@ -167,7 +168,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         _handleLoadMoreSuccessfulTypesenseSearchEvent(options, response) {
-            this.log('_handleLoadMoreSuccessfulTypesenseSearchEvent', response);
+            this.debug('_handleLoadMoreSuccessfulTypesenseSearchEvent', response);
             this._lastTypesenseSearchResponse = response;
             this._loadingMore = false;
             if (response.hits.length === 0) {
@@ -190,7 +191,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         _handleSuccessfulTypesenseSearchEvent(options, response) {
-            this.log('_handleSuccessfulTypesenseSearchEvent', response);
+            this.debug('_handleSuccessfulTypesenseSearchEvent', response);
             if (this._loadingMore === true) {
 console.log('wtf');
                 let loadMoreResponse = this._handleLoadMoreSuccessfulTypesenseSearchEvent(options, response);
@@ -320,15 +321,13 @@ console.log('ummm.');
          * focus
          * 
          * @access  public
-         * @param   Boolean scrollToTop (default: true)
          * @return  Boolean
          */
-        focus() {//scrollToTop = true) {
+        focus() {
             let $input = this.first('input'),
                 found = this.getWebComponent().getView('root').getView('body').getView('results').getView('found');
-            window.annexSearch.DataUtils.waitForAnimation().then(function() {
+            window.annexSearch.ElementUtils.waitForAnimation().then(function() {
                 $input.focus();
-                // scrollToTop && found.smoothScrollToTop();
                 found.smoothScrollToTop();
             })
             return true;
@@ -383,7 +382,7 @@ console.log('ummm.');
          */
         select() {
             let $input = this.first('input');
-            window.annexSearch.DataUtils.waitForAnimation().then(function() {
+            window.annexSearch.ElementUtils.waitForAnimation().then(function() {
                 $input.select();
             })
             return true;

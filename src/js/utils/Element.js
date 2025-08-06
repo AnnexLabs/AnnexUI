@@ -157,4 +157,23 @@ window.annexSearch.ElementUtils = window.annexSearch.ElementUtils || class Eleme
         });
         return html;
     }
+
+    /**
+     * waitForAnimation
+     *
+     * @see     https://chatgpt.com/c/682a39f4-d464-800f-bd7c-9793d2bf0349
+     * @access  public
+     * @static
+     * @return  Promise
+     */
+    static waitForAnimation() {
+        let promise = new Promise(function(resolve, reject) {
+            requestAnimationFrame(function() {
+                requestAnimationFrame(function() {
+                    resolve();
+                });
+            });
+        });
+        return promise;
+    }
 }

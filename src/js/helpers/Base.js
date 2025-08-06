@@ -31,6 +31,18 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * debug
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        debug() {
+            let scope = window.annexSearch.DebuggingUtils,
+                response = window.annexSearch.DebuggingUtils.log.apply(scope, arguments);
+            return response;
+        }
+
+        /**
          * get
          * 
          * @access  public
@@ -73,7 +85,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         log() {
             let scope = window.annexSearch.LoggingUtils,
-                response = window.annexSearch.LoggingUtils.log.apply(scope, arguments);
+                response = window.annexSearch.LoggingUtils.message.apply(scope, arguments);
             return response;
         }
 

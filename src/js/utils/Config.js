@@ -77,6 +77,14 @@ window.annexSearch.ConfigUtils = window.annexSearch.ConfigUtils || class ConfigU
         },
 
         /**
+         * debug
+         * 
+         * @var     Boolean (default: false)
+         */
+        // debug: false,
+        debug: true,
+
+        /**
          * keyboardShortcut
          * 
          * The keyboard combination which when pressed, toggles the widget to
@@ -93,14 +101,6 @@ window.annexSearch.ConfigUtils = window.annexSearch.ConfigUtils || class ConfigU
          * @var     String (default: 'MARK')
          */
         highlightTagName: 'MARK',
-
-        /**
-         * logging
-         * 
-         * @var     Boolean (default: false)
-         */
-        // logging: false,
-        logging: true,
 
         /**
          * mode

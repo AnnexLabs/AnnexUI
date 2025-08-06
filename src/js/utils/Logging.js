@@ -7,35 +7,57 @@
 window.annexSearch.LoggingUtils = window.annexSearch.LoggingUtils || class LoggingUtils {
 
     /**
-     * log
+     * #__colorCodes
+     * 
+     * @static
+     * @access  private
+     * @var     Object
+     */
+    static #__colorCodes = {
+        green: '\x1b[32m',
+        red: '\x1b[31m',
+        reset: '\x1b[0m',
+    };
+
+    /**
+     * #__labels
+     * 
+     * @static
+     * @access  private
+     * @var     String (default: 'Annex Search')
+     */
+    static #__labels = {
+        debug: '🐞 Annex Search',
+        message: 'Annex Search'
+    };
+
+    /**
+     * debug
      * 
      * @access  public
      * @static
      * @return  Boolean
      */
-    static log() {
-        let logging = window.annexSearch.ConfigUtils.get('logging');
-        if (logging === false) {
-            return false;
+    static debug() {
+        for (let arg of arguments) {
+            let message = (this.#__colorCodes.red) + '[' + (this.#__labels.debug) + '] ' + (this.#__colorCodes.reset);
+            window.console && window.console.log && window.console.log(message, arg);
         }
-        window.console && window.console.log && window.console.log.apply(window, arguments);
         return true;
     }
 
     /**
-     * time
+     * message
      * 
      * @access  public
      * @static
-     * @param   String label
      * @return  Boolean
      */
-    // static time(label) {
-    //     let logging = window.annexSearch.ConfigUtils.get('logging');
-    //     if (logging === false) {
-    //         return false;
-    //     }
-    //     window.console && window.console.log && window.console.log.apply(window, arguments);
-    //     return true;
-    // }
+    static message() {
+        for (let arg of arguments) {
+            let message = (this.#__colorCodes.green) + '[' + (this.#__labels.message) + '] ' + (this.#__colorCodes.reset);
+            window.console && window.console.log && window.console.log(message, arg);
+        }
+        return true;
+    }
 }

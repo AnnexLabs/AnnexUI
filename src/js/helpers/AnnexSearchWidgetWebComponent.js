@@ -98,7 +98,7 @@ this.show();
          */
         #__handleStylesheetErrorLoadEvent(reject, event) {
             let msg = 'Could not load stylesheet.';
-            window.annexSearch.LoggingUtils.log(msg, event);
+            window.annexSearch.LoggingUtils.message(msg, event);
             reject();
             return true;
         }
@@ -111,7 +111,7 @@ this.show();
          * @return  Boolean
          */
         #__handleStylesheetSuccessfulLoadEvent(resolve) {
-            window.annexSearch.DataUtils.waitForAnimation().then(resolve);
+            window.annexSearch.ElementUtils.waitForAnimation().then(resolve);
             return true;
         }
 

@@ -138,11 +138,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * focus
          * 
          * @access  public
-         * @param   Boolean scrollToTop (default: true);
          * @return  Boolean
          */
-        focus() {//scrollToTop = true) {
-            let response = this.getView('field').focus();//scrollToTop);
+        focus() {
+            let response = this.getView('field').focus();
             return response;
         }
 
@@ -156,7 +155,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this._drawField();
             this._drawMetaBar();
             super.render();
-            // this._addEvents();
             return true;
         }
 

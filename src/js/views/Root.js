@@ -121,11 +121,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * focus
          * 
          * @access  public
-         * @param   Boolean scrollToTop (default: true);
          * @return  Boolean
          */
-        focus() {//scrollToTop = true) {
-            let response = this.getView('header').focus();//scrollToTop);
+        focus() {
+            let response = this.getView('header').focus();
             return response;
         }
 

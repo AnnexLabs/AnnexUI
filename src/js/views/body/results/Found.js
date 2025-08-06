@@ -30,12 +30,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         _results = [];
 
         /**
-         * _scrollDebounceDuration
+         * _scrollDebounceDelay
          * 
          * @access  protected
          * @var     Number (default: 60)
          */
-        _scrollDebounceDuration = 60;
+        _scrollDebounceDelay = 60;
 
         /**
          * _scrollRatio
@@ -76,8 +76,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         _addScrollEventListener() {
             let $element = this._$element,
                 handler = this._handleScrollEvent.bind(this),
-                scrollDebounceDuration = this._scrollDebounceDuration,
-                debounced = window.annexSearch.DataUtils.debounce(handler, scrollDebounceDuration);
+                scrollDebounceDelay = this._scrollDebounceDelay,
+                debounced = window.annexSearch.FunctionUtils.debounce(handler, scrollDebounceDelay);
             $element.addEventListener('scroll', debounced);
             return true;
         }
