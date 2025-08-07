@@ -1,6 +1,6 @@
 
 /**
- * /src/js/helpers/TypesenseSearchRequest.js
+ * /src/js/requests/TypesenseSearch.js
  * 
  */
 window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function() {

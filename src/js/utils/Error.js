@@ -20,20 +20,18 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @var     Object
          */
         static #__messageMap = {
-            'configUtils.get.key.invalid':                      'Invalid {key} passed to {helper.config.get}: %0',
-            'configUtils.set.key.undefined':                    'Invalid {undefined} value passed as {key} to {window.annexSearch.ConfigHelper.set}',
-            'configUtils.set.value.undefined':                  'Invalid {undefined} value passed as {value} to {window.annexSearch.ConfigHelper.set}',
-            'loggingUtils.fetchFailed.tip':                     'Tip: Double check that you defined your {hostname} value correctly in {config.cluster}',
-            'loggingUtils.typesenseFailed.tip':                 'Tip: Double check that you defined your {apiKey} and {collectionName} values correctly in {config.cluster}',
-            'stylesheets.failedLoading':                        'Could not load stylesheets.',
-            'typesenseSearchRequest.abort':                     'TypesenseSearchRequest abort method called',
-            'typesenseUtils.options.q.null':                    'Invalid valid {q} option; found (null)',
-            'typesenseUtils.options.q.undefined':               'Invalid valid {q} option; found (undefined)',
-            'typesenseUtils.options.q.empty':                   'Invalid valid {q} option; found (empty string)',
-            'typesenseUtils.searchOptions.q.null':              'Invalid valid {query_by} option; found (null). Either {preset} or {query_by} needs to be defined in {config.searchOptions}',
-            'typesenseUtils.searchOptions.q.undefined':         'Invalid valid {query_by} option; found (undefined). Either {preset} or {query_by} needs to be defined in {config.searchOptions}',
-            // 'webComponent.getConfig.invalidKey':                'Invalid {key} passed to {$annexSearchWidget.getConfig}: %0',
-            // 'webComponent.setConfig.invalidKey':                'Invalid {key} passed to {$annexSearchWidget.setConfig}: %0',
+            'configHelper.get.key.invalid':                         'Invalid {key} value passed to {base.configHelper.get}; found {%0}',
+            'configHelper.set.key.undefined':                       'Invalid {key} value passed to {base.configHelper.set}; found {undefined}',
+            'configHelper.set.value.undefined':                     'Invalid {value} value passed to {base.configHelper.set}; found {undefined}',
+            'loggingUtils.fetchFailed.tip':                         'Tip: Double check that {config.cluster.hostname} is defined and correct',
+            'loggingUtils.typesenseFailed.tip':                     'Tip: Double check that {config.cluster.apiKey} and {config.cluster.collectionName} are defined and correct',
+            'stylesheets.failedLoading':                            'Could not load stylesheets',
+            'typesenseSearchRequest.abort':                         'Abort method called against {window.annexSearch.TypesenseSearchRequest}',
+            'typesenseHelper.options.q.empty':                      'Invalid {q} value; found {empty string}',
+            'typesenseHelper.options.q.null':                       'Invalid {q} value; found {null}',
+            'typesenseHelper.options.q.undefined':                  'Invalid {q} value; found {undefined}',
+            'typesenseHelper.searchOptions.query_by.null':          'Invalid {config.searchOptions.query_by} value; found {null}. Either {config.searchOptions.query_by} or {config.cluster.presetName} needs to be defined.',
+            'typesenseHelper.searchOptions.query_by.undefined':     'Invalid {config.searchOptions.query_by} value; found {undefined}. Either {config.searchOptions.query_by} or {config.cluster.presetName} needs to be defined.',
         };
 
         /**
@@ -43,9 +41,10 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @access  public
          * @static
          * @param   String key
+         * @param   Array args (optional)
          * @return  null|String
          */
-        static getMessage(key) {
+        static getMessage(key, ...args) {
             let message = this.#__messageMap[key];
             if (message === undefined) {
                 return null;

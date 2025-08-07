@@ -357,7 +357,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             }
             let pieces = key.split('.');
             if (pieces.length === 1) {
-                let message = window.annexSearch.ErrorUtils.getMessage('configUtils.get.key.invalid', key);
+                let message = window.annexSearch.ErrorUtils.getMessage('configHelper.get.key.invalid', key);
                 this.error(message);
                 return undefined;
             }
@@ -365,7 +365,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             for (let piece of pieces) {
                 value = value[piece];
                 if (value === undefined) {
-                    let message = window.annexSearch.ErrorUtils.getMessage('configUtils.get.key.invalid', key);
+                    let message = window.annexSearch.ErrorUtils.getMessage('configHelper.get.key.invalid', key);
                     this.error(message);
                     return undefined;
                 }
@@ -383,12 +383,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         set(key, value) {
             if (key === undefined) {
-                let message = window.annexSearch.ErrorUtils.getMessage('configUtils.set.key.undefined');
+                let message = window.annexSearch.ErrorUtils.getMessage('configHelper.set.key.undefined');
                 this.error(message);
                 return false;
             }
             if (value === undefined) {
-                let message = window.annexSearch.ErrorUtils.getMessage('configUtils.set.value.undefined');
+                let message = window.annexSearch.ErrorUtils.getMessage('configHelper.set.value.undefined');
                 this.error(message);
                 return false;
             }
