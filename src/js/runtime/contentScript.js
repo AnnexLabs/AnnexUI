@@ -6,7 +6,7 @@
 window.annexSearch.DependencyLoader.load(function() {
     window.annexSearch.ConfigUtils.setup().then(function() {
         let $annexSearchWidget = document.createElement('annex-search-widget'),
-            $parent = window?.annexSearchConfig?.$parentContainer || (document.body || document.head || document.documentElement);
+            $parent = window?.annexSearchConfig?.$container || (document.body || document.head || document.documentElement);
         $parent && $parent.appendChild($annexSearchWidget);
         if ($parent === undefined) {
             console.log && console.log('Could not find valid $parent element');

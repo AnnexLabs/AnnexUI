@@ -22,7 +22,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__data = {
 
             /**
-             * $parentContainer
+             * $container
              * 
              * The container that the UI should be inserted into. If null, it'll
              * be appened to the either the $body, $head or $documentElement (in
@@ -31,7 +31,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * @access  private
              * @var     null|EventTarget (default: null)
              */
-            $parentContainer: null,
+            $container: null,
 
             /**
              * callbacks
