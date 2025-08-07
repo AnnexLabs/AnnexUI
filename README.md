@@ -21,19 +21,19 @@
 - templates
 
 ### Setup
-```
-    let $annexSearchWidget = new window.annexSearch.AnnexSearchWidgetWebComponent();
-    $annexSearchWidget.mount();
+``` javascript
+let $annexSearchWidget = new window.annexSearch.AnnexSearchWidgetWebComponent();
+$annexSearchWidget.mount();
 ```
 
 ### Config
-```
-    $('annex-search-widget').setConfig('$parentContainer', document.body);
-    $('annex-search-widget').setConfig('debug', true);
-    $('annex-search-widget').setConfig('searchOptions.snippet_threshold', 20);
-    $('annex-search-widget').setConfig('searchOptions', {
-        snippet_threshold: 20
-    });
+``` javascript
+$('annex-search-widget').setConfig('$parentContainer', document.body);
+$('annex-search-widget').setConfig('debug', true);
+$('annex-search-widget').setConfig('searchOptions.snippet_threshold', 20);
+$('annex-search-widget').setConfig('searchOptions', {
+    snippet_threshold: 20
+});
 ```
 
 ### Events (config and event listeners)
@@ -47,6 +47,8 @@
 `callbacks.root.show`  
 `callbacks.root.toggle`  
 
+``` javascript
 $('annex-search-widget').addEventListener('root.show', function(event) {
     console.log(event, event.detail);// Describe event.detail array entries
 });
+```
