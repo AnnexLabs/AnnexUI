@@ -92,6 +92,18 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * clearActive
+         * 
+         * @access  public
+         * @static
+         * @return  Boolean
+         */
+        static clearActive() {
+            this.#__$active = null;
+            return true;
+        }
+
+        /**
          * getActive
          * 
          * @access  public

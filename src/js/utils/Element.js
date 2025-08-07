@@ -13,6 +13,28 @@ window.annexSearch.DependencyLoader.push([], function() {
     window.annexSearch.ElementUtils = window.annexSearch.ElementUtils || class {
 
         /**
+         * #__getTemplateElement
+         * 
+         * @see     https://chatgpt.com/c/6828cebf-a638-800f-bdf2-3e8642c89de6
+         * @access  private
+         * @static
+         * @param   String templateId
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @return  HTMLElement
+         */
+        static #__getTemplateElement(templateId, $annexSearchWidget) {
+            let templateContent = $annexSearchWidget.getHelper('config').get('templates')[templateId],
+                parser = new DOMParser(),
+                $document = parser.parseFromString(templateContent, 'text/html'),
+                $script = $document.querySelector('script[type]'),
+                $element;
+            templateContent = $script.textContent.trim(),
+            $document = parser.parseFromString(templateContent, 'text/html');
+            $element = $document.body.firstElementChild;
+            return $element;
+        }
+
+        /**
          * getEscapedHTML
          * 
          * @see     https://chatgpt.com/c/68911e4d-9784-8330-b358-a52ba952426b
@@ -34,29 +56,6 @@ window.annexSearch.DependencyLoader.push([], function() {
             $div.innerHTML = $div.innerHTML.replaceAll(escapedEndTag, endTag);
             let html = $div.innerHTML;
             return html;
-        }
-
-        /**
-         * #__getTemplateElement
-         * 
-         * @see     https://chatgpt.com/c/6828cebf-a638-800f-bdf2-3e8642c89de6
-         * @access  private
-         * @static
-         * @param   String templateId
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
-         * @return  HTMLElement
-         */
-        static #__getTemplateElement(templateId, $annexSearchWidget) {
-// console.log($annexSearchWidget.getHelper('config').get('templates'));
-            let templateContent = $annexSearchWidget.getHelper('config').get('templates')[templateId],
-                parser = new DOMParser(),
-                $document = parser.parseFromString(templateContent, 'text/html'),
-                $script = $document.querySelector('script[type]'),
-                $element;
-            templateContent = $script.textContent.trim(),
-            $document = parser.parseFromString(templateContent, 'text/html');
-            $element = $document.body.firstElementChild;
-            return $element;
         }
 
         /**

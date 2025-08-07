@@ -113,10 +113,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  window.annexSearch.AnnexSearchWidgetWebComponent
          */
         getWebComponent() {
-return this._$element.getRootNode().host;
-return window.annexSearch.AnnexSearch.getActive();
-console.log(this);
-            let $webComponent = this._$element.getRootNode().host;
+            let $webComponent = this._$element?.getRootNode()?.host || window.annexSearch.AnnexSearch.getActive();
             return $webComponent;
         }
 

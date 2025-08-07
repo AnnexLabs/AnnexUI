@@ -219,12 +219,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * reetFocusedIndex
+         * resetFocusedIndex
          * 
          * @access  public
          * @return  Boolean
          */
-        reetFocusedIndex() {
+        resetFocusedIndex() {
             let response = this.setFocusedIndex(null);
             return response;
         }

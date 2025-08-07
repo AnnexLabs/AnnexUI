@@ -151,7 +151,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  private
          * @static
-         * @return  window.annexSearch.AnnexSearchWidgetWebComponent
+         * @return  null|window.annexSearch.AnnexSearchWidgetWebComponent
          */
         static #__getActiveWebComponent() {
             let $active = window.annexSearch.AnnexSearch.getActive();
@@ -178,8 +178,8 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  BaseView
          */
         static #__getField() {
-            let $activeWebComponent = this.#__getActiveWebComponent(),
-                field = $activeWebComponent.getView('root').getView('header.field');
+            let $annexSearchWidget = this.#__getActiveWebComponent(),
+                field = $annexSearchWidget.getView('root').getView('header.field');
             return field;
         }
 
@@ -191,8 +191,8 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  BaseView
          */
         static #__getFound() {
-            let $activeWebComponent = this.#__getActiveWebComponent(),
-                found = $activeWebComponent.getView('root').getView('body.results.found');
+            let $annexSearchWidget = this.#__getActiveWebComponent(),
+                found = $annexSearchWidget.getView('root').getView('body.results.found');
             return found;
         }
 
@@ -203,17 +203,17 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @static
          * @return  null|String
          */
-        static #__getKeyboardShortcut() {
-            let value = this.#__getActiveWebComponent().getHelper('config').get('keyboardShortcut');
-            if (value === null) {
-                return null;
-            }
-            if (value === undefined) {
-                return null;
-            }
-            value = value.trim().toLowerCase();
-            return value;
-        }
+        // static #__getKeyboardShortcut() {
+        //     let value = this.#__getActiveWebComponent().getHelper('config').get('keyboardShortcut');
+        //     if (value === null) {
+        //         return null;
+        //     }
+        //     if (value === undefined) {
+        //         return null;
+        //     }
+        //     value = value.trim().toLowerCase();
+        //     return value;
+        // }
 
         /**
          * #__handleDocumentCatchAllKeydownEvent
@@ -230,8 +230,8 @@ window.annexSearch.DependencyLoader.push([], function() {
             if (this.#__active.documentCatchAll === false) {
                 return false;
             }
-            let $activeWebComponent = this.#__getActiveWebComponent();
-            if ($activeWebComponent.showing() === false) {
+            let $annexSearchWidget = this.#__getActiveWebComponent();
+            if ($annexSearchWidget.showing() === false) {
                 return false;
             }
             if (event.metaKey === true) {
@@ -247,7 +247,7 @@ window.annexSearch.DependencyLoader.push([], function() {
             if (key === ' ') {
                 return false;
             }
-            let $activeElement = $activeWebComponent.shadow.activeElement,
+            let $activeElement = $annexSearchWidget.shadow.activeElement,
                 field = this.#__getField(),
                 found = this.#__getFound();
             if ($activeElement === null) {
@@ -256,7 +256,7 @@ window.annexSearch.DependencyLoader.push([], function() {
                 field.nullifyLastTypesenseSearchResponse();
                 field.append(key);
                 found.smoothScrollToTop();
-                found.reetFocusedIndex();
+                found.resetFocusedIndex();
                 field.first('input').dispatchEvent(new Event('input', {
                     bubbles: true,
                     shiftKey: event.shiftKey
@@ -271,7 +271,7 @@ window.annexSearch.DependencyLoader.push([], function() {
             field.nullifyLastTypesenseSearchResponse();
             field.append(key);
             found.smoothScrollToTop();
-            found.reetFocusedIndex();
+            found.resetFocusedIndex();
             field.first('input').dispatchEvent(new Event('input', {
                 bubbles: true,
                 shiftKey: event.shiftKey
@@ -291,8 +291,8 @@ window.annexSearch.DependencyLoader.push([], function() {
             if (this.#__validKeydownEvent(event, 'documentDelete', 'backspace') === false) {
                 return false;
             }
-            let $activeWebComponent = this.#__getActiveWebComponent(),
-                $activeElement = $activeWebComponent.shadow.activeElement,
+            let $annexSearchWidget = this.#__getActiveWebComponent(),
+                $activeElement = $annexSearchWidget.shadow.activeElement,
                 field = this.#__getField(),
                 found = this.#__getFound();
             if ($activeElement === null) {
@@ -300,7 +300,7 @@ window.annexSearch.DependencyLoader.push([], function() {
                 field.decrement();
                 field.nullifyLastTypesenseSearchResponse();
                 found.smoothScrollToTop();
-                found.reetFocusedIndex();
+                found.resetFocusedIndex();
                 field.first('input').dispatchEvent(new Event('input', {
                     bubbles: true
                 }));
@@ -313,7 +313,7 @@ window.annexSearch.DependencyLoader.push([], function() {
             field.decrement();
             field.nullifyLastTypesenseSearchResponse();
             found.smoothScrollToTop();
-            found.reetFocusedIndex();
+            found.resetFocusedIndex();
             field.first('input').dispatchEvent(new Event('input', {
                 bubbles: true
             }));
@@ -332,8 +332,8 @@ window.annexSearch.DependencyLoader.push([], function() {
             if (this.#__validKeydownEvent(event, 'documentEscape', 'escape') === false) {
                 return false;
             }
-            let $activeWebComponent = this.#__getActiveWebComponent(),
-                $activeElement = $activeWebComponent.shadow.activeElement;
+            let $annexSearchWidget = this.#__getActiveWebComponent(),
+                $activeElement = $annexSearchWidget.shadow.activeElement;
             if ($activeElement === null) {
                 let field = this.#__getField();
                 field.focus();
@@ -392,23 +392,29 @@ window.annexSearch.DependencyLoader.push([], function() {
             if (this.#__active.documentKeyboardShortcut === false) {
                 return false;
             }
-            let keyboardShortcut = this.#__getKeyboardShortcut();
-            if (keyboardShortcut === null) {
-                return false;
-            }
-            if (keyboardShortcut.charAt(0) !== '⌘') {
-                return false;
-            }
-            let character = keyboardShortcut.charAt(1),
-                isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-            if (
-                (isMac && event.metaKey && event.key.toLowerCase() === character) ||
-                (!isMac && event.ctrlKey && event.key.toLowerCase() === character)
-            ) {
-                event.preventDefault();
-                let $activeWebComponent = this.#__getActiveWebComponent();
-                $activeWebComponent.toggle();
-                return true;
+            let registered = this.#__getRegisteredWebComponents();
+            for (let $annexSearchWidget of registered) {
+                let keyboardShortcut = $annexSearchWidget.getHelper('config').get('keyboardShortcut');
+                if (keyboardShortcut === null) {
+                    continue
+                }
+                if (keyboardShortcut === undefined) {
+                    continue
+                }
+                keyboardShortcut = keyboardShortcut.trim().toLowerCase();
+                if (keyboardShortcut.charAt(0) !== '⌘') {
+                    continue
+                }
+                let character = keyboardShortcut.charAt(1),
+                    isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+                if (
+                    (isMac && event.metaKey && event.key.toLowerCase() === character) ||
+                    (!isMac && event.ctrlKey && event.key.toLowerCase() === character)
+                ) {
+                    event.preventDefault();
+                    $annexSearchWidget.toggle();
+                    return true;
+                }
             }
             return false;
         }
@@ -423,11 +429,14 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         static #__handleDocumentPasteEvent(event) {
+            if (this.#__getRegisteredWebComponents().length === 0) {
+                return false;
+            }
             if (this.#__getActiveWebComponent() === null) {
                 return false
             }
-            let $activeWebComponent = this.#__getActiveWebComponent();
-            if ($activeWebComponent.showing() === false) {
+            let $annexSearchWidget = this.#__getActiveWebComponent();
+            if ($annexSearchWidget.showing() === false) {
                 return false;
             }
             let configKey = 'documentPaste';
@@ -442,7 +451,7 @@ window.annexSearch.DependencyLoader.push([], function() {
             if (pastedText.length === 0) {
                 return false;
             }
-            let $activeElement = $activeWebComponent.shadow.activeElement,
+            let $activeElement = $annexSearchWidget.shadow.activeElement,
                 field = this.#__getField(),
                 found = this.#__getFound();
             if ($activeElement === null) {
@@ -451,7 +460,7 @@ window.annexSearch.DependencyLoader.push([], function() {
                 field.nullifyLastTypesenseSearchResponse();
                 field.append(pastedText);
                 found.smoothScrollToTop();
-                found.reetFocusedIndex();
+                found.resetFocusedIndex();
                 field.first('input').dispatchEvent(new Event('input', {
                     bubbles: true,
                 }));
@@ -465,7 +474,7 @@ window.annexSearch.DependencyLoader.push([], function() {
             field.nullifyLastTypesenseSearchResponse();
             field.append(pastedText);
             found.smoothScrollToTop();
-            found.reetFocusedIndex();
+            found.resetFocusedIndex();
             field.first('input').dispatchEvent(new Event('input', {
                 bubbles: true,
             }));
@@ -505,8 +514,8 @@ window.annexSearch.DependencyLoader.push([], function() {
             if (this.#__validKeydownEvent(event, 'documentSlash', '/') === false) {
                 return false;
             }
-            let $activeWebComponent = this.#__getActiveWebComponent(),
-                $activeElement = $activeWebComponent.shadow.activeElement,
+            let $annexSearchWidget = this.#__getActiveWebComponent(),
+                $activeElement = $annexSearchWidget.shadow.activeElement,
                 field = this.#__getField();
             if ($activeElement === null) {
                 field.focus();
@@ -531,8 +540,8 @@ window.annexSearch.DependencyLoader.push([], function() {
             if (this.#__validKeydownEvent(event, 'fieldEnter', 'enter') === false) {
                 return false;
             }
-            let $activeWebComponent = this.#__getActiveWebComponent(),
-                $activeElement = $activeWebComponent.shadow.activeElement;
+            let $annexSearchWidget = this.#__getActiveWebComponent(),
+                $activeElement = $annexSearchWidget.shadow.activeElement;
             if ($activeElement === null) {
                 return false;
             }
@@ -567,8 +576,8 @@ window.annexSearch.DependencyLoader.push([], function() {
             if (this.#__validKeydownEvent(event, 'fieldEscape', 'escape') === false) {
                 return false;
             }
-            let $activeWebComponent = this.#__getActiveWebComponent(),
-                $activeElement = $activeWebComponent.shadow.activeElement;
+            let $annexSearchWidget = this.#__getActiveWebComponent(),
+                $activeElement = $annexSearchWidget.shadow.activeElement;
             if ($activeElement === null) {
                 return false;
             }
@@ -578,7 +587,7 @@ window.annexSearch.DependencyLoader.push([], function() {
                 let value = $activeElement.value.trim(),
                     found = this.#__getFound();
                 if (value === '') {
-                    $activeWebComponent.hide();
+                    $annexSearchWidget.hide();
                     return true;
                 }
                 let field = this.#__getField();
@@ -586,7 +595,7 @@ window.annexSearch.DependencyLoader.push([], function() {
                 field.nullifyLastTypesenseSearchResponse();
                 found.clearResults();
                 found.setStateKey('idle');
-                $activeWebComponent.dispatchCustomEvent('results.idle');
+                $annexSearchWidget.dispatchCustomEvent('results.idle');
                 return true;
             }
             return false;
@@ -646,8 +655,17 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         static #__validKeydownEvent(event, configKey, validKeys) {
-            let $activeWebComponent = this.#__getActiveWebComponent();
-            if ($activeWebComponent.showing() === false) {
+            if (this.#__getRegisteredWebComponents().length === 0) {
+                return false
+            }
+            let $annexSearchWidget = this.#__getActiveWebComponent();
+            if ($annexSearchWidget === null) {
+                return false;
+            }
+            if ($annexSearchWidget === undefined) {
+                return false;
+            }
+            if ($annexSearchWidget.showing() === false) {
                 return false;
             }
             if (this.#__active[configKey] === false) {

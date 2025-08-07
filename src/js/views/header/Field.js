@@ -192,7 +192,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.setStateKey('results');
             let found = this.getView('root.body.results.found');
             found.drawResults(response);
-            found.reetFocusedIndex();
+            found.resetFocusedIndex();
             this.#__updateMetaBar();
             return true;
         };

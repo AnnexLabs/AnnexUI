@@ -219,6 +219,7 @@ window.annexSearch.DependencyLoader.push([], function() {
             if (this.#__showing === false) {
                 return false;
             }
+            window.annexSearch.AnnexSearch.clearActive();
             this.dispatchCustomEvent('root.hide');
             this.#__showing = false;
             this.#__views.root.blur();
@@ -306,7 +307,7 @@ console.log(key, value);
             if (this.#__showing === true) {
                 return false;
             }
-            // window.annexSearch.AnnexSearch.setActive(this);
+            window.annexSearch.AnnexSearch.setActive(this);
             this.dispatchCustomEvent('root.show');
             this.#__showing = true;
             this.setAttribute('data-annex-search-open', '1');
