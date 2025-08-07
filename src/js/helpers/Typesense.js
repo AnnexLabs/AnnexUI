@@ -1,19 +1,19 @@
 
 /**
- * /src/js/utils/Typesense.js
+ * /src/js/helpers/Typesense.js
  * 
  */
 window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * window.annexSearch.TypesenseUtils
+     * window.annexSearch.TypesenseHelper
      * 
      * @see     https://claude.ai/chat/47f3434d-203d-45a8-a8ac-f52ad7505b0a
      * @see     https://typesense.org/docs/29.0/api/search.html
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.TypesenseUtils = window.annexSearch.TypesenseUtils || class TypesenseUtils extends window.annexSearch.BaseView {
+    window.annexSearch.TypesenseHelper = window.annexSearch.TypesenseHelper || class extends window.annexSearch.BaseView {
 
         /**
          * _lastRequest
@@ -30,6 +30,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     Array (default [])
          */
         #__requests = [];
+
+        /**
+         * constructor
+         * 
+         * @access  public
+         * @return  void
+         */
+        constructor() {
+            super();
+        }
 
         /**
          * _abortLastRequest
@@ -110,7 +120,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  String
          */
         getHighlightEndTag() {
-            let tagName = window.annexSearch.ConfigUtils.get('highlightTagName'),
+            let tagName = this.getHelper('config').get('highlightTagName'),
                 tagNameLowerCase = tagName.toLowerCase(),
                 endTag = '</' + (tagNameLowerCase) + '>';
             return endTag;
@@ -123,7 +133,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  String
          */
         getHighlightStartTag() {
-            let tagName = window.annexSearch.ConfigUtils.get('highlightTagName'),
+            let tagName = this.getHelper('config').get('highlightTagName'),
                 tagNameLowerCase = tagName.toLowerCase(),
                 startTag = '<' + (tagNameLowerCase) + '>';
             return startTag;
@@ -151,5 +161,4 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             return promise;
         }
     }
-    window.annexSearch.TypesenseUtils = new window.annexSearch.TypesenseUtils();
 });

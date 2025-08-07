@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.ResultFoundResultsBodyView = window.annexSearch.ResultFoundResultsBodyView || class ResultFoundResultsBodyView extends window.annexSearch.BaseView {
+    window.annexSearch.ResultFoundResultsBodyView = window.annexSearch.ResultFoundResultsBodyView || class extends window.annexSearch.BaseView {
 
         /**
          * constructor
@@ -59,7 +59,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__handleClickEvent(event) {
             let hit = this.get('hit');
-            window.annexSearch.FunctionUtils.triggerCallback('result.click', event, hit);
+            this.getWebComponent().dispatchCustomEvent('result.click', event, hit);
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             return true;
         }
@@ -73,7 +73,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__handleFocusEvent(event) {
             let hit = this.get('hit');
-            window.annexSearch.FunctionUtils.triggerCallback('result.focus', event, hit);
+            this.getWebComponent().dispatchCustomEvent('result.focus', event, hit);
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             return true;
         }
@@ -90,7 +90,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 map = {
                     hit: hit
                 };
-// console.log(hit);
             html = window.annexSearch.ElementUtils.renderTemplateVariables(html, map);
             this._$element = this.#__replaceOuterHTML(html);
             return true;
@@ -150,9 +149,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this._$element.focus();
             this._$element.scrollIntoView({
                 behavior: 'smooth',
-                // block: 'end',
                 block: 'center',
-                // block: 'nearest',
                 inline: 'nearest'
             });
             return true;

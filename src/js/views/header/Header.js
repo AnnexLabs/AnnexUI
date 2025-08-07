@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.HeaderView = window.annexSearch.HeaderView || class HeaderView extends window.annexSearch.BaseView {
+    window.annexSearch.HeaderView = window.annexSearch.HeaderView || class extends window.annexSearch.BaseView {
 
         /**
          * #__showingSpinner

@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.EmptyResultsBodyView = window.annexSearch.EmptyResultsBodyView || class EmptyResultsBodyView extends window.annexSearch.BaseView {
+    window.annexSearch.EmptyResultsBodyView = window.annexSearch.EmptyResultsBodyView || class extends window.annexSearch.BaseView {
 
         /**
          * constructor
@@ -31,7 +31,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__setMessage() {
-            let value = window.annexSearch.ConfigUtils.get('copy').empty.message;
+            let value = this.getHelper('config').get('copy').empty.message;
             if (value === null) {
                 return false;
             }

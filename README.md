@@ -20,7 +20,13 @@
 - searchRequestMethod
 - templates
 
-### Elements
+### Setup
+```
+    let $annexSearchWidget = new window.annexSearch.AnnexSearchWidgetWebComponent();
+    $annexSearchWidget.mount();
+```
+
+### Config
 ```
     $('annex-search-widget').setConfig('$parentContainer', document.body);
     $('annex-search-widget').setConfig('debug', true);

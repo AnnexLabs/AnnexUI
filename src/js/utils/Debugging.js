@@ -3,24 +3,24 @@
  * /src/js/utils/Debugging.js
  * 
  */
-window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push([], function() {
 
     /**
      * window.annexSearch.DebuggingUtils
      * 
      * @access  public
-     * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.DebuggingUtils = window.annexSearch.DebuggingUtils || class DebuggingUtils extends window.annexSearch.BaseView {
+    window.annexSearch.DebuggingUtils = window.annexSearch.DebuggingUtils || class {
 
         /**
          * log
          * 
          * @access  public
+         * @static
          * @return  Boolean
          */
-        log() {
-            let debug = window.annexSearch.ConfigUtils.get('debug');
+        static log() {
+            let debug = this.getHelper('config').get('debug');
             if (debug === false) {
                 return false;
             }
@@ -30,6 +30,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             );
             return response;
         }
+
+        /**
+         * setup
+         * 
+         * @access  public
+         * @static
+         * @return  Boolean
+         */
+        static setup() {
+            return true;
+        }
     }
-    window.annexSearch.DebuggingUtils = new window.annexSearch.DebuggingUtils();
 });

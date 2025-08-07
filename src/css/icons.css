@@ -42,16 +42,16 @@
  * 
  */
 :host .icon:not(img).icon-plus.original {
-    background-image: var(--annex-ts-icon-plus);
+    background-image: var(--annex-search-icon-plus);
 }
 :host .icon:not(img).icon-plus:not(.original) {
-    -webkit-mask-image: var(--annex-ts-icon-plus);
-    mask-image: var(--annex-ts-icon-plus);
+    -webkit-mask-image: var(--annex-search-icon-plus);
+    mask-image: var(--annex-search-icon-plus);
 }
 :host .icon:not(img).icon-spinner.original {
-    background-image: var(--annex-ts-icon-spinner);
+    background-image: var(--annex-search-icon-spinner);
 }
 :host .icon:not(img).icon-spinner:not(.original) {
-    -webkit-mask-image: var(--annex-ts-icon-spinner);
-    mask-image: var(--annex-ts-icon-spinner);
+    -webkit-mask-image: var(--annex-search-icon-spinner);
+    mask-image: var(--annex-search-icon-spinner);
 }

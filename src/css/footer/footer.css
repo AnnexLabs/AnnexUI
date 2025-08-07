@@ -1,6 +1,6 @@
 [data-view-name="FooterView"] {
-    background-color: var(--annex-ts-footer-background-color);
-    height: var(--annex-ts-footer-height);
+    background-color: var(--annex-search-footer-background-color);
+    height: var(--annex-search-footer-height);
 /*    position: fixed;*/
     position: absolute;
     bottom: 0;

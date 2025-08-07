@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
      * @access  public
      * @extends window.annexSearch.Base
      */
-    window.annexSearch.BaseView = window.annexSearch.BaseView || class BaseView extends window.annexSearch.Base {
+    window.annexSearch.BaseView = window.annexSearch.BaseView || class extends window.annexSearch.Base {
 
         /**
          * _$element

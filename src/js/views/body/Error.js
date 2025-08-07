@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.ErrorBodyView = window.annexSearch.ErrorBodyView || class ErrorBodyView extends window.annexSearch.BaseView {
+    window.annexSearch.ErrorBodyView = window.annexSearch.ErrorBodyView || class extends window.annexSearch.BaseView {
 
         /**
          * constructor
@@ -31,7 +31,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__setMessage() {
-            let value = window.annexSearch.ConfigUtils.get('copy').error.message;
+            let value = this.getHelper('config').get('copy').error.message;
             if (value === null) {
                 return false;
             }

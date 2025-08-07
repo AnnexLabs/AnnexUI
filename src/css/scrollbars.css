@@ -6,10 +6,10 @@
 }
 *::-webkit-scrollbar-thumb {
     border-radius: 100px 100px 100px 100px;
-    background-color: var(--annex-ts-scrollbar-thumb-color);
+    background-color: var(--annex-search-scrollbar-thumb-color);
 }
 *::-webkit-scrollbar-thumb:hover {
-    background-color: var(--annex-ts-scrollbar-thumb-hover-color);
+    background-color: var(--annex-search-scrollbar-thumb-hover-color);
 }
 *:hover::-webkit-scrollbar-thumb {
     display: block;

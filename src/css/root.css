@@ -7,7 +7,7 @@
 }
 [data-view-name="RootView"]:before {
     content: '';
-    background-color: var(--annex-ts-root-overlay-color);
+    background-color: var(--annex-search-root-overlay-color);
     position: absolute;
     left: 0;
     right: 0;

@@ -1,13 +1,13 @@
 [data-view-name="MetaBarHeaderView"] {
     display: none;
     padding: 0 0 0 16px;
-    background-color: var(--annex-ts-metaBar-background-color);
-    border-bottom: 1px solid var(--annex-ts-border-color);
+    background-color: var(--annex-search-metaBar-background-color);
+    border-bottom: 1px solid var(--annex-search-border-color);
     font-size: 11px;
-    color: var(--annex-ts-metaBar-color);
+    color: var(--annex-search-metaBar-color);
     opacity: 0.80;
-    height: var(--annex-ts-metaBar-height);
-    line-height: var(--annex-ts-metaBar-height);
+    height: var(--annex-search-metaBar-height);
+    line-height: var(--annex-search-metaBar-height);
 }
 [data-view-name="RootView"][data-state-key="results"] [data-view-name="MetaBarHeaderView"] {
     display: block;

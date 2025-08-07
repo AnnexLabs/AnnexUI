@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.MetaBarHeaderView = window.annexSearch.MetaBarHeaderView || class MetaBarHeaderView extends window.annexSearch.BaseView {
+    window.annexSearch.MetaBarHeaderView = window.annexSearch.MetaBarHeaderView || class extends window.annexSearch.BaseView {
 
         /**
          * constructor

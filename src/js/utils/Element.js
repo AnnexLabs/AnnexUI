@@ -3,27 +3,27 @@
  * /src/js/utils/Element.js
  * 
  */
-window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push([], function() {
 
     /**
      * window.annexSearch.ElementUtils
      * 
      * @access  public
-     * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.ElementUtils = window.annexSearch.ElementUtils || class ElementUtils extends window.annexSearch.BaseView {
+    window.annexSearch.ElementUtils = window.annexSearch.ElementUtils || class {
 
         /**
          * getEscapedHTML
          * 
          * @see     https://chatgpt.com/c/68911e4d-9784-8330-b358-a52ba952426b
          * @access  public
+         * @static
          * @param   String str
          * @return  String
          */
-        getEscapedHTML(str) {
+        static getEscapedHTML(str) {
             let $div = document.createElement('div'),
-                tagName = window.annexSearch.ConfigUtils.get('highlightTagName'),
+                tagName = this.getHelper('config').get('highlightTagName'),
                 tagNameLowerCase = tagName.toLowerCase(),
                 startTag = '<' + (tagNameLowerCase) + '>',
                 endTag = '</' + (tagNameLowerCase) + '>',
@@ -37,15 +37,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * getTemplateElement
+         * #__getTemplateElement
          * 
          * @see     https://chatgpt.com/c/6828cebf-a638-800f-bdf2-3e8642c89de6
-         * @access  public
+         * @access  private
+         * @static
          * @param   String templateId
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
          * @return  HTMLElement
          */
-        getTemplateElement(templateId) {
-            let templateContent = window.annexSearch.ConfigUtils.get('templates')[templateId],
+        static #__getTemplateElement(templateId, $annexSearchWidget) {
+// console.log($annexSearchWidget.getHelper('config').get('templates'));
+            let templateContent = $annexSearchWidget.getHelper('config').get('templates')[templateId],
                 parser = new DOMParser(),
                 $document = parser.parseFromString(templateContent, 'text/html'),
                 $script = $document.querySelector('script[type]'),
@@ -60,11 +63,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * getValueFromPath
          * 
          * @access  public
+         * @static
          * @param   String path
          * @param   Object map
          * @return  String
          */
-        getValueFromPath(path, map) {
+        static getValueFromPath(path, map) {
             let keys = path.split('.'),
                 value = map;
             for (const key of keys) {
@@ -96,24 +100,29 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @param   Function componentClass
          * @return  Boolean
          */
-        registerComponent(tagName, componentClass) {
-            if (window.customElements.get(tagName) === true) {
-                return false;
-            }
-            window.customElements.define(tagName, componentClass);
-            return true;
-        }
+        // registerComponent(tagName, componentClass) {
+        //     if (window.customElements.get(tagName) === true) {
+        //         return false;
+        //     }
+        //     window.customElements.define(tagName, componentClass);
+        //     return true;
+        // }
 
         /**
          * renderTemplate
          * 
          * @access  public
+         * @static
          * @param   String templateId
-         * @param   EventTarget $parent
+         * @param   HTMLElement $parent
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget (default: null)
          * @return  window.annexSearch.BaseView
          */
-        renderTemplate(templateId, $parent) {
-            let $element = this.getTemplateElement(templateId);
+        static renderTemplate(templateId, $parent, $annexSearchWidget = null) {
+            $annexSearchWidget = $annexSearchWidget || $parent.getRootNode().host;
+// console.log($parent.closest);//, $parent.closest('annex-search-widget'));
+// console.log($parent, $parent.closest('annex-search-widget'));
+            let $element = this.#__getTemplateElement(templateId, $annexSearchWidget);
             $parent.appendChild($element);
             let viewName = $element.getAttribute('data-view-name'),
                 view = new window.annexSearch[viewName]($element);
@@ -128,11 +137,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * 
          * @note    Ordered
          * @access  public
+         * @static
          * @param   String html
          * @param   Object map
          * @return  String
          */
-        renderTemplateVariables(html, map) {
+        static renderTemplateVariables(html, map) {
             html = html.replace(/\{\{([^}]+)\}\}/g, function(match, expression) {
                 if (expression.includes('||') === true) {
                     const paths = expression.split('||').map(function(piece) {
@@ -164,9 +174,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          *
          * @see     https://chatgpt.com/c/682a39f4-d464-800f-bd7c-9793d2bf0349
          * @access  public
+         * @static
          * @return  Promise
          */
-        waitForAnimation() {
+        static waitForAnimation() {
             let promise = new Promise(function(resolve, reject) {
                 window.requestAnimationFrame(function() {
                     window.requestAnimationFrame(function() {
@@ -176,6 +187,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             });
             return promise;
         }
+
+        /**
+         * setup
+         * 
+         * @access  public
+         * @static
+         * @return  Boolean
+         */
+        static setup() {
+            return true;
+        }
     }
-    window.annexSearch.ElementUtils = new window.annexSearch.ElementUtils();
 });

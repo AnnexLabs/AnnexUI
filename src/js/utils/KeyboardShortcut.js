@@ -3,23 +3,23 @@
  * /src/js/utils/KeyboardShortcuts.js
  * 
  */
-window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push([], function() {
 
     /**
      * window.annexSearch.KeyboardShortcutUtils
      * 
      * @access  public
-     * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.KeyboardShortcutUtils = window.annexSearch.KeyboardShortcutUtils || class KeyboardShortcutUtils extends window.annexSearch.BaseView {
+    window.annexSearch.KeyboardShortcutUtils = window.annexSearch.KeyboardShortcutUtils || class {
 
         /**
          * #__active
          * 
          * @access  private
+         * @static
          * @var     Object
          */
-        #__active = {
+        static #__active = {
 
             /**
              * documentCatchAll
@@ -122,9 +122,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__addDocumentPasteEventListener
          * 
          * @access  private
+         * @static
          * @return  Boolean
          */
-        #__addDocumentPasteEventListener() {
+        static #__addDocumentPasteEventListener() {
             let $element = document,
                 handler = this.#__handleDocumentPasteEvent.bind(this);
             $element.addEventListener('paste', handler);
@@ -135,9 +136,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__addKeydownEventListener
          * 
          * @access  private
+         * @static
          * @return  Boolean
          */
-        #__addKeydownEventListener() {
+        static #__addKeydownEventListener() {
             let $element = document,
                 handler = this.#__handleKeydownEvent.bind(this);
             $element.addEventListener('keydown', handler);
@@ -145,13 +147,39 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * #__getActiveWebComponent
+         * 
+         * @access  private
+         * @static
+         * @return  window.annexSearch.AnnexSearchWidgetWebComponent
+         */
+        static #__getActiveWebComponent() {
+            let $active = window.annexSearch.AnnexSearch.getActive();
+            return $active;
+        }
+
+        /**
+         * #__getRegisteredWebComponents
+         * 
+         * @access  private
+         * @static
+         * @return  Array
+         */
+        static #__getRegisteredWebComponents() {
+            let registered = window.annexSearch.AnnexSearch.getRegistered();
+            return registered;
+        }
+
+        /**
          * #__getField
          * 
          * @access  private
+         * @static
          * @return  BaseView
          */
-        #__getField() {
-            let field = this.getView('root.header.field');
+        static #__getField() {
+            let $activeWebComponent = this.#__getActiveWebComponent(),
+                field = $activeWebComponent.getView('root').getView('header.field');
             return field;
         }
 
@@ -159,10 +187,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__getFound
          * 
          * @access  private
+         * @static
          * @return  BaseView
          */
-        #__getFound() {
-            let found = this.getView('root.body.results.found');
+        static #__getFound() {
+            let $activeWebComponent = this.#__getActiveWebComponent(),
+                found = $activeWebComponent.getView('root').getView('body.results.found');
             return found;
         }
 
@@ -170,10 +200,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__getKeyboardShortcut
          * 
          * @access  private
+         * @static
          * @return  null|String
          */
-        #__getKeyboardShortcut() {
-            let value = window.annexSearch.ConfigUtils.get('keyboardShortcut');
+        static #__getKeyboardShortcut() {
+            let value = this.#__getActiveWebComponent().getHelper('config').get('keyboardShortcut');
             if (value === null) {
                 return null;
             }
@@ -191,14 +222,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          *          etc.
          * @see     https://chatgpt.com/c/688abab5-f678-8330-9aff-e43c24768100
          * @access  private
+         * @static
          * @param   Object event
          * @return  Boolean
          */
-        #__handleDocumentCatchAllKeydownEvent(event) {
+        static #__handleDocumentCatchAllKeydownEvent(event) {
             if (this.#__active.documentCatchAll === false) {
                 return false;
             }
-            if (window.annexSearch.webComponent.showing() === false) {
+            let $activeWebComponent = this.#__getActiveWebComponent();
+            if ($activeWebComponent.showing() === false) {
                 return false;
             }
             if (event.metaKey === true) {
@@ -214,7 +247,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             if (key === ' ') {
                 return false;
             }
-            let $activeElement = window.annexSearch.webComponent.shadow.activeElement,
+            let $activeElement = $activeWebComponent.shadow.activeElement,
                 field = this.#__getField(),
                 found = this.#__getFound();
             if ($activeElement === null) {
@@ -250,14 +283,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__handleDocumentDeleteKeydownEvent
          * 
          * @access  private
+         * @static
          * @param   Object event
          * @return  Boolean
          */
-        #__handleDocumentDeleteKeydownEvent(event) {
+        static #__handleDocumentDeleteKeydownEvent(event) {
             if (this.#__validKeydownEvent(event, 'documentDelete', 'backspace') === false) {
                 return false;
             }
-            let $activeElement = window.annexSearch.webComponent.shadow.activeElement,
+            let $activeWebComponent = this.#__getActiveWebComponent(),
+                $activeElement = $activeWebComponent.shadow.activeElement,
                 field = this.#__getField(),
                 found = this.#__getFound();
             if ($activeElement === null) {
@@ -289,14 +324,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__handleDocumentEscapeKeydownEvent
          * 
          * @access  private
+         * @static
          * @param   Object event
          * @return  Boolean
          */
-        #__handleDocumentEscapeKeydownEvent(event) {
+        static #__handleDocumentEscapeKeydownEvent(event) {
             if (this.#__validKeydownEvent(event, 'documentEscape', 'escape') === false) {
                 return false;
             }
-            let $activeElement = window.annexSearch.webComponent.shadow.activeElement;
+            let $activeWebComponent = this.#__getActiveWebComponent(),
+                $activeElement = $activeWebComponent.shadow.activeElement;
             if ($activeElement === null) {
                 let field = this.#__getField();
                 field.focus();
@@ -314,10 +351,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__handleDocumentKeyboardNavigationKeydownEvent
          * 
          * @access  private
+         * @static
          * @param   Object event
          * @return  Boolean
          */
-        #__handleDocumentKeyboardNavigationKeydownEvent(event) {
+        static #__handleDocumentKeyboardNavigationKeydownEvent(event) {
             let validKeys = ['tab', 'arrowdown', 'arrowup'];
             if (this.#__validKeydownEvent(event, 'documentKeyboardNavigation', validKeys) === false) {
                 return false;
@@ -338,7 +376,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 found.next();
                 return true;
             }
-            found.previous() || this.getView('root').focus();
+            found.previous() || this.#__getActiveWebComponent().getView('root').focus();
             return true;
         }
 
@@ -346,10 +384,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__handleDocumentKeyboardShortcutKeydownEvent
          * 
          * @access  private
+         * @static
          * @param   Object event
          * @return  Boolean
          */
-        #__handleDocumentKeyboardShortcutKeydownEvent(event) {
+        static #__handleDocumentKeyboardShortcutKeydownEvent(event) {
             if (this.#__active.documentKeyboardShortcut === false) {
                 return false;
             }
@@ -367,7 +406,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 (!isMac && event.ctrlKey && event.key.toLowerCase() === character)
             ) {
                 event.preventDefault();
-                window.annexSearch.webComponent.toggle();
+                let $activeWebComponent = this.#__getActiveWebComponent();
+                $activeWebComponent.toggle();
                 return true;
             }
             return false;
@@ -378,11 +418,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * 
          * @see     https://chatgpt.com/c/688abab5-f678-8330-9aff-e43c24768100
          * @access  private
+         * @static
          * @param   Object event
          * @return  Boolean
          */
-        #__handleDocumentPasteEvent(event) {
-            if (window.annexSearch.webComponent.showing() === false) {
+        static #__handleDocumentPasteEvent(event) {
+            if (this.#__getActiveWebComponent() === null) {
+                return false
+            }
+            let $activeWebComponent = this.#__getActiveWebComponent();
+            if ($activeWebComponent.showing() === false) {
                 return false;
             }
             let configKey = 'documentPaste';
@@ -397,7 +442,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             if (pastedText.length === 0) {
                 return false;
             }
-            let $activeElement = window.annexSearch.webComponent.shadow.activeElement,
+            let $activeElement = $activeWebComponent.shadow.activeElement,
                 field = this.#__getField(),
                 found = this.#__getFound();
             if ($activeElement === null) {
@@ -431,10 +476,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__handleDocumentSelectAllKeydownEvent
          * 
          * @access  private
+         * @static
          * @param   Object event
          * @return  Boolean
          */
-        #__handleDocumentSelectAllKeydownEvent(event) {
+        static #__handleDocumentSelectAllKeydownEvent(event) {
             if (this.#__validKeydownEvent(event, 'documentSelectAll', 'a') === false) {
                 return false;
             }
@@ -451,14 +497,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__handleDocumentSlashKeydownEvent
          * 
          * @access  private
+         * @static
          * @param   Object event
          * @return  Boolean
          */
-        #__handleDocumentSlashKeydownEvent(event) {
+        static #__handleDocumentSlashKeydownEvent(event) {
             if (this.#__validKeydownEvent(event, 'documentSlash', '/') === false) {
                 return false;
             }
-            let $activeElement = window.annexSearch.webComponent.shadow.activeElement,
+            let $activeWebComponent = this.#__getActiveWebComponent(),
+                $activeElement = $activeWebComponent.shadow.activeElement,
                 field = this.#__getField();
             if ($activeElement === null) {
                 field.focus();
@@ -475,14 +523,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__handleFieldEnterKeydownEvent
          * 
          * @access  private
+         * @static
          * @param   Object event
          * @return  Boolean
          */
-        #__handleFieldEnterKeydownEvent(event) {
+        static #__handleFieldEnterKeydownEvent(event) {
             if (this.#__validKeydownEvent(event, 'fieldEnter', 'enter') === false) {
                 return false;
             }
-            let $activeElement = window.annexSearch.webComponent.shadow.activeElement;
+            let $activeWebComponent = this.#__getActiveWebComponent(),
+                $activeElement = $activeWebComponent.shadow.activeElement;
             if ($activeElement === null) {
                 return false;
             }
@@ -509,14 +559,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__handleFieldEscapeKeydownEvent
          * 
          * @access  private
+         * @static
          * @param   Object event
          * @return  Boolean
          */
-        #__handleFieldEscapeKeydownEvent(event) {
+        static #__handleFieldEscapeKeydownEvent(event) {
             if (this.#__validKeydownEvent(event, 'fieldEscape', 'escape') === false) {
                 return false;
             }
-            let $activeElement = window.annexSearch.webComponent.shadow.activeElement;
+            let $activeWebComponent = this.#__getActiveWebComponent(),
+                $activeElement = $activeWebComponent.shadow.activeElement;
             if ($activeElement === null) {
                 return false;
             }
@@ -526,7 +578,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 let value = $activeElement.value.trim(),
                     found = this.#__getFound();
                 if (value === '') {
-                    this.hideWebComponent();
+                    $activeWebComponent.hide();
                     return true;
                 }
                 let field = this.#__getField();
@@ -534,7 +586,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 field.nullifyLastTypesenseSearchResponse();
                 found.clearResults();
                 found.setStateKey('idle');
-                window.annexSearch.FunctionUtils.triggerCallback('results.idle');
+                $activeWebComponent.dispatchCustomEvent('results.idle');
                 return true;
             }
             return false;
@@ -545,35 +597,39 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * 
          * @note    Ordered
          * @access  private
+         * @static
          * @param   Object event
          * @return  Boolean
          */
-        #__handleKeydownEvent(event) {
-            if (this.#__handleDocumentKeyboardShortcutKeydownEvent(event) === true) {// Nothing
+        static #__handleKeydownEvent(event) {
+            if (this.#__getRegisteredWebComponents().length === 0) {
+                return false
+            }
+            if (this.#__handleDocumentKeyboardShortcutKeydownEvent(event) === true) {
                 return true;
             }
-            if (this.#__handleDocumentKeyboardNavigationKeydownEvent(event) === true) {// Nothing
+            if (this.#__handleDocumentKeyboardNavigationKeydownEvent(event) === true) {
                 return true;
             }
-            if (this.#__handleDocumentEscapeKeydownEvent(event) === true) {// Nothing
+            if (this.#__handleDocumentEscapeKeydownEvent(event) === true) {
                 return true;
             }
-            if (this.#__handleFieldEscapeKeydownEvent(event) === true) {// Clear results
+            if (this.#__handleFieldEscapeKeydownEvent(event) === true) {
                 return true;
             }
-            if (this.#__handleFieldEnterKeydownEvent(event) === true) {// Nothing
+            if (this.#__handleFieldEnterKeydownEvent(event) === true) {
                 return true;
             }
-            if (this.#__handleDocumentSlashKeydownEvent(event) === true) {// Nothing
+            if (this.#__handleDocumentSlashKeydownEvent(event) === true) {
                 return true;
             }
-            if (this.#__handleDocumentSelectAllKeydownEvent(event) === true) {// Nothing
+            if (this.#__handleDocumentSelectAllKeydownEvent(event) === true) {
                 return true;
             }
-            if (this.#__handleDocumentDeleteKeydownEvent(event) === true) {// Don't clear results + new search
+            if (this.#__handleDocumentDeleteKeydownEvent(event) === true) {
                 return true;
             }
-            if (this.#__handleDocumentCatchAllKeydownEvent(event) === true) {// Clear results
+            if (this.#__handleDocumentCatchAllKeydownEvent(event) === true) {
                 return true;
             }
             return true;
@@ -583,13 +639,15 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__validKeydownEvent
          * 
          * @access  private
+         * @static
          * @param   Object event
          * @param   String configKey
          * @param   String|Array validKeys
          * @return  Boolean
          */
-        #__validKeydownEvent(event, configKey, validKeys) {
-            if (window.annexSearch.webComponent.showing() === false) {
+        static #__validKeydownEvent(event, configKey, validKeys) {
+            let $activeWebComponent = this.#__getActiveWebComponent();
+            if ($activeWebComponent.showing() === false) {
                 return false;
             }
             if (this.#__active[configKey] === false) {
@@ -607,13 +665,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * setup
          * 
          * @access  public
+         * @static
          * @return  Promise
          */
-        setup() {
-            this.#__addDocumentPasteEventListener();// Don't clear results + new search
+        static setup() {
+            this.#__addDocumentPasteEventListener();
             this.#__addKeydownEventListener();
             return true;
         }
     }
-    window.annexSearch.KeyboardShortcutUtils = new window.annexSearch.KeyboardShortcutUtils();
 });

@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.RootView = window.annexSearch.RootView || class RootView extends window.annexSearch.BaseView {
+    window.annexSearch.RootView = window.annexSearch.RootView || class extends window.annexSearch.BaseView {
 
         /**
          * constructor
@@ -99,7 +99,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         _addEvents() {
-            window.annexSearch.KeyboardShortcutUtils.setup();
+            // window.annexSearch.KeyboardShortcutUtils.setup();
             this.#__addOverlayClickEventListener();
             return true;
         }
@@ -138,7 +138,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.#__drawFooter();
             super.render();
             this.setStateKey('idle');
-            window.annexSearch.FunctionUtils.triggerCallback('results.idle');
+            this.getWebComponent().dispatchCustomEvent('results.idle');
             return true;
         }
 

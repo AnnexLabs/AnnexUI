@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.FooterView = window.annexSearch.FooterView || class FooterView extends window.annexSearch.BaseView {
+    window.annexSearch.FooterView = window.annexSearch.FooterView || class extends window.annexSearch.BaseView {
 
         /**
          * constructor

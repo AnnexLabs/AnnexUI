@@ -3,15 +3,14 @@
  * /src/js/utils/Logging.js
  * 
  */
-window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push([], function() {
 
     /**
      * window.annexSearch.LoggingUtils
      * 
      * @access  public
-     * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.LoggingUtils = window.annexSearch.LoggingUtils || class LoggingUtils extends window.annexSearch.BaseView {
+    window.annexSearch.LoggingUtils = window.annexSearch.LoggingUtils || class {
 
         /**
          * #__colorCodes
@@ -29,9 +28,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__labels
          * 
          * @access  private
+         * @static
          * @var     String (default: 'Annex Search')
          */
-        #__labels = {
+        static #__labels = {
             // debug: '🐞 Annex Search',
             // message: '📣 Annex Search'
             debug: 'Annex Search',
@@ -43,9 +43,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * debug
          * 
          * @access  public
+         * @static
          * @return  Boolean
          */
-        debug() {
+        static debug() {
             let message = '%c[' + (this.#__labels.debug) + ']',
                 styles = 'color: green; font-weight: bold; font-family: monospace;',
                 args = [];
@@ -61,9 +62,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * error
          * 
          * @access  public
+         * @static
          * @return  Boolean
          */
-        error() {
+        static error() {
             let message = '%c[' + (this.#__labels.error) + ']',
                 styles = 'color: red; font-weight: bold; font-family: monospace;',
                 args = [];
@@ -79,10 +81,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * logFailedTypesenseSearchRequestError
          * 
          * @access  public
+         * @static
          * @param   window.annexSearch.TypesenseSearchRequest typesenseSearchRequest
          * @return  Boolean
          */
-        logFailedTypesenseSearchRequestError(typesenseSearchRequest) {
+        static logFailedTypesenseSearchRequestError(typesenseSearchRequest) {
             let error = typesenseSearchRequest.getError(),
                 key = error.key,
                 message = error.message;
@@ -121,6 +124,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         //     window.console && window.console.log && window.console.log.apply(window, args);
         //     return true;
         // }
+
+        /**
+         * setup
+         * 
+         * @access  public
+         * @static
+         * @return  Boolean
+         */
+        static setup() {
+            return true;
+        }
     }
-    window.annexSearch.LoggingUtils = new window.annexSearch.LoggingUtils();
 });

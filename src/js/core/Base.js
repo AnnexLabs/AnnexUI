@@ -1,6 +1,6 @@
 
 /**
- * /src/js/helpers/Base.js
+ * /src/js/core/Base.js
  * 
  */
 window.annexSearch.DependencyLoader.push([], function() {
@@ -10,16 +10,15 @@ window.annexSearch.DependencyLoader.push([], function() {
      * 
      * @access  public
      */
-    window.annexSearch.Base = window.annexSearch.Base || class Base {
+    window.annexSearch.Base = window.annexSearch.Base || class {
 
         /**
          * #__data
          * 
          * @access  private
-         * @var     Object (default:{})
+         * @var     Object (default: {})
          */
         #__data = {};
-
 
         /**
          * constructor
@@ -67,6 +66,19 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * getHelper
+         * 
+         * @access  public
+         * @param   String key
+         * @return  window.annexSearch.BaseView
+         */
+        getHelper(key) {
+            let webComponent = this.getWebComponent(),
+                helper = webComponent.getHelper(key);
+            return helper;
+        }
+
+        /**
          * getView
          * 
          * @access  public
@@ -101,8 +113,11 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  window.annexSearch.AnnexSearchWidgetWebComponent
          */
         getWebComponent() {
-            let value = window.annexSearch.webComponent;
-            return value;
+return this._$element.getRootNode().host;
+return window.annexSearch.AnnexSearch.getActive();
+console.log(this);
+            let $webComponent = this._$element.getRootNode().host;
+            return $webComponent;
         }
 
         /**
@@ -116,18 +131,6 @@ window.annexSearch.DependencyLoader.push([], function() {
             webComponent.hide();
             return true;
         }
-
-        /**
-         * log
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        // log() {
-        //     let scope = window.annexSearch.LoggingUtils,
-        //         response = window.annexSearch.LoggingUtils.info.apply(scope, arguments);
-        //     return response;
-        // }
 
         /**
          * set

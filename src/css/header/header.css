@@ -1,6 +1,6 @@
 [data-view-name="HeaderView"] {
-    height: var(--annex-ts-header-height);
-    background-color: var(--annex-ts-header-background-color);
+    height: var(--annex-search-header-height);
+    background-color: var(--annex-search-header-background-color);
     position: relative;
     border-radius: 12px 12px 0 0;
 }
@@ -12,11 +12,11 @@
 [data-view-name="HeaderView"] > div.close {
     position: absolute;
     right: 10px;
-    top: calc((var(--annex-ts-header-height) - 24px) / 2);
+    top: calc((var(--annex-search-header-height) - 24px) / 2);
     height: 24px;
     width: 24px;
     transform: rotate(45deg);
-    background-color: var(--annex-ts-header-close-button-color);
+    background-color: var(--annex-search-header-close-button-color);
     opacity: 0.30;
     cursor: pointer;
     transition: 250ms all;
@@ -36,14 +36,14 @@
     display: none;
     position: absolute;
     right: calc(14px);
-    top: calc((var(--annex-ts-header-height) - 14px) / 2);
+    top: calc((var(--annex-search-header-height) - 14px) / 2);
     height: 14px;
     width: 14px;
-    background-color: var(--annex-ts-header-spinner-color);
+    background-color: var(--annex-search-header-spinner-color);
     opacity: 0.40;
 }
 [data-view-name="HeaderView"] > div.spinner.spinning {
-    animation-duration: var(--annex-ts-spinner-duration);
+    animation-duration: var(--annex-search-spinner-duration);
 }
 
 /**
@@ -51,7 +51,7 @@
  * 
  */
 [data-view-name="RootView"][data-state-key="results"] [data-view-name="HeaderView"] {
-    height: calc(var(--annex-ts-header-height) + var(--annex-ts-metaBar-height));
+    height: calc(var(--annex-search-header-height) + var(--annex-search-metaBar-height));
 }
 
 /**

@@ -14,11 +14,11 @@
     height: 104px;
     background-position: center center;
     background-size: contain;
-    background-image: var(--annex-ts-image-broken-robot);
+    background-image: var(--annex-search-image-broken-robot);
 }
 [data-view-name="ErrorBodyView"] > div.message {
     font-size: 19px;
     font-weight: 100;
-    color: var(--annex-ts-body-message-color);
+    color: var(--annex-search-body-message-color);
     padding: 12px 0 0 0;
 }

@@ -30,5 +30,5 @@
 /*    pointer-events: auto;*/
 }
 :host([data-annex-search-ready="1"]) {
-    transition: opacity var(--annex-ts-open-duration);
+    transition: opacity var(--annex-search-open-duration);
 }

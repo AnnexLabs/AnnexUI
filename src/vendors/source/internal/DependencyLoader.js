@@ -1,4 +1,7 @@
 
+// Setup
+window.annexSearch = window.annexSearch || {};
+
 /**
  * DependencyLoader
  * 

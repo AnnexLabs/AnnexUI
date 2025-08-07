@@ -11,7 +11,7 @@
 [data-view-name="ResultFoundResultsBodyView"] > div.title {
     height: 16px;
     line-height: 16px;
-    color: var(--annex-ts-result-title-color);
+    color: var(--annex-search-result-title-color);
     font-size: 13px;
 
     display: -webkit-box;
@@ -21,7 +21,7 @@
 }
 [data-view-name="ResultFoundResultsBodyView"] > div.body {
     padding: 4px 0 0 0;
-    color: var(--annex-ts-result-body-color);
+    color: var(--annex-search-result-body-color);
     font-size: 12px;
     line-height: 1.25em;
 
@@ -34,7 +34,7 @@
     padding: 2px 0 0 0;
     height: 20px;
     line-height: 20px;
-    color: var(--annex-ts-result-uri-color);
+    color: var(--annex-search-result-uri-color);
     font-size: 11px;
 }
 /*[data-view-name="ResultFoundResultsBodyView"] > div.title,
@@ -45,16 +45,16 @@
     overflow: hidden;
 }*/
 [data-view-name="ResultFoundResultsBodyView"] mark {
-    color: var(--annex-ts-mark-color);
+    color: var(--annex-search-mark-color);
     padding: 0 2px 0 2px;
     border-radius: 2px 2px 2px 2px;
-    background-color: var(--annex-ts-mark-background-color);
+    background-color: var(--annex-search-mark-background-color);
 }
 [data-view-name="ResultFoundResultsBodyView"]:hover {
-    background-color: var(--annex-ts-result-hover-background-color);
-    outline: 1px solid var(--annex-ts-border-color);
+    background-color: var(--annex-search-result-hover-background-color);
+    outline: 1px solid var(--annex-search-border-color);
 }
 [data-view-name="ResultFoundResultsBodyView"]:focus {
-    outline: 2px solid var(--annex-ts-result-focus-outline-color);
-    background-color: var(--annex-ts-result-focus-background-color);
+    outline: 2px solid var(--annex-search-result-focus-outline-color);
+    background-color: var(--annex-search-result-focus-background-color);
 }

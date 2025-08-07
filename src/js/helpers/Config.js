@@ -1,17 +1,17 @@
 
 /**
- * /src/js/utils/Config.js
+ * /src/js/helpers/Config.js
  * 
  */
 window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
 
     /**
-     * window.annexSearch.ConfigUtils
+     * window.annexSearch.ConfigHelper
      * 
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.ConfigUtils = window.annexSearch.ConfigUtils || class ConfigUtils extends window.annexSearch.BaseView {
+    window.annexSearch.ConfigHelper = window.annexSearch.ConfigHelper || class extends window.annexSearch.BaseView {
 
         /**
          * #__data
@@ -29,9 +29,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * that order).
              * 
              * @access  private
-             * @var     null|EventTarget (default: null)
+             * @var     EventTarget
              */
-            $container: null,
+            $container: (document.body || document.head || document.documentElement),
 
             /**
              * callbacks
@@ -44,35 +44,35 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             callbacks: {
                 result: {
                     click: function($annexSearchWidget, event, hit) {
-                        // console.log('result.click', $annexSearchWidget, event, hit);
+                        console.log('result.click', $annexSearchWidget, event, hit);
                     },
                     focus: function($annexSearchWidget, event, hit) {
-                        // console.log('result.focus', $annexSearchWidget, event, hit);
+                        console.log('result.focus', $annexSearchWidget, event, hit);
                     },
                 },
                 results: {
                     empty: function($annexSearchWidget) {
-                        // console.log('results.empty', $annexSearchWidget);
+                        console.log('results.empty', $annexSearchWidget);
                     },
                     error: function($annexSearchWidget, error) {
-                        // console.log('results.error', $annexSearchWidget, error);
+                        console.log('results.error', $annexSearchWidget, error);
                     },
                     idle: function($annexSearchWidget) {
-                        // console.log('results.idle', $annexSearchWidget);
+                        console.log('results.idle', $annexSearchWidget);
                     },
                     loaded: function($annexSearchWidget, response) {
-                        // console.log('results.loaded', $annexSearchWidget, response);
+                        console.log('results.loaded', $annexSearchWidget, response);
                     },
                 },
                 root: {
                     hide: function($annexSearchWidget) {
-                        // console.log('root.hide', $annexSearchWidget);
+                        console.log('root.hide', $annexSearchWidget);
                     },
                     show: function($annexSearchWidget) {
-                        // console.log('root.show', $annexSearchWidget);
+                        console.log('root.show', $annexSearchWidget);
                     },
                     toggle: function($annexSearchWidget) {
-                        // console.log('root.toggle', $annexSearchWidget);
+                        console.log('root.toggle', $annexSearchWidget);
                     }
                 }
             },
@@ -234,6 +234,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         };
 
         /**
+         * constructor
+         * 
+         * @access  public
+         * @return  void
+         */
+        constructor() {
+            super();
+        }
+
+        /**
          * #__handleLoadTemplates
          * 
          * @access  private
@@ -255,6 +265,66 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * #__handleStylesheetErrorLoadEvent
+         * 
+         * @access  private
+         * @param   Function reject
+         * @param   Object event
+         * @return  Boolean
+         */
+        #__handleStylesheetErrorLoadEvent(reject, event) {
+            let message = window.annexSearch.ErrorUtils.getMessage('stylesheets.failedLoading');
+            window.annexSearch.LoggingUtils.error(message, event);
+            reject();
+            return true;
+        }
+
+        /**
+         * #__handleStylesheetSuccessfulLoadEvent
+         * 
+         * @access  private
+         * @param   Function resolve
+         * @return  Boolean
+         */
+        #__handleStylesheetSuccessfulLoadEvent(resolve) {
+            window.annexSearch.ElementUtils.waitForAnimation().then(resolve);
+            return true;
+        }
+
+        /**
+         * #__loadStylesheets
+         * 
+         * @see     https://claude.ai/chat/3683f5e2-b3b9-4cbb-846f-ac1a2d2cb64b
+         * @access  private
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @return  Promise
+         */
+        #__loadStylesheets($annexSearchWidget) {
+            let $shadow = $annexSearchWidget.shadow,
+                errorHandler = this.#__handleStylesheetErrorLoadEvent.bind(this),
+                successfulHandler = this.#__handleStylesheetSuccessfulLoadEvent.bind(this),
+                paths = Array.from(
+                    new Set(this.get('paths').css)
+                ),
+                promises = paths.map(function(href) {
+                    return new Promise(function(resolve, reject) {
+                        let $link = document.createElement('link');
+                        $link.rel = 'stylesheet';
+                        $link.href = href;
+                        $link.onload = resolve;
+                        $link.onerror = errorHandler.bind(null, reject);
+                        $shadow.appendChild($link);
+                    });
+                }),
+                promise = Promise.all(promises).then(function() {
+                    return new Promise(function(resolve) {
+                        successfulHandler(resolve);
+                    });
+                })
+            return promise;
+        }
+
+        /**
          * #__loadTemplates
          * 
          * @access  private
@@ -263,8 +333,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__loadTemplates() {
             let handler = this.#__handleLoadTemplates.bind(this),
                 promise = fetch(this.#__data.paths.templates).then(function(response) {
-                        return response.text();
-                    }).then(handler);
+                    return response.text();
+                }).then(handler);
             return promise
         }
 
@@ -340,19 +410,39 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * setup
+         * setData
+         * 
+         * @access  public
+         * @param   Object data
+         * @return  Boolean
+         */
+        setData(data) {
+            this.#__data = window.annexSearch.DataUtils.deepMerge(this.#__data, data);
+            return true;
+        }
+
+        /**
+         * loadStylesheets
+         * 
+         * @access  public
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @return  Boolean
+         */
+        loadStylesheets($annexSearchWidget) {
+            let promise = this.#__loadStylesheets($annexSearchWidget);
+            return promise;
+        }
+
+        /**
+         * loadTemplates
          * 
          * @access  public
          * @return  Promise
          */
-        setup() {
-            this.#__data = window.annexSearch.DataUtils.deepMerge(
-                this.#__data,
-                window.annexSearchConfig || {}
-            );
+        loadTemplates() {
             let promise = this.#__loadTemplates();
             return promise;
         }
+
     }
-    window.annexSearch.ConfigUtils = new window.annexSearch.ConfigUtils();
 });

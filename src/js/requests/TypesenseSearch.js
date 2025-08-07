@@ -10,7 +10,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
      * 
      * @extends window.annexSearch.Base
      */
-    window.annexSearch.TypesenseSearchRequest = window.annexSearch.TypesenseSearchRequest || class TypesenseSearchRequest extends window.annexSearch.Base {
+    window.annexSearch.TypesenseSearchRequest = window.annexSearch.TypesenseSearchRequest || class extends window.annexSearch.Base {
 
         /**
          * #__abortController
@@ -92,8 +92,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
             super();
             this.#__query = query;
             this.#__options.q = query;
-            this.#__options.highlight_end_tag = window.annexSearch.TypesenseUtils.getHighlightEndTag();
-            this.#__options.highlight_start_tag = window.annexSearch.TypesenseUtils.getHighlightStartTag();
+            this.#__options.highlight_end_tag = this.getHelper('typesense').getHighlightEndTag();
+            this.#__options.highlight_start_tag = this.getHelper('typesense').getHighlightStartTag();
         }
 
         /**
@@ -119,11 +119,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          */
         #__getAuth() {
             let auth = {
-                hostname: window.annexSearchConfig.cluster.hostname,
+                hostname: this.getHelper('config').get('cluster.hostname'),
                 protocol: 'https',
-                apiKey: window.annexSearchConfig.cluster.apiKey,
-                collectionName: window.annexSearchConfig.cluster.collectionName,
-                presetName: window.annexSearchConfig.cluster.presetName
+                apiKey: this.getHelper('config').get('cluster.apiKey'),
+                collectionName: this.getHelper('config').get('cluster.collectionName'),
+                presetName: this.getHelper('config').get('cluster.presetName')
             };
             return auth;
         }
@@ -387,8 +387,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
             this.#__options = Object.assign(
                 {},
                 this.#__options,
-                window.annexSearch.ConfigUtils.get('searchOptions'),
-                window.annexSearchConfig.searchOptions,
+                this.getHelper('config').get('searchOptions'),
                 options,
             );
             return true;

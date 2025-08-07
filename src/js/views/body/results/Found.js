@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.FoundResultsBodyView = window.annexSearch.FoundResultsBodyView || class FoundResultsBodyView extends window.annexSearch.BaseView {
+    window.annexSearch.FoundResultsBodyView = window.annexSearch.FoundResultsBodyView || class extends window.annexSearch.BaseView {
 
         /**
          * #__focusedIndex

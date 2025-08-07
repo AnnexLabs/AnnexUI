@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.IdleBodyView = window.annexSearch.IdleBodyView || class IdleBodyView extends window.annexSearch.BaseView {
+    window.annexSearch.IdleBodyView = window.annexSearch.IdleBodyView || class extends window.annexSearch.BaseView {
 
         /**
          * constructor
@@ -31,7 +31,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__setMessage() {
-            let value = window.annexSearch.ConfigUtils.get('copy').idle.message;
+            let value = this.getHelper('config').get('copy').idle.message;
             if (value === null) {
                 return false;
             }

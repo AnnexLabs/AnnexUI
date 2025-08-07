@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.FieldHeaderView = window.annexSearch.FieldHeaderView || class FieldHeaderView extends window.annexSearch.BaseView {
+    window.annexSearch.FieldHeaderView = window.annexSearch.FieldHeaderView || class extends window.annexSearch.BaseView {
 
         /**
          * #__lastTypesenseSearchRequest
@@ -85,7 +85,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  null|String
          */
         #__getKeyboardShortcut() {
-            let value = window.annexSearch.ConfigUtils.get('keyboardShortcut');
+            let value = this.getHelper('config').get('keyboardShortcut');
             if (value === null) {
                 return null;
             }
@@ -107,7 +107,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             if (key === 'abort') {
                 return false;
             }
-            window.annexSearch.FunctionUtils.triggerCallback('results.error', error);
+            this.getWebComponent().dispatchCustomEvent('results.error', error);
             let header = this.getView('root.header');
             header.hideSpinner();
             let response = typesenseSearchRequest.getResponse();
@@ -130,7 +130,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 this.nullifyLastTypesenseSearchResponse();
                 this.clear();
                 this.setStateKey('idle');
-                window.annexSearch.FunctionUtils.triggerCallback('results.idle');
+                this.getWebComponent().dispatchCustomEvent('results.idle');
                 return false;
             }
             if (value === this.#__lastTypesenseSearchResponse?.request_params?.q) {
@@ -155,8 +155,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__handleLoadMoreSuccessfulTypesenseSearchEvent(options, typesenseSearchRequest) {
             let response = typesenseSearchRequest.getResponse();
-            window.annexSearch.FunctionUtils.triggerCallback('results.loaded', response);
-            // this.debug('#__handleLoadMoreSuccessfulTypesenseSearchEvent', response);
+            this.getWebComponent().dispatchCustomEvent('results.loaded', response);
             this.#__lastTypesenseSearchResponse = response;
             this.#__loadingMore = false;
             if (response.hits.length === 0) {
@@ -178,7 +177,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__handleSuccessfulTypesenseSearchEvent(options, typesenseSearchRequest) {
             let response = typesenseSearchRequest.getResponse();
-            // this.debug('#__handleSuccessfulTypesenseSearchEvent', response);
             if (this.#__loadingMore === true) {
                 let loadMoreResponse = this.#__handleLoadMoreSuccessfulTypesenseSearchEvent(options, typesenseSearchRequest);
                 return loadMoreResponse;
@@ -186,11 +184,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.#__lastTypesenseSearchResponse = response;
             this.getView('root.body.results.found').clearResults();
             if (response.hits.length === 0) {
-                window.annexSearch.FunctionUtils.triggerCallback('results.empty');
+                this.getWebComponent().dispatchCustomEvent('results.empty');
                 this.setStateKey('empty');
                 return false;
             }
-            window.annexSearch.FunctionUtils.triggerCallback('results.loaded', response);
+            this.getWebComponent().dispatchCustomEvent('results.loaded', response);
             this.setStateKey('results');
             let found = this.getView('root.body.results.found');
             found.drawResults(response);
@@ -232,7 +230,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             header.showSpinner();
             let value = this.first('input').value.trim(),
                 handler = this.#__handleTypesenseSearchResponse.bind(this, options),
-                promise = window.annexSearch.TypesenseUtils.search(value, options).then(handler);
+                promise = this.getHelper('typesense').search(value, options).then(handler);
             return promise;
         }
 
@@ -258,7 +256,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__setInputPlaceholder() {
-            let placeholder = window.annexSearch.ConfigUtils.get('copy').placeholder;
+            let placeholder = this.getHelper('config').get('copy').placeholder;
             if (placeholder === null) {
                 return false;
             }
@@ -424,31 +422,5 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             })
             return true;
         }
-
-        /**
-         * select
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        // select() {
-        //     let $input = this.first('input');
-        //     window.annexSearch.ElementUtils.waitForAnimation().then(function() {
-        //         $input.select();
-        //     })
-        //     return true;
-        // }
-
-        /**
-         * smoothScrollToTop
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        // smoothScrollToTop() {
-        //     let found = this.getView('root.body.results.found');
-        //     found.smoothScrollToTop();
-        //     return true;
-        // }
     }
 });

@@ -4,15 +4,5 @@
  * 
  */
 window.annexSearch.DependencyLoader.load(function() {
-    window.annexSearch.ConfigUtils.setup().then(function() {
-        let $annexSearchWidget = document.createElement('annex-search-widget'),
-            $parent = window?.annexSearchConfig?.$container || (document.body || document.head || document.documentElement);
-        $parent && $parent.appendChild($annexSearchWidget);
-        if ($parent === undefined) {
-            console.log && console.log('Could not find valid $parent element');
-            return false;
-        }
-        window.annexSearch.ElementUtils.registerComponent('annex-search-widget', window.annexSearch.AnnexSearchWidgetWebComponent);
-        return true;
-    });
+    window.annexSearch.AnnexSearch.setup();
 });
