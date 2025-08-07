@@ -138,6 +138,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.#__drawFooter();
             super.render();
             this.setStateKey('idle');
+            window.annexSearch.FunctionUtils.triggerCallback('results.idle');
             return true;
         }
 

@@ -94,26 +94,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * #__logFailedTypesenseSearchRequestError
-         * 
-         * @access  private
-         * @param   window.annexSearch.TypesenseSearchRequest typesenseSearchRequest
-         * @return  Boolean
-         */
-        #__logFailedTypesenseSearchRequestError(typesenseSearchRequest) {
-            let error = typesenseSearchRequest.getError(),
-                key = error.key,
-                message = error.message;
-            this.error('Could not complete Typesense search request');
-            if (key === 'typesenseSearchRequestResponse') {
-                this.error('Typesense response: ' + (message));
-                return true;
-            }
-            this.error('Error: ' + (message));
-            return true;
-        }
-
-        /**
          * #__handleFailedTypesenseSearchEvent
          * 
          * @access  private
@@ -127,10 +107,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             if (key === 'abort') {
                 return false;
             }
+            window.annexSearch.FunctionUtils.triggerCallback('results.error', error);
+            let header = this.getView('root.header');
+            header.hideSpinner();
             let response = typesenseSearchRequest.getResponse();
             this.#__lastTypesenseSearchResponse = response;
             this.setStateKey('error');
-            this.#__logFailedTypesenseSearchRequestError(typesenseSearchRequest);
+            window.annexSearch.LoggingUtils.logFailedTypesenseSearchRequestError(typesenseSearchRequest);
             return true;
         };
 
@@ -147,6 +130,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 this.nullifyLastTypesenseSearchResponse();
                 this.clear();
                 this.setStateKey('idle');
+                window.annexSearch.FunctionUtils.triggerCallback('results.idle');
                 return false;
             }
             if (value === this.#__lastTypesenseSearchResponse?.request_params?.q) {
@@ -171,7 +155,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__handleLoadMoreSuccessfulTypesenseSearchEvent(options, typesenseSearchRequest) {
             let response = typesenseSearchRequest.getResponse();
-            this.debug('#__handleLoadMoreSuccessfulTypesenseSearchEvent', response);
+            window.annexSearch.FunctionUtils.triggerCallback('results.loaded', response);
+            // this.debug('#__handleLoadMoreSuccessfulTypesenseSearchEvent', response);
             this.#__lastTypesenseSearchResponse = response;
             this.#__loadingMore = false;
             if (response.hits.length === 0) {
@@ -193,7 +178,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__handleSuccessfulTypesenseSearchEvent(options, typesenseSearchRequest) {
             let response = typesenseSearchRequest.getResponse();
-            this.debug('#__handleSuccessfulTypesenseSearchEvent', response);
+            // this.debug('#__handleSuccessfulTypesenseSearchEvent', response);
             if (this.#__loadingMore === true) {
                 let loadMoreResponse = this.#__handleLoadMoreSuccessfulTypesenseSearchEvent(options, typesenseSearchRequest);
                 return loadMoreResponse;
@@ -201,9 +186,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.#__lastTypesenseSearchResponse = response;
             this.getView('root.body.results.found').clearResults();
             if (response.hits.length === 0) {
+                window.annexSearch.FunctionUtils.triggerCallback('results.empty');
                 this.setStateKey('empty');
                 return false;
             }
+            window.annexSearch.FunctionUtils.triggerCallback('results.loaded', response);
             this.setStateKey('results');
             let found = this.getView('root.body.results.found');
             found.drawResults(response);
@@ -221,11 +208,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleTypesenseSearchResponse(options = {}, typesenseSearchRequest) {
-            let header = this.getView('root.header');
-            header.hideSpinner();
             // this.#__lastTypesenseSearchRequest = typesenseSearchRequest;
             let error = typesenseSearchRequest.getError();
             if (error === null) {
+                let header = this.getView('root.header');
+                header.hideSpinner();
                 let response = this.#__handleSuccessfulTypesenseSearchEvent(options, typesenseSearchRequest);
                 return response;
             }

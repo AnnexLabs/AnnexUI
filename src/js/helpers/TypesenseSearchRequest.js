@@ -60,9 +60,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         #__options = {
             page: 1,
             per_page: 10
-            // query_by: options.query_by || 'title,content',
-            // filter_by: options.filter_by || '',
-            // sort_by: options.sort_by || '_text_match:desc',
+            // query_by: options.query_by || 'title,content',// working: title,body
+            // filter_by: options.filter_by || '',// working: filter_by = score:>8
+            // sort_by: options.sort_by || '_text_match:desc',// working: sort_by = score:desc
         };
 
         /**
@@ -276,7 +276,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
             }
             this.#__aborted = true;
             let key = 'abort',
-                message = 'TypesenseSearchRequest abort method called';
+                message = window.annexSearch.ErrorUtils.getMessage('typesenseSearchRequest.abort');
             this.setError(key, message);
             this.#__abortController.abort();
             return true;

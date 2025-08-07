@@ -9,7 +9,10 @@ window.annexSearch.DependencyLoader.push([], function() {
      * window.annexSearch.AnnexSearchWidgetWebComponent
      * 
      * @todo    - instantiation
-     * @todo    - config functions re:modifications
+     * @todo    - external trigger to show/hide/toggle
+     * @todo    - external trigger to show w/ query
+     * @todo    - inline layout
+     * 
      * @todo    - variable templating
      * @todo    - custom templates
      * 
@@ -34,6 +37,7 @@ window.annexSearch.DependencyLoader.push([], function() {
      * @todo    [DONE] - loadMore bug re:adding and not clearing
      * @todo    [PUNT] - Missing truncation dots: https://416.io/ss/f/7wtusv
      * @todo    [DONE] - typesense query param (e.g. w/o preset)
+     * @todo    [DONE] - config functions re:modifications
      * @extends HTMLElement
      */
     window.annexSearch.AnnexSearchWidgetWebComponent = window.annexSearch.AnnexSearchWidgetWebComponent || class AnnexSearchWidgetWebComponent extends HTMLElement {
@@ -45,6 +49,14 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @var     Boolean (default: false)
          */
         #__showing = false;
+
+        /**
+         * #__uuid
+         * 
+         * @access  private
+         * @var     Object (default: {})
+         */
+        #__uuid = 'asw-' + window.annexSearch.StringUtils.generateUUID();
 
         /**
          * #__views
@@ -81,6 +93,7 @@ window.annexSearch.DependencyLoader.push([], function() {
                 layout = window.annexSearch.ConfigUtils.get('layout'),
                 overlay = String(+window.annexSearch.ConfigUtils.get('overlay'));
             this.#__views.root = view;
+            this.setAttribute('id', this.#__uuid);
             this.setAttribute('data-annex-search-layout', layout);
             this.setAttribute('data-annex-search-overlay', overlay);
             this.setAttribute('data-annex-search-ready', '1');
@@ -97,9 +110,8 @@ this.show();
          * @return  Boolean
          */
         #__handleStylesheetErrorLoadEvent(reject, event) {
-            let msg = 'Could not load stylesheets.';
-            // window.annexSearch.LoggingUtils.error(msg, event);
-            window.annexSearch.LoggingUtils.error(msg);
+            let message = window.annexSearch.ErrorUtils.getMessage('stylesheets.failedLoading');
+            window.annexSearch.LoggingUtils.error(message, event);
             reject();
             return true;
         }
@@ -156,9 +168,28 @@ this.show();
         #__render() {
             let handler = this.#__drawRoot.bind(this),
                 promise = this.#__loadStylesheets().then(handler).catch(function(error) {
-                    window.annexSearch.LoggingUtils.error(error);
+// console.trace();
+                    // window.annexSearch.LoggingUtils.error(error);
                 });
             return promise;
+        }
+
+        /**
+         * getConfig
+         * 
+         * @access  public
+         * @param   String key
+         * @return  Boolean
+         */
+        getConfig(key) {
+            let value = window.annexSearch.ConfigUtils.get(key);
+            return value;
+            // if (value === undefined) {
+            //     // let message = window.annexSearch.ErrorUtils.getMessage('webComponent.getConfig.invalidKey', key);
+            //     // window.annexSearch.LoggingUtils.error(message);
+            //     return undefined;
+            // }
+            // return value;
         }
 
         /**
@@ -184,11 +215,33 @@ this.show();
             if (this.#__showing === false) {
                 return false;
             }
+            window.annexSearch.FunctionUtils.triggerCallback('root.hide');
             this.#__showing = false;
             this.#__views.root.blur();
             this.setAttribute('data-annex-search-open', '0');
             this.setAttribute('inert', '');
             return true;
+        }
+
+        /**
+         * setConfig
+         * 
+         * @access  public
+         * @param   String key
+         * @param   mixed value
+         * @return  Boolean
+         */
+        setConfig(key, value) {
+            // let response = window.annexSearch.ConfigUtils.get(key);
+            let response = window.annexSearch.ConfigUtils.set(key, value);
+            return response;
+            // if (reference === undefined) {
+            //     let message = window.annexSearch.ErrorUtils.getMessage('webComponent.setConfig.invalidKey', key);
+            //     window.annexSearch.LoggingUtils.error(message);
+            //     return false;
+            // }
+            // window.annexSearch.ConfigUtils.set(key, value);
+            // return true;
         }
 
         /**
@@ -203,6 +256,7 @@ this.show();
             if (this.#__showing === true) {
                 return false;
             }
+            window.annexSearch.FunctionUtils.triggerCallback('root.show');
             this.#__showing = true;
             this.setAttribute('data-annex-search-open', '1');
             this.removeAttribute('inert');
@@ -242,6 +296,7 @@ this.show();
          * @return  Boolean
          */
         toggle() {
+            window.annexSearch.FunctionUtils.triggerCallback('root.toggle');
             if (this.#__showing === true) {
                 let response = this.hide();
                 return response;

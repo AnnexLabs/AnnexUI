@@ -534,6 +534,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 field.nullifyLastTypesenseSearchResponse();
                 found.clearResults();
                 found.setStateKey('idle');
+                window.annexSearch.FunctionUtils.triggerCallback('results.idle');
                 return true;
             }
             return false;

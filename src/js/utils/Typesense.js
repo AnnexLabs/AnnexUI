@@ -66,19 +66,19 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let options = request.getOptions();
             if (options.q === null) {
                 let key = 'option',
-                    message = 'Invalid valid {q} option; found (null)';
+                    message = window.annexSearch.ErrorUtils.getMessage('typesenseUtils.options.q.null');
                 request.setError(key, message);
                 return false;
             }
             if (options.q === undefined) {
                 let key = 'option',
-                    message = 'Invalid valid {q} option; found (undefined)';
+                    message = window.annexSearch.ErrorUtils.getMessage('typesenseUtils.options.q.undefined');
                 request.setError(key, message);
                 return false;
             }
             if (options.q.trim() === '') {
                 let key = 'option',
-                    message = 'Invalid valid {q} option; found (empty string)';
+                    message = window.annexSearch.ErrorUtils.getMessage('typesenseUtils.options.q.empty');
                 request.setError(key, message);
                 return false;
             }
@@ -90,13 +90,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             }
             if (searchOptions.query_by === null) {
                 let key = 'searchOptions',
-                    message = 'Invalid valid {query_by} option; found (null). Either {preset} or {query_by} needs to be defined in window.annexSearchConfig.searchOptions';
+                    message = window.annexSearch.ErrorUtils.getMessage('typesenseUtils.searchOptions.q.null');
                 request.setError(key, message);
                 return false;
             }
             if (searchOptions.query_by === undefined) {
                 let key = 'searchOptions',
-                    message = 'Invalid valid {query_by} option; found (undefined). Either {preset} or {query_by} needs to be defined in window.annexSearchConfig.searchOptions';
+                    message = window.annexSearch.ErrorUtils.getMessage('typesenseUtils.searchOptions.q.undefined');
                 request.setError(key, message);
                 return false;
             }

@@ -60,10 +60,10 @@ window.annexSearch.DependencyLoader = (function() {
      */
     var __checkForFailure = function(dependencies) {
         if (__attempts > 10000) {
-            var msg = 'Could not complete an attempt: [';
-            msg += dependencies.join(', ') + ']';
-            window.annexSearch && window.annexSearch.LoggingUtils && window.annexSearch.LoggingUtils.error(msg);
-            throw new Error(msg);
+            var message = 'Could not complete an attempt: [';
+            message += dependencies.join(', ') + ']';
+            window.annexSearch && window.annexSearch.LoggingUtils && window.annexSearch.LoggingUtils.error(message);
+            throw new Error(message);
         }
     };
 

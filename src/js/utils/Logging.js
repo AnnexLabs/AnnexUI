@@ -71,6 +71,37 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             args.push(styles);
             args = args.concat(Array.from(arguments));
             window.console && window.console.log && window.console.log.apply(window, args);
+// window.console.trace();
+            return true;
+        }
+
+        /**
+         * logFailedTypesenseSearchRequestError
+         * 
+         * @access  public
+         * @param   window.annexSearch.TypesenseSearchRequest typesenseSearchRequest
+         * @return  Boolean
+         */
+        logFailedTypesenseSearchRequestError(typesenseSearchRequest) {
+            let error = typesenseSearchRequest.getError(),
+                key = error.key,
+                message = error.message;
+            this.error('Could not complete Typesense search request');
+            if (key === 'typesenseSearchRequestResponse') {
+                this.error('Typesense response: ' + (message));
+                if (message.includes('Forbidden - a valid `x-typesense-api-key` header must be sent.') === true) {
+                    message = window.annexSearch.ErrorUtils.getMessage('loggingUtils.typesenseFailed.tip');
+                    this.error(message);
+                    return true;
+                }
+                return true;
+            }
+            this.error('Error: ' + (message));
+            if (message.includes('Failed to fetch') === true) {
+                message = window.annexSearch.ErrorUtils.getMessage('loggingUtils.fetchFailed.tip');
+                this.error(message);
+                return true;
+            }
             return true;
         }
 

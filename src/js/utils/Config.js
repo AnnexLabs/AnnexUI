@@ -28,6 +28,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * be appened to the either the $body, $head or $documentElement (in
              * that order).
              * 
+             * @access  private
              * @var     null|EventTarget (default: null)
              */
             $parentContainer: null,
@@ -37,11 +38,41 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * 
              * Map of callbacks that can be used for custom logic.
              * 
+             * @access  private
              * @var     Object
              */
             callbacks: {
+                result: {
+                    click: function($annexSearchWidget, event, hit) {
+                        // console.log('result.click', $annexSearchWidget, event, hit);
+                    },
+                    focus: function($annexSearchWidget, event, hit) {
+                        // console.log('result.focus', $annexSearchWidget, event, hit);
+                    },
+                },
                 results: {
-                    click: function(event, hit) {
+                    empty: function($annexSearchWidget) {
+                        // console.log('results.empty', $annexSearchWidget);
+                    },
+                    error: function($annexSearchWidget, error) {
+                        // console.log('results.error', $annexSearchWidget, error);
+                    },
+                    idle: function($annexSearchWidget) {
+                        // console.log('results.idle', $annexSearchWidget);
+                    },
+                    loaded: function($annexSearchWidget, response) {
+                        // console.log('results.loaded', $annexSearchWidget, response);
+                    },
+                },
+                root: {
+                    hide: function($annexSearchWidget) {
+                        // console.log('root.hide', $annexSearchWidget);
+                    },
+                    show: function($annexSearchWidget) {
+                        // console.log('root.show', $annexSearchWidget);
+                    },
+                    toggle: function($annexSearchWidget) {
+                        // console.log('root.toggle', $annexSearchWidget);
                     }
                 }
             },
@@ -52,6 +83,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * Authentication and configuration details specifically for the
              * Typesense cluster.
              * 
+             * @access  private
              * @var     Object
              */
             cluster: {
@@ -68,6 +100,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * comprehensive updates, templates may need to be defined. Supports
              * HTML.
              * 
+             * @access  private
              * @var     Object
              */
             copy: {
@@ -89,6 +122,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             /**
              * debug
              * 
+             * @access  private
              * @var     Boolean (default: false)
              */
             // debug: false,
@@ -100,6 +134,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * The keyboard combination which when pressed, toggles the widget to
              * open or close. If null, no listener is created.
              * 
+             * @access  private
              * @var     null|String (default: '⌘k')
              */
             keyboardShortcut: '⌘k',
@@ -108,6 +143,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             /**
              * highlightTagName
              * 
+             * @access  private
              * @var     String (default: 'MARK')
              */
             highlightTagName: 'MARK',
@@ -120,6 +156,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * - panel-left
              * - panel-right
              * 
+             * @access  private
              * @var     String (default: 'modal')
              */
             layout: 'modal',
@@ -131,6 +168,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * click listener which when detected outside of the widget, triggers it
              * to be closed.
              * 
+             * @access  private
              * @var     Boolean (default: true)
              */
             overlay: true,
@@ -142,18 +180,29 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * to the functionality, but extensible for being able to define custom
              * styles and templating systems.
              * 
+             * @access  private
              * @var     Object
              */
             paths: {
                 css: [
                     'https://local.annexsearch.com/ts/css',
+                    // 'https://local.annexsearch.com/ts/css2',
                 ],
                 templates: 'https://local.annexsearch.com/ts/templates',
             },
 
             /**
+             * schema
+             * 
+             * @access  private
+             * @var     String (default: 'webResource-v0.1.0')
+             */
+            schema: 'webResource-v0.1.0',
+
+            /**
              * searchOptions
              * 
+             * @access  private
              * @var     Object
              */
             searchOptions: {
@@ -165,6 +214,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             /**
              * searchRequestMethod
              * 
+             * @access  private
              * @var     String (default: 'lifo')
              */
             // searchRequestMethod: 'fifo',
@@ -176,6 +226,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * Map of strings corresponding to all the available templates used in
              * the widget.
              * 
+             * @access  private
              * @var     Object
              */
             templates: {
@@ -230,7 +281,62 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 return data;
             }
             let value = this.#__data[key];
+            if (value !== undefined) {
+                return value;
+            }
+            let pieces = key.split('.');
+            if (pieces.length === 1) {
+                let message = window.annexSearch.ErrorUtils.getMessage('configUtils.get.key.invalid', key);
+                this.error(message);
+                return undefined;
+            }
+            value = this.#__data;
+            for (let piece of pieces) {
+                value = value[piece];
+                if (value === undefined) {
+                    let message = window.annexSearch.ErrorUtils.getMessage('configUtils.get.key.invalid', key);
+                    this.error(message);
+                    return undefined;
+                }
+            }
             return value;
+        }
+
+        /**
+         * set
+         * 
+         * @access  public
+         * @param   String key
+         * @param   mixed value
+         * @return  Boolean
+         */
+        set(key, value) {
+            if (key === undefined) {
+                let message = window.annexSearch.ErrorUtils.getMessage('configUtils.set.key.undefined');
+                this.error(message);
+                return false;
+            }
+            if (value === undefined) {
+                let message = window.annexSearch.ErrorUtils.getMessage('configUtils.set.value.undefined');
+                this.error(message);
+                return false;
+            }
+            if (this.get(key) === undefined) {
+                return false;
+            }
+            let parent = this.#__data,
+                reference = this.#__data[key],
+                piece = key;
+            if (reference === undefined) {
+                let pieces = key.split('.');
+                reference = this.#__data;
+                for (piece of pieces) {
+                    parent = reference;
+                    reference = reference[piece];
+                }
+            }
+            parent[piece] = value;
+            return true;
         }
 
         /**

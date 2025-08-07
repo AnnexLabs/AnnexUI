@@ -58,9 +58,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleClickEvent(event) {
-            let callback = window.annexSearch.ConfigUtils.get('callbacks')?.results?.click,
-                hit = this.get('hit');
-            callback && callback(event, hit);
+            let hit = this.get('hit');
+            window.annexSearch.FunctionUtils.triggerCallback('result.click', event, hit);
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             return true;
         }
@@ -73,9 +72,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleFocusEvent(event) {
-            let callback = window.annexSearch.ConfigUtils.get('callbacks')?.results?.focus,
-                hit = this.get('hit');
-            callback && callback(event, hit);
+            let hit = this.get('hit');
+            window.annexSearch.FunctionUtils.triggerCallback('result.focus', event, hit);
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             return true;
         }
