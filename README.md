@@ -7,6 +7,7 @@
 - `{{response.page}}`
 - `{{response.search_time_ms}}`
 
+
 ### Config
 - $parent
 - callbacks
@@ -19,6 +20,7 @@
 - paths
 - searchRequestMethod
 - templates
+
 
 ### Setup
 ``` javascript
@@ -42,6 +44,7 @@ $annexSearchWidget.ready().then(function($annexSearchWidget) {
 });
 ```
 
+
 ### Config
 ``` javascript
 $('annex-search-widget').setConfig('$parentContainer', document.body);
@@ -52,7 +55,8 @@ $('annex-search-widget').setConfig('searchOptions', {
 });
 ```
 
-### Events (config and event listeners)
+
+### Supported config callbacks
 `callbacks.result.click`  
 `callbacks.result.focus`  
 `callbacks.results.empty`  
@@ -61,10 +65,24 @@ $('annex-search-widget').setConfig('searchOptions', {
 `callbacks.results.loaded`  
 `callbacks.root.hide`  
 `callbacks.root.show`  
-`callbacks.root.toggle`  
+`callbacks.root.toggle`
 
+
+### Supported $annexSearchWidget events
+`result.click`  
+`result.focus`  
+`results.empty`  
+`results.error`  
+`results.idle`  
+`results.loaded`  
+`root.hide`  
+`root.show`  
+`root.toggle`
+
+
+### Sample event handling
 ``` javascript
 $('annex-search-widget').addEventListener('root.show', function(event) {
-    console.log(event, event.detail);// Describe event.detail array entries
+    console.log(event, event.detail);
 });
 ```
