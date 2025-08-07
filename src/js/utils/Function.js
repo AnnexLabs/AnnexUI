@@ -41,16 +41,32 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @param   Number delay
          * @return  Promise
          */
-        getDelayedPromise(resolve, delay, ... args) {
-            let promise = new Promise(function(resolve, reject) {
-                setTimeout(function() {
-                    if (resolve === true) {
-                        resolve(args[0]);
-                    } else {
-                        reject(args[0]);
-                    }
-                }, delay);
-            });
+//         getDelayedPromise(resolve, delay, ... args) {
+//             let promise = new Promise(function(resolve, reject) {
+// console.log('123solving');
+//                 setTimeout(function() {
+//                     if (resolve === true) {
+// console.log('resolving');
+//                         resolve(args[0]);
+//                     } else {
+//                         reject(args[0]);
+//                     }
+//                 }, delay);
+//             });
+//             return promise;
+//         }
+
+        /**
+         * getEmptyPromise
+         * 
+         * @access  public
+         * @return  Promise
+         */
+        getEmptyPromise() {
+            let args = Array.from(arguments),
+                promise = new Promise(function(resolve, reject) {
+                    resolve.apply(window, args);
+                });
             return promise;
         }
     }

@@ -8,9 +8,7 @@ window.annexSearch.DependencyLoader.push([], function() {
     /**
      * window.annexSearch.AnnexSearchWidgetWebComponent
      * 
-     * @todo    - Missing truncation dots: https://416.io/ss/f/7wtusv
-     * @todo    - typesense query param (e.g. w/o preset)
-     * 
+     * @todo    - instantiation
      * @todo    - config functions re:modifications
      * @todo    - variable templating
      * @todo    - custom templates
@@ -34,6 +32,8 @@ window.annexSearch.DependencyLoader.push([], function() {
      * @todo    [PUNT] - thumbnails
      * @todo    [PUNT] - Look into CSV fields and commas being encoded in XHRs
      * @todo    [DONE] - loadMore bug re:adding and not clearing
+     * @todo    [PUNT] - Missing truncation dots: https://416.io/ss/f/7wtusv
+     * @todo    [DONE] - typesense query param (e.g. w/o preset)
      * @extends HTMLElement
      */
     window.annexSearch.AnnexSearchWidgetWebComponent = window.annexSearch.AnnexSearchWidgetWebComponent || class AnnexSearchWidgetWebComponent extends HTMLElement {

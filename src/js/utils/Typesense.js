@@ -57,16 +57,49 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * 
          * @see     https://416.io/ss/f/fm0aua
          * @access  private
-         * @param   Object options (default: {})
+         * @param   window.annexSearch.TypesenseSearchRequest request
          * @return  Boolean
          */
-        #__validSearchOptions(options = {}) {
-            // if (options.query === undefined) {
-            //     return false;
-            // }
-            // if (options.query_by === undefined) {
-            //     return false;
-            // }
+        #__validSearchOptions(request) {
+
+            // Options
+            let options = request.getOptions();
+            if (options.q === null) {
+                let key = 'option',
+                    message = 'Invalid valid {q} option; found (null)';
+                request.setError(key, message);
+                return false;
+            }
+            if (options.q === undefined) {
+                let key = 'option',
+                    message = 'Invalid valid {q} option; found (undefined)';
+                request.setError(key, message);
+                return false;
+            }
+            if (options.q.trim() === '') {
+                let key = 'option',
+                    message = 'Invalid valid {q} option; found (empty string)';
+                request.setError(key, message);
+                return false;
+            }
+
+            // Search options
+            let searchOptions = request.getSearchOptions();
+            if (searchOptions.preset) {
+                return true;
+            }
+            if (searchOptions.query_by === null) {
+                let key = 'searchOptions',
+                    message = 'Invalid valid {query_by} option; found (null). Either {preset} or {query_by} needs to be defined in window.annexSearchConfig.searchOptions';
+                request.setError(key, message);
+                return false;
+            }
+            if (searchOptions.query_by === undefined) {
+                let key = 'searchOptions',
+                    message = 'Invalid valid {query_by} option; found (undefined). Either {preset} or {query_by} needs to be defined in window.annexSearchConfig.searchOptions';
+                request.setError(key, message);
+                return false;
+            }
             return true;
         }
 
@@ -105,18 +138,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Promise
          */
         search(query, options = {}) {
-            if (this.#__validSearchOptions(options) === false) {
-                this.error('Invalid search $options');
-                let resolve = false,
-                    promise = window.annexSearch.FunctionUtils.getDelayedPromise(resolve);
-                return promise;
-            }
             this.#__abortLastRequest();
             let request = new window.annexSearch.TypesenseSearchRequest(query);
             request.setOptions(options);
+            if (this.#__validSearchOptions(request) === false) {
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(request);
+                return promise;
+            }
             this.#__lastRequest = request;
             this.#__requests.push(request);
-            let promise = request.run();
+            let promise = request.fetch();
             return promise;
         }
     }

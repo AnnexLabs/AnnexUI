@@ -53,6 +53,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             args.push(styles);
             args = args.concat(Array.from(arguments));
             window.console && window.console.log && window.console.log.apply(window, args);
+            window.console.trace();
             return true;
         }
 

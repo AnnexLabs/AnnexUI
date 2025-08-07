@@ -117,6 +117,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * #__setIndexAttribute
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__setIndexAttribute() {
+            let found = this.getView('root.body.results.found'),
+                results = found.getResults(),
+                index = results.indexOf(this);
+            this.setAttribute('data-index', index);
+            return true;
+        }
+
+        /**
          * _addEvents
          * 
          * @access  protected
@@ -159,6 +173,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 return false;
             }
             this.#__renderTemplateVariables();
+            this.#__setIndexAttribute();
             super.render();
             return true;
         }

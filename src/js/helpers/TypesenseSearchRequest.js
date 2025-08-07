@@ -44,6 +44,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         // ];
 
         /**
+         * #__error
+         * 
+         * @access  private
+         * @var     null|Object (default: null)
+         */
+        #__error = null;
+
+        /**
          * #__options
          * 
          * @access  private
@@ -86,6 +94,21 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
             this.#__options.q = query;
             this.#__options.highlight_end_tag = window.annexSearch.TypesenseUtils.getHighlightEndTag();
             this.#__options.highlight_start_tag = window.annexSearch.TypesenseUtils.getHighlightStartTag();
+        }
+
+        /**
+         * #__fetch
+         * 
+         * @access  private
+         * @param   String url
+         * @param   Object options
+         * @return  Promise
+         */
+        #__fetch(url, options) {
+            let successful = this.#__handleSuccessfulRequest.bind(this),
+                failed = this.#__handleFailedRequest.bind(this),
+                promise = window.fetch(url, options).then(successful).catch(failed);
+            return promise;
         }
 
         /**
@@ -151,24 +174,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         }
 
         /**
-         * #__getSearchOptions
-         * 
-         * @access  private
-         * @return  Object
-         */
-        #__getSearchOptions() {
-            let auth = this.#__getAuth(),
-                options = this.#__options;
-            options.preset = auth.presetName || null;
-            for (let key in options) {
-                if (options[key] === null) {
-                    delete options[key];
-                }
-            }
-            return options;
-        }
-
-        /**
          * #__getSearchParams
          * 
          * @access  private
@@ -176,7 +181,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * @return  Object
          */
         #__getSearchParams() {
-            let searchOptions = this.#__getSearchOptions(),
+            let searchOptions = this.getSearchOptions(),
                 params = new URLSearchParams(searchOptions);
 // console.log(__encodingExemptFields);
             for (const [key, value] of params.entries()) {
@@ -209,6 +214,57 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         }
 
         /**
+         * #__handleFailedRequest
+         * 
+         * @access  private
+         * @param   Object error
+         * @return  window.annexSearch.TypesenseSearchRequest
+         */
+        #__handleFailedRequest(error) {
+// console.log(error);
+            let key = error.name,
+                message = error.message;
+            this.setError(key, message);
+            return this;
+        }
+
+        /**
+         * #__handleSuccessfulRequestJSONDecoding
+         * 
+         * @throws  Error
+         * @access  private
+         * @param   Object json
+         * @return  Promise
+         */
+        #__handleSuccessfulRequestJSONDecoding(json) {
+            this.#__response = json;
+            let message = json?.message;
+            if (message !== undefined) {
+                let key = 'typesenseSearchRequestResponse';
+                this.setError(key, message);
+                throw new Error();
+            }
+            if (json.ok === false) {
+                alert('hmmm');
+            }
+            // this.#__response = json;
+            return this;
+        }
+
+        /**
+         * #__handleSuccessfulRequest
+         * 
+         * @access  private
+         * @param   Response response
+         * @return  Promise
+         */
+        #__handleSuccessfulRequest(response) {
+            let handler = this.#__handleSuccessfulRequestJSONDecoding.bind(this),
+                promise = response.json().then(handler);
+            return promise;
+        }
+
+        /**
          * abort
          * 
          * @access  public
@@ -219,8 +275,58 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
                 return false;
             }
             this.#__aborted = true;
+            let key = 'abort',
+                message = 'TypesenseSearchRequest abort method called';
+            this.setError(key, message);
             this.#__abortController.abort();
             return true;
+        }
+
+        /**
+         * fetch
+         * 
+         * @access  public
+         * @return  Promise
+         */
+        fetch() {
+            let url = this.#__getSearchURL(),
+                options = this.#__getFetchOptions(),
+                promise = this.#__fetch(url, options);
+            // this.abort();
+            return promise;
+        }
+
+        /**
+         * getError
+         * 
+         * @access  public
+         * @return  null|Object
+         */
+        getError() {
+            let error = this.#__error;
+            return error;
+        }
+
+        /**
+         * getOptions
+         * 
+         * @access  public
+         * @return  Object
+         */
+        getOptions() {
+            let options = this.#__options;
+            return options;
+        }
+
+        /**
+         * getQuery
+         * 
+         * @access  public
+         * @return  String
+         */
+        getQuery() {
+            let query = this.#__query;
+            return query;
         }
 
         /**
@@ -235,29 +341,39 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         }
 
         /**
-         * run
+         * getSearchOptions
          * 
          * @access  public
-         * @return  Promise
+         * @return  Object
          */
-        run() {
-            let url = this.#__getSearchURL(),
-                options = this.#__getFetchOptions(),
-                promise = new Promise(async function(resolve, reject) {
-                    try {
-                        let response = await fetch(url, options);
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        response.json().then(resolve);
-                    } catch (error) {
-                        if (error.name === 'AbortError') {
-                        } else {
-                            reject(error);
-                        }
-                    }
-                });
-            return promise;
+        getSearchOptions() {
+            let auth = this.#__getAuth(),
+                options = Object.assign({}, this.#__options);
+            options.preset = auth.presetName || null;
+            for (let key in options) {
+                if (options[key] === null) {
+                    delete options[key];
+                }
+            }
+            return options;
+        }
+
+        /**
+         * setError
+         * 
+         * @access  public
+         * @param   String key
+         * @param   String message
+         * @return  Boolean
+         */
+        setError(key, message) {
+            if (this.#__error !== null) {
+                return false;
+            }
+            this.#__error = {};
+            this.#__error.key = key;
+            this.#__error.message = message;
+            return true;
         }
 
         /**

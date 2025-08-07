@@ -14,6 +14,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.FieldHeaderView = window.annexSearch.FieldHeaderView || class FieldHeaderView extends window.annexSearch.BaseView {
 
         /**
+         * #__lastTypesenseSearchRequest
+         * 
+         * @access  private
+         * @var     null|window.annexSearch.TypesenseSearchRequest (default: null)
+         */
+        // #__lastTypesenseSearchRequest = null;
+
+        /**
          * #__lastTypesenseSearchResponse
          * 
          * @access  private
@@ -86,17 +94,43 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * #__logFailedTypesenseSearchRequestError
+         * 
+         * @access  private
+         * @param   window.annexSearch.TypesenseSearchRequest typesenseSearchRequest
+         * @return  Boolean
+         */
+        #__logFailedTypesenseSearchRequestError(typesenseSearchRequest) {
+            let error = typesenseSearchRequest.getError(),
+                key = error.key,
+                message = error.message;
+            this.error('Could not complete Typesense search request');
+            if (key === 'typesenseSearchRequestResponse') {
+                this.error('Typesense response: ' + (message));
+                return true;
+            }
+            this.error('Error: ' + (message));
+            return true;
+        }
+
+        /**
          * #__handleFailedTypesenseSearchEvent
          * 
          * @access  private
          * @param   Object options
-         * @param   Object response
+         * @param   window.annexSearch.TypesenseSearchRequest typesenseSearchRequest
          * @return  Boolean
          */
-        #__handleFailedTypesenseSearchEvent(options, response) {
-            this.debug('#__handleFailedTypesenseSearchEvent', response, arguments);
+        #__handleFailedTypesenseSearchEvent(options, typesenseSearchRequest) {
+            let error = typesenseSearchRequest.getError(),
+                key = error.key;
+            if (key === 'abort') {
+                return false;
+            }
+            let response = typesenseSearchRequest.getResponse();
             this.#__lastTypesenseSearchResponse = response;
             this.setStateKey('error');
+            this.#__logFailedTypesenseSearchRequestError(typesenseSearchRequest);
             return true;
         };
 
@@ -132,10 +166,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * 
          * @access  private
          * @param   Object options
-         * @param   Object response
+         * @param   window.annexSearch.TypesenseSearchRequest typesenseSearchRequest
          * @return  Boolean
          */
-        #__handleLoadMoreSuccessfulTypesenseSearchEvent(options, response) {
+        #__handleLoadMoreSuccessfulTypesenseSearchEvent(options, typesenseSearchRequest) {
+            let response = typesenseSearchRequest.getResponse();
             this.debug('#__handleLoadMoreSuccessfulTypesenseSearchEvent', response);
             this.#__lastTypesenseSearchResponse = response;
             this.#__loadingMore = false;
@@ -153,13 +188,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * 
          * @access  private
          * @param   Object options
-         * @param   Object response
+         * @param   window.annexSearch.TypesenseSearchRequest typesenseSearchRequest
          * @return  Boolean
          */
-        #__handleSuccessfulTypesenseSearchEvent(options, response) {
+        #__handleSuccessfulTypesenseSearchEvent(options, typesenseSearchRequest) {
+            let response = typesenseSearchRequest.getResponse();
             this.debug('#__handleSuccessfulTypesenseSearchEvent', response);
             if (this.#__loadingMore === true) {
-                let loadMoreResponse = this.#__handleLoadMoreSuccessfulTypesenseSearchEvent(options, response);
+                let loadMoreResponse = this.#__handleLoadMoreSuccessfulTypesenseSearchEvent(options, typesenseSearchRequest);
                 return loadMoreResponse;
             }
             this.#__lastTypesenseSearchResponse = response;
@@ -177,6 +213,27 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         };
 
         /**
+         * #__handleTypesenseSearchResponse
+         * 
+         * @access  private
+         * @param   Object options (default: {})
+         * @param   window.annexSearch.TypesenseSearchRequest typesenseSearchRequest
+         * @return  Boolean
+         */
+        #__handleTypesenseSearchResponse(options = {}, typesenseSearchRequest) {
+            let header = this.getView('root.header');
+            header.hideSpinner();
+            // this.#__lastTypesenseSearchRequest = typesenseSearchRequest;
+            let error = typesenseSearchRequest.getError();
+            if (error === null) {
+                let response = this.#__handleSuccessfulTypesenseSearchEvent(options, typesenseSearchRequest);
+                return response;
+            }
+            let response = this.#__handleFailedTypesenseSearchEvent(options, typesenseSearchRequest);
+            return response;
+        }
+
+        /**
          * #__searchTypesense
          * 
          * @access  private
@@ -187,12 +244,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let header = this.getView('root.header');
             header.showSpinner();
             let value = this.first('input').value.trim(),
-                successful = this.#__handleSuccessfulTypesenseSearchEvent.bind(this, options),
-                failed = this.#__handleFailedTypesenseSearchEvent.bind(this, options),
-                promise = window.annexSearch.TypesenseUtils.search(value, options).then(function(json) {
-                    header.hideSpinner();
-                    return successful(json);
-                }).catch(failed);
+                handler = this.#__handleTypesenseSearchResponse.bind(this, options),
+                promise = window.annexSearch.TypesenseUtils.search(value, options).then(handler);
             return promise;
         }
 

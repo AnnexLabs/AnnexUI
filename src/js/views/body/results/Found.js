@@ -74,6 +74,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         /**
          * #__drawResult
          * 
+         * @note    Ordered
          * @access  private
          * @param   Object hit
          * @return  Boolean
@@ -81,8 +82,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__drawResult(hit) {
             let view = window.annexSearch.ElementUtils.renderTemplate('resultFoundResultsBody', this._$element);
             view.set('hit', hit);
-            view.render();
             this.#__results.push(view);
+            view.render();
             return true;
         }
 
