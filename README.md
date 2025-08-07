@@ -22,8 +22,24 @@
 
 ### Setup
 ``` javascript
-let $annexSearchWidget = new window.annexSearch.AnnexSearchWidgetWebComponent();
+let $annexSearchWidget = document.createElement('annex-search-widget');
+$annexSearchWidget.setConfig({
+    cluster: {
+        apiKey: '606o4DjqwBhFNZ2NKgSiqFsqdMNCbcKx',
+        collectionName: 'prod:::tpclwpqz62hq:::crawlerResourceSearch:::v0.1.0',
+        hostname: 'b3487cx0hrdu1y6kp-1.a1.typesense.net',
+        presetName: 'prod:::tcprkee8nnvp:::crawlerResourceSearch:::v0.1.0',
+    },
+    searchOptions: {
+        highlight_full_fields: 'title,body',
+        highlight_affix_num_tokens: '10',
+        snippet_threshold: '20',
+    }
+});
 $annexSearchWidget.mount();
+$annexSearchWidget.ready().then(function($annexSearchWidget) {
+    $annexSearchWidget.show();
+});
 ```
 
 ### Config
