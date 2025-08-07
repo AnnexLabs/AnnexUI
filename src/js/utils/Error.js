@@ -13,16 +13,16 @@ window.annexSearch.DependencyLoader.push([], function() {
     window.annexSearch.ErrorUtils = window.annexSearch.ErrorUtils || class {
 
         /**
-         * #__data
+         * #__messageMap
          * 
          * @access  private
          * @static
          * @var     Object
          */
-        static #__data = {
+        static #__messageMap = {
             'configUtils.get.key.invalid':                      'Invalid {key} passed to {helper.config.get}: %0',
-            'configUtils.set.key.undefined':                    'Invalid {undefined} value passed as {key} to {window.annexSearch.ConfigUtils.set}',
-            'configUtils.set.value.undefined':                  'Invalid {undefined} value passed as {value} to {window.annexSearch.ConfigUtils.set}',
+            'configUtils.set.key.undefined':                    'Invalid {undefined} value passed as {key} to {window.annexSearch.ConfigHelper.set}',
+            'configUtils.set.value.undefined':                  'Invalid {undefined} value passed as {value} to {window.annexSearch.ConfigHelper.set}',
             'loggingUtils.fetchFailed.tip':                     'Tip: Double check that you defined your {hostname} value correctly in {config.cluster}',
             'loggingUtils.typesenseFailed.tip':                 'Tip: Double check that you defined your {apiKey} and {collectionName} values correctly in {config.cluster}',
             'stylesheets.failedLoading':                        'Could not load stylesheets.',
@@ -43,11 +43,10 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @access  public
          * @static
          * @param   String key
-         * @param   Array args (optional)
          * @return  null|String
          */
-        static getMessage(key, ...args) {
-            let message = this.#__data[key];
+        static getMessage(key) {
+            let message = this.#__messageMap[key];
             if (message === undefined) {
                 return null;
             }

@@ -8,6 +8,7 @@ window.annexSearch.DependencyLoader.push([], function() {
     /**
      * window.annexSearch.AnnexSearchWidgetWebComponent
      * 
+     * @see     https://chatgpt.com/c/68952fc2-4a9c-8323-9de9-8857960241d8
      * @extends HTMLElement
      */
     window.annexSearch.AnnexSearchWidgetWebComponent = window.annexSearch.AnnexSearchWidgetWebComponent || class extends HTMLElement {
@@ -19,6 +20,22 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @var     Object (default: {})
          */
         #__helpers = {};
+
+        /**
+         * #__index
+         * 
+         * @access  private
+         * @var     null|Number (default: null)
+         */
+        #__index = null;
+
+        /**
+         * #__maxZIndexValue
+         * 
+         * @access  private
+         * @var     Number (default: 2147483647)
+         */
+        #__maxZIndexValue = 2147483647;
 
         /**
          * #__showing
@@ -52,6 +69,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         constructor() {
             super();
+            this.#__index = window.annexSearch.AnnexSearch.getRegistered().length;
             window.annexSearch.AnnexSearch.register(this);
             this.#__setupShadow();
             this.#__setupHelpers();
@@ -76,6 +94,25 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * #__setStyles
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__setStyles() {
+            // let showing = window.annexSearch.AnnexSearch.getShowing();
+            // if (showing.length === 0) {
+            //     return false;
+            // }
+            // if (showing.length === 1) {
+            //     return false;
+            // }
+            let zIndex = this.#__maxZIndexValue - this.#__index;
+// console.log(zIndex);
+            return true;
+        }
+
+        /**
          * #__drawRoot
          * 
          * @access  private
@@ -85,12 +122,14 @@ window.annexSearch.DependencyLoader.push([], function() {
             let $shadow = this.shadow,
                 view = window.annexSearch.ElementUtils.renderTemplate('root', $shadow, this),
                 layout = this.getHelper('config').get('layout'),
-                overlay = String(+this.getHelper('config').get('overlay'));
+                overlay = String(+this.getHelper('config').get('showOverlay')),
+                index = this.#__index;
             this.#__views.root = view;
             this.setAttribute('id', this.#__uuid);
             this.setAttribute('data-annex-search-layout', layout);
             this.setAttribute('data-annex-search-overlay', overlay);
             this.setAttribute('data-annex-search-ready', '1');
+            this.setAttribute('data-annex-search-index', index);
             return true;
         }
 
@@ -282,17 +321,8 @@ window.annexSearch.DependencyLoader.push([], function() {
                 let response = this.getHelper('config').setData(key);
                 return response;
             }
-            // let response = this.getHelper('config').get(key);
-console.log(key, value);
             let response = this.getHelper('config').set(key, value);
             return response;
-            // if (reference === undefined) {
-            //     let message = window.annexSearch.ErrorUtils.getMessage('webComponent.setConfig.invalidKey', key);
-            //     window.annexSearch.LoggingUtils.error(message);
-            //     return false;
-            // }
-            // window.annexSearch.ConfigUtils.set(key, value);
-            // return true;
         }
 
         /**
@@ -310,6 +340,7 @@ console.log(key, value);
             window.annexSearch.AnnexSearch.setActive(this);
             this.dispatchCustomEvent('root.show');
             this.#__showing = true;
+            this.#__setStyles();
             this.setAttribute('data-annex-search-open', '1');
             this.removeAttribute('inert');
             let found = this.#__views.root.getView('root.body.results.found'),

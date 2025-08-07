@@ -38,24 +38,21 @@ window.annexSearch.DependencyLoader.push([], function() {
          * getEscapedHTML
          * 
          * @see     https://chatgpt.com/c/68911e4d-9784-8330-b358-a52ba952426b
+         * @see     https://chatgpt.com/c/68952ba0-eb34-8326-8389-f043ba0261be
          * @access  public
          * @static
          * @param   String str
          * @return  String
          */
         static getEscapedHTML(str) {
-            let $div = document.createElement('div'),
-                tagName = this.getHelper('config').get('highlightTagName'),
-                tagNameLowerCase = tagName.toLowerCase(),
-                startTag = '<' + (tagNameLowerCase) + '>',
-                endTag = '</' + (tagNameLowerCase) + '>',
-                escapedStartTag = startTag.replace('<', '&lt;').replace('>', '&gt;'),
-                escapedEndTag = endTag.replace('<', '&lt;').replace('>', '&gt;');
-            $div.textContent = str;
-            $div.innerHTML = $div.innerHTML.replaceAll(escapedStartTag, startTag);
-            $div.innerHTML = $div.innerHTML.replaceAll(escapedEndTag, endTag);
-            let html = $div.innerHTML;
-            return html;
+            let escaped = str
+                .replace(/&(?!(?:[a-z\d]+|#\d+|#x[a-f\d]+);)/gi, '&amp;')
+                // .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+            return escaped;
         }
 
         /**
@@ -92,22 +89,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * registerComponent
-         * 
-         * @access  public
-         * @param   String tagName
-         * @param   Function componentClass
-         * @return  Boolean
-         */
-        // registerComponent(tagName, componentClass) {
-        //     if (window.customElements.get(tagName) === true) {
-        //         return false;
-        //     }
-        //     window.customElements.define(tagName, componentClass);
-        //     return true;
-        // }
-
-        /**
          * renderTemplate
          * 
          * @access  public
@@ -119,8 +100,6 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         static renderTemplate(templateId, $parent, $annexSearchWidget = null) {
             $annexSearchWidget = $annexSearchWidget || $parent.getRootNode().host;
-// console.log($parent.closest);//, $parent.closest('annex-search-widget'));
-// console.log($parent, $parent.closest('annex-search-widget'));
             let $element = this.#__getTemplateElement(templateId, $annexSearchWidget);
             $parent.appendChild($element);
             let viewName = $element.getAttribute('data-view-name'),

@@ -134,7 +134,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * 
          * @access  public
          * @param   String key
-         * @param   BaseView view
+         * @param   window.annexSearch.BaseView view
          * @return  Boolean
          */
         setView(key, view) {

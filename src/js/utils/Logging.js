@@ -13,18 +13,6 @@ window.annexSearch.DependencyLoader.push([], function() {
     window.annexSearch.LoggingUtils = window.annexSearch.LoggingUtils || class {
 
         /**
-         * #__colorCodes
-         * 
-         * @access  private
-         * @var     Object
-         */
-        // #__colorCodes = {
-        //     green: '\x1b[32m',
-        //     red: '\x1b[31m',
-        //     reset: '\x1b[0m',
-        // };
-
-        /**
          * #__labels
          * 
          * @access  private
@@ -32,31 +20,8 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @var     String (default: 'Annex Search')
          */
         static #__labels = {
-            // debug: '🐞 Annex Search',
-            // message: '📣 Annex Search'
-            debug: 'Annex Search',
             error: 'Annex Search',
-            message: 'Annex Search'
         };
-
-        /**
-         * debug
-         * 
-         * @access  public
-         * @static
-         * @return  Boolean
-         */
-        static debug() {
-            let message = '%c[' + (this.#__labels.debug) + ']',
-                styles = 'color: green; font-weight: bold; font-family: monospace;',
-                args = [];
-            args.push(message);
-            args.push(styles);
-            args = args.concat(Array.from(arguments));
-            window.console && window.console.log && window.console.log.apply(window, args);
-            window.console.trace();
-            return true;
-        }
 
         /**
          * error
@@ -73,7 +38,6 @@ window.annexSearch.DependencyLoader.push([], function() {
             args.push(styles);
             args = args.concat(Array.from(arguments));
             window.console && window.console.log && window.console.log.apply(window, args);
-// window.console.trace();
             return true;
         }
 

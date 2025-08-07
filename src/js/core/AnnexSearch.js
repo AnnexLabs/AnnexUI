@@ -5,6 +5,7 @@
  * @todo    - instantiation
  * 
  * @todo    - external trigger to show/hide/toggle
+ * @todo    - bug with multiple open and query-ing
  * @todo    - external trigger to show w/ query
  * @todo    - inline layout
  * 
@@ -62,13 +63,13 @@ window.annexSearch.DependencyLoader.push([], function() {
         static #__registered = [];
 
         /**
-         * #__parseAnnexSearchWidget
+         * #__parseAnnexSearchWidgets
          * 
          * @access  private
          * @static
          * @return  Boolean
          */
-        static #__parseAnnexSearchWidget() {
+        static #__parseAnnexSearchWidgets() {
             return true;
         }
 
@@ -128,6 +129,24 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * getShowing
+         * 
+         * @access  public
+         * @static
+         * @return  Array
+         */
+        static getShowing() {
+            let registered = this.#__registered,
+                showing = [];
+            for (let $annexSearchWidget of registered) {
+                if ($annexSearchWidget.showing() === true) {
+                    showing.push($annexSearchWidget);
+                }
+            }
+            return showing;
+        }
+
+        /**
          * register
          * 
          * @access  public
@@ -154,6 +173,19 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * setStyles
+         * 
+         * @access  public
+         * @static
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @return  Boolean
+         */
+        // static setStyles($annexSearchWidget) {
+        //     this.#__$active = $annexSearchWidget;
+        //     return true;
+        // }
+
+        /**
          * setup
          * 
          * @access  public
@@ -162,7 +194,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         static setup() {
             this.#__setupUtils();
-            this.#__parseAnnexSearchWidget();
+            this.#__parseAnnexSearchWidgets();
             window.customElements.define('annex-search-widget', window.annexSearch.AnnexSearchWidgetWebComponent);
             return true;
         }

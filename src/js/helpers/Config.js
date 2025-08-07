@@ -44,35 +44,35 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             callbacks: {
                 result: {
                     click: function($annexSearchWidget, event, hit) {
-                        console.log('result.click', $annexSearchWidget, event, hit);
+                        // console.log('result.click', $annexSearchWidget, event, hit);
                     },
                     focus: function($annexSearchWidget, event, hit) {
-                        console.log('result.focus', $annexSearchWidget, event, hit);
+                        // console.log('result.focus', $annexSearchWidget, event, hit);
                     },
                 },
                 results: {
                     empty: function($annexSearchWidget) {
-                        console.log('results.empty', $annexSearchWidget);
+                        // console.log('results.empty', $annexSearchWidget);
                     },
                     error: function($annexSearchWidget, error) {
-                        console.log('results.error', $annexSearchWidget, error);
+                        // console.log('results.error', $annexSearchWidget, error);
                     },
                     idle: function($annexSearchWidget) {
-                        console.log('results.idle', $annexSearchWidget);
+                        // console.log('results.idle', $annexSearchWidget);
                     },
                     loaded: function($annexSearchWidget, response) {
-                        console.log('results.loaded', $annexSearchWidget, response);
+                        // console.log('results.loaded', $annexSearchWidget, response);
                     },
                 },
                 root: {
                     hide: function($annexSearchWidget) {
-                        console.log('root.hide', $annexSearchWidget);
+                        // console.log('root.hide', $annexSearchWidget);
                     },
                     show: function($annexSearchWidget) {
-                        console.log('root.show', $annexSearchWidget);
+                        // console.log('root.show', $annexSearchWidget);
                     },
                     toggle: function($annexSearchWidget) {
-                        console.log('root.toggle', $annexSearchWidget);
+                        // console.log('root.toggle', $annexSearchWidget);
                     }
                 }
             },
@@ -138,6 +138,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * @var     null|String (default: '⌘k')
              */
             keyboardShortcut: '⌘k',
+            // keyboardShortcut: '⌘j',
             // keyboardShortcut: null,
 
             /**
@@ -160,18 +161,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * @var     String (default: 'modal')
              */
             layout: 'modal',
-
-            /**
-             * overlay
-             * 
-             * Whether an overlay should be shown. Currently doesn't effect the
-             * click listener which when detected outside of the widget, triggers it
-             * to be closed.
-             * 
-             * @access  private
-             * @var     Boolean (default: true)
-             */
-            overlay: true,
 
             /**
              * paths
@@ -219,6 +208,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              */
             // searchRequestMethod: 'fifo',
             searchRequestMethod: 'lifo',
+
+            /**
+             * showOverlay
+             * 
+             * Whether an overlay should be shown. Currently doesn't effect the
+             * click listener which when detected outside of the widget, triggers it
+             * to be closed.
+             * 
+             * @access  private
+             * @var     Boolean (default: true)
+             */
+            showOverlay: true,
 
             /**
              * templates

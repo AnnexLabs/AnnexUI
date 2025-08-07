@@ -82,7 +82,8 @@ $('annex-search-widget').setConfig('searchOptions', {
 
 ### Sample event handling
 ``` javascript
-$('annex-search-widget').addEventListener('root.show', function(event) {
-    console.log(event, event.detail);
+$('annex-search-widget').addEventListener('root.show', function(customEvent) {
+    console.log(customEvent);
+    console.log(customEvent.detail);
 });
 ```

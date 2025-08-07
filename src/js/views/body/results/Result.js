@@ -91,6 +91,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                     hit: hit
                 };
             html = window.annexSearch.ElementUtils.renderTemplateVariables(html, map);
+            html = this.getHelper('typesense').replaceHightlightTags(html);
             this._$element = this.#__replaceOuterHTML(html);
             return true;
         }
@@ -189,7 +190,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 metaKey: originEvent.metaKey,
                 ctrlKey: originEvent.ctrlKey
             });
-            this.getElement().dispatchEvent(event);
+            this._$element.dispatchEvent(event);
             return true;
         }
     }

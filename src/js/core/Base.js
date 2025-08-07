@@ -35,11 +35,11 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @access  public
          * @return  Boolean
          */
-        debug() {
-            let scope = window.annexSearch.DebuggingUtils,
-                response = window.annexSearch.DebuggingUtils.log.apply(scope, arguments);
-            return response;
-        }
+        // debug() {
+        //     let scope = window.annexSearch.DebuggingUtils,
+        //         response = window.annexSearch.DebuggingUtils.log.apply(scope, arguments);
+        //     return response;
+        // }
 
         /**
          * error

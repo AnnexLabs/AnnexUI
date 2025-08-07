@@ -32,3 +32,16 @@
 :host([data-annex-search-ready="1"]) {
     transition: opacity var(--annex-search-open-duration);
 }
+
+/**
+ * States (offset)
+ * 
+ */
+:host([data-annex-search-index="0"]) [data-view-name="RootView"] > div.content {
+/*    background-color: red !important;*/
+/*    --offset: attr(data-annex-search-index px);*/
+/*    transform: translateY(-10px) translateX(-10px);*/
+
+    /*margin-top: -10px;
+    margin-left: -10px;*/
+}

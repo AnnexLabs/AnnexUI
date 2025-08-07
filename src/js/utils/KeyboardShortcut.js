@@ -175,7 +175,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  private
          * @static
-         * @return  BaseView
+         * @return  window.annexSearch.BaseView
          */
         static #__getField() {
             let $annexSearchWidget = this.#__getActiveWebComponent(),
@@ -188,7 +188,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  private
          * @static
-         * @return  BaseView
+         * @return  window.annexSearch.BaseView
          */
         static #__getFound() {
             let $annexSearchWidget = this.#__getActiveWebComponent(),
@@ -231,6 +231,9 @@ window.annexSearch.DependencyLoader.push([], function() {
                 return false;
             }
             let $annexSearchWidget = this.#__getActiveWebComponent();
+            if ($annexSearchWidget === null) {
+                return false;
+            }
             if ($annexSearchWidget.showing() === false) {
                 return false;
             }

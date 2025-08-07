@@ -140,6 +140,23 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * replaceHightlightTags
+         * 
+         * @access  public
+         * @param   String html
+         * @return  String
+         */
+        replaceHightlightTags(html) {
+            let startTag = this.getHighlightStartTag(),
+                endTag = this.getHighlightEndTag(),
+                escapedStartTag = startTag.replace('<', '&lt;').replace('>', '&gt;'),
+                escapedEndTag = endTag.replace('<', '&lt;').replace('>', '&gt;');
+            html = html.replaceAll(escapedStartTag, startTag);
+            html = html.replaceAll(escapedEndTag, endTag);
+            return html;
+        }
+
+        /**
          * search
          * 
          * @access  public

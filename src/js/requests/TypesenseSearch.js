@@ -92,6 +92,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
             super();
             this.#__query = query;
             this.#__options.q = query;
+// console.log(this, this.getHelper);//, this.getHelper('typesense'));
             this.#__options.highlight_end_tag = this.getHelper('typesense').getHighlightEndTag();
             this.#__options.highlight_start_tag = this.getHelper('typesense').getHighlightStartTag();
         }
