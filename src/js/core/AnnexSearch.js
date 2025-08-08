@@ -4,6 +4,7 @@
  * 
  * @todo    - bug with multiple open and query-ing
  * @todo    - multiple bugs (various)
+ * @todo    - ensure multiple instantiations happen sequentially (to allow for /templates caching)
  * 
  * @todo    - CacheUtils for /css and /templates lookups to speed things up?
  * @todo    - Error logging cleanup
@@ -82,9 +83,9 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @static
          * @return  Boolean
          */
-        static #__parseAnnexSearchWidgets() {
-            return true;
-        }
+        // static #__parseAnnexSearchWidgets() {
+        //     return true;
+        // }
 
         /**
          * #__setupUtils
@@ -94,6 +95,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         static #__setupUtils() {
+            window.annexSearch.CacheUtils.setup();
             window.annexSearch.DataUtils.setup();
             // window.annexSearch.DebuggingUtils.setup();
             window.annexSearch.ElementUtils.setup();
@@ -233,7 +235,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         static setup() {
             this.#__setupUtils();
-            this.#__parseAnnexSearchWidgets();
+            // this.#__parseAnnexSearchWidgets();
             window.customElements.define('annex-search-widget', window.annexSearch.AnnexSearchWidgetWebComponent);
             return true;
         }

@@ -271,6 +271,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 }
                 this.#__data.templates[id] = match;
             }
+            window.annexSearch.CacheUtils.set('templates', this.#__data.templates);
             return true;
         }
 
@@ -401,8 +402,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Promise
          */
         loadTemplates() {
-            let promise = this.#__loadTemplates();
-            return promise;
+            let templates = window.annexSearch.CacheUtils.get('templates');
+            if (templates === undefined) {
+                let promise = this.#__loadTemplates();
+                return promise;
+            }
+            this.#__data.templates = templates;
+console.log('oh');
+            return true;
         }
 
         /**

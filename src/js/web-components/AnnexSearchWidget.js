@@ -77,6 +77,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         constructor() {
             super();
+console.log('a');
             this.#__index = window.annexSearch.AnnexSearch.getRegistered().length;
             window.annexSearch.AnnexSearch.register(this);
             this.#__setupShadow();
