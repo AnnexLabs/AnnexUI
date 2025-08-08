@@ -77,6 +77,15 @@ window.annexSearch.DependencyLoader.push([], function() {
         static #__registered = [];
 
         /**
+         * #__version
+         * 
+         * @access  private
+         * @static
+         * @var     String (default: 'v0.1.0-dev')
+         */
+        static #__version = 'v0.1.0-dev';
+
+        /**
          * #__parseAnnexSearchWidgets
          * 
          * @access  private
@@ -172,6 +181,18 @@ window.annexSearch.DependencyLoader.push([], function() {
                 }
             }
             return showing;
+        }
+
+        /**
+         * getVersion
+         * 
+         * @access  public
+         * @static
+         * @return  String
+         */
+        static getVersion() {
+            let version = this.#__version;
+            return version;
         }
 
         /**
