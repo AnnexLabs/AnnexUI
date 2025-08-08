@@ -2,12 +2,11 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - external trigger to show/hide/toggle
- * @todo    - external trigger to show w/ query
- * 
  * @todo    - bug with multiple open and query-ing
+ * @todo    - multiple bugs (various)
  * 
  * @todo    - CacheUtils for /css and /templates lookups to speed things up?
+ * @todo    - Error logging cleanup
  * 
  * @todo    - variable templating
  * @todo    - custom templates
@@ -37,6 +36,8 @@
  * @todo    [PUNT] - Deal w/ inline where 10 results doesn't trigger scroll / loadMore
  * @todo    [DONE] - inline layout
  * @todo    [DONE] - instantiation
+ * @todo    [DONE] - external trigger to show/hide/toggle
+ * @todo    [DONE] - external trigger to show w/ query
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

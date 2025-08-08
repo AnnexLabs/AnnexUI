@@ -168,7 +168,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         static #__logDevModeMessage(messageKey) {
             let message = window.annexSearch.ErrorUtils.getMessage(messageKey);
-            window.annexSearch.LoggingUtils.error(message, event);
+            window.annexSearch.LoggingUtils.error(message);
             return true;
         }
 

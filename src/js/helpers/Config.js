@@ -29,9 +29,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * that order).
              * 
              * @access  private
-             * @var     EventTarget
+             * @var     null|HTMLElement (default: null)
              */
-            $container: (document.body || document.head || document.documentElement),
+            // $container: (document.body || document.head || document.documentElement),
+            $container: null,
 
             /**
              * callbacks
@@ -161,6 +162,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * @var     String (default: 'modal')
              */
             layout: 'modal',
+
+            /**
+             * name
+             * 
+             * @access  private
+             * @var     null|String (default: null)
+             */
+            name: null,
 
             /**
              * paths

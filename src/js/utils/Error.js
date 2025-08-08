@@ -24,7 +24,7 @@ window.annexSearch.DependencyLoader.push([], function() {
             'configHelper.set.key.undefined':                       'Invalid {key} value passed to {base.configHelper.set}; found {undefined}',
             'configHelper.set.value.undefined':                     'Invalid {value} value passed to {base.configHelper.set}; found {undefined}',
             'interactionUtils.zeroRegistered':                      'No registered $annexSearchWidget elements found',
-            'interactionUtils.multipleRegistered':                  'Multiuple registered $annexSearchWidget elements found. Unable to determine which $elemnt is the target.',
+            'interactionUtils.multipleRegistered':                  'Multiple registered $annexSearchWidget elements found. Unable to determine which $element is the target.',
             'loggingUtils.fetchFailed.tip':                         'Tip: Double check that {config.cluster.hostname} is defined and correct',
             'loggingUtils.typesenseFailed.tip':                     'Tip: Double check that {config.cluster.apiKey} and {config.cluster.collectionName} are defined and correct',
             'stylesheets.failedLoading':                            'Could not load stylesheets',

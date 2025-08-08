@@ -38,6 +38,14 @@ window.annexSearch.DependencyLoader.push([], function() {
         #__maxZIndexValue = 2147483647;
 
         /**
+         * #__mounted
+         * 
+         * @access  private
+         * @var     Boolean (default: false)
+         */
+        #__mounted = false;
+
+        /**
          * #__showing
          * 
          * @access  private
@@ -121,11 +129,11 @@ window.annexSearch.DependencyLoader.push([], function() {
         #__drawRoot() {
             let $shadow = this.shadow,
                 view = window.annexSearch.ElementUtils.renderTemplate('root', $shadow, this),
-                layout = this.getHelper('config').get('layout'),
-                overlay = String(+this.getHelper('config').get('showOverlay')),
+                layout = this.getConfig('layout'),
+                overlay = String(+this.getConfig('showOverlay')),
                 index = this.#__index;
 // console.log(overlay);
-            if (this.getHelper('config').get('layout') === 'inline') {
+            if (this.getConfig('layout') === 'inline') {
                 overlay = 0;
             }
             this.#__views.root = view;
@@ -135,7 +143,11 @@ window.annexSearch.DependencyLoader.push([], function() {
             this.setAttribute('data-annex-search-ready', '1');
             this.setAttribute('data-annex-search-index', index);
             this.setAttribute('data-annex-search-open', '0');
-            if (this.getHelper('config').get('layout') === 'inline') {
+            if (this.getConfig('name') !== null) {
+                let name = this.getConfig('name');
+                this.setAttribute('data-annex-search-name', name);
+            }
+            if (this.getConfig('layout') === 'inline') {
                 this.show();
             }
             return true;
@@ -205,7 +217,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         dispatchCustomEvent(key, ...args) {
-            let reference = this.getHelper('config').get('callbacks') || {},
+            let reference = this.getConfig('callbacks') || {},
                 pieces = key.split('.');
             for (var piece of pieces) {
                 reference = reference[piece] ?? null;
@@ -286,8 +298,15 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         mount($container = null) {
-            $container = $container || this.getHelper('config').get('$container');
+            $container = $container || this.getConfig('$container') || null;
+            if ($container === null) {
+                if (this.getConfig('layout') === 'inline') {
+                    return false;
+                }
+                $container = (document.body || document.head || document.documentElement);
+            }
             $container.appendChild(this);
+            this.#__mounted = true;
             return true;
         }
 
@@ -323,11 +342,18 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Promise
          */
         ready() {
+            if (this.#__mounted === false) {
+                let promise = new Promise(function(resolve, reject) {
+                    reject();
+                });
+                return promise;
+            }
             let $annexSearchWidget = this,
                 ready = this.getAttribute('data-annex-search-ready');
             if (ready === null) {
                 let promise = new Promise(function(resolve, reject) {
                     let interval = setInterval(function() {
+// console.log('eff');
                         let ready = $annexSearchWidget.getAttribute('data-annex-search-ready');
                         if (ready !== null) {
                             clearInterval(interval);
