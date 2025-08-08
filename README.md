@@ -47,16 +47,19 @@ $annexSearchWidget.ready().then(function($annexSearchWidget) {
 
 ### HTML Attributes
 ``` html
-<a href="#test" data-annex-search="open">test</a>
+<a href="#test" data-annex-search="open">open $annexSearchWidget</a>
 ````
 ``` html
-<a href="#test" data-annex-search="close">test</a>
+<a href="#test" data-annex-search="close">close $annexSearchWidget</a>
 ````
 ``` html
-<a href="#test" data-annex-search="toggle">test</a>
+<a href="#test" data-annex-search="toggle">toggle $annexSearchWidget</a>
 ````
 ``` html
-<a href="#test" data-annex-search-query="search query">test</a>
+<a href="#test" data-annex-search="clear">clear $annexSearchWidget $input</a>
+````
+``` html
+<a href="#test" data-annex-search-query="search query">open $annexSearchWidget, insert query and search</a>
 ````
 
 

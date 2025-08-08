@@ -261,10 +261,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleLoadTemplates(templatesContent) {
-            var expression = /<script\b[^>]*>[\s\S]*?<\/script>/gi,
+            let expression = /<script\b[^>]*>[\s\S]*?<\/script>/gi,
                 matches = templatesContent.match(expression);
-            for (var match of matches) {
-                var matches = match.match(/data-template-id=["']([^"']+)["']/),
+            for (let match of matches) {
+                let matches = match.match(/data-template-id=["']([^"']+)["']/),
                     id = matches ? matches[1] : null;
                 if (id === null) {
                     continue;
@@ -383,6 +383,29 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * loadStylesheets
+         * 
+         * @access  public
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @return  Boolean
+         */
+        loadStylesheets($annexSearchWidget) {
+            let promise = this.#__loadStylesheets($annexSearchWidget);
+            return promise;
+        }
+
+        /**
+         * loadTemplates
+         * 
+         * @access  public
+         * @return  Promise
+         */
+        loadTemplates() {
+            let promise = this.#__loadTemplates();
+            return promise;
+        }
+
+        /**
          * set
          * 
          * @access  public
@@ -430,29 +453,5 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.#__data = window.annexSearch.DataUtils.deepMerge(this.#__data, data);
             return true;
         }
-
-        /**
-         * loadStylesheets
-         * 
-         * @access  public
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
-         * @return  Boolean
-         */
-        loadStylesheets($annexSearchWidget) {
-            let promise = this.#__loadStylesheets($annexSearchWidget);
-            return promise;
-        }
-
-        /**
-         * loadTemplates
-         * 
-         * @access  public
-         * @return  Promise
-         */
-        loadTemplates() {
-            let promise = this.#__loadTemplates();
-            return promise;
-        }
-
     }
 });

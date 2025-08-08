@@ -27,6 +27,59 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * #__handleBehaviorInteraction
+         * 
+         * @access  private
+         * @static
+         * @param   Object event
+         * @return  Boolean
+         */
+        static #__handleBehaviorInteraction(event) {
+            if (this.#__validEventTarget(event, '[data-annex-search]') === false) {
+                return false;
+            }
+            // event.preventDefault();
+            let registered = window.annexSearch.AnnexSearch.getRegistered(),
+                $annexSearchWidget = registered[0];
+            if ($annexSearchWidget.getConfig('layout') === 'inline') {
+                return false;
+            }
+            let $target = event.target,
+                value = $target.getAttribute('data-annex-search');
+            if (value === null) {
+                return false
+            }
+            if (value === undefined) {
+                return false
+            }
+            value = value.trim();
+            if (value === '') {
+                return false
+            }
+            let validBehaviorInteractions = ['clear', 'hide', 'show', 'toggle'];
+            if (validBehaviorInteractions.includes(value) === false) {
+                return false;
+            }
+            if (value === 'clear') {
+                // let response = $annexSearchWidget.toggle();
+                // return response;
+            }
+            if (value === 'hide') {
+                let response = $annexSearchWidget.hide();
+                return response;
+            }
+            if (value === 'show') {
+                let response = $annexSearchWidget.show();
+                return response;
+            }
+            if (value === 'toggle') {
+                let response = $annexSearchWidget.toggle();
+                return response;
+            }
+            return false;
+        }
+
+        /**
          * #__handleDocumentClickEvent
          * 
          * @access  private
@@ -35,10 +88,10 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         static #__handleDocumentClickEvent(event) {
-            if (this.#__handleQueryInteraction(event) === true) {
+            if (this.#__handleBehaviorInteraction(event) === true) {
                 return true;
             }
-            if (this.#__handleVisibilityInteraction(event) === true) {
+            if (this.#__handleQueryInteraction(event) === true) {
                 return true;
             }
             return false;
@@ -92,55 +145,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * #__handleVisibilityInteraction
-         * 
-         * @access  private
-         * @static
-         * @param   Object event
-         * @return  Boolean
-         */
-        static #__handleVisibilityInteraction(event) {
-            if (this.#__validEventTarget(event, '[data-annex-search]') === false) {
-                return false;
-            }
-            // event.preventDefault();
-            let registered = window.annexSearch.AnnexSearch.getRegistered(),
-                $annexSearchWidget = registered[0];
-            if ($annexSearchWidget.getConfig('layout') === 'inline') {
-                return false;
-            }
-            let $target = event.target,
-                value = $target.getAttribute('data-annex-search');
-            if (value === null) {
-                return false
-            }
-            if (value === undefined) {
-                return false
-            }
-            value = value.trim();
-            if (value === '') {
-                return false
-            }
-            let validVisbilityInteractions = ['show', 'hide', 'toggle'];
-            if (validVisbilityInteractions.includes(value) === false) {
-                return false;
-            }
-            if (value === 'show') {
-                let response = $annexSearchWidget.show();
-                return response;
-            }
-            if (value === 'hide') {
-                let response = $annexSearchWidget.hide();
-                return response;
-            }
-            if (value === 'toggle') {
-                let response = $annexSearchWidget.toggle();
-                return response;
-            }
-            return false;
-        }
-
-        /**
          * #__setupMutationObserver
          * 
          * @access  private
@@ -166,11 +170,11 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @param   String messageKey
          * @return  Boolean
          */
-        static #__logDevModeMessage(messageKey) {
-            let message = window.annexSearch.ErrorUtils.getMessage(messageKey);
-            window.annexSearch.LoggingUtils.error(message);
-            return true;
-        }
+        // static #__logDevModeMessage(messageKey) {
+        //     let message = window.annexSearch.ErrorUtils.getMessage(messageKey);
+        //     window.annexSearch.LoggingUtils.error(message);
+        //     return true;
+        // }
 
         /**
          * #__validEventTarget
@@ -192,11 +196,15 @@ window.annexSearch.DependencyLoader.push([], function() {
             event.preventDefault();
             let registered = window.annexSearch.AnnexSearch.getRegistered();
             if (registered.length === 0) {
-                this.#__logDevModeMessage('interactionUtils.zeroRegistered');
+                let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.zeroRegistered');
+                window.annexSearch.LoggingUtils.error(message);
+                // this.#__logDevModeMessage('interactionUtils.zeroRegistered');
                 return false;
             }
             if (registered.length > 1) {
-                this.#__logDevModeMessage('interactionUtils.multipleRegistered');
+                let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.multipleRegistered');
+                window.annexSearch.LoggingUtils.error(message);
+                // this.#__logDevModeMessage('interactionUtils.multipleRegistered');
                 return false;
             }
             return true;

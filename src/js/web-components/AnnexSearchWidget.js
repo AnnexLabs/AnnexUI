@@ -232,6 +232,40 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * focus
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        focus() {
+            // if (this.#__showing === true) {
+            //     return false;
+            // }
+            // window.annexSearch.AnnexSearch.setActive(this);
+            // this.dispatchCustomEvent('root.show');
+            // this.#__showing = true;
+            // this.#__setStyles();
+            // this.setAttribute('data-annex-search-open', '1');
+            // this.removeAttribute('inert');
+            // let found = this.#__views.root.getView('root.body.results.found'),
+            //     results = found.getResults();
+            // if (results.length === 0) {
+            //     this.#__views.root.focus();
+            //     return true;
+            // }
+            // let focusedIndex = found.getFocusedIndex();
+            // if (focusedIndex === null) {
+            //     focusedIndex = 0;
+            // }
+            // let result = results[focusedIndex];
+            // if (result === undefined) {
+            //     return true;
+            // }
+            // result.focus();
+            return true;
+        }
+
+        /**
          * getConfig
          * 
          * @access  public

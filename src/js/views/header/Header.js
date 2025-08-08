@@ -90,7 +90,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleClickEvent(event) {
-// console.log('wtf');
             let $target = event.target,
                 $close = this.first('.close');
             if ($target === $close) {
