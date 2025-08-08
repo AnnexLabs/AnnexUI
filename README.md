@@ -45,6 +45,22 @@ $annexSearchWidget.ready().then(function($annexSearchWidget) {
 ```
 
 
+### HTML Attributes
+``` html
+<a href="#test" data-annex-search="open">test</a>
+````
+``` html
+<a href="#test" data-annex-search="close">test</a>
+````
+``` html
+<a href="#test" data-annex-search="toggle">test</a>
+````
+``` html
+<a href="#test" data-annex-search-query="search query">test</a>
+````
+
+
+
 ### Config
 ``` javascript
 $('annex-search-widget').setConfig('$parentContainer', document.body);

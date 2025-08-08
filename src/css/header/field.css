@@ -3,7 +3,7 @@
     padding: calc((var(--annex-search-header-height) - 20px) / 2) 0 0 12px;
     border-bottom: 1px solid var(--annex-search-border-color);
 }
-[data-view-name="FieldHeaderView"]  > div.label {
+[data-view-name="FieldHeaderView"] > div.label {
     height: 20px;
     width: 28px;
     text-align: center;
@@ -13,13 +13,13 @@
     float: left;
     opacity: 0.50;
 }
-[data-view-name="FieldHeaderView"]  > div.input {
+[data-view-name="FieldHeaderView"] > div.input {
     height: 20px;
     float: left;
     margin: 0 0 0 12px;
-    width: calc(100% - 28px - 12px);
+    width: calc(100% - 28px - 12px - var(--annex-search-header-close-size) - 10px - 8px);
 }
-[data-view-name="FieldHeaderView"]  > div.input > input {
+[data-view-name="FieldHeaderView"] > div.input > input {
     display: block;
     width: 100%;
     height: 100%;
@@ -27,13 +27,13 @@
     color: var(--annex-search-header-input-color);
     transition: 250ms color;
 }
-[data-view-name="FieldHeaderView"]  > div.input > input:focus {
+[data-view-name="FieldHeaderView"] > div.input > input:focus {
     color: var(--annex-search-header-input-focus-color);
 }
-[data-view-name="FieldHeaderView"]  > div.input > input::placeholder {
+[data-view-name="FieldHeaderView"] > div.input > input::placeholder {
     color: var(--annex-search-header-input-placeholder-color);
 }
-[data-view-name="FieldHeaderView"]  > div.input > input::-webkit-search-cancel-button {
+[data-view-name="FieldHeaderView"] > div.input > input::-webkit-search-cancel-button {
     -webkit-appearance: none;
     appearance: none;
     display: none;

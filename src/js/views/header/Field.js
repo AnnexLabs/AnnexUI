@@ -422,5 +422,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             })
             return true;
         }
+
+        /**
+         * setCaret
+         * 
+         * Moves the caret to the end of the input.
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        setCaret() {
+            let $input = this.first('input'),
+                value = $input.value;
+            $input.setSelectionRange(value.length, value.length);
+            return true;
+        }
     }
 });

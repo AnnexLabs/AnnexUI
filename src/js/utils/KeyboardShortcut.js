@@ -1,6 +1,6 @@
 
 /**
- * /src/js/utils/KeyboardShortcuts.js
+ * /src/js/utils/KeyboardShortcut.js
  * 
  */
 window.annexSearch.DependencyLoader.push([], function() {
@@ -197,25 +197,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * #__getKeyboardShortcut
-         * 
-         * @access  private
-         * @static
-         * @return  null|String
-         */
-        // static #__getKeyboardShortcut() {
-        //     let value = this.#__getActiveWebComponent().getHelper('config').get('keyboardShortcut');
-        //     if (value === null) {
-        //         return null;
-        //     }
-        //     if (value === undefined) {
-        //         return null;
-        //     }
-        //     value = value.trim().toLowerCase();
-        //     return value;
-        // }
-
-        /**
          * #__handleDocumentCatchAllKeydownEvent
          * 
          * @note    The key length check is to handle things like the "Meta" key
@@ -397,6 +378,9 @@ window.annexSearch.DependencyLoader.push([], function() {
             }
             let registered = this.#__getRegisteredWebComponents();
             for (let $annexSearchWidget of registered) {
+                if ($annexSearchWidget.getConfig('layout') === 'inline') {
+                    continue;
+                }
                 let keyboardShortcut = $annexSearchWidget.getHelper('config').get('keyboardShortcut');
                 if (keyboardShortcut === null) {
                     continue

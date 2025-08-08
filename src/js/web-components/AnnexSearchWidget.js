@@ -124,12 +124,20 @@ window.annexSearch.DependencyLoader.push([], function() {
                 layout = this.getHelper('config').get('layout'),
                 overlay = String(+this.getHelper('config').get('showOverlay')),
                 index = this.#__index;
+// console.log(overlay);
+            if (this.getHelper('config').get('layout') === 'inline') {
+                overlay = 0;
+            }
             this.#__views.root = view;
             this.setAttribute('id', this.#__uuid);
             this.setAttribute('data-annex-search-layout', layout);
             this.setAttribute('data-annex-search-overlay', overlay);
             this.setAttribute('data-annex-search-ready', '1');
             this.setAttribute('data-annex-search-index', index);
+            this.setAttribute('data-annex-search-open', '0');
+            if (this.getHelper('config').get('layout') === 'inline') {
+                this.show();
+            }
             return true;
         }
 
@@ -255,6 +263,9 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         hide() {
+            if (this.getConfig('layout') === 'inline') {
+                return false;
+            }
             if (this.#__showing === false) {
                 return false;
             }
@@ -276,8 +287,32 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         mount($container = null) {
             $container = $container || this.getHelper('config').get('$container');
-// console.log($container);
             $container.appendChild(this);
+            return true;
+        }
+
+        /**
+         * query
+         * 
+         * @access  public
+         * @param   String query
+         * @return  Boolean
+         */
+        query(query) {
+            let field = this.getView('root').getView('root.header.field'),
+                found = this.getView('root').getView('body.results.found');
+            field.focus();
+            field.clear();
+            field.nullifyLastTypesenseSearchResponse();
+            field.append(query);
+            found.smoothScrollToTop();
+            found.resetFocusedIndex();
+            window.annexSearch.ElementUtils.waitForAnimation().then(function() {
+                field.setCaret();
+            });
+            field.first('input').dispatchEvent(new Event('input', {
+                bubbles: true
+            }));
             return true;
         }
 
@@ -389,4 +424,3 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
     }
 });
-// console.log('1223');

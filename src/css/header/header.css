@@ -12,9 +12,9 @@
 [data-view-name="HeaderView"] > div.close {
     position: absolute;
     right: 10px;
-    top: calc((var(--annex-search-header-height) - 24px) / 2);
-    height: 24px;
-    width: 24px;
+    top: calc((var(--annex-search-header-height) - var(--annex-search-header-close-size)) / 2);
+    height: var(--annex-search-header-close-size);
+    width: var(--annex-search-header-close-size);
     transform: rotate(45deg);
     background-color: var(--annex-search-header-close-button-color);
     opacity: 0.30;

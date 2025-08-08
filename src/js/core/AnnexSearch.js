@@ -2,12 +2,12 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - instantiation
- * 
  * @todo    - external trigger to show/hide/toggle
- * @todo    - bug with multiple open and query-ing
  * @todo    - external trigger to show w/ query
- * @todo    - inline layout
+ * 
+ * @todo    - bug with multiple open and query-ing
+ * 
+ * @todo    - CacheUtils for /css and /templates lookups to speed things up?
  * 
  * @todo    - variable templating
  * @todo    - custom templates
@@ -34,6 +34,9 @@
  * @todo    [PUNT] - Missing truncation dots: https://416.io/ss/f/7wtusv
  * @todo    [DONE] - typesense query param (e.g. w/o preset)
  * @todo    [DONE] - config functions re:modifications
+ * @todo    [PUNT] - Deal w/ inline where 10 results doesn't trigger scroll / loadMore
+ * @todo    [DONE] - inline layout
+ * @todo    [DONE] - instantiation
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -52,6 +55,15 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @var     null|window.annexSearch.AnnexSearchWidgetWebComponent (default: null)
          */
         static #__$active = null;
+
+        /**
+         * #__devMode
+         * 
+         * @access  private
+         * @static
+         * @var     Boolean (default: false)
+         */
+        static #__devMode = false;
 
         /**
          * #__registered
@@ -82,10 +94,11 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         static #__setupUtils() {
             window.annexSearch.DataUtils.setup();
-            window.annexSearch.DebuggingUtils.setup();
+            // window.annexSearch.DebuggingUtils.setup();
             window.annexSearch.ElementUtils.setup();
             window.annexSearch.ErrorUtils.setup();
             window.annexSearch.FunctionUtils.setup();
+            window.annexSearch.InteractionUtils.setup();
             window.annexSearch.KeyboardShortcutUtils.setup();
             window.annexSearch.LoggingUtils.setup();
             window.annexSearch.StringUtils.setup();
@@ -114,6 +127,18 @@ window.annexSearch.DependencyLoader.push([], function() {
         static getActive() {
             let active = this.#__$active;
             return active;
+        }
+
+        /**
+         * getDevMode
+         * 
+         * @access  public
+         * @static
+         * @return  Boolean
+         */
+        static getDevMode() {
+            let devMode = this.#__devMode;
+            return devMode;
         }
 
         /**
@@ -169,6 +194,19 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         static setActive($annexSearchWidget) {
             this.#__$active = $annexSearchWidget;
+            return true;
+        }
+
+        /**
+         * setDevMode
+         * 
+         * @access  public
+         * @static
+         * @param   Boolean devMode
+         * @return  Boolean
+         */
+        static setDevMode(devMode) {
+            this.#__devMode = devMode;
             return true;
         }
 
