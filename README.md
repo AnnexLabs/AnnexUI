@@ -54,6 +54,10 @@ Out the box, Annex supports the following:
 - Responsive layouts
 - Event handling
 
+Style considerations:
+- There are currently 65+ CSS variables that can be overriden
+- These control layouts, dimensions, colors, fonts and more
+
 Privacy and data considerations:
 - No data is stored in cookies or localStorage
 - Queries are only sent to your Typesense cluster; no middleware is present
