@@ -2,33 +2,15 @@
 
 
 ### Config
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Required/th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Row 1 Col 1</td>
-    <td>Row 1 Col 1</td>
-    <td>Row 1 Col 2</td>
-    <td>Row 1 Col 3</td>
-  </tr>
-  <tr>
-    <td>Row 2 Col 1</td>
-    <td>Row 2 Col 2</td>
-    <td>Row 2 Col 2</td>
-    <td>Row 2 Col 3</td>
-  </tr>
-</table>
-
-
 | Key                       | Type          | Required   | Default value        | Description                                                                                           |
 | --------------------------| --------------| ---------- | -------------------- | ----------------------------------------------------------------------------------------------------- |
 | $container                | HTMLElement   | ❌         | `null`                | The HTMLElement that the $annexSearchWidget element should be appended to.                            |
 | callbacks                 | Object        | ❌         | (see ...)             | Map of callback functions that will be triggered upon certain events.                                 |
 | cluster                   | Object        | ✅         | (see ...)             | Map of Typesense related cluster auth properties.                                                     |
+| cluster.apiKey            | Object        | ✅         | String                | Typesense cluster search API key.                                                                     |
+| cluster.collectionName    | Object        | ✅         | String                | Typesense cluster collection name.                                                                    |
+| cluster.hostname          | Object        | ✅         | String                | Typesense cluster hostname.                                                                           |
+| cluster.presetName        | Object        | ❌         | null|String           | Typesense cluster search preset name.                                                                 |
 | copy                      | Object        | ❌         | (see ...)             | Map of copy used in different `templates`.                                                            |
 | debug                     | Boolean       | ❌         | `false`               | Whether debugging information should be logged to console.                                            |
 | keyboardShortcut          | null|String   | ❌         | `⌘k`                  | The keyboard shortcut that should be used to toggle Annex (does not apply to `inline` instances).     |
