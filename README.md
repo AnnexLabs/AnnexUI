@@ -11,13 +11,23 @@ It's currently in early-development.
 <hr />
 
 ### Quick links
-1. Quick intro (for devs)
-2. Quickstart
-3. Config
-4. Debugging
-5. `$annexSearchWidget` interactions
-6. Config overriding
-7. Events
+1. Demos
+2. Quick intro (for devs)
+3. Quickstart
+4. Config
+5. Debugging
+6. `$annexSearchWidget` interactions
+7. Config overriding
+8. Events
+
+
+<hr />
+
+### Demos
+1. Modal: [https://local.annexsearch.com/demos/inline](https://local.annexsearch.com/demos/inline)
+2. Modal: [https://local.annexsearch.com/demos/modal](https://local.annexsearch.com/demos/modal)
+3. Modal: [https://local.annexsearch.com/demos/panel-left](https://local.annexsearch.com/demos/panel-left)
+4. Modal: [https://local.annexsearch.com/demos/panel-right](https://local.annexsearch.com/demos/panel-right)
 
 
 <hr />
@@ -120,19 +130,19 @@ Note: These interactions will not work if there is more than one
 
 | Attribute                     | Example                                       | Description                                                                   |
 | ------------------------------| ----------------------------------------------|-------------------------------------------------------------------------------|
-| `data-annex-search="open"`    | `<a data-annex-search="open">test</a>`        | Shows the `$annexSearchWidget` if it's currently hidden.                      |
-| `data-annex-search="close"`   | `<a data-annex-search="close">test</a>`       | Hides the `$annexSearchWidget` if it's not currently hidden.                  |
-| `data-annex-search="toggle"`  | `<a data-annex-search="toggle">test</a>`      | Shows or hides the `$annexSearchWidget` depending on it's current state.      |
 | `data-annex-search="clear"`   | `<a data-annex-search="clear">test</a>`       | Clears the search query input value from the `$annexSearchWidget`.            |
+| `data-annex-search="close"`   | `<a data-annex-search="close">test</a>`       | Hides the `$annexSearchWidget` if it's not currently hidden.                  |
 | `data-annex-search="focus"`   | `<a data-annex-search="focus">test</a>`       | Focuses on `$annexSearchWidget` if it's currently showing.                    |
+| `data-annex-search="show"`    | `<a data-annex-search="show">test</a>`        | Shows the `$annexSearchWidget` if it's currently hidden.                      |
+| `data-annex-search="toggle"`  | `<a data-annex-search="toggle">test</a>`      | Shows or hides the `$annexSearchWidget` depending on it's current state.      |
 
 
 ``` html
-<a href="#test" data-annex-search="open">open $annexSearchWidget</a>
-<a href="#test" data-annex-search="close">close $annexSearchWidget</a>
-<a href="#test" data-annex-search="toggle">toggle $annexSearchWidget</a>
 <a href="#test" data-annex-search="clear">clear $annexSearchWidget $input</a>
+<a href="#test" data-annex-search="close">close $annexSearchWidget</a>
 <a href="#test" data-annex-search="focus">focus on the $annexSearchWidget</a>
+<a href="#test" data-annex-search="show">open $annexSearchWidget</a>
+<a href="#test" data-annex-search="toggle">toggle $annexSearchWidget</a>
 <a href="#test" data-annex-search-query="search query">open $annexSearchWidget, insert query and search</a>
 ````
 
@@ -184,18 +194,18 @@ Below you'll find the methods that can be called against an `$annexSearchWidget`
 reference. While you'll find other public events available when inspecting the
 element, only the ones below are currently supported.
 
-| Method name       | Description                                                                                                       |
+| Method name       | Return value      | Description                                                                                                       |
 | ------------------| ------------------------------------------------------------------------------------------------------------------| 
-| `focus`           | Focuses on the `$annexSearchWidget` search query input.                                                           |
-| `getConfig`       | Returns an object representing the config options for the `$annexSearchWidget`.                                   |
-| `hide`            | Hides the `$annexSearchWidget` if it's currently showing.                                                         |
-| `mount`           | Mounts the `$annexSearchWidget` to the `$container` config option.                                                |
-| `query`           | Shows the `$annexSearchWidget` if it's currently hidden, and performs a query (based on the passed in value).     |
-| `ready`           | Returns a promise when the `$annexSearchWidget` is ready for interaction.                                         |
-| `setConfig`       | Sets `$annexSearchWidget` config options.                                                                         |
-| `show`            | Shows the `$annexSearchWidget` if it's currently hidden.                                                          |
-| `showing`         | Returns whether or not the `$annexSearchWidget` is currently showing.                                             |
-| `toggle`          | Shows or hides the `$annexSearchWidget` depending on it's currently state.                                        |
+| `focus`           | `Boolean`         | Focuses on the `$annexSearchWidget` search query input.                                                           |
+| `getConfig`       | `Boolean`         | Returns an object representing the config options for the `$annexSearchWidget`.                                   |
+| `hide`            | `Boolean`         | Hides the `$annexSearchWidget` if it's currently showing.                                                         |
+| `mount`           | `Boolean`         | Mounts the `$annexSearchWidget` to the `$container` config option.                                                |
+| `query`           | `Boolean`         | Shows the `$annexSearchWidget` if it's currently hidden, and performs a query (based on the passed in value).     |
+| `ready`           | `Promise`         | Returns a promise when the `$annexSearchWidget` is ready for interaction.                                         |
+| `setConfig`       | `Boolean`         | Sets `$annexSearchWidget` config options.                                                                         |
+| `show`            | `Boolean`         | Shows the `$annexSearchWidget` if it's currently hidden.                                                          |
+| `showing`         | `Boolean`         | Returns whether or not the `$annexSearchWidget` is currently showing.                                             |
+| `toggle`          | `Boolean`         | Shows or hides the `$annexSearchWidget` depending on it's currently state.                                        |
 
 
 <hr />
