@@ -5,6 +5,9 @@ running in a few minutes.
 
 It's currently in early-development.
 
+### Quick preview
+![](https://416.io/ss/f/x43xuv/r)
+
 
 ### Quick Intro (for devs)
 Annex uses [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
