@@ -129,13 +129,13 @@ found, Annex will process them.
 Note: These interactions will not work if there is more than one
 `$annexSearchWidget` instance instantiated on the page.
 
-| Attribute                     | Example                                       | Description                                                                   |
-| ------------------------------| ----------------------------------------------|-------------------------------------------------------------------------------|
-| `data-annex-search="clear"`   | `<a data-annex-search="clear">test</a>`       | Clears the search query input value from the `$annexSearchWidget`.            |
-| `data-annex-search="close"`   | `<a data-annex-search="close">test</a>`       | Hides the `$annexSearchWidget` if it's not currently hidden.                  |
-| `data-annex-search="focus"`   | `<a data-annex-search="focus">test</a>`       | Focuses on `$annexSearchWidget` if it's currently showing.                    |
-| `data-annex-search="show"`    | `<a data-annex-search="show">test</a>`        | Shows the `$annexSearchWidget` if it's currently hidden.                      |
-| `data-annex-search="toggle"`  | `<a data-annex-search="toggle">test</a>`      | Shows or hides the `$annexSearchWidget` depending on it's current state.      |
+| Attribute                     | Example                                       | Layout Support            | Description                                                                   |
+| ------------------------------| ----------------------------------------------|---------------------------|-------------------------------------------------------------------------------|
+| `data-annex-search="clear"`   | `<a data-annex-search="clear">test</a>`       | All                       | Clears the search query input value from the `$annexSearchWidget`.            |
+| `data-annex-search="close"`   | `<a data-annex-search="close">test</a>`       | All except `'inline'`     | Hides the `$annexSearchWidget` if it's not currently hidden.                  |
+| `data-annex-search="focus"`   | `<a data-annex-search="focus">test</a>`       | All                       | Focuses on `$annexSearchWidget` if it's currently showing.                    |
+| `data-annex-search="show"`    | `<a data-annex-search="show">test</a>`        | All except `'inline'`     | Shows the `$annexSearchWidget` if it's currently hidden.                      |
+| `data-annex-search="toggle"`  | `<a data-annex-search="toggle">test</a>`      | All except `'inline'`     | Shows or hides the `$annexSearchWidget` depending on it's current state.      |
 
 
 ``` html
