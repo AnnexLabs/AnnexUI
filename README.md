@@ -102,7 +102,7 @@ so.
 | debug                     | `Boolean`             | ❌         | `false`                   | Whether debugging information should be logged to console.                                                |
 | keyboardShortcut          | `null` \|\| `String`  | ❌         | `'⌘k'`                    | The keyboard shortcut that should be used to toggle Annex (does not apply to `inline` instances).         |
 | highlightTagName          | `String`              | ❌         | `'MARK'`                  | The `HTMLElement` that should be rendered around query matches.                                           |
-| layout                    | `String`              | ❌         | `modal`                   | The layout for Annex. Can be: `inline`, `modal`, `panel-left` or `panel-right`.                           |
+| layout                    | `String`              | ❌         | `'modal'`                 | The layout for Annex. Can be: `inline`, `modal`, `panel-left` or `panel-right`.                           |
 | name                      | `String`              | ❌         | `null`                    | The name of the instance. Useful for differentiating between multiple `$annexSearchWidget` instances.     |
 | paths                     | `Object`              | ❌         | (see ...)                 | Map of `css` and `template` URLs that are loaded for an `$annexSearchWidget`.                             |
 | schema                    | `String`              | ❌         | `'webResource-v0.1.0'`    | Name of the schema associated with the Typesense cluster.                                                 |
