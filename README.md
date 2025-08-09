@@ -13,7 +13,7 @@
 | cluster.presetName        | Object            | ❌         | null|String           | Typesense cluster search preset name.                                                                 |
 | copy                      | Object            | ❌         | (see ...)             | Map of copy used in different `templates`.                                                            |
 | debug                     | Boolean           | ❌         | `false`               | Whether debugging information should be logged to console.                                            |
-| keyboardShortcut          | null || String    | ❌         | `⌘k`                  | The keyboard shortcut that should be used to toggle Annex (does not apply to `inline` instances).     |
+| keyboardShortcut          | null \|\| String  | ❌         | `⌘k`                  | The keyboard shortcut that should be used to toggle Annex (does not apply to `inline` instances).     |
 | highlightTagName          | String            | ❌         | `MARK`                | The HTMLElement that should be rendered around query matches.                                         |
 | layout                    | String            | ❌         | `modal`               | The layout for Annex. Can be: `inline`, `modal`, `panel-left` or `panel-right`.                       |
 | name                      | String            | ❌         | `null`                | The name of the instance. Useful for differentiating between multiple $annexSearchWidget instances.   |
