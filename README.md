@@ -6,6 +6,15 @@ running in a few minutes.
 It's currently in early-development.
 
 
+### Quick Intro (for devs)
+Annex uses [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
+to encapsulate and restrict JavaScript and CSS scope. The fundamental concepts
+to understand are:
+
+- The UI will be encapsulated within a `<annex-search-widget>` HTML tag
+- Public methods to modify any "instance" will be through that custom HTMLElement
+
+
 ### Quickstart
 ``` html
 <script type="text/javascript" src="https://local.annexsearch.com/ts/js"></script>
