@@ -34,6 +34,7 @@ to encapsulate and restrict JavaScript and CSS scope. The fundamental concepts
 to understand are:
 
 - The UI will be encapsulated within a `<annex-search-widget>` HTML tag
+-- In docs, this will often be referenced as the `$annexSearchWidget` variable
 - Public methods to modify any "instance" will be through that custom HTMLElement
 
 
