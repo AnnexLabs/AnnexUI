@@ -80,7 +80,7 @@ so.
 
 | Key                       | Type              | Required   | Default value        | Description                                                                                           |
 | --------------------------| ------------------| ---------- | -------------------- | ----------------------------------------------------------------------------------------------------- |
-| $container                | HTMLElement       | ❌         | `null`                | The HTMLElement that the $annexSearchWidget element should be appended to.                            |
+| $container                | HTMLElement       | ❌         | `null`                | The HTMLElement that the `$annexSearchWidget` element should be appended to.                          |
 | callbacks                 | Object            | ❌         | (see ...)             | Map of callback functions that will be triggered upon certain events.                                 |
 | cluster                   | Object            | ✅         | (n/a)                 | Map of Typesense related cluster auth properties.                                                     |
 | cluster.apiKey            | String            | ✅         | null                  | Typesense cluster search API key.                                                                     |
@@ -92,8 +92,8 @@ so.
 | keyboardShortcut          | null \|\| String  | ❌         | `⌘k`                  | The keyboard shortcut that should be used to toggle Annex (does not apply to `inline` instances).     |
 | highlightTagName          | String            | ❌         | `MARK`                | The HTMLElement that should be rendered around query matches.                                         |
 | layout                    | String            | ❌         | `modal`               | The layout for Annex. Can be: `inline`, `modal`, `panel-left` or `panel-right`.                       |
-| name                      | String            | ❌         | `null`                | The name of the instance. Useful for differentiating between multiple $annexSearchWidget instances.   |
-| paths                     | Object            | ❌         | (see ...)             | Map of `css` and `template` URLs that are loaded for an $annexSearchWidget.                           |
+| name                      | String            | ❌         | `null`                | The name of the instance. Useful for differentiating between multiple `$annexSearchWidget` instances. |
+| paths                     | Object            | ❌         | (see ...)             | Map of `css` and `template` URLs that are loaded for an `$annexSearchWidget`.                         |
 | schema                    | String            | ❌         | `webResource-v0.1.0`  | Name of the schema associated with the Typesense cluster.                                             |
 | searchOptions             | Object            | ✅         | (see ...)             | Map of search options that are passed in a Typesense search query.                                    |
 | searchRequestMethod       | String            | ❌         | `lifo`                | The type of search handling. Currently limited to just `lifo` (last in first out)                     |
@@ -113,14 +113,14 @@ tips on how to get your integration working properly.
 
 ### `$annexSearchWidget` interactions
 Below are examples of elements that trigger various actions when the loaded page
-has a single $annexSearchWidget running on the page.
+has a single `$annexSearchWidget` running on the page.
 
 ``` html
-<a href="#test" data-annex-search="open">open $annexSearchWidget</a>
-<a href="#test" data-annex-search="close">close $annexSearchWidget</a>
-<a href="#test" data-annex-search="toggle">toggle $annexSearchWidget</a>
-<a href="#test" data-annex-search="clear">clear $annexSearchWidget $input</a>
-<a href="#test" data-annex-search-query="search query">open $annexSearchWidget, insert query and search</a>
+<a href="#test" data-annex-search="open">open `$annexSearchWidget`</a>
+<a href="#test" data-annex-search="close">close `$annexSearchWidget`</a>
+<a href="#test" data-annex-search="toggle">toggle `$annexSearchWidget`</a>
+<a href="#test" data-annex-search="clear">clear `$annexSearchWidget` $input</a>
+<a href="#test" data-annex-search-query="search query">open `$annexSearchWidget`, insert query and search</a>
 ````
 
 
