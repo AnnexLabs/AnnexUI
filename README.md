@@ -15,7 +15,7 @@ It's currently in early-development.
 2. Quickstart
 3. Config
 4. Debugging
-5. HTMLElement interactions
+5. `$annexSearchWidget` interactions
 6. Config overriding
 7. Events
 
@@ -112,14 +112,27 @@ tips on how to get your integration working properly.
 <hr />
 
 ### `$annexSearchWidget` interactions
-Below are examples of elements that trigger various actions when the loaded page
-has a single `$annexSearchWidget` running on the page.
+Below is a list of attributes that can be bound to elements on a page. When
+found, Annex will process them.
+
+Note: These interactions will not work if there is more than one
+`$annexSearchWidget` instance instantiated on the page.
+
+| Attribute                     | Example                                       | Description                                                                   |
+| ------------------------------| ----------------------------------------------|-------------------------------------------------------------------------------|
+| `data-annex-search="open"`    | `<a data-annex-search="open">test</a>`        | Shows the `$annexSearchWidget` if it's currently hidden.                      |
+| `data-annex-search="close"`   | `<a data-annex-search="close">test</a>`       | Hides the `$annexSearchWidget` if it's not currently hidden.                  |
+| `data-annex-search="toggle"`  | `<a data-annex-search="toggle">test</a>`      | Shows or hides the `$annexSearchWidget` depending on it's current state.      |
+| `data-annex-search="clear"`   | `<a data-annex-search="clear">test</a>`       | Clears the search query input value from the `$annexSearchWidget`.            |
+| `data-annex-search="focus"`   | `<a data-annex-search="focus">test</a>`       | Focuses on `$annexSearchWidget` if it's currently showing.                    |
+
 
 ``` html
 <a href="#test" data-annex-search="open">open $annexSearchWidget</a>
 <a href="#test" data-annex-search="close">close $annexSearchWidget</a>
 <a href="#test" data-annex-search="toggle">toggle $annexSearchWidget</a>
 <a href="#test" data-annex-search="clear">clear $annexSearchWidget $input</a>
+<a href="#test" data-annex-search="focus">focus on the $annexSearchWidget</a>
 <a href="#test" data-annex-search-query="search query">open $annexSearchWidget, insert query and search</a>
 ````
 
