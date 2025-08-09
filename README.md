@@ -26,6 +26,8 @@ It's currently in early-development.
 ![](https://416.io/ss/f/x43xuv/r)
 
 
+<hr />
+
 ### Quick intro (for devs)
 Annex uses [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
 to encapsulate and restrict JavaScript and CSS scope. The fundamental concepts
