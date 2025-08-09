@@ -64,6 +64,10 @@ Privacy and data considerations:
 - Images are base64-encoded and not requested remotely
 - The remote CDN used is [UNPKG](https://unpkg.com/)
 
+Performance considerations:
+- Annex currently employs a "Last in, first out" approach to queries
+  - This means that if users type quickly, previous searches will be aborted to lower server and bandwidth burden
+
 
 <hr />
 
