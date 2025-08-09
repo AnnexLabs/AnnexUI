@@ -26,7 +26,7 @@ It's currently in early-development.
 1. Inline: <a href="https://local.annexsearch.com/demos/inline" target="_blank">https://local.annexsearch.com/demos/inline</a>
 2. Modal: <a href="https://local.annexsearch.com/demos/modal" target="_blank">https://local.annexsearch.com/demos/modal</a>
 3. Panel (left): <a href="https://local.annexsearch.com/demos/panel-left" target="_blank">https://local.annexsearch.com/demos/panel-left</a>
-4. Modal: <a href="https://local.annexsearch.com/demos/panel-right" target="_blank">https://local.annexsearch.com/demos/panel-right</a>
+4. Panel (right): <a href="https://local.annexsearch.com/demos/panel-right" target="_blank">https://local.annexsearch.com/demos/panel-right</a>
 
 
 <hr />
