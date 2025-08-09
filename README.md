@@ -53,7 +53,8 @@ Typesense cluster settings.
 
 ### Config
 Below you'll find a high-level breakdown of configuration options that can be
-customized. See [#config-overriding] for details on how to do so.s
+customized. See [#config-overriding](Config overriding) for details on how to do
+so.
 
 | Key                       | Type              | Required   | Default value        | Description                                                                                           |
 | --------------------------| ------------------| ---------- | -------------------- | ----------------------------------------------------------------------------------------------------- |
