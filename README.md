@@ -2,8 +2,7 @@
 AnnexUI is a MIT licensed UI library for [Typesense](https://typesense.org/).
 It's designed to be a clean, UX focused library that gets developers up and
 running in a few minutes. Just include a link to the JS, set your Typesense
-cluster settings, and then press `⌘k` to see Annex up and running, performing
-queries against your Typesense cluster.
+cluster settings, and then press `⌘k` to see Annex up and running.
 
 It's currently in early-development.
 
@@ -24,10 +23,10 @@ It's currently in early-development.
 <hr />
 
 ### Demos
-1. Modal: [https://local.annexsearch.com/demos/inline](https://local.annexsearch.com/demos/inline)
-2. Modal: [https://local.annexsearch.com/demos/modal](https://local.annexsearch.com/demos/modal)
-3. Modal: [https://local.annexsearch.com/demos/panel-left](https://local.annexsearch.com/demos/panel-left)
-4. Modal: [https://local.annexsearch.com/demos/panel-right](https://local.annexsearch.com/demos/panel-right)
+1. Inline: <a href="https://local.annexsearch.com/demos/inline" target="_blank">https://local.annexsearch.com/demos/inline</a>
+2. Modal: <a href="https://local.annexsearch.com/demos/modal" target="_blank">https://local.annexsearch.com/demos/modal</a>
+3. Panel (left): <a href="https://local.annexsearch.com/demos/panel-left" target="_blank">https://local.annexsearch.com/demos/panel-left</a>
+4. Modal: <a href="https://local.annexsearch.com/demos/panel-right" target="_blank">https://local.annexsearch.com/demos/panel-right</a>
 
 
 <hr />
@@ -194,7 +193,7 @@ accessible via the `event.detail` property.
 
 
 ### Methods
-Below you'll find the methods that can be called against an `$annexSearchWidget`
+Below you'll find methods that can be called against an `$annexSearchWidget`
 reference. While you'll find other public events available when inspecting the
 element, only the ones below are currently supported.
 
