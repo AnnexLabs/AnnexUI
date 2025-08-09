@@ -7,6 +7,9 @@ cluster.
 
 It's currently in early-development.
 
+
+<hr />
+
 ### Quick links
 1. Quick intro (for devs)
 2. Quickstart
@@ -31,6 +34,8 @@ to understand are:
 - The UI will be encapsulated within a `<annex-search-widget>` HTML tag
 - Public methods to modify any "instance" will be through that custom HTMLElement
 
+
+<hr />
 
 ### Quickstart
 Below you'll find a few lines to get up and running quickly. Just swap out your
@@ -63,6 +68,8 @@ Typesense cluster settings.
 ```
 
 
+<hr />
+
 ### Config
 Below you'll find a high-level breakdown of configuration options that can be
 customized. See [Config overriding](#config-overriding) for details on how to do
@@ -91,11 +98,15 @@ so.
 | templates                 | Object            | ❌         | (see ...)             | Map of templates that should be used in Annex rendering.                                              |
 
 
+<hr />
+
 ### Debugging
 Annex tries to communicate installation and instantiation errors clealy through
 DevTools console. During integration, ensure you have your console open to view
 tips on how to get your integration working properly.
 
+
+<hr />
 
 ### HTMLElement interactions
 Below are examples of elements that trigger various actions when the loaded page
@@ -110,6 +121,8 @@ has a single $annexSearchWidget running on the page.
 ````
 
 
+<hr />
+
 ### Config overriding
 Below are examples of code that can be executed against a `$annexSearchWidget`
 which overrides and/or defines config values.
@@ -122,6 +135,8 @@ $('annex-search-widget').setConfig('searchOptions', {
 });
 ```
 
+
+<hr />
 
 ### Events
 Events can be processed either through the config options passed in during
@@ -146,6 +161,8 @@ accessible via the `event.detail` property.
 | `root.toggle`         | Dispatched when the `$annexSearchWidget` is toggled.                                                                      |
 
 
+<hr />
+
 ### Supported callback handling
 ``` javascript
 function(...args) {
@@ -153,6 +170,8 @@ function(...args) {
 }
 ```
 
+
+<hr />
 
 ### Supported $annexSearchWidget event handling
 ``` javascript
@@ -162,6 +181,8 @@ $('annex-search-widget').addEventListener('root.show', function(customEvent) {
 });
 ```
 
+
+<hr />
 
 ### Template variables
 - `{{response.found}}`
