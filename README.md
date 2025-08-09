@@ -123,12 +123,12 @@ tips on how to get your integration working properly.
 <hr />
 
 ### `$annexSearchWidget` interactions
-Below is a list of supported actions which can be bound to elements on the page.
+Below is a list of supported actions which can be bound to elements on a page.
 When found, Annex will process them.
 
 **Notes**:
-1. Interactions will not work if there is more than one `$annexSearchWidget` instance instantiated on the page.
-2. Not all layouts support all ineractions. For example, an `inline` `$annexSearchWidget` cannot be "shown"
+1. Interactions will not work if there is more than one `$annexSearchWidget` instance instantiated on a page.
+2. Not all layouts support all interactions. For example, an `inline` `$annexSearchWidget` cannot be "shown" or "hidden"
 
 Note #2: 
 
