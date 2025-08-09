@@ -7,11 +7,20 @@ cluster.
 
 It's currently in early-development.
 
+### Quick links
+1. Quick intro (for devs)
+2. Quickstart
+3. Config
+4. Debugging
+5. HTMLElement interactions
+6. Config overriding
+7. Events
+
 ### Quick preview
 ![](https://416.io/ss/f/x43xuv/r)
 
 
-### Quick Intro (for devs)
+### Quick intro (for devs)
 Annex uses [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
 to encapsulate and restrict JavaScript and CSS scope. The fundamental concepts
 to understand are:
@@ -85,7 +94,7 @@ DevTools console. During integration, ensure you have your console open to view
 tips on how to get your integration working properly.
 
 
-### HTMLElement Interactions
+### HTMLElement interactions
 Below are examples of elements that trigger various actions when the loaded page
 has a single $annexSearchWidget running on the page.
 
@@ -140,19 +149,6 @@ function(...args) {
     console.log(arguments);
 }
 ```
-
-
-### Supported $annexSearchWidget events
-`result.click`  
-`result.focus`  
-`results.empty`  
-`results.error`  
-`results.idle`  
-`results.loaded`  
-`root.hide`  
-`root.show`  
-`root.toggle`
-
 
 
 ### Supported $annexSearchWidget event handling
