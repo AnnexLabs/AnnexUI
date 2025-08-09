@@ -271,3 +271,32 @@ causes.
 
 - You've defined your cluster settings correctly, but your searches are failing
   - Ensure your `cluster.apiKey` is associated with an `apiKey` that has permission to perform queries
+
+
+<hr />
+
+### More examples
+
+#### Preset without config options
+The code below shows the simplest example of Annex. By specifying a `presetName`
+Annex knows how to perform the query. Along with that, the default config
+options (e.g. `'⌘k'` for the keyboard shortcut, `layout` being `'modal'`, etc.)
+are good enough to get going.
+
+``` html
+<script type="text/javascript" src="https://local.annexsearch.com/ts/js"></script>
+<script type="text/javascript">
+    (function() {
+        let $annexSearchWidget = document.createElement('annex-search-widget');
+        $annexSearchWidget.setConfig({
+            cluster: {
+                apiKey: '606o4DjqwBhFNZ2NKgSiqFsqdMNCbcKx',
+                collectionName: 'prod:::tpclwpqz62hq:::crawlerResourceSearch:::v0.1.0',
+                hostname: 'b3487cx0hrdu1y6kp-1.a1.typesense.net',
+                presetName: 'prod:::tcprkee8nnvp:::crawlerResourceSearch:::v0.1.0',
+            }
+        });
+        $annexSearchWidget.mount();
+    })();
+</script>
+```
