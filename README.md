@@ -48,6 +48,18 @@ to understand are:
 - Public methods to modify any "instance" will be through that custom
 `HTMLElement`
 
+Out the box, Annex supports the following:
+- Four (4) different layouts (`'inline'`, `'modal'`, `'panel-left'` and `'panel-right'`)
+- Dark mode
+- Responsive layouts
+- Event handling
+
+Privacy and data considerations:
+- No data is stored in cookies or localStorage
+- Queries are only sent to your Typesense cluster; no middleware is present
+- Images are base64-encoded and not requested remotely
+- The remote CDN used is [UNPKG](https://unpkg.com/)
+
 
 <hr />
 
