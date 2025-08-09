@@ -79,6 +79,11 @@ so.
 | templates                 | Object            | ❌         | (see ...)             | Map of templates that should be used in Annex rendering.                                              |
 
 
+### Debugging
+Annex tries to communicate installation and instantiation errors clealy through
+DevTools console. During integration, ensure you have your console open to view
+tips on how to get your integration working properly.
+
 
 ### HTMLElement Interactions
 Below are examples of elements that trigger various actions when the loaded page
@@ -106,16 +111,27 @@ $('annex-search-widget').setConfig('searchOptions', {
 ```
 
 
-### Supported callbacks
-`result.click`  
-`result.focus`  
-`results.empty`  
-`results.error`  
-`results.idle`  
-`results.loaded`  
-`root.hide`  
-`root.show`  
-`root.toggle`
+### Events
+Events can be processed either through the config options passed in during
+instantiation, or via native event listeners (e.g.
+`$annexSearchWidget.addEventListener('result.click', handler)`). Below you'll
+find a list of supported events.
+
+When events are processed through native event listeners, arguments are
+accessible via the `event.detail` property.
+
+
+| eventName             | Description                                                                                                               |
+| ----------------------| -------------------------------------------------------------------------------------------------------------------------- 
+| `result.click`        | Dispatched when a result is clicked.                                                                                      |
+| `result.focus`        | Dispatched when a result is focused.                                                                                      |
+| `results.empty`       | Dispatched when a search results in an empy state (no results found).                                                     |
+| `results.error`       | Dispatched when a search results in an error.                                                                             |
+| `results.idle`        | Dispatched when the idle state for results is shown (e.g. the user deletes a previously searched query from the input).   |
+| `results.loaded`      | Dispatched when a search results in an results being shown.                                                               |
+| `root.hide`           | Dispatched when the `$annexSearchWidget` is hidden.                                                                       |
+| `root.show`           | Dispatched when the `$annexSearchWidget` is shown.                                                                        |
+| `root.toggle`         | Dispatched when the `$annexSearchWidget` is toggled.                                                                      |
 
 
 ### Supported callback handling
