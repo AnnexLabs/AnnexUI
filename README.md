@@ -21,6 +21,9 @@ to understand are:
 
 
 ### Quickstart
+Below you'll find a few lines to get up and running quickly. Just swap out your
+Typesense cluster settings.
+
 ``` html
 <script type="text/javascript" src="https://local.annexsearch.com/ts/js"></script>
 <script type="text/javascript">
@@ -31,13 +34,11 @@ to understand are:
                 apiKey: '606o4DjqwBhFNZ2NKgSiqFsqdMNCbcKx',
                 collectionName: 'prod:::tpclwpqz62hq:::crawlerResourceSearch:::v0.1.0',
                 hostname: 'b3487cx0hrdu1y6kp-1.a1.typesense.net',
-                presetName: 'prod:::tcprkee8nnvp:::crawlerResourceSearch:::v0.1.0',
             },
-            layout: 'modal',
-            name: 'modal-demo',
             searchOptions: {
                 highlight_full_fields: 'title,body',
                 highlight_affix_num_tokens: '10',
+                query_by: 'title,body',
                 snippet_threshold: '20',
             }
         });
@@ -51,6 +52,9 @@ to understand are:
 
 
 ### Config
+Below you'll find a high-level breakdown of configuration options that can be
+customized.
+
 | Key                       | Type              | Required   | Default value        | Description                                                                                           |
 | --------------------------| ------------------| ---------- | -------------------- | ----------------------------------------------------------------------------------------------------- |
 | $container                | HTMLElement       | ❌         | `null`                | The HTMLElement that the $annexSearchWidget element should be appended to.                            |
