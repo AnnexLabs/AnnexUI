@@ -111,7 +111,7 @@ tips on how to get your integration working properly.
 
 <hr />
 
-### HTMLElement interactions
+### `$annexSearchWidget` interactions
 Below are examples of elements that trigger various actions when the loaded page
 has a single $annexSearchWidget running on the page.
 
