@@ -116,11 +116,11 @@ Below are examples of elements that trigger various actions when the loaded page
 has a single `$annexSearchWidget` running on the page.
 
 ``` html
-<a href="#test" data-annex-search="open">open `$annexSearchWidget`</a>
-<a href="#test" data-annex-search="close">close `$annexSearchWidget`</a>
-<a href="#test" data-annex-search="toggle">toggle `$annexSearchWidget`</a>
-<a href="#test" data-annex-search="clear">clear `$annexSearchWidget` $input</a>
-<a href="#test" data-annex-search-query="search query">open `$annexSearchWidget`, insert query and search</a>
+<a href="#test" data-annex-search="open">open $annexSearchWidget</a>
+<a href="#test" data-annex-search="close">close $annexSearchWidget</a>
+<a href="#test" data-annex-search="toggle">toggle $annexSearchWidget</a>
+<a href="#test" data-annex-search="clear">clear $annexSearchWidget $input</a>
+<a href="#test" data-annex-search-query="search query">open $annexSearchWidget, insert query and search</a>
 ````
 
 
@@ -176,7 +176,7 @@ function(...args) {
 
 <hr />
 
-### Supported $annexSearchWidget event handling
+### Supported `$annexSearchWidget` event handling
 ``` javascript
 $('annex-search-widget').addEventListener('root.show', function(customEvent) {
     console.log(customEvent);
