@@ -150,9 +150,8 @@ find a list of supported events.
 When events are processed through native event listeners, arguments are
 accessible via the `event.detail` property.
 
-
-| eventName             | Description                                                                                                               |
-| ----------------------| -------------------------------------------------------------------------------------------------------------------------- 
+| Event Name            | Description                                                                                                               |
+| ----------------------| --------------------------------------------------------------------------------------------------------------------------|
 | `result.click`        | Dispatched when a result is clicked.                                                                                      |
 | `result.focus`        | Dispatched when a result is focused.                                                                                      |
 | `results.empty`       | Dispatched when a search results in an empy state (no results found).                                                     |
@@ -162,6 +161,28 @@ accessible via the `event.detail` property.
 | `root.hide`           | Dispatched when the `$annexSearchWidget` is hidden.                                                                       |
 | `root.show`           | Dispatched when the `$annexSearchWidget` is shown.                                                                        |
 | `root.toggle`         | Dispatched when the `$annexSearchWidget` is toggled.                                                                      |
+
+
+<hr />
+
+
+### Methods
+Below you'll find the methods that can be called against an `$annexSearchWidget`
+reference. While you'll find other public events available when inspecting the
+element, only the ones below are currently supported.
+
+| Method name       | Description                                                                                                       |
+| ------------------| ------------------------------------------------------------------------------------------------------------------| 
+| `focus`           | Focuses on the `$annexSearchWidget` search query input.                                                           |
+| `getConfig`       | Returns an object representing the config options for the `$annexSearchWidget`.                                   |
+| `hide`            | Hides the `$annexSearchWidget` if it's currently showing.                                                         |
+| `mount`           | Mounts the `$annexSearchWidget` to the `$container` config option.                                                |
+| `query`           | Shows the `$annexSearchWidget` if it's currently hidden, and performs a query (based on the passed in value).     |
+| `ready`           | Returns a promise when the `$annexSearchWidget` is ready for interaction.                                         |
+| `setConfig`       | Sets `$annexSearchWidget` config options.                                                                         |
+| `show`            | Shows the `$annexSearchWidget` if it's currently hidden.                                                          |
+| `showing`         | Returns whether or not the `$annexSearchWidget` is currently showing.                                             |
+| `toggle`          | Shows or hides the `$annexSearchWidget` depending on it's currently state.                                        |
 
 
 <hr />
