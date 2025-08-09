@@ -82,7 +82,7 @@ so.
 | --------------------------| ------------------| ---------- | -------------------- | ----------------------------------------------------------------------------------------------------- |
 | $container                | HTMLElement       | ❌         | `null`                | The HTMLElement that the $annexSearchWidget element should be appended to.                            |
 | callbacks                 | Object            | ❌         | (see ...)             | Map of callback functions that will be triggered upon certain events.                                 |
-| cluster                   | Object            | ✅         | (see ...)             | Map of Typesense related cluster auth properties.                                                     |
+| cluster                   | Object            | ✅         | (n/a)                 | Map of Typesense related cluster auth properties.                                                     |
 | cluster.apiKey            | String            | ✅         | null                  | Typesense cluster search API key.                                                                     |
 | cluster.collectionName    | String            | ✅         | null                  | Typesense cluster collection name.                                                                    |
 | cluster.hostname          | String            | ✅         | null                  | Typesense cluster hostname.                                                                           |
