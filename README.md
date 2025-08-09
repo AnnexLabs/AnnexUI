@@ -1,4 +1,38 @@
-# Typesense-InstantSearch
+# AnnexUI
+AnnexUI is a MIT licensed UI library for [Typesense](https://typesense.org/).
+It's designed to be a clean, UX focused library that gets developers up and
+running in a few minutes.
+
+It's currently in early-development.
+
+
+### Quickstart
+``` html
+<script type="text/javascript" src="https://local.annexsearch.com/ts/js"></script>
+<script type="text/javascript">
+    (function() {
+        let $annexSearchWidget = document.createElement('annex-search-widget');
+        $annexSearchWidget.setConfig({
+            cluster: {
+                apiKey: '606o4DjqwBhFNZ2NKgSiqFsqdMNCbcKx',
+                collectionName: 'prod:::tpclwpqz62hq:::crawlerResourceSearch:::v0.1.0',
+                hostname: 'b3487cx0hrdu1y6kp-1.a1.typesense.net',
+                presetName: 'prod:::tcprkee8nnvp:::crawlerResourceSearch:::v0.1.0',
+            },
+            layout: 'modal',
+            name: 'modal-demo',
+            searchOptions: {
+                highlight_full_fields: 'title,body',
+                highlight_affix_num_tokens: '10',
+                snippet_threshold: '20',
+            }
+        });
+        $annexSearchWidget.mount();
+        $annexSearchWidget.ready().then(function($annexSearchWidget) {
+            // $annexSearchWidget.show();
+        });
+    })();
+</script>
 
 
 ### Config
@@ -25,52 +59,26 @@
 | templates                 | Object            | ❌         | (see ...)             | Map of templates that should be used in Annex rendering.                                              |
 
 
-### Quickstart
-``` javascript
-let $annexSearchWidget = document.createElement('annex-search-widget');
-$annexSearchWidget.setConfig({
-    cluster: {
-        apiKey: '606o4DjqwBhFNZ2NKgSiqFsqdMNCbcKx',
-        collectionName: 'prod:::tpclwpqz62hq:::crawlerResourceSearch:::v0.1.0',
-        hostname: 'b3487cx0hrdu1y6kp-1.a1.typesense.net',
-        presetName: 'prod:::tcprkee8nnvp:::crawlerResourceSearch:::v0.1.0',
-    },
-    searchOptions: {
-        highlight_full_fields: 'title,body',
-        highlight_affix_num_tokens: '10',
-        snippet_threshold: '20',
-    }
-});
-$annexSearchWidget.mount();
-$annexSearchWidget.ready().then(function($annexSearchWidget) {
-    $annexSearchWidget.show();
-});
-```
 
+### HTMLElement Interactions
+Below are examples of elements that trigger various actions when the loaded page
+has a single $annexSearchWidget running on the page.
 
-### HTML Attributes
 ``` html
 <a href="#test" data-annex-search="open">open $annexSearchWidget</a>
-````
-``` html
 <a href="#test" data-annex-search="close">close $annexSearchWidget</a>
-````
-``` html
 <a href="#test" data-annex-search="toggle">toggle $annexSearchWidget</a>
-````
-``` html
 <a href="#test" data-annex-search="clear">clear $annexSearchWidget $input</a>
-````
-``` html
 <a href="#test" data-annex-search-query="search query">open $annexSearchWidget, insert query and search</a>
 ````
 
 
+### Config overriding
+Below are examples of code that can be executed against a `$annexSearchWidget`
+which overrides and/or defines config values.
 
-### Config
 ``` javascript
-$('annex-search-widget').setConfig('$parentContainer', document.body);
-$('annex-search-widget').setConfig('debug', true);
+$('annex-search-widget').setConfig('$container', document.body);
 $('annex-search-widget').setConfig('searchOptions.snippet_threshold', 20);
 $('annex-search-widget').setConfig('searchOptions', {
     snippet_threshold: 20
