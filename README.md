@@ -192,3 +192,13 @@ $('annex-search-widget').addEventListener('root.show', function(customEvent) {
 - `{{response.out_of}}`
 - `{{response.page}}`
 - `{{response.search_time_ms}}`
+
+
+<hr />
+
+### Common problems / gotchas
+Below are a list of possible issues developers may run into, along with possible
+causes.
+
+- You've defined your cluster settings correctly, but your searches are failing
+  - Ensure your `cluster.apiKey` is associated with an `apiKey` that has permission to perform queries
