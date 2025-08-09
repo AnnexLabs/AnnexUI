@@ -22,7 +22,7 @@
 - templates
 
 
-### Setup
+### Quick Setup
 ``` javascript
 let $annexSearchWidget = document.createElement('annex-search-widget');
 $annexSearchWidget.setConfig({
