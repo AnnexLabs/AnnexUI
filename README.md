@@ -9,6 +9,15 @@ It's currently in early-development.
 
 <hr />
 
+### Demos
+1. Inline: <a href="https://local.annexsearch.com/demos/inline" target="_blank">https://local.annexsearch.com/demos/inline</a>
+2. Modal: <a href="https://local.annexsearch.com/demos/modal" target="_blank">https://local.annexsearch.com/demos/modal</a>
+3. Panel (left): <a href="https://local.annexsearch.com/demos/panel-left" target="_blank">https://local.annexsearch.com/demos/panel-left</a>
+4. Panel (right): <a href="https://local.annexsearch.com/demos/panel-right" target="_blank">https://local.annexsearch.com/demos/panel-right</a>
+
+
+<hr />
+
 ### Quick links
 1. Demos
 2. Quick intro (for devs)
@@ -18,15 +27,6 @@ It's currently in early-development.
 6. `$annexSearchWidget` interactions
 7. Config overriding
 8. Events
-
-
-<hr />
-
-### Demos
-1. Inline: <a href="https://local.annexsearch.com/demos/inline" target="_blank">https://local.annexsearch.com/demos/inline</a>
-2. Modal: <a href="https://local.annexsearch.com/demos/modal" target="_blank">https://local.annexsearch.com/demos/modal</a>
-3. Panel (left): <a href="https://local.annexsearch.com/demos/panel-left" target="_blank">https://local.annexsearch.com/demos/panel-left</a>
-4. Panel (right): <a href="https://local.annexsearch.com/demos/panel-right" target="_blank">https://local.annexsearch.com/demos/panel-right</a>
 
 
 <hr />
