@@ -195,7 +195,7 @@ reference. While you'll find other public events available when inspecting the
 element, only the ones below are currently supported.
 
 | Method name       | Return value      | Description                                                                                                       |
-| ------------------| --------------------------------------------------------------------------------------------------------------------------------------| 
+| ------------------| ------------------|-------------------------------------------------------------------------------------------------------------------| 
 | `focus`           | `Boolean`         | Focuses on the `$annexSearchWidget` search query input.                                                           |
 | `getConfig`       | `Boolean`         | Returns an object representing the config options for the `$annexSearchWidget`.                                   |
 | `hide`            | `Boolean`         | Hides the `$annexSearchWidget` if it's currently showing.                                                         |
