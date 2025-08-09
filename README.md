@@ -16,6 +16,9 @@ It's currently in early-development.
 6. Config overriding
 7. Events
 
+
+<hr />
+
 ### Quick preview
 ![](https://416.io/ss/f/x43xuv/r)
 
