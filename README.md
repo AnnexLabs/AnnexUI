@@ -1,28 +1,49 @@
 # Typesense-InstantSearch
 
 
-### Variables
-- `{{response.found}}`
-- `{{response.out_of}}`
-- `{{response.page}}`
-- `{{response.search_time_ms}}`
-
-
 ### Config
-- $parent
-- callbacks
-- cluster
-- copy
-- keyboardShortcut
-- logging
-- mode
-- overlay
-- paths
-- searchRequestMethod
-- templates
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Required/th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Row 1 Col 1</td>
+    <td>Row 1 Col 1</td>
+    <td>Row 1 Col 2</td>
+    <td>Row 1 Col 3</td>
+  </tr>
+  <tr>
+    <td>Row 2 Col 1</td>
+    <td>Row 2 Col 2</td>
+    <td>Row 2 Col 2</td>
+    <td>Row 2 Col 3</td>
+  </tr>
+</table>
 
 
-### Quick Setup
+| Key                       | Type          | Required   | Default value        | Description                                                                                           |
+| --------------------------| --------------| ---------- | -------------------- | ----------------------------------------------------------------------------------------------------- |
+| $container                | HTMLElement   | ❌         | `null`                | The HTMLElement that the $annexSearchWidget element should be appended to.                            |
+| callbacks                 | Object        | ❌         | (see ...)             | Map of callback functions that will be triggered upon certain events.                                 |
+| cluster                   | Object        | ✅         | (see ...)             | Map of Typesense related cluster auth properties.                                                     |
+| copy                      | Object        | ❌         | (see ...)             | Map of copy used in different `templates`.                                                            |
+| debug                     | Boolean       | ❌         | `false`               | Whether debugging information should be logged to console.                                            |
+| keyboardShortcut          | null|String   | ❌         | `⌘k`                  | The keyboard shortcut that should be used to toggle Annex (does not apply to `inline` instances).     |
+| highlightTagName          | String        | ❌         | `MARK`                | The HTMLElement that should be rendered around query matches.                                         |
+| layout                    | String        | ❌         | `modal`               | The layout for Annex. Can be: `inline`, `modal`, `panel-left` or `panel-right`.                       |
+| name                      | String        | ❌         | `null`                | The name of the instance. Useful for differentiating between multiple $annexSearchWidget instances.   |
+| paths                     | Object        | ❌         | (see ...)             | Map of `css` and `template` URLs that are loaded for an $annexSearchWidget.                           |
+| schema                    | String        | ❌         | `webResource-v0.1.0`  | Name of the schema associated with the Typesense cluster.                                             |
+| searchOptions             | Object        | ✅         | (see ...)             | Map of search options that are passed in a Typesense search query.                                    |
+| searchRequestMethod       | String        | ❌         | `lifo`                | The type of search handling. Currently limited to just `lifo` (last in first out)                     |
+| showOverlay               | Boolean       | ❌         | `true`                | Whether the overlay HTMLElement should be rendered.                                                   |
+| templates                 | Object        | ❌         | (see ...)             | Map of templates that should be used in Annex rendering.                                              |
+
+
+### Quickstart
 ``` javascript
 let $annexSearchWidget = document.createElement('annex-search-widget');
 $annexSearchWidget.setConfig({
@@ -75,16 +96,24 @@ $('annex-search-widget').setConfig('searchOptions', {
 ```
 
 
-### Supported config callbacks
-`callbacks.result.click`  
-`callbacks.result.focus`  
-`callbacks.results.empty`  
-`callbacks.results.error`  
-`callbacks.results.idle`  
-`callbacks.results.loaded`  
-`callbacks.root.hide`  
-`callbacks.root.show`  
-`callbacks.root.toggle`
+### Supported callbacks
+`result.click`  
+`result.focus`  
+`results.empty`  
+`results.error`  
+`results.idle`  
+`results.loaded`  
+`root.hide`  
+`root.show`  
+`root.toggle`
+
+
+### Supported callback handling
+``` javascript
+function(...args) {
+    console.log(arguments);
+}
+```
 
 
 ### Supported $annexSearchWidget events
@@ -99,10 +128,18 @@ $('annex-search-widget').setConfig('searchOptions', {
 `root.toggle`
 
 
-### Sample event handling
+
+### Supported $annexSearchWidget event handling
 ``` javascript
 $('annex-search-widget').addEventListener('root.show', function(customEvent) {
     console.log(customEvent);
     console.log(customEvent.detail);
 });
 ```
+
+
+### Template variables
+- `{{response.found}}`
+- `{{response.out_of}}`
+- `{{response.page}}`
+- `{{response.search_time_ms}}`
