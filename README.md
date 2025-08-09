@@ -33,6 +33,7 @@ It's currently in early-development.
         });
     })();
 </script>
+```
 
 
 ### Config
