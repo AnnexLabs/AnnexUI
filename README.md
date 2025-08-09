@@ -67,6 +67,7 @@ to understand are:
 ⚡️ Performance considerations:
 - Annex currently employs a "Last in, first out" approach to queries
   - This means that if users type quickly, previous searches will be aborted to lower server and bandwidth burden
+- Analytics can be facilitate through Events
 
 
 <hr />
