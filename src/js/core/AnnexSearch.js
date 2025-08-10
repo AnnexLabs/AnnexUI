@@ -15,6 +15,7 @@
  * @todo    - collection retriveal (for smart templates?)
  * 
  * @todo    - CacheUtils for /css and /templates lookups to speed things up (?)
+ * @todo    -- Only for /templates since /css is direct linked (?)
  * 
  * @todo    [DONE] - dark mode
  * @todo    [DONE] - mobile
