@@ -3,14 +3,14 @@
  * /src/js/utils/Toast.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.ToastUtils
      * 
      * @access  public
      */
-    window.annexSearch.ToastUtils = window.annexSearch.ToastUtils || class {
+    window.annexSearch.ToastUtils = window.annexSearch.ToastUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * #__toasts

@@ -58,6 +58,10 @@
  * @todo    [DONE] - Toast positioning...
  * @todo    [DONE] -- See getBoundingClientRect
  * @todo    [DONE] -- div.content with overflow: hidden;
+ * @todo    [PUNT] - Further cleanup of error handling (e.g. don't define messages in TypesenseHelper?)
+ * @todo    [PUNT] - UI for customizing and storing it on a server
+ * @todo    [PUNT] - Arch cleanup to ensure object instances are directly tied to the respective $annexSearchWidget
+ * @todo    [PUNT] -- Right now, this is messy. Should be standardized
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -139,17 +143,6 @@ window.annexSearch.DependencyLoader.push([], function() {
                 }
                 window.annexSearch[propertyName].setup && window.annexSearch[propertyName].setup();
             }
-            // window.annexSearch.CacheUtils.setup();
-            // window.annexSearch.DataUtils.setup();
-            // // window.annexSearch.DebuggingUtils.setup();
-            // window.annexSearch.ElementUtils.setup();
-            // window.annexSearch.ErrorUtils.setup();
-            // window.annexSearch.FunctionUtils.setup();
-            // window.annexSearch.InteractionUtils.setup();
-            // window.annexSearch.KeyboardShortcutUtils.setup();
-            // window.annexSearch.LoggingUtils.setup();
-            // window.annexSearch.StringUtils.setup();
-            // window.annexSearch.ToastUtils.setup();
             return true;
         }
 

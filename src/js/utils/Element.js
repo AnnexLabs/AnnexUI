@@ -3,14 +3,14 @@
  * /src/js/utils/Element.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.ElementUtils
      * 
      * @access  public
      */
-    window.annexSearch.ElementUtils = window.annexSearch.ElementUtils || class {
+    window.annexSearch.ElementUtils = window.annexSearch.ElementUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * #__getTemplateElement

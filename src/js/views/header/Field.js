@@ -113,7 +113,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let response = typesenseSearchRequest.getResponse();
             this.#__lastTypesenseSearchResponse = response;
             this.setStateKey('error');
-            window.annexSearch.LoggingUtils.logFailedTypesenseSearchRequestError(typesenseSearchRequest);
+            typesenseSearchRequest.logFailedEvent();
             return true;
         };
 

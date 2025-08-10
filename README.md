@@ -230,7 +230,7 @@ element, only the ones below are currently supported.
 | `setConfig`       | `Boolean`         | Sets `$annexSearchWidget` config options.                                                                         |
 | `show`            | `Boolean`         | Shows the `$annexSearchWidget` if it's currently hidden.                                                          |
 | `showing`         | `Boolean`         | Returns whether or not the `$annexSearchWidget` is currently showing.                                             |
-| `showToast`       | `Boolean`         | Shows a toast in the search UI, accepting a `title`, `message` and `hideTimeoutDuration` params.                  |
+| `showToast`       | `Boolean`         | Shows a toast in the search UI, accepting `title`, `message` and `hideTimeoutDuration` params.                    |
 | `toggle`          | `Boolean`         | Shows or hides the `$annexSearchWidget` depending on it's currently state.                                        |
 
 

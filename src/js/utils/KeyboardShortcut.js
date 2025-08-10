@@ -25,7 +25,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
              * documentCatchAll
              * 
              * Whether any keyboard keydown event against the document should be
-             * "caught" and processed as if it was entered into the $input field.
+             * "caught" and processed as if it was entered into the $input
+             * field.
              * 
              * @static
              * @access  private
@@ -36,8 +37,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             /**
              * documentDelete
              * 
-             * Whether any keyboard keydown event against the document should be
-             * "caught" and processed as if it was entered into the $input field.
+             * Whether the delete key should be caught and processed as the user
+             * wanting to delete the last entered character.
              * 
              * @static
              * @access  private

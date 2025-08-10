@@ -3,14 +3,14 @@
  * /src/js/utils/Function.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.FunctionUtils
      * 
      * @access  public
      */
-    window.annexSearch.FunctionUtils = window.annexSearch.FunctionUtils || class {
+    window.annexSearch.FunctionUtils = window.annexSearch.FunctionUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * debounce

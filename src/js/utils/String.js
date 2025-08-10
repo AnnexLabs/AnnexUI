@@ -3,14 +3,14 @@
  * /src/js/utils/String.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.StringUtils
      * 
      * @access  public
      */
-    window.annexSearch.StringUtils = window.annexSearch.StringUtils || class {
+    window.annexSearch.StringUtils = window.annexSearch.StringUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * generateUUID

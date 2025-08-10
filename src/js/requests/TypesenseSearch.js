@@ -361,6 +361,67 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         }
 
         /**
+         * logFailedEvent
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        logFailedEvent() {
+
+            // Typesense failure message
+            let message = window.annexSearch.ErrorUtils.getMessage('typesenseSearchRequest.failed.general');
+            this.error(message);
+
+            // Response received, but request not processed
+            let error = this.getError(),
+                key = error.key;
+            if (key === 'typesenseSearchRequestResponse') {
+
+                // Response from Typesense
+                let message = window.annexSearch.ErrorUtils.getMessage('typesenseSearchRequest.failed.responseReceived', error.message);
+                this.error(message);
+
+                // Possible $query_by incorrect
+                if (message.includes('Could not find a field named') === true) {
+                    let message = window.annexSearch.ErrorUtils.getMessage('typesenseSearchRequest.failed.responseReceived.fieldTip');
+                    this.error(message);
+                    return true;
+                }
+
+                // Possible $apiKey or $collectionName incorrect
+                if (message.includes('Forbidden - a valid `x-typesense-api-key` header must be sent.') === true) {
+                    let message = window.annexSearch.ErrorUtils.getMessage('typesenseSearchRequest.failed.responseReceived.forbiddenTip');
+                    this.error(message);
+                    return true;
+                }
+
+                // Possible $query_by incorrect
+                if (message.includes('No search fields specified') === true) {
+                    let message = window.annexSearch.ErrorUtils.getMessage('typesenseSearchRequest.failed.responseReceived.queryTip');
+                    this.error(message);
+                    return true;
+                }
+
+                // Done
+                return true;
+            }
+
+            // Unknown error (e.g. fetch failed)
+            message = window.annexSearch.ErrorUtils.getMessage('typesenseSearchRequest.failed.unknown', error.message);
+            this.error(message);
+
+            // Possible tip to help with debugging
+            if (message.includes('Failed to fetch') === true) {
+                message = window.annexSearch.ErrorUtils.getMessage('loggingUtils.fetchFailed.tip');
+                this.error(message);
+                return true;
+            }
+
+            // Done
+            return true;
+        }
+
+        /**
          * setError
          * 
          * @access  public

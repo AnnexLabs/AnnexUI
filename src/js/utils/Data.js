@@ -3,14 +3,14 @@
  * /src/js/utils/Data.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.DataUtils
      * 
      * @access  public
      */
-    window.annexSearch.DataUtils = window.annexSearch.DataUtils || class {
+    window.annexSearch.DataUtils = window.annexSearch.DataUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * deepMerge
