@@ -159,11 +159,8 @@ window.annexSearch.DependencyLoader = (function() {
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - bug with focus not coming back (related to found.results not being cleared)
- * 
- * @todo    - Deal w/ Config role for css loading and dist script
- * @todo    - CacheUtils for /css and /templates lookups to speed things up?
  * @todo    - Error logging cleanup
+ * @todo    - bug with focus not coming back (related to found.results not being cleared)
  * 
  * @todo    - ensure multiple instantiations happen sequentially (to allow for /templates caching)
  * 
@@ -173,6 +170,8 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    - variable templating
  * @todo    - custom templates
  * @todo    - collection retriveal (for smart templates?)
+ * 
+ * @todo    - CacheUtils for /css and /templates lookups to speed things up (?)
  * 
  * @todo    [DONE] - dark mode
  * @todo    [DONE] - mobile
@@ -210,6 +209,11 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    [DONE] -- See: https://416.io/ss/f/y75fpa
  * @todo    [DONE] - Toast UI
  * @todo    [DONE] - event dispatching cleanup
+ * @todo    [DONE] - ToastUtils, passing in $annexSearchWidget and tracking open toasts
+ * @todo    [DONE] - Deal w/ Config role for css loading and dist script
+ * @todo    [DONE] - Toast positioning...
+ * @todo    [DONE] -- See getBoundingClientRect
+ * @todo    [DONE] -- div.content with overflow: hidden;
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -270,21 +274,35 @@ window.annexSearch.DependencyLoader.push([], function() {
         /**
          * #__setupUtils
          * 
+         * @see     https://chatgpt.com/c/6898260b-ca3c-8323-8df8-d8099634d658
          * @access  private
          * @static
          * @return  Boolean
          */
         static #__setupUtils() {
-            window.annexSearch.CacheUtils.setup();
-            window.annexSearch.DataUtils.setup();
-            // window.annexSearch.DebuggingUtils.setup();
-            window.annexSearch.ElementUtils.setup();
-            window.annexSearch.ErrorUtils.setup();
-            window.annexSearch.FunctionUtils.setup();
-            window.annexSearch.InteractionUtils.setup();
-            window.annexSearch.KeyboardShortcutUtils.setup();
-            window.annexSearch.LoggingUtils.setup();
-            window.annexSearch.StringUtils.setup();
+            for (var propertyName in window.annexSearch) {
+                if (window.annexSearch.hasOwnProperty(propertyName) === false) {
+                    continue;
+                }
+                if (typeof window.annexSearch[propertyName] !== 'function') {
+                    continue;
+                }
+                if (propertyName.endsWith('Utils') === false) {
+                    continue;
+                }
+                window.annexSearch[propertyName].setup && window.annexSearch[propertyName].setup();
+            }
+            // window.annexSearch.CacheUtils.setup();
+            // window.annexSearch.DataUtils.setup();
+            // // window.annexSearch.DebuggingUtils.setup();
+            // window.annexSearch.ElementUtils.setup();
+            // window.annexSearch.ErrorUtils.setup();
+            // window.annexSearch.FunctionUtils.setup();
+            // window.annexSearch.InteractionUtils.setup();
+            // window.annexSearch.KeyboardShortcutUtils.setup();
+            // window.annexSearch.LoggingUtils.setup();
+            // window.annexSearch.StringUtils.setup();
+            // window.annexSearch.ToastUtils.setup();
             return true;
         }
 
@@ -689,9 +707,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             /**
              * copy
              * 
-             * Series of copy variables which are dotted throughout the UI. For more
-             * comprehensive updates, templates may need to be defined. Supports
-             * HTML.
+             * Series of copy variables which are dotted throughout the UI. For
+             * more comprehensive updates, templates may need to be defined.
+             * Supports HTML.
              * 
              * @access  private
              * @var     Object
@@ -764,17 +782,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             /**
              * paths
              * 
-             * Map of arrays which are loaded into memory upon each page load. Core
-             * to the functionality, but extensible for being able to define custom
-             * styles and templating systems.
+             * Map of arrays which are loaded into memory upon each page load.
+             * Core to the functionality, but extensible for being able to
+             * define custom styles and templating systems.
              * 
              * @access  private
              * @var     Object
              */
             paths: {
                 css: [
-                    'https://local.annexsearch.com/ts/css',
-                    // 'https://local.annexsearch.com/ts/css2',
+                    'https://website.com/v0.1.0-dev/bundle.min.css',
+                    // 'https://website.com/v0.1.0-dev/bundle.min.css2',
                 ],
                 templates: 'https://local.annexsearch.com/ts/templates',
             },
@@ -823,8 +841,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             /**
              * templates
              * 
-             * Map of strings corresponding to all the available templates used in
-             * the widget.
+             * Map of strings corresponding to all the available templates used
+             * in the widget.
              * 
              * @access  private
              * @var     Object
@@ -840,7 +858,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String (default: 'prod')
          */
         // #__env = 'prod';
-        #__env = 'local';
+        // #__env = 'local';
 
         /**
          * constructor
@@ -851,6 +869,29 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         constructor() {
             super();
         }
+        // getVersion
+
+        /**
+         * #__setPaths
+         * 
+         * @access  private
+         * @param   String templatesContent
+         * @return  Boolean
+         */
+        // #__setPaths(templatesContent) {
+        //     let expression = /<script\b[^>]*>[\s\S]*?<\/script>/gi,
+        //         matches = templatesContent.match(expression);
+        //     for (let match of matches) {
+        //         let matches = match.match(/data-template-id=["']([^"']+)["']/),
+        //             id = matches ? matches[1] : null;
+        //         if (id === null) {
+        //             continue;
+        //         }
+        //         this.#__data.templates[id] = match;
+        //     }
+        //     window.annexSearch.CacheUtils.set('templates', this.#__data.templates);
+        //     return true;
+        // }
 
         /**
          * #__handleLoadTemplates
@@ -3307,6 +3348,128 @@ window.annexSearch.DependencyLoader.push([], function() {
 });
 
 /**
+ * /src/js/utils/Toast.js
+ * 
+ */
+window.annexSearch.DependencyLoader.push([], function() {
+
+    /**
+     * window.annexSearch.ToastUtils
+     * 
+     * @access  public
+     */
+    window.annexSearch.ToastUtils = window.annexSearch.ToastUtils || class {
+
+        /**
+         * #__toasts
+         * 
+         * @access  private
+         * @static
+         * @var     Array (default: [])
+         */
+        static #__toasts = [];
+
+        /**
+         * all
+         * 
+         * @access  public
+         * @static
+         * @return  Array
+         */
+        static all() {
+            let toasts = this.#__toasts;
+            return toasts;
+        }
+
+        /**
+         * get
+         * 
+         * @access  public
+         * @static
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @return  Array
+         */
+        static get($annexSearchWidget) {
+            let toasts = [];
+            for (let toast of this.#__toasts) {
+                if (toast.getWebComponent() === $annexSearchWidget) {
+                    toasts.push(toast);
+                }
+            }
+            return toasts;
+        }
+
+        /**
+         * remove
+         * 
+         * @access  public
+         * @static
+         * @param   window.annexSearch.ToastView toast
+         * @return  Boolean
+         */
+        static remove(toast) {
+            let index = this.#__toasts.indexOf(toast);
+            if (index === -1) {
+                return false;
+            }
+            this.#__toasts.splice(index, 1);
+            return true;
+        }
+
+        /**
+         * #__getParent
+         * 
+         * @access  public
+         * @static
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @return  Boolean
+         */
+        static #__getParent($annexSearchWidget) {
+            let $parent = $annexSearchWidget.shadow;
+            // if ($annexSearchWidget.getConfig('layout') === 'inline') {
+            //     $parent = $parent.querySelector('[data-view-name="RootView"] > div.content');
+            // }
+            // if ($annexSearchWidget.getConfig('layout') === 'panel-left') {
+            //     $parent = $parent.querySelector('[data-view-name="RootView"] > div.content');
+            // }
+                $parent = $parent.querySelector('[data-view-name="RootView"] > div.content');
+            return $parent;
+        }
+
+        /**
+         * show
+         * 
+         * @access  public
+         * @static
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @param   Object options
+         * @return  Boolean
+         */
+        static show($annexSearchWidget, options) {
+            let $parent = this.#__getParent($annexSearchWidget),
+                view = window.annexSearch.ElementUtils.renderTemplate('toast', $parent);
+            this.#__toasts.push(view);
+            options.hideTimeoutDuration && view.setHideTimeoutDuration(options.hideTimeoutDuration);
+            options.message && view.setMessage(options.message);
+            options.title && view.setTitle(options.title);
+            view.show();
+            return true;
+        }
+
+        /**
+         * setup
+         * 
+         * @access  public
+         * @static
+         * @return  Boolean
+         */
+        static setup() {
+            return true;
+        }
+    }
+});
+
+/**
  * /src/js/views/Base.js
  * 
  */
@@ -4302,7 +4465,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     Number (default: 5000)
          */
         #__hideTimeoutDuration = 5000;
-        // #__hideTimeoutDuration = 2000;
 
         /**
          * #__hideTimeoutReference
@@ -4355,28 +4517,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         /**
          * #__destroy
          * 
-         * @access  protected
-         * @return  Boolean
-         */
-        #__destroy() {
-            this._$element.remove();
-            return true;
-        }
-
-        /**
-         * #__destroyOpenToasts
-         * 
          * @access  private
          * @return  Boolean
          */
-        #__destroyOpenToasts() {
-            let toasts = this.getWebComponent().getToasts();
-            for (let toast of toasts) {
-                if (toast === this) {
-                    continue;
-                }
-                toast.hide();
-            }
+        #__destroy() {
+            // let $webComponent = this.getWebComponent();
+            this._$element.remove();
+            // window.annexSearch.ToastUtils.remove($webComponent, this);
+            window.annexSearch.ToastUtils.remove(this);
             return true;
         }
 
@@ -4389,6 +4537,24 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__handleClickEvent(event) {
             this.hide();
+            return true;
+        }
+
+        /**
+         * #__hideOpenToasts
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__hideOpenToasts() {
+            let $annexSearchWidget = this.getWebComponent(),
+                toasts = window.annexSearch.ToastUtils.get($annexSearchWidget);
+            for (let toast of toasts) {
+                if (toast === this) {
+                    continue;
+                }
+                toast.hide();
+            }
             return true;
         }
 
@@ -4435,17 +4601,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * render
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        // render() {
-        //     super.render();
-        //     return true;
-        // }
-
-        /**
          * setHideTimeoutDuration
          * 
          * @access  public
@@ -4490,7 +4645,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         show() {
-            this.#__destroyOpenToasts();
+            this.#__hideOpenToasts();
             this.#__setTimeout();
             let $element = this._$element;
             window.annexSearch.ElementUtils.waitForAnimation().then(function() {
@@ -4920,7 +5075,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         /**
          * #__setKeyboardShortcutLabel
          * 
-         * @access  public
+         * @access  private
          * @return  Boolean
          */
         #__setKeyboardShortcutLabel() {
@@ -5584,14 +5739,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         #__showing = false;
 
         /**
-         * #__toasts
-         * 
-         * @access  private
-         * @var     Array (default: [])
-         */
-        #__toasts = [];
-
-        /**
          * #__uuid
          * 
          * @access  private
@@ -5826,17 +5973,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * getToasts
-         * 
-         * @access  public
-         * @return  Array
-         */
-        getToasts() {
-            let toasts = this.#__toasts;
-            return toasts;
-        }
-
-        /**
          * getView
          * 
          * @access  public
@@ -6028,14 +6164,9 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         showToast(title, message, hideTimeoutDuration = null) {
-            let $shadow = this.shadow,
-                view = window.annexSearch.ElementUtils.renderTemplate('toast', $shadow);
-            this.#__toasts.push(view);
-            view.setHideTimeoutDuration(hideTimeoutDuration);
-            view.setMessage(message);
-            view.setTitle(title);
-            view.show();
-            return true;
+            let options = {title, message, hideTimeoutDuration},
+                response = window.annexSearch.ToastUtils.show(this, options);
+            return response;
         }
 
         /**

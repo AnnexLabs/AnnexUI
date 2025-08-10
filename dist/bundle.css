@@ -246,6 +246,9 @@
  * States (offset)
  * 
  */
+/*:host [data-view-name="RootView"] > div.content {*/
+/*    overflow: hidden;*/
+/*}*/
 :host([data-annex-search-index="0"]) [data-view-name="RootView"] > div.content {
 /*    background-color: red !important;*/
 /*    --offset: attr(data-annex-search-index px);*/
@@ -285,6 +288,9 @@
     right: 0;
     top: 0;
     bottom: 0;
+}
+[data-view-name="RootView"] > div.content {
+    overflow: hidden;
 }
 [data-view-name="RootView"][data-state-key="results"] > div.content {
 /*    max-height: 540px;*/
@@ -459,7 +465,7 @@
     top: 12px;
     background-color: rgba(0, 0, 0, 1.00);
     border-radius: 10px 10px 10px 10px;
-    height: 72px;
+/*    height: 72px;*/
     width: 302px;
     padding: 12px 16px 12px 16px;
     transition: all var(--annex-search-toast-duration);
@@ -484,6 +490,7 @@
     color: rgba(255, 255, 255, 0.80);
     font-size: 12.5px;
     line-height: 1.30em;
+    min-height: 22px;
 }
 [data-view-name="FooterView"] {
     background-color: var(--annex-search-footer-background-color);
