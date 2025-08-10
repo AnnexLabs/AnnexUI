@@ -37,6 +37,7 @@ CSS_FILES=(
     "src/css/body/results/empty.css"
     "src/css/body/results/found.css"
     "src/css/body/results/result.css"
+    "src/css/common/toast.css"
     "src/css/footer/footer.css"
     "src/css/footer/brandingBar.css"
     "src/css/footer/statusBar.css"

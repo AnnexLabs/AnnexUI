@@ -61,6 +61,7 @@
     --annex-search-open-duration:                               400ms;
     --annex-search-open-panel-duration:                         540ms;
     --annex-search-spinner-duration:                            2050ms;
+    --annex-search-toast-duration:                              400ms;
 
     /**
      * Images

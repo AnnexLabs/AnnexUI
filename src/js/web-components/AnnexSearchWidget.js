@@ -54,6 +54,14 @@ window.annexSearch.DependencyLoader.push([], function() {
         #__showing = false;
 
         /**
+         * #__toasts
+         * 
+         * @access  private
+         * @var     Array (default: [])
+         */
+        #__toasts = [];
+
+        /**
          * #__uuid
          * 
          * @access  private
@@ -77,6 +85,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         constructor() {
             super();
+window.test = this;
 // console.log('yep');
 // console.log('a');
             this.#__index = window.annexSearch.AnnexSearch.getRegistered().length;
@@ -298,6 +307,17 @@ console.log(event.detail);
         }
 
         /**
+         * getToasts
+         * 
+         * @access  public
+         * @return  Array
+         */
+        getToasts() {
+            let toasts = this.#__toasts;
+            return toasts;
+        }
+
+        /**
          * getView
          * 
          * @access  public
@@ -475,6 +495,26 @@ console.log(event.detail);
         showing() {
             let showing = this.#__showing;
             return showing;
+        }
+
+        /**
+         * showToast
+         * 
+         * @access  public
+         * @param   String title
+         * @param   String message
+         * @param   null|Number hideTimeoutDuration (default: null)
+         * @return  Boolean
+         */
+        showToast(title, message, hideTimeoutDuration = null) {
+            let $shadow = this.shadow,
+                view = window.annexSearch.ElementUtils.renderTemplate('toast', $shadow);
+            this.#__toasts.push(view);
+            view.setHideTimeoutDuration(hideTimeoutDuration);
+            view.setMessage(message);
+            view.setTitle(title);
+            view.show();
+            return true;
         }
 
         /**

@@ -52,6 +52,7 @@
  * @todo    [PUNT] - "Loading more results" template
  * @todo    [DONE] - Deal w/ inline where 10 results doesn't trigger scroll / loadMore
  * @todo    [DONE] -- See: https://416.io/ss/f/y75fpa
+ * @todo    [DONE] - Toast UI
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -78,7 +79,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @static
          * @var     Boolean (default: false)
          */
-        static #__devMode = false;
+        // static #__devMode = false;
 
         /**
          * #__registered
@@ -161,10 +162,10 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @static
          * @return  Boolean
          */
-        static getDevMode() {
-            let devMode = this.#__devMode;
-            return devMode;
-        }
+        // static getDevMode() {
+        //     let devMode = this.#__devMode;
+        //     return devMode;
+        // }
 
         /**
          * getRegistered
@@ -242,10 +243,10 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @param   Boolean devMode
          * @return  Boolean
          */
-        static setDevMode(devMode) {
-            this.#__devMode = devMode;
-            return true;
-        }
+        // static setDevMode(devMode) {
+        //     this.#__devMode = devMode;
+        //     return true;
+        // }
 
         /**
          * setStyles

@@ -302,6 +302,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         _addEvents() {
+// console.log('a');
             this.#__addInputInputEventListener();
             return true;
         }

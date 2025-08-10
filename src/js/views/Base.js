@@ -111,6 +111,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * @return  Boolean
          */
         render() {
+// console.log(this);
             this._addEvents();
             // this.show();
             return true;
