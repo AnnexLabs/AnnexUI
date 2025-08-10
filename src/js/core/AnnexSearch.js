@@ -2,10 +2,9 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - event dispatching cleanup
- * 
  * @todo    - bug with focus not coming back (related to found.results not being cleared)
  * 
+ * @todo    - Deal w/ Config role for css loading and dist script
  * @todo    - CacheUtils for /css and /templates lookups to speed things up?
  * @todo    - Error logging cleanup
  * 
@@ -53,6 +52,7 @@
  * @todo    [DONE] - Deal w/ inline where 10 results doesn't trigger scroll / loadMore
  * @todo    [DONE] -- See: https://416.io/ss/f/y75fpa
  * @todo    [DONE] - Toast UI
+ * @todo    [DONE] - event dispatching cleanup
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

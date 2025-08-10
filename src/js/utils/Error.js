@@ -43,7 +43,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @access  public
          * @static
          * @param   String key
-         * @param   Array args (optional)
+         * @param   ... args
          * @return  null|String
          */
         static getMessage(key, ...args) {

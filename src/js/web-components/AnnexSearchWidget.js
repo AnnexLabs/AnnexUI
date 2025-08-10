@@ -85,32 +85,12 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         constructor() {
             super();
-window.test = this;
-// console.log('yep');
-// console.log('a');
             this.#__index = window.annexSearch.AnnexSearch.getRegistered().length;
             window.annexSearch.AnnexSearch.register(this);
             this.#__setupShadow();
             this.#__setupHelpers();
             this.#__setUUID();
             this.#__render();
-        }
-
-        /**
-         * #__dispatchCustomEvent
-         * 
-         * @access  private
-         * @param   String eventName
-         * @param   Array args
-         * @return  Boolean
-         */
-        #__dispatchCustomEvent(eventName, args) {
-            let event = new CustomEvent(eventName, {
-                detail: args
-            });
-console.log(event.detail);
-            this.dispatchEvent(event);
-            return true;
         }
 
         /**
@@ -252,22 +232,31 @@ console.log(event.detail);
          * 
          * @see     https://chatgpt.com/c/68942c36-15a0-8328-a9aa-a0a5e682af61
          * @access  public
-         * @param   String key
-         * @param   Object payload
+         * @param   String eventName
+         * @param   Object map (default: {})
          * @return  Boolean
          */
-        dispatchCustomEvent(key, ...args) {
+        dispatchCustomEvent(eventName, map = {}) {
+
+            // CustomEvent
+            map.$annexSearchWidget = this;
+            let event = new CustomEvent(eventName, {
+                detail: map
+            });
+
+            // Callback
             let reference = this.getConfig('callbacks') || {},
-                pieces = key.split('.');
+                pieces = eventName.split('.');
             for (var piece of pieces) {
                 reference = reference[piece] ?? null;
                 if (reference === null) {
-                    return false;
+                    break;
                 }
             }
-            this.#__dispatchCustomEvent(key, args.slice());
-            args.unshift(this);
-            reference.apply(window, args);
+            reference && reference && reference.apply(this, [event]);
+
+            // Dispatching
+            this.dispatchEvent(event);
             return true;
         }
 

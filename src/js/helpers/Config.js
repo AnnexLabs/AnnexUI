@@ -44,36 +44,36 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              */
             callbacks: {
                 result: {
-                    click: function($annexSearchWidget, event, hit) {
-                        // console.log('result.click', $annexSearchWidget, event, hit);
+                    click: function(customEvent) {
+                        // console.log('result.click', customEvent.detail, this);
                     },
-                    focus: function($annexSearchWidget, event, hit) {
-                        console.log('result.focus', $annexSearchWidget, event, hit);
+                    focus: function(customEvent) {
+                        // console.log('result.focus', customEvent.detail, this);
                     },
                 },
                 results: {
-                    empty: function($annexSearchWidget) {
-                        // console.log('results.empty', $annexSearchWidget);
+                    empty: function(customEvent) {
+                        // console.log('results.empty', customEvent.detail, this);
                     },
-                    error: function($annexSearchWidget, error) {
-                        // console.log('results.error', $annexSearchWidget, error);
+                    error: function(customEvent) {
+                        // console.log('results.error', customEvent.detail, this);
                     },
-                    idle: function($annexSearchWidget) {
-                        // console.log('results.idle', $annexSearchWidget);
+                    idle: function(customEvent) {
+                        // console.log('results.idle', customEvent.detail, this);
                     },
-                    loaded: function($annexSearchWidget, response) {
-                        // console.log('results.loaded', $annexSearchWidget, response);
+                    loaded: function(customEvent) {
+                        // console.log('results.loaded', customEvent.detail, this);
                     },
                 },
                 root: {
-                    hide: function($annexSearchWidget) {
-                        // console.log('root.hide', $annexSearchWidget);
+                    hide: function(customEvent) {
+                        // console.log('root.hide', customEvent.detail, this);
                     },
-                    show: function($annexSearchWidget) {
-                        // console.log('root.show', $annexSearchWidget);
+                    show: function(customEvent) {
+                        // console.log('root.show', customEvent.detail, this);
                     },
-                    toggle: function($annexSearchWidget) {
-                        // console.log('root.toggle', $annexSearchWidget);
+                    toggle: function(customEvent) {
+                        // console.log('root.toggle', customEvent.detail, this);
                     }
                 }
             },
@@ -240,6 +240,15 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             templates: {
             }
         };
+
+        /**
+         * #__env
+         * 
+         * @access  private
+         * @var     String (default: 'prod')
+         */
+        // #__env = 'prod';
+        #__env = 'local';
 
         /**
          * constructor
