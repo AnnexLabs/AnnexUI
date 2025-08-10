@@ -54,14 +54,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         #__showing = false;
 
         /**
-         * #__toasts
-         * 
-         * @access  private
-         * @var     Array (default: [])
-         */
-        #__toasts = [];
-
-        /**
          * #__uuid
          * 
          * @access  private
@@ -296,17 +288,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * getToasts
-         * 
-         * @access  public
-         * @return  Array
-         */
-        getToasts() {
-            let toasts = this.#__toasts;
-            return toasts;
-        }
-
-        /**
          * getView
          * 
          * @access  public
@@ -498,14 +479,9 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         showToast(title, message, hideTimeoutDuration = null) {
-            let $shadow = this.shadow,
-                view = window.annexSearch.ElementUtils.renderTemplate('toast', $shadow);
-            this.#__toasts.push(view);
-            view.setHideTimeoutDuration(hideTimeoutDuration);
-            view.setMessage(message);
-            view.setTitle(title);
-            view.show();
-            return true;
+            let options = {title, message, hideTimeoutDuration},
+                response = window.annexSearch.ToastUtils.show(this, options);
+            return response;
         }
 
         /**

@@ -248,7 +248,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String (default: 'prod')
          */
         // #__env = 'prod';
-        #__env = 'local';
+        // #__env = 'local';
 
         /**
          * constructor

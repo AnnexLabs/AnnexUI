@@ -2,11 +2,8 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - Deal w/ Config role for css loading and dist script
- * 
- * @todo    - bug with focus not coming back (related to found.results not being cleared)
- * @todo    - CacheUtils for /css and /templates lookups to speed things up?
  * @todo    - Error logging cleanup
+ * @todo    - bug with focus not coming back (related to found.results not being cleared)
  * 
  * @todo    - ensure multiple instantiations happen sequentially (to allow for /templates caching)
  * 
@@ -16,6 +13,8 @@
  * @todo    - variable templating
  * @todo    - custom templates
  * @todo    - collection retriveal (for smart templates?)
+ * 
+ * @todo    - CacheUtils for /css and /templates lookups to speed things up (?)
  * 
  * @todo    [DONE] - dark mode
  * @todo    [DONE] - mobile
@@ -53,6 +52,8 @@
  * @todo    [DONE] -- See: https://416.io/ss/f/y75fpa
  * @todo    [DONE] - Toast UI
  * @todo    [DONE] - event dispatching cleanup
+ * @todo    [DONE] - ToastUtils, passing in $annexSearchWidget and tracking open toasts
+ * @todo    [DONE] - Deal w/ Config role for css loading and dist script
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -128,6 +129,7 @@ window.annexSearch.DependencyLoader.push([], function() {
             window.annexSearch.KeyboardShortcutUtils.setup();
             window.annexSearch.LoggingUtils.setup();
             window.annexSearch.StringUtils.setup();
+            window.annexSearch.ToastUtils.setup();
             return true;
         }
 

@@ -5,6 +5,7 @@
 ## 
 ## @see     https://claude.ai/chat/fdcd3fb0-fa74-4b5f-abcd-4f12147a0df0
 ## @see     https://claude.ai/chat/4bb6ae71-0ee9-488e-b415-ecf79bb74824
+## @see     https://claude.ai/chat/b8618404-247b-4ed5-a0af-c13f3fb27743
 ## @see     https://www.toptal.com/developers/cssminifier
 ## @see     https://www.toptal.com/developers/javascript-minifier
 ## 
@@ -90,6 +91,8 @@ echo "Minifying CSS via API..."
 curl -s -X POST https://www.toptal.com/developers/cssminifier/api/raw \
     --data-urlencode "input@$UNMINIFIED_CSS_FILEPATH" \
     -o "$MINIFIED_CSS_FILEPATH"
+echo "Done"
+echo ""
 
 
 ## 
@@ -119,6 +122,26 @@ fi
 
 
 ## 
+## Unminified JS (CSS URL replacement)
+## 
+## 
+
+## Logging
+echo "Applying post-compilation modifications to JS..."
+
+# Extract version from the compiled JS
+VERSION=$(grep -o "static #__version = '[^']*'" "$UNMINIFIED_JS_FILEPATH" | sed "s/static #__version = '\([^']*\)'/\1/")
+if [ -n "$VERSION" ]; then
+    echo "Found version: $VERSION"
+    sed -i.bak "s|https://local\.annexsearch\.com/ts/css|https://website.com/$VERSION/bundle.min.css|g" "$UNMINIFIED_JS_FILEPATH"
+    rm -f "$UNMINIFIED_JS_FILEPATH.bak"
+    echo "Replaced URL with: http://website.com/$VERSION/bundle.min.js"
+else
+    echo "Warning: Could not find version string in compiled JS"
+fi
+
+
+## 
 ## Minified JS
 ## 
 ## 
@@ -131,3 +154,5 @@ echo "Minifying JS via API..."
 curl -s -X POST https://www.toptal.com/developers/javascript-minifier/api/raw \
     --data-urlencode "input@$UNMINIFIED_JS_FILEPATH" \
     -o "$MINIFIED_JS_FILEPATH"
+echo "Done"
+echo ""

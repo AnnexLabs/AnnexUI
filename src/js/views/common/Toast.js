@@ -20,7 +20,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     Number (default: 5000)
          */
         #__hideTimeoutDuration = 5000;
-        // #__hideTimeoutDuration = 2000;
 
         /**
          * #__hideTimeoutReference
@@ -73,28 +72,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         /**
          * #__destroy
          * 
-         * @access  protected
-         * @return  Boolean
-         */
-        #__destroy() {
-            this._$element.remove();
-            return true;
-        }
-
-        /**
-         * #__destroyOpenToasts
-         * 
          * @access  private
          * @return  Boolean
          */
-        #__destroyOpenToasts() {
-            let toasts = this.getWebComponent().getToasts();
-            for (let toast of toasts) {
-                if (toast === this) {
-                    continue;
-                }
-                toast.hide();
-            }
+        #__destroy() {
+            // let $webComponent = this.getWebComponent();
+            this._$element.remove();
+            // window.annexSearch.ToastUtils.remove($webComponent, this);
+            window.annexSearch.ToastUtils.remove(this);
             return true;
         }
 
@@ -107,6 +92,24 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__handleClickEvent(event) {
             this.hide();
+            return true;
+        }
+
+        /**
+         * #__hideOpenToasts
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__hideOpenToasts() {
+            let $annexSearchWidget = this.getWebComponent(),
+                toasts = window.annexSearch.ToastUtils.get($annexSearchWidget);
+            for (let toast of toasts) {
+                if (toast === this) {
+                    continue;
+                }
+                toast.hide();
+            }
             return true;
         }
 
@@ -153,17 +156,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * render
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        // render() {
-        //     super.render();
-        //     return true;
-        // }
-
-        /**
          * setHideTimeoutDuration
          * 
          * @access  public
@@ -208,7 +200,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         show() {
-            this.#__destroyOpenToasts();
+            this.#__hideOpenToasts();
             this.#__setTimeout();
             let $element = this._$element;
             window.annexSearch.ElementUtils.waitForAnimation().then(function() {

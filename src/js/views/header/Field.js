@@ -269,7 +269,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         /**
          * #__setKeyboardShortcutLabel
          * 
-         * @access  public
+         * @access  private
          * @return  Boolean
          */
         #__setKeyboardShortcutLabel() {
