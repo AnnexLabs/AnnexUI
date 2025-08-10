@@ -54,6 +54,9 @@
  * @todo    [DONE] - event dispatching cleanup
  * @todo    [DONE] - ToastUtils, passing in $annexSearchWidget and tracking open toasts
  * @todo    [DONE] - Deal w/ Config role for css loading and dist script
+ * @todo    [DONE] - Toast positioning...
+ * @todo    [DONE] -- See getBoundingClientRect
+ * @todo    [DONE] -- div.content with overflow: hidden;
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

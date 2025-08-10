@@ -43,6 +43,9 @@
  * States (offset)
  * 
  */
+/*:host [data-view-name="RootView"] > div.content {*/
+/*    overflow: hidden;*/
+/*}*/
 :host([data-annex-search-index="0"]) [data-view-name="RootView"] > div.content {
 /*    background-color: red !important;*/
 /*    --offset: attr(data-annex-search-index px);*/

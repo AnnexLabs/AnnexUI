@@ -69,6 +69,26 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * #__getParent
+         * 
+         * @access  public
+         * @static
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @return  Boolean
+         */
+        static #__getParent($annexSearchWidget) {
+            let $parent = $annexSearchWidget.shadow;
+            // if ($annexSearchWidget.getConfig('layout') === 'inline') {
+            //     $parent = $parent.querySelector('[data-view-name="RootView"] > div.content');
+            // }
+            // if ($annexSearchWidget.getConfig('layout') === 'panel-left') {
+            //     $parent = $parent.querySelector('[data-view-name="RootView"] > div.content');
+            // }
+                $parent = $parent.querySelector('[data-view-name="RootView"] > div.content');
+            return $parent;
+        }
+
+        /**
          * show
          * 
          * @access  public
@@ -78,8 +98,8 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         static show($annexSearchWidget, options) {
-            let $shadow = $annexSearchWidget.shadow,
-                view = window.annexSearch.ElementUtils.renderTemplate('toast', $shadow);
+            let $parent = this.#__getParent($annexSearchWidget),
+                view = window.annexSearch.ElementUtils.renderTemplate('toast', $parent);
             this.#__toasts.push(view);
             options.hideTimeoutDuration && view.setHideTimeoutDuration(options.hideTimeoutDuration);
             options.message && view.setMessage(options.message);
