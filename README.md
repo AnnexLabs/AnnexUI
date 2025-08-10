@@ -271,13 +271,13 @@ $('annex-search-widget').addEventListener('root.show', function(customEvent) {
 | ----------------------------------| --------------------------------------------------------------------------------------------------|-------------------    |
 | `rootView`                        | The "root" of the search UI. Broadly, a container for other containers.                           | `null`                |
 | `bodyView`                        | Contains the body of search results, including errors, idle states and empty result states.       | `null`                |
-| `errorBodyView`                   | Element that communicates an error took place during search.                                      | `null`                |
+| `errorBodyView`                   | Element that communicates an error took place during search.                                      | `{response}`          |
 | `idleBodyView`                    | Element that communicates that no search has taken place yet.                                     | `null`                |
-| `emptyResultsBodyView`            | Element that communicates no matching search results were found.                                  | `null`                |
+| `emptyResultsBodyView`            | Element that communicates no matching search results were found.                                  | `{response}`          |
 | `foundResultsBodyView`            | Element that contains a list of results.                                                          | `null`                |
 | `resultFoundResultsBodyView`      | The result element itself.                                                                        | `{hit}`               |
-| `resultsBodyView`                 | A container for the broad concept of results.                                                     | `title`, `message`    |
-| `toastView`                       | An element to communicate an alert.                                                               | `null`                |
+| `resultsBodyView`                 | A container for the broad concept of results.                                                     | `{response}`          |
+| `toastView`                       | An element to communicate an alert.                                                               | `title`, `message`    |
 | `brandingBarFooterView`           | Element that communicates the Annex brand.                                                        | `null`                |
 | `footerView`                      | Container element for footer elements.                                                            | `null`                |
 | `statusBarFooterView`             | Element that communicates some status around the search UX.                                       | `null`                |
