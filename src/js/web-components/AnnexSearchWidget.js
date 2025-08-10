@@ -460,6 +460,8 @@ console.log(event.detail);
             if (this.#__showing === true) {
                 return false;
             }
+// console.log('eff');
+// console.trace();
             window.annexSearch.AnnexSearch.setActive(this);
             this.dispatchCustomEvent('root.show');
             this.#__showing = true;

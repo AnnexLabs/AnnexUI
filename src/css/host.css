@@ -19,7 +19,7 @@
 }
 
 /**
- * States
+ * Open
  * 
  */
 :host([data-annex-search-open="1"]) {
@@ -30,6 +30,11 @@
 /*    opacity: 1;*/
 /*    pointer-events: auto;*/
 }
+
+/**
+ * Ready
+ * 
+ */
 :host([data-annex-search-ready="1"]) {
     transition: opacity var(--annex-search-open-duration);
 }
