@@ -172,6 +172,7 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    - collection retriveal (for smart templates?)
  * 
  * @todo    - CacheUtils for /css and /templates lookups to speed things up (?)
+ * @todo    -- Only for /templates since /css is direct linked (?)
  * 
  * @todo    [DONE] - dark mode
  * @todo    [DONE] - mobile
@@ -214,6 +215,10 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    [DONE] - Toast positioning...
  * @todo    [DONE] -- See getBoundingClientRect
  * @todo    [DONE] -- div.content with overflow: hidden;
+ * @todo    [PUNT] - Further cleanup of error handling (e.g. don't define messages in TypesenseHelper?)
+ * @todo    [PUNT] - UI for customizing and storing it on a server
+ * @todo    [PUNT] - Arch cleanup to ensure object instances are directly tied to the respective $annexSearchWidget
+ * @todo    [PUNT] -- Right now, this is messy. Should be standardized
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -287,22 +292,14 @@ window.annexSearch.DependencyLoader.push([], function() {
                 if (typeof window.annexSearch[propertyName] !== 'function') {
                     continue;
                 }
+                if (propertyName === 'BaseUtils') {
+                    continue;
+                }
                 if (propertyName.endsWith('Utils') === false) {
                     continue;
                 }
                 window.annexSearch[propertyName].setup && window.annexSearch[propertyName].setup();
             }
-            // window.annexSearch.CacheUtils.setup();
-            // window.annexSearch.DataUtils.setup();
-            // // window.annexSearch.DebuggingUtils.setup();
-            // window.annexSearch.ElementUtils.setup();
-            // window.annexSearch.ErrorUtils.setup();
-            // window.annexSearch.FunctionUtils.setup();
-            // window.annexSearch.InteractionUtils.setup();
-            // window.annexSearch.KeyboardShortcutUtils.setup();
-            // window.annexSearch.LoggingUtils.setup();
-            // window.annexSearch.StringUtils.setup();
-            // window.annexSearch.ToastUtils.setup();
             return true;
         }
 
@@ -481,18 +478,6 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         constructor() {
         }
-
-        /**
-         * debug
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        // debug() {
-        //     let scope = window.annexSearch.DebuggingUtils,
-        //         response = window.annexSearch.DebuggingUtils.log.apply(scope, arguments);
-        //     return response;
-        // }
 
         /**
          * error
@@ -1807,6 +1792,67 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         }
 
         /**
+         * logFailedEvent
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        logFailedEvent() {
+
+            // Typesense failure message
+            let message = window.annexSearch.ErrorUtils.getMessage('typesenseSearchRequest.failed.general');
+            this.error(message);
+
+            // Response received, but request not processed
+            let error = this.getError(),
+                key = error.key;
+            if (key === 'typesenseSearchRequestResponse') {
+
+                // Response from Typesense
+                let message = window.annexSearch.ErrorUtils.getMessage('typesenseSearchRequest.failed.responseReceived', error.message);
+                this.error(message);
+
+                // Possible $query_by incorrect
+                if (message.includes('Could not find a field named') === true) {
+                    let message = window.annexSearch.ErrorUtils.getMessage('typesenseSearchRequest.failed.responseReceived.fieldTip');
+                    this.error(message);
+                    return true;
+                }
+
+                // Possible $apiKey or $collectionName incorrect
+                if (message.includes('Forbidden - a valid `x-typesense-api-key` header must be sent.') === true) {
+                    let message = window.annexSearch.ErrorUtils.getMessage('typesenseSearchRequest.failed.responseReceived.forbiddenTip');
+                    this.error(message);
+                    return true;
+                }
+
+                // Possible $query_by incorrect
+                if (message.includes('No search fields specified') === true) {
+                    let message = window.annexSearch.ErrorUtils.getMessage('typesenseSearchRequest.failed.responseReceived.queryTip');
+                    this.error(message);
+                    return true;
+                }
+
+                // Done
+                return true;
+            }
+
+            // Unknown error (e.g. fetch failed)
+            message = window.annexSearch.ErrorUtils.getMessage('typesenseSearchRequest.failed.unknown', error.message);
+            this.error(message);
+
+            // Possible tip to help with debugging
+            if (message.includes('Failed to fetch') === true) {
+                message = window.annexSearch.ErrorUtils.getMessage('loggingUtils.fetchFailed.tip');
+                this.error(message);
+                return true;
+            }
+
+            // Done
+            return true;
+        }
+
+        /**
          * setError
          * 
          * @access  public
@@ -1844,17 +1890,64 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
 });
 
 /**
- * /src/js/utils/Cache.js
+ * /src/js/utils/Base.js
  * 
  */
 window.annexSearch.DependencyLoader.push([], function() {
+
+    /**
+     * window.annexSearch.BaseUtils
+     * 
+     * @access  public
+     */
+    window.annexSearch.BaseUtils = window.annexSearch.BaseUtils || class {
+
+        /**
+         * #__setup
+         * 
+         * @access  private
+         * @static
+         * @var     Boolean (default: false)
+         */
+        static #__setup = false;
+
+        /**
+         * setup
+         * 
+         * @access  public
+         * @static
+         * @return  Boolean
+         */
+        static setup() {
+            if (document === null) {
+                return false;
+            }
+            if (document === undefined) {
+                return false;
+            }
+            if (document.readyState === 'complete') {
+                return true;
+            }
+            if (document.readyState === 'interactive') {
+                return true;
+            }
+            return false
+        }
+    }
+});
+
+/**
+ * /src/js/utils/Cache.js
+ * 
+ */
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.CacheUtils
      * 
      * @access  public
      */
-    window.annexSearch.CacheUtils = window.annexSearch.CacheUtils || class {
+    window.annexSearch.CacheUtils = window.annexSearch.CacheUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * #__data
@@ -1912,14 +2005,14 @@ window.annexSearch.DependencyLoader.push([], function() {
  * /src/js/utils/Data.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.DataUtils
      * 
      * @access  public
      */
-    window.annexSearch.DataUtils = window.annexSearch.DataUtils || class {
+    window.annexSearch.DataUtils = window.annexSearch.DataUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * deepMerge
@@ -1963,62 +2056,17 @@ window.annexSearch.DependencyLoader.push([], function() {
 });
 
 /**
- * /src/js/utils/Debugging.js
- * 
- */
-window.annexSearch.DependencyLoader.push([], function() {
-
-    /**
-     * window.annexSearch.DebuggingUtils
-     * 
-     * @access  public
-     */
-    window.annexSearch.DebuggingUtils = window.annexSearch.DebuggingUtils || class {
-
-        /**
-         * log
-         * 
-         * @access  public
-         * @static
-         * @return  Boolean
-         */
-        static log() {
-            let debug = this.getHelper('config').get('debug');
-            if (debug === false) {
-                return false;
-            }
-            let response = window.annexSearch.LoggingUtils.debug.apply(
-                window.annexSearch.LoggingUtils,
-                arguments
-            );
-            return response;
-        }
-
-        /**
-         * setup
-         * 
-         * @access  public
-         * @static
-         * @return  Boolean
-         */
-        static setup() {
-            return true;
-        }
-    }
-});
-
-/**
  * /src/js/utils/Element.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.ElementUtils
      * 
      * @access  public
      */
-    window.annexSearch.ElementUtils = window.annexSearch.ElementUtils || class {
+    window.annexSearch.ElementUtils = window.annexSearch.ElementUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * #__getTemplateElement
@@ -2191,14 +2239,14 @@ window.annexSearch.DependencyLoader.push([], function() {
  * /src/js/utils/Error.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.ErrorUtils
      * 
      * @access  public
      */
-    window.annexSearch.ErrorUtils = window.annexSearch.ErrorUtils || class {
+    window.annexSearch.ErrorUtils = window.annexSearch.ErrorUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * #__messageMap
@@ -2208,20 +2256,25 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @var     Object
          */
         static #__messageMap = {
-            'configHelper.get.key.invalid':                         'Invalid {key} value passed to {base.configHelper.get}; found {%0}',
-            'configHelper.set.key.undefined':                       'Invalid {key} value passed to {base.configHelper.set}; found {undefined}',
-            'configHelper.set.value.undefined':                     'Invalid {value} value passed to {base.configHelper.set}; found {undefined}',
-            'interactionUtils.zeroRegistered':                      'No registered $annexSearchWidget elements found',
-            'interactionUtils.multipleRegistered':                  'Multiple registered $annexSearchWidget elements found. Unable to determine which $element is the target.',
-            'loggingUtils.fetchFailed.tip':                         'Tip: Double check that {config.cluster.hostname} is defined and correct',
-            'loggingUtils.typesenseFailed.tip':                     'Tip: Double check that {config.cluster.apiKey} and {config.cluster.collectionName} are defined and correct',
-            'stylesheets.failedLoading':                            'Could not load stylesheets',
-            'typesenseSearchRequest.abort':                         'Abort method called against {window.annexSearch.TypesenseSearchRequest}',
-            'typesenseHelper.options.q.empty':                      'Invalid {q} value; found {empty string}',
-            'typesenseHelper.options.q.null':                       'Invalid {q} value; found {null}',
-            'typesenseHelper.options.q.undefined':                  'Invalid {q} value; found {undefined}',
-            'typesenseHelper.searchOptions.query_by.null':          'Invalid {config.searchOptions.query_by} value; found {null}. Either {config.searchOptions.query_by} or {config.cluster.presetName} needs to be defined.',
-            'typesenseHelper.searchOptions.query_by.undefined':     'Invalid {config.searchOptions.query_by} value; found {undefined}. Either {config.searchOptions.query_by} or {config.cluster.presetName} needs to be defined.',
+            'configHelper.get.key.invalid':                                     'Invalid {key} value passed to {base.configHelper.get}; found {%0}',
+            'configHelper.set.key.undefined':                                   'Invalid {key} value passed to {base.configHelper.set}; found {undefined}',
+            'configHelper.set.value.undefined':                                 'Invalid {value} value passed to {base.configHelper.set}; found {undefined}',
+            'interactionUtils.zeroRegistered':                                  'No registered $annexSearchWidget elements found',
+            'interactionUtils.multipleRegistered':                              'Multiple registered $annexSearchWidget elements found. Unable to determine which $element is the target.',
+            'loggingUtils.fetchFailed.tip':                                     'Tip: Double check that {config.cluster.hostname} is defined and correct.',
+            'stylesheets.failedLoading':                                        'Could not load stylesheets.',
+            'typesenseSearchRequest.abort':                                     'Abort method called against {window.annexSearch.TypesenseSearchRequest}',
+            'typesenseHelper.options.q.empty':                                  'Invalid {q} value; found {empty string}',
+            'typesenseHelper.options.q.null':                                   'Invalid {q} value; found {null}',
+            'typesenseHelper.options.q.undefined':                              'Invalid {q} value; found {undefined}',
+            'typesenseHelper.searchOptions.query_by.null':                      'Invalid {config.searchOptions.query_by} value; found {null}. Either {config.searchOptions.query_by} or {config.cluster.presetName} needs to be defined.',
+            'typesenseHelper.searchOptions.query_by.undefined':                 'Invalid {config.searchOptions.query_by} value; found {undefined}. Either {config.searchOptions.query_by} or {config.cluster.presetName} needs to be defined.',
+            'typesenseSearchRequest.failed.general':                            'Could not complete Typesense search request.',
+            'typesenseSearchRequest.failed.responseReceived':                   'Typesense response: %0',
+            'typesenseSearchRequest.failed.responseReceived.fieldTip':          'Tip: Double check that {config.searchOptions.query_by} is referencing valid collection fields.',
+            'typesenseSearchRequest.failed.responseReceived.forbiddenTip':      'Tip: Double check that {config.cluster.apiKey} and {config.cluster.collectionName} are defined and correct.',
+            'typesenseSearchRequest.failed.responseReceived.queryTip':          'Tip: Double check that, if defined, both {config.cluster.presetName} and/or {config.searchOptions.query_by} are correct.',
+            'typesenseSearchRequest.failed.unknown':                            'Error: %0',
         };
 
         /**
@@ -2262,14 +2315,14 @@ window.annexSearch.DependencyLoader.push([], function() {
  * /src/js/utils/Function.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.FunctionUtils
      * 
      * @access  public
      */
-    window.annexSearch.FunctionUtils = window.annexSearch.FunctionUtils || class {
+    window.annexSearch.FunctionUtils = window.annexSearch.FunctionUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * debounce
@@ -2323,14 +2376,14 @@ window.annexSearch.DependencyLoader.push([], function() {
  * /src/js/utils/Interaction.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.InteractionUtils
      * 
      * @access  public
      */
-    window.annexSearch.InteractionUtils = window.annexSearch.InteractionUtils || class {
+    window.annexSearch.InteractionUtils = window.annexSearch.InteractionUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * #__addDocumentClickEventListener
@@ -2501,10 +2554,16 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  public
          * @static
-         * @return  Promise
+         * @return  Boolean
          */
         static setup() {
-            this.#__addDocumentClickEventListener();
+            let response = super.setup();
+            if (response === true) {
+                this.#__addDocumentClickEventListener();
+                return true;
+            }
+            let handler = window.annexSearch.InteractionUtils.setup.bind(window.annexSearch.InteractionUtils);
+            document.addEventListener('DOMContentLoaded', handler);
             return true;
         }
     }
@@ -2514,14 +2573,14 @@ window.annexSearch.DependencyLoader.push([], function() {
  * /src/js/utils/KeyboardShortcut.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.KeyboardShortcutUtils
      * 
      * @access  public
      */
-    window.annexSearch.KeyboardShortcutUtils = window.annexSearch.KeyboardShortcutUtils || class {
+    window.annexSearch.KeyboardShortcutUtils = window.annexSearch.KeyboardShortcutUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * #__active
@@ -2536,7 +2595,8 @@ window.annexSearch.DependencyLoader.push([], function() {
              * documentCatchAll
              * 
              * Whether any keyboard keydown event against the document should be
-             * "caught" and processed as if it was entered into the $input field.
+             * "caught" and processed as if it was entered into the $input
+             * field.
              * 
              * @static
              * @access  private
@@ -2547,8 +2607,8 @@ window.annexSearch.DependencyLoader.push([], function() {
             /**
              * documentDelete
              * 
-             * Whether any keyboard keydown event against the document should be
-             * "caught" and processed as if it was entered into the $input field.
+             * Whether the delete key should be caught and processed as the user
+             * wanting to delete the last entered character.
              * 
              * @static
              * @access  private
@@ -3182,11 +3242,17 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  public
          * @static
-         * @return  Promise
+         * @return  Boolean
          */
         static setup() {
-            this.#__addDocumentPasteEventListener();
-            this.#__addKeydownEventListener();
+            let response = super.setup();
+            if (response === true) {
+                this.#__addDocumentPasteEventListener();
+                this.#__addKeydownEventListener();
+                return true;
+            }
+            let handler = window.annexSearch.KeyboardShortcutUtils.setup.bind(window.annexSearch.KeyboardShortcutUtils);
+            document.addEventListener('DOMContentLoaded', handler);
             return true;
         }
     }
@@ -3196,14 +3262,14 @@ window.annexSearch.DependencyLoader.push([], function() {
  * /src/js/utils/Logging.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.LoggingUtils
      * 
      * @access  public
      */
-    window.annexSearch.LoggingUtils = window.annexSearch.LoggingUtils || class {
+    window.annexSearch.LoggingUtils = window.annexSearch.LoggingUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * #__labels
@@ -3226,61 +3292,12 @@ window.annexSearch.DependencyLoader.push([], function() {
         static error() {
             let message = '%c[' + (this.#__labels.error) + ']',
                 styles = 'color: red; font-weight: bold; font-family: monospace;',
-                args = [];
-            args.push(message);
-            args.push(styles);
-            args = args.concat(Array.from(arguments));
+                args = Array.from(arguments);
+            args.unshift(styles);
+            args.unshift(message);
             window.console && window.console.log && window.console.log.apply(window, args);
             return true;
         }
-
-        /**
-         * logFailedTypesenseSearchRequestError
-         * 
-         * @access  public
-         * @static
-         * @param   window.annexSearch.TypesenseSearchRequest typesenseSearchRequest
-         * @return  Boolean
-         */
-        static logFailedTypesenseSearchRequestError(typesenseSearchRequest) {
-            let error = typesenseSearchRequest.getError(),
-                key = error.key,
-                message = error.message;
-            this.error('Could not complete Typesense search request');
-            if (key === 'typesenseSearchRequestResponse') {
-                this.error('Typesense response: ' + (message));
-                if (message.includes('Forbidden - a valid `x-typesense-api-key` header must be sent.') === true) {
-                    message = window.annexSearch.ErrorUtils.getMessage('loggingUtils.typesenseFailed.tip');
-                    this.error(message);
-                    return true;
-                }
-                return true;
-            }
-            this.error('Error: ' + (message));
-            if (message.includes('Failed to fetch') === true) {
-                message = window.annexSearch.ErrorUtils.getMessage('loggingUtils.fetchFailed.tip');
-                this.error(message);
-                return true;
-            }
-            return true;
-        }
-
-        /**
-         * info
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        // info() {
-        //     let message = '%c[' + (this.#__labels.message) + ']',
-        //         styles = 'color: blue; font-weight: bold; font-family: monospace;',
-        //         args = [];
-        //     args.push(message);
-        //     args.push(styles);
-        //     args = args.concat(Array.from(arguments));
-        //     window.console && window.console.log && window.console.log.apply(window, args);
-        //     return true;
-        // }
 
         /**
          * setup
@@ -3299,14 +3316,14 @@ window.annexSearch.DependencyLoader.push([], function() {
  * /src/js/utils/String.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.StringUtils
      * 
      * @access  public
      */
-    window.annexSearch.StringUtils = window.annexSearch.StringUtils || class {
+    window.annexSearch.StringUtils = window.annexSearch.StringUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * generateUUID
@@ -3351,14 +3368,14 @@ window.annexSearch.DependencyLoader.push([], function() {
  * /src/js/utils/Toast.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.ToastUtils
      * 
      * @access  public
      */
-    window.annexSearch.ToastUtils = window.annexSearch.ToastUtils || class {
+    window.annexSearch.ToastUtils = window.annexSearch.ToastUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * #__toasts
@@ -4919,7 +4936,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let response = typesenseSearchRequest.getResponse();
             this.#__lastTypesenseSearchResponse = response;
             this.setStateKey('error');
-            window.annexSearch.LoggingUtils.logFailedTypesenseSearchRequestError(typesenseSearchRequest);
+            typesenseSearchRequest.logFailedEvent();
             return true;
         };
 
