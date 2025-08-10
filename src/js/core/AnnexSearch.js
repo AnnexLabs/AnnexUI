@@ -114,22 +114,35 @@ window.annexSearch.DependencyLoader.push([], function() {
         /**
          * #__setupUtils
          * 
+         * @see     https://chatgpt.com/c/6898260b-ca3c-8323-8df8-d8099634d658
          * @access  private
          * @static
          * @return  Boolean
          */
         static #__setupUtils() {
-            window.annexSearch.CacheUtils.setup();
-            window.annexSearch.DataUtils.setup();
-            // window.annexSearch.DebuggingUtils.setup();
-            window.annexSearch.ElementUtils.setup();
-            window.annexSearch.ErrorUtils.setup();
-            window.annexSearch.FunctionUtils.setup();
-            window.annexSearch.InteractionUtils.setup();
-            window.annexSearch.KeyboardShortcutUtils.setup();
-            window.annexSearch.LoggingUtils.setup();
-            window.annexSearch.StringUtils.setup();
-            window.annexSearch.ToastUtils.setup();
+            for (var propertyName in window.annexSearch) {
+                if (window.annexSearch.hasOwnProperty(propertyName) === false) {
+                    continue;
+                }
+                if (typeof window.annexSearch[propertyName] !== 'function') {
+                    continue;
+                }
+                if (propertyName.endsWith('Utils') === false) {
+                    continue;
+                }
+                window.annexSearch[propertyName].setup && window.annexSearch[propertyName].setup();
+            }
+            // window.annexSearch.CacheUtils.setup();
+            // window.annexSearch.DataUtils.setup();
+            // // window.annexSearch.DebuggingUtils.setup();
+            // window.annexSearch.ElementUtils.setup();
+            // window.annexSearch.ErrorUtils.setup();
+            // window.annexSearch.FunctionUtils.setup();
+            // window.annexSearch.InteractionUtils.setup();
+            // window.annexSearch.KeyboardShortcutUtils.setup();
+            // window.annexSearch.LoggingUtils.setup();
+            // window.annexSearch.StringUtils.setup();
+            // window.annexSearch.ToastUtils.setup();
             return true;
         }
 
