@@ -264,6 +264,28 @@ $('annex-search-widget').addEventListener('root.show', function(customEvent) {
 - `{{response.search_time_ms}}`
 
 
+### Overriding templates
+
+
+| Config property key               | Description                                                                                       | Params                |
+| ----------------------------------| --------------------------------------------------------------------------------------------------|-------------------    |
+| `rootView`                        | The "root" of the search UI. Broadly, a container for other containers.                           | `null`                |
+| `bodyView`                        | Contains the body of search results, including errors, idle states and empty result states.       | `null`                |
+| `errorBodyView`                   | Element that communicates an error took place during search.                                      | `null`                |
+| `idleBodyView`                    | Element that communicates that no search has taken place yet.                                     | `null`                |
+| `emptyResultsBodyView`            | Element that communicates no matching search results were found.                                  | `null`                |
+| `foundResultsBodyView`            | Element that contains a list of results.                                                          | `null`                |
+| `resultFoundResultsBodyView`      | The result element itself.                                                                        | `{hit}`               |
+| `resultsBodyView`                 | A container for the broad concept of results.                                                     | `title`, `message`    |
+| `toastView`                       | An element to communicate an alert.                                                               | `null`                |
+| `brandingBarFooterView`           | Element that communicates the Annex brand.                                                        | `null`                |
+| `footerView`                      | Container element for footer elements.                                                            | `null`                |
+| `statusBarFooterView`             | Element that communicates some status around the search UX.                                       | `null`                |
+| `fieldHeaderView`                 | Element that contains the keyboard shortcut, input field, hide button and spinner.                | `null`                |
+| `headerView`                      | Element that contains the `$fieldHeaderView`.                                                     | `null`                |
+| `metaBarHeaderView`               | Element that communicates meta data about a search (if any).                                      | `{response}`          |
+
+
 <hr />
 
 ### Common problems / gotchas
@@ -301,3 +323,7 @@ are good enough to get going.
     })();
 </script>
 ```
+
+
+### Edge cases considered
+- High-resolution monitors that immediately ought to trigger a loadMore flow (because there's not scrollbar)
