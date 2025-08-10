@@ -6,7 +6,7 @@
     top: 12px;
     background-color: rgba(0, 0, 0, 1.00);
     border-radius: 10px 10px 10px 10px;
-    height: 72px;
+/*    height: 72px;*/
     width: 302px;
     padding: 12px 16px 12px 16px;
     transition: all var(--annex-search-toast-duration);
@@ -31,4 +31,5 @@
     color: rgba(255, 255, 255, 0.80);
     font-size: 12.5px;
     line-height: 1.30em;
+    min-height: 22px;
 }
