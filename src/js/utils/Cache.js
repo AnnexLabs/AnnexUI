@@ -3,14 +3,14 @@
  * /src/js/utils/Cache.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.CacheUtils
      * 
      * @access  public
      */
-    window.annexSearch.CacheUtils = window.annexSearch.CacheUtils || class {
+    window.annexSearch.CacheUtils = window.annexSearch.CacheUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * #__data

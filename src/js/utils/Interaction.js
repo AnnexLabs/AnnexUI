@@ -3,14 +3,14 @@
  * /src/js/utils/Interaction.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.InteractionUtils
      * 
      * @access  public
      */
-    window.annexSearch.InteractionUtils = window.annexSearch.InteractionUtils || class {
+    window.annexSearch.InteractionUtils = window.annexSearch.InteractionUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * #__addDocumentClickEventListener
@@ -181,10 +181,16 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  public
          * @static
-         * @return  Promise
+         * @return  Boolean
          */
         static setup() {
-            this.#__addDocumentClickEventListener();
+            let response = super.setup();
+            if (response === true) {
+                this.#__addDocumentClickEventListener();
+                return true;
+            }
+            let handler = window.annexSearch.InteractionUtils.setup.bind(window.annexSearch.InteractionUtils);
+            document.addEventListener('DOMContentLoaded', handler);
             return true;
         }
     }

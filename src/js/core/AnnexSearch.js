@@ -131,6 +131,9 @@ window.annexSearch.DependencyLoader.push([], function() {
                 if (typeof window.annexSearch[propertyName] !== 'function') {
                     continue;
                 }
+                if (propertyName === 'BaseUtils') {
+                    continue;
+                }
                 if (propertyName.endsWith('Utils') === false) {
                     continue;
                 }

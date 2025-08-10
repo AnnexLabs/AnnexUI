@@ -3,14 +3,14 @@
  * /src/js/utils/KeyboardShortcut.js
  * 
  */
-window.annexSearch.DependencyLoader.push([], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
      * window.annexSearch.KeyboardShortcutUtils
      * 
      * @access  public
      */
-    window.annexSearch.KeyboardShortcutUtils = window.annexSearch.KeyboardShortcutUtils || class {
+    window.annexSearch.KeyboardShortcutUtils = window.annexSearch.KeyboardShortcutUtils || class extends window.annexSearch.BaseUtils {
 
         /**
          * #__active
@@ -671,11 +671,17 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  public
          * @static
-         * @return  Promise
+         * @return  Boolean
          */
         static setup() {
-            this.#__addDocumentPasteEventListener();
-            this.#__addKeydownEventListener();
+            let response = super.setup();
+            if (response === true) {
+                this.#__addDocumentPasteEventListener();
+                this.#__addKeydownEventListener();
+                return true;
+            }
+            let handler = window.annexSearch.KeyboardShortcutUtils.setup.bind(window.annexSearch.KeyboardShortcutUtils);
+            document.addEventListener('DOMContentLoaded', handler);
             return true;
         }
     }
