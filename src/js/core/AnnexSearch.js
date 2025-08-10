@@ -2,9 +2,9 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - bug with focus not coming back (related to found.results not being cleared)
- * 
  * @todo    - Deal w/ Config role for css loading and dist script
+ * 
+ * @todo    - bug with focus not coming back (related to found.results not being cleared)
  * @todo    - CacheUtils for /css and /templates lookups to speed things up?
  * @todo    - Error logging cleanup
  * 
