@@ -59,7 +59,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__handleClickEvent(event) {
             let hit = this.get('hit');
-            this.getWebComponent().dispatchCustomEvent('result.click', event, hit);
+            this.getWebComponent().dispatchCustomEvent('result.click', {event, hit});
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             return true;
         }
@@ -73,7 +73,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__handleFocusEvent(event) {
             let hit = this.get('hit');
-            this.getWebComponent().dispatchCustomEvent('result.focus', event, hit);
+            this.getWebComponent().dispatchCustomEvent('result.focus', {event, hit});
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             return true;
         }

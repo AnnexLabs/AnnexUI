@@ -17,7 +17,7 @@
 :host([data-annex-search-layout="inline"]) [data-view-name="HeaderView"] {
     border-radius: 0;
 }
-:host([data-annex-search-layout="inline"]) [data-view-name="HeaderView"] > div.close {
+:host([data-annex-search-layout="inline"]) [data-view-name="HeaderView"] > div.hide {
     display: none;
 }
 :host([data-annex-search-layout="inline"]) [data-view-name="HeaderView"] > [data-view-name="FieldHeaderView"] > div.label {

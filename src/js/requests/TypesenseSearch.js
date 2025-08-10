@@ -60,6 +60,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         #__options = {
             page: 1,
             per_page: 10
+            // per_page: 1
             // query_by: options.query_by || 'title,content',// working: title,body
             // filter_by: options.filter_by || '',// working: filter_by = score:>8
             // sort_by: options.sort_by || '_text_match:desc',// working: sort_by = score:desc

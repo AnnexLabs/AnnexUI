@@ -46,14 +46,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         };
 
         /**
-         * #__addCloseClickEventListener
+         * #__addHideClickEventListener
          * 
          * @access  private
          * @return  Boolean
          */
-        #__addCloseClickEventListener() {
-            let handler = this.#__handleCloseClickEvent.bind(this),
-                $element = this.first('.close');
+        #__addHideClickEventListener() {
+            let handler = this.#__handleHideClickEvent.bind(this),
+                $element = this.first('.hide');
             $element.addEventListener('click', handler);
             return true;
         };
@@ -91,8 +91,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__handleClickEvent(event) {
             let $target = event.target,
-                $close = this.first('.close');
-            if ($target === $close) {
+                $hide = this.first('.hide');
+            if ($target === $hide) {
                 return false;
             }
             this.focus();
@@ -100,13 +100,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         };
 
         /**
-         * #__handleCloseClickEvent
+         * #__handleHideClickEvent
          * 
          * @access  private
          * @param   Object event
          * @return  Boolean
          */
-        #__handleCloseClickEvent(event) {
+        #__handleHideClickEvent(event) {
             this.hideWebComponent();
             return false;
         };
@@ -119,7 +119,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         _addEvents() {
             this.#__addClickEventListener();
-            this.#__addCloseClickEventListener();
+            this.#__addHideClickEventListener();
             return true;
         }
 
@@ -194,13 +194,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @access  public
          * @return  Boolean
          */
-        toggleSpinner() {
-            if (this.#__showingSpinner === true) {
-                let response = this.hideSpinner();
-                return response;
-            }
-            let response = this.showSpinner();
-            return response;
-        }
+        // toggleSpinner() {
+        //     if (this.#__showingSpinner === true) {
+        //         let response = this.hideSpinner();
+        //         return response;
+        //     }
+        //     let response = this.showSpinner();
+        //     return response;
+        // }
     }
 });

@@ -35,34 +35,37 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         static #__handleBehaviorInteraction(event) {
-            if (this.#__validEventTarget(event, '[data-annex-search]') === false) {
+
+            // Broadly invalid
+            if (this.#__validEventTarget(event, 'data-annex-search') === false) {
                 return false;
             }
-            // event.preventDefault();
-            let registered = window.annexSearch.AnnexSearch.getRegistered(),
+// console.log('s');
+            // Invalid layout (clear is always supported)
+            let $target = event.target,
+                value = $target.getAttribute('data-annex-search'),
+                registered = window.annexSearch.AnnexSearch.getRegistered(),
                 $annexSearchWidget = registered[0];
             if ($annexSearchWidget.getConfig('layout') === 'inline') {
-                return false;
+                if (value !== 'clear' && value !== 'focus') {
+                    return false;
+                }
             }
-            let $target = event.target,
-                value = $target.getAttribute('data-annex-search');
-            if (value === null) {
-                return false
-            }
-            if (value === undefined) {
-                return false
-            }
-            value = value.trim();
-            if (value === '') {
-                return false
-            }
-            let validBehaviorInteractions = ['clear', 'hide', 'show', 'toggle'];
+
+            // Unsupported value
+            let validBehaviorInteractions = ['clear', 'focus', 'hide', 'show', 'toggle'];
             if (validBehaviorInteractions.includes(value) === false) {
                 return false;
             }
+
+            // Processing
             if (value === 'clear') {
-                // let response = $annexSearchWidget.toggle();
-                // return response;
+                let response = $annexSearchWidget.clear();
+                return response;
+            }
+            if (value === 'focus') {
+                let response = $annexSearchWidget.focus();
+                return response;
             }
             if (value === 'hide') {
                 let response = $annexSearchWidget.hide();
@@ -98,26 +101,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * #__handleMutationObserverObserveEvent
-         * 
-         * @access  private
-         * @static
-         * @param   Array mutations
-         * @return  Boolean
-         */
-        // static #__handleMutationObserverObserveEvent(mutations) {
-        //     mutations.forEach(function(mutation) {
-        //         mutation.addedNodes.forEach(function(node) {
-        //             if (node.nodeType === 1 && node.hasAttribute('data-test')) {
-        //                 console.log('New element with data-test:', node);
-        //                 // Your code here
-        //             }
-        //         });
-        //     });
-        //     return true;
-        // }
-
-        /**
          * #__handleQueryInteraction
          * 
          * @access  private
@@ -126,17 +109,16 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         static #__handleQueryInteraction(event) {
-            if (this.#__validEventTarget(event, '[data-annex-search-query]') === false) {
+
+            // Broadly invalid
+            if (this.#__validEventTarget(event, 'data-annex-search-query') === false) {
                 return false;
             }
-            // event.preventDefault();
+
+            // Invalid value
             let $target = event.target,
-                value = $target.getAttribute('data-annex-search-query');
-            value = value.trim()
-            if (value === '') {
-                return false;
-            }
-            let registered = window.annexSearch.AnnexSearch.getRegistered(),
+                value = $target.getAttribute('data-annex-search-query'),
+                registered = window.annexSearch.AnnexSearch.getRegistered(),
                 $annexSearchWidget = registered[0],
                 query = value;
             $annexSearchWidget.show();
@@ -145,51 +127,20 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * #__setupMutationObserver
-         * 
-         * @access  private
-         * @static
-         * @return  Boolean
-         */
-        // static #__setupMutationObserver() {
-        //     let handler = this.#__handleMutationObserverObserveEvent.bind(this),
-        //         observer = new MutationObserver(handler),
-        //         $target = (document.body || document.head || document.documentElement);
-        //     observer.observe($target, {
-        //         childList: true,
-        //         subtree: true
-        //     });
-        //     return true;
-        // }
-
-        /**
-         * #__logDevModeMessage
-         * 
-         * @access  private
-         * @static
-         * @param   String messageKey
-         * @return  Boolean
-         */
-        // static #__logDevModeMessage(messageKey) {
-        //     let message = window.annexSearch.ErrorUtils.getMessage(messageKey);
-        //     window.annexSearch.LoggingUtils.error(message);
-        //     return true;
-        // }
-
-        /**
          * #__validEventTarget
          * 
          * @access  private
          * @static
          * @param   Object event
-         * @param   String selector
+         * @param   String attributeName
          * @return  Boolean
          */
-        static #__validEventTarget(event, selector) {
+        static #__validEventTarget(event, attributeName) {
             let $target = event.target || null;
             if ($target === null) {
                 return false;
             }
+            let selector = '[' + (attributeName) + ']';
             if ($target.matches(selector) === false) {
                 return false;
             }
@@ -207,6 +158,21 @@ window.annexSearch.DependencyLoader.push([], function() {
                 // this.#__logDevModeMessage('interactionUtils.multipleRegistered');
                 return false;
             }
+
+            // Invalid value
+            let value = $target.getAttribute(attributeName);
+            if (value === null) {
+                return false;
+            }
+            if (value === undefined) {
+                return false;
+            }
+            value = value.trim();
+            if (value === '') {
+                return false;
+            }
+
+            // All good..
             return true;
         }
 
@@ -218,7 +184,6 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Promise
          */
         static setup() {
-            // this.#__setupMutationObserver();
             this.#__addDocumentClickEventListener();
             return true;
         }

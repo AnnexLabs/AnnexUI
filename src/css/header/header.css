@@ -9,21 +9,21 @@
  * Close
  * 
  */
-[data-view-name="HeaderView"] > div.close {
+[data-view-name="HeaderView"] > div.hide {
     position: absolute;
     right: 10px;
-    top: calc((var(--annex-search-header-height) - var(--annex-search-header-close-size)) / 2);
-    height: var(--annex-search-header-close-size);
-    width: var(--annex-search-header-close-size);
+    top: calc((var(--annex-search-header-height) - var(--annex-search-header-hide-button-size)) / 2);
+    height: var(--annex-search-header-hide-button-size);
+    width: var(--annex-search-header-hide-button-size);
     transform: rotate(45deg);
-    background-color: var(--annex-search-header-close-button-color);
+    background-color: var(--annex-search-header-hide-button-color);
     opacity: 0.30;
     cursor: pointer;
     transition: 250ms all;
     -webkit-mask-size: 14px !important;
             mask-size: 14px !important;
 }
-[data-view-name="HeaderView"] > div.close:hover {
+[data-view-name="HeaderView"] > div.hide:hover {
     transform: scale(1.20) rotate(135deg);
     opacity: 0.50;
 }
@@ -58,7 +58,7 @@
  * Searching
  * 
  */
-[data-view-name="RootView"][data-searching="1"] [data-view-name="HeaderView"] > div.close {
+[data-view-name="RootView"][data-searching="1"] [data-view-name="HeaderView"] > div.hide {
     display: none;
 }
 

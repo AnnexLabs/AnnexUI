@@ -420,7 +420,7 @@ window.annexSearch.DependencyLoader.push([], function() {
                 return false;
             }
             if (this.#__getActiveWebComponent() === null) {
-                return false
+                return false;
             }
             let $annexSearchWidget = this.#__getActiveWebComponent();
             if ($annexSearchWidget.showing() === false) {
@@ -599,7 +599,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         static #__handleKeydownEvent(event) {
             if (this.#__getRegisteredWebComponents().length === 0) {
-                return false
+                return false;
             }
             if (this.#__handleDocumentKeyboardShortcutKeydownEvent(event) === true) {
                 return true;
@@ -643,7 +643,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         static #__validKeydownEvent(event, configKey, validKeys) {
             if (this.#__getRegisteredWebComponents().length === 0) {
-                return false
+                return false;
             }
             let $annexSearchWidget = this.#__getActiveWebComponent();
             if ($annexSearchWidget === null) {

@@ -107,7 +107,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             if (key === 'abort') {
                 return false;
             }
-            this.getWebComponent().dispatchCustomEvent('results.error', error);
+            this.getWebComponent().dispatchCustomEvent('results.error', {error});
             let header = this.getView('root.header');
             header.hideSpinner();
             let response = typesenseSearchRequest.getResponse();
@@ -125,6 +125,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleInputInputEvent(event) {
+// console.log('ummm');
             let value = this.first('input').value.trim();
             if (value === '') {
                 this.nullifyLastTypesenseSearchResponse();
@@ -155,7 +156,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__handleLoadMoreSuccessfulTypesenseSearchEvent(options, typesenseSearchRequest) {
             let response = typesenseSearchRequest.getResponse();
-            this.getWebComponent().dispatchCustomEvent('results.loaded', response);
+            this.getWebComponent().dispatchCustomEvent('results.loaded', {response});
             this.#__lastTypesenseSearchResponse = response;
             this.#__loadingMore = false;
             if (response.hits.length === 0) {
@@ -178,7 +179,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__handleSuccessfulTypesenseSearchEvent(options, typesenseSearchRequest) {
             let response = typesenseSearchRequest.getResponse();
             if (this.#__loadingMore === true) {
-                let loadMoreResponse = this.#__handleLoadMoreSuccessfulTypesenseSearchEvent(options, typesenseSearchRequest);
+                let loadMoreResponse = this.#__handleLoadMoreSuccessfulTypesenseSearchEvent(options, typesenseSearchRequest),
+                    found = this.getView('root.body.results.found'),
+                    containsScrollbar = found.containsScrollbar();
+    // console.log(containsScrollbar);
+                if (containsScrollbar === true) {
+                    return true;
+                }
+                this.loadMore();
                 return loadMoreResponse;
             }
             this.#__lastTypesenseSearchResponse = response;
@@ -188,12 +196,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 this.setStateKey('empty');
                 return false;
             }
-            this.getWebComponent().dispatchCustomEvent('results.loaded', response);
+            this.getWebComponent().dispatchCustomEvent('results.loaded', {response});
             this.setStateKey('results');
             let found = this.getView('root.body.results.found');
             found.drawResults(response);
             found.resetFocusedIndex();
             this.#__updateMetaBar();
+            let containsScrollbar = found.containsScrollbar();
+// console.log(containsScrollbar);
+            if (containsScrollbar === true) {
+                return true;
+            }
+            this.loadMore();
             return true;
         };
 
@@ -235,21 +249,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * #__setKeyboardShortcutLabel
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        #__setKeyboardShortcutLabel() {
-            let keyboardShortcut = this.#__getKeyboardShortcut();
-            if (keyboardShortcut === null) {
-                return false;
-            }
-            this.first('.label').innerHTML = keyboardShortcut.toUpperCase();
-            return true;
-        }
-
-        /**
          * #__setInputPlaceholder
          * 
          * @access  private
@@ -266,6 +265,21 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.first('input').setAttribute('placeholder', placeholder);
             return true;
         };
+
+        /**
+         * #__setKeyboardShortcutLabel
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        #__setKeyboardShortcutLabel() {
+            let keyboardShortcut = this.#__getKeyboardShortcut();
+            if (keyboardShortcut === null) {
+                return false;
+            }
+            this.first('.label').innerHTML = keyboardShortcut.toUpperCase();
+            return true;
+        }
 
         /**
          * #__updateMetaBar

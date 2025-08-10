@@ -17,7 +17,7 @@
     height: 20px;
     float: left;
     margin: 0 0 0 12px;
-    width: calc(100% - 28px - 12px - var(--annex-search-header-close-size) - 10px - 8px);
+    width: calc(100% - 28px - 12px - var(--annex-search-header-hide-button-size) - 10px - 8px);
 }
 [data-view-name="FieldHeaderView"] > div.input > input {
     display: block;

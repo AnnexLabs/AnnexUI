@@ -131,6 +131,19 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * containsScrollbar
+         * 
+         * @see     https://chatgpt.com/c/6897db9a-a3c8-8327-a22d-e1db1187c914
+         * @access  public
+         * @return  Boolean
+         */
+        containsScrollbar() {
+            let $element = this._$element,
+                response = $element.scrollHeight > $element.clientHeight;
+            return response;
+        }
+
+        /**
          * drawResults
          * 
          * @access  public

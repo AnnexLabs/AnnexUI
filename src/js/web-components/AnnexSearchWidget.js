@@ -77,7 +77,8 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         constructor() {
             super();
-console.log('a');
+// console.log('yep');
+// console.log('a');
             this.#__index = window.annexSearch.AnnexSearch.getRegistered().length;
             window.annexSearch.AnnexSearch.register(this);
             this.#__setupShadow();
@@ -87,17 +88,18 @@ console.log('a');
         }
 
         /**
-         * #__dispatchEvent
+         * #__dispatchCustomEvent
          * 
          * @access  private
          * @param   String eventName
          * @param   Array args
          * @return  Boolean
          */
-        #__dispatchEvent(eventName, args) {
+        #__dispatchCustomEvent(eventName, args) {
             let event = new CustomEvent(eventName, {
                 detail: args
             });
+console.log(event.detail);
             this.dispatchEvent(event);
             return true;
         }
@@ -209,12 +211,40 @@ console.log('a');
         }
 
         /**
+         * clear
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        clear() {
+            // if (this.#__showing === true) {
+            //     return false;
+            // }
+// console.log('clearing');
+            let field = this.getView('root').getView('root.header.field'),
+                found = this.getView('root').getView('body.results.found');
+            field.focus();
+            field.clear();
+            field.nullifyLastTypesenseSearchResponse();
+            // field.append(query);
+            // found.smoothScrollToTop();
+            found.resetFocusedIndex();
+            // window.annexSearch.ElementUtils.waitForAnimation().then(function() {
+            //     field.setCaret();
+            // });
+            field.first('input').dispatchEvent(new Event('input', {
+                bubbles: true
+            }));
+            return true;
+        }
+
+        /**
          * dispatchCustomEvent
          * 
          * @see     https://chatgpt.com/c/68942c36-15a0-8328-a9aa-a0a5e682af61
          * @access  public
          * @param   String key
-         * @param   Array args
+         * @param   Object payload
          * @return  Boolean
          */
         dispatchCustomEvent(key, ...args) {
@@ -226,7 +256,7 @@ console.log('a');
                     return false;
                 }
             }
-            this.#__dispatchEvent(key, args.slice());
+            this.#__dispatchCustomEvent(key, args.slice());
             args.unshift(this);
             reference.apply(window, args);
             return true;
@@ -239,31 +269,8 @@ console.log('a');
          * @return  Boolean
          */
         focus() {
-            // if (this.#__showing === true) {
-            //     return false;
-            // }
-            // window.annexSearch.AnnexSearch.setActive(this);
-            // this.dispatchCustomEvent('root.show');
-            // this.#__showing = true;
-            // this.#__setStyles();
-            // this.setAttribute('data-annex-search-open', '1');
-            // this.removeAttribute('inert');
-            // let found = this.#__views.root.getView('root.body.results.found'),
-            //     results = found.getResults();
-            // if (results.length === 0) {
-            //     this.#__views.root.focus();
-            //     return true;
-            // }
-            // let focusedIndex = found.getFocusedIndex();
-            // if (focusedIndex === null) {
-            //     focusedIndex = 0;
-            // }
-            // let result = results[focusedIndex];
-            // if (result === undefined) {
-            //     return true;
-            // }
-            // result.focus();
-            return true;
+            let response = this.getView('root').focus();
+            return response;
         }
 
         /**
@@ -441,7 +448,9 @@ console.log('a');
             this.removeAttribute('inert');
             let found = this.#__views.root.getView('root.body.results.found'),
                 results = found.getResults();
+// console.log(results);
             if (results.length === 0) {
+// console.log('a');
                 this.#__views.root.focus();
                 return true;
             }

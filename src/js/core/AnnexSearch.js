@@ -2,15 +2,21 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - bug with multiple open and query-ing
- * @todo    - multiple bugs (various)
- * @todo    - ensure multiple instantiations happen sequentially (to allow for /templates caching)
+ * @todo    - event dispatching cleanup
+ * 
+ * @todo    - bug with focus not coming back (related to found.results not being cleared)
  * 
  * @todo    - CacheUtils for /css and /templates lookups to speed things up?
  * @todo    - Error logging cleanup
  * 
+ * @todo    - ensure multiple instantiations happen sequentially (to allow for /templates caching)
+ * 
+ * @todo    - bug with multiple open and query-ing
+ * @todo    - multiple bugs (various)
+ * 
  * @todo    - variable templating
  * @todo    - custom templates
+ * @todo    - collection retriveal (for smart templates?)
  * 
  * @todo    [DONE] - dark mode
  * @todo    [DONE] - mobile
@@ -34,11 +40,18 @@
  * @todo    [PUNT] - Missing truncation dots: https://416.io/ss/f/7wtusv
  * @todo    [DONE] - typesense query param (e.g. w/o preset)
  * @todo    [DONE] - config functions re:modifications
- * @todo    [PUNT] - Deal w/ inline where 10 results doesn't trigger scroll / loadMore
  * @todo    [DONE] - inline layout
  * @todo    [DONE] - instantiation
  * @todo    [DONE] - external trigger to show/hide/toggle
  * @todo    [DONE] - external trigger to show w/ query
+ * @todo    [DONE] - clear-interaction
+ * @todo    [DONE] - absolute positioning on long page
+ * @todo    [DONE] - panel animations
+ * @todo    [DONE] - focus-interaction
+ * @todo    [PUNT] - "End of results" template
+ * @todo    [PUNT] - "Loading more results" template
+ * @todo    [DONE] - Deal w/ inline where 10 results doesn't trigger scroll / loadMore
+ * @todo    [DONE] -- See: https://416.io/ss/f/y75fpa
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

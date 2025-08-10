@@ -20,7 +20,7 @@ window.annexSearch.DependencyLoader = (function() {
      * @access  private
      * @var     Array (default: [])
      */
-    var __attemptClosures = [];
+    let __attemptClosures = [];
 
     /**
      * __attempts
@@ -28,7 +28,7 @@ window.annexSearch.DependencyLoader = (function() {
      * @access  private
      * @var     Number (default: 0)
      */
-    var __attempts = 0;
+    let __attempts = 0;
 
     /**
      * Methods (private)
@@ -43,7 +43,7 @@ window.annexSearch.DependencyLoader = (function() {
      * @param   Function callback
      * @return  Boolean
      */
-    var __attempt = function(dependencies, callback) {
+    let __attempt = function(dependencies, callback) {
         ++__attempts;
         __checkForFailure(dependencies);
         if (__dependenciesAvailable(dependencies) === true) {
@@ -61,9 +61,9 @@ window.annexSearch.DependencyLoader = (function() {
      * @param   Array dependencies
      * @return  void
      */
-    var __checkForFailure = function(dependencies) {
+    let __checkForFailure = function(dependencies) {
         if (__attempts > 10000) {
-            var message = 'Could not complete an attempt: [';
+            let message = 'Could not complete an attempt: [';
             message += dependencies.join(', ') + ']';
             window.annexSearch && window.annexSearch.LoggingUtils && window.annexSearch.LoggingUtils.error(message);
             throw new Error(message);
@@ -77,8 +77,8 @@ window.annexSearch.DependencyLoader = (function() {
      * @param   Array dependencies
      * @return  Boolean
      */
-    var __dependenciesAvailable = function(dependencies) {
-        var x = 0,
+    let __dependenciesAvailable = function(dependencies) {
+        let x = 0,
             l = dependencies.length;
         for (x; x < l; ++x) {
             if (__referenceExists(dependencies[x]) === false) {
@@ -96,8 +96,8 @@ window.annexSearch.DependencyLoader = (function() {
      * @param   String path
      * @return  Boolean
      */
-    var __referenceExists = function(path) {
-        var parts = path.split('.'),
+    let __referenceExists = function(path) {
+        let parts = path.split('.'),
             current = window;
         for (var part of parts) {
             if (current[part] === undefined) {
@@ -123,7 +123,7 @@ window.annexSearch.DependencyLoader = (function() {
          */
         load: function(callback) {
             callback = callback || function() {};
-            var attempt;
+            let attempt;
             while (__attemptClosures.length > 0) {
                 attempt = __attemptClosures.shift();
                 if (attempt.apply(window.annexSearch.DependencyLoader) === false) {
@@ -145,9 +145,9 @@ window.annexSearch.DependencyLoader = (function() {
             if (typeof dependencies === 'string') {
                 dependencies = [dependencies];
             }
-            var args = [dependencies, callback],
+            let args = [dependencies, callback],
                 attempt = function() {
-                    var response = __attempt.apply(window.annexSearch.DependencyLoader, args);
+                    let response = __attempt.apply(window.annexSearch.DependencyLoader, args);
                     return response;
                 };
             __attemptClosures.push(attempt);

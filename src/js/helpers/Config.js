@@ -48,7 +48,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                         // console.log('result.click', $annexSearchWidget, event, hit);
                     },
                     focus: function($annexSearchWidget, event, hit) {
-                        // console.log('result.focus', $annexSearchWidget, event, hit);
+                        console.log('result.focus', $annexSearchWidget, event, hit);
                     },
                 },
                 results: {
@@ -116,7 +116,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 },
                 placeholder: 'Search...',
                 statusBar: {
-                    message: 'Search through 10,000+ results instantly'
+                    message: 'Instantly search through 10,000+ results'
                 },
             },
 
@@ -132,15 +132,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             /**
              * keyboardShortcut
              * 
-             * The keyboard combination which when pressed, toggles the widget to
-             * open or close. If null, no listener is created.
+             * The keyboard combination which when pressed, toggles the widget
+             * to be shown or hidden. If null, no listener is created.
              * 
              * @access  private
              * @var     null|String (default: '⌘k')
              */
             keyboardShortcut: '⌘k',
-            // keyboardShortcut: '⌘j',
-            // keyboardShortcut: null,
 
             /**
              * highlightTagName
@@ -222,8 +220,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * showOverlay
              * 
              * Whether an overlay should be shown. Currently doesn't effect the
-             * click listener which when detected outside of the widget, triggers it
-             * to be closed.
+             * click listener which when detected outside of the widget,
+             * triggers the widget to be hidden.
              * 
              * @access  private
              * @var     Boolean (default: true)
