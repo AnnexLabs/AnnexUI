@@ -46,6 +46,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__title = '(title)';
 
         /**
+         * #__markup
+         * 
+         * @access  public
+         * @var     String
+         */
+        static markup = `
+<div data-view-name="ToastView">
+    <div class="title"></div>
+    <div class="message"></div>
+</div>`;
+
+        /**
          * constructor
          * 
          * @access  public
@@ -152,6 +164,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             clearTimeout(this.#__hideTimeoutReference);
             var handler = this.#__destroy.bind(this);
             this._$element.addEventListener('transitionend', handler);
+            return true;
+        }
+
+        /**
+         * render
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        render() {
+            super.render();
             return true;
         }
 

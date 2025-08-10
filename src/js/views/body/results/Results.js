@@ -14,6 +14,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.ResultsBodyView = window.annexSearch.ResultsBodyView || class extends window.annexSearch.BaseView {
 
         /**
+         * #__markup
+         * 
+         * @access  public
+         * @var     String
+         */
+        static markup = `
+<div data-view-name="ResultsBodyView">
+</div>`;
+
+        /**
          * constructor
          * 
          * @access  public

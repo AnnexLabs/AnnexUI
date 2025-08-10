@@ -271,9 +271,9 @@ $('annex-search-widget').addEventListener('root.show', function(customEvent) {
 | ----------------------------------| --------------------------------------------------------------------------------------------------|-------------------    |
 | `rootView`                        | The "root" of the search UI. Broadly, a container for other containers.                           | `null`                |
 | `bodyView`                        | Contains the body of search results, including errors, idle states and empty result states.       | `null`                |
-| `errorBodyView`                   | Element that communicates an error took place during search.                                      | `{response}`          |
+| `errorBodyView`                   | Element that communicates an error took place during search.                                      | `null` ⚠️             |
 | `idleBodyView`                    | Element that communicates that no search has taken place yet.                                     | `null`                |
-| `emptyResultsBodyView`            | Element that communicates no matching search results were found.                                  | `{response}`          |
+| `emptyResultsBodyView`            | Element that communicates no matching search results were found.                                  | `null` ⚠️             |
 | `foundResultsBodyView`            | Element that contains a list of results.                                                          | `null`                |
 | `resultFoundResultsBodyView`      | The result element itself.                                                                        | `{hit}`               |
 | `resultsBodyView`                 | A container for the broad concept of results.                                                     | `{response}`          |

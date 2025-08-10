@@ -14,6 +14,19 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.ResultFoundResultsBodyView = window.annexSearch.ResultFoundResultsBodyView || class extends window.annexSearch.BaseView {
 
         /**
+         * #__markup
+         * 
+         * @access  public
+         * @var     String
+         */
+        static markup = `
+<a data-view-name="ResultFoundResultsBodyView" href="https://{{hit.document.hostname}}{{hit.document.relativeURL}}">
+    <div class="title">{{hit.highlight.title.snippet || hit.document.title}}</div>
+    <div class="body">{{hit.highlight.body.snippet || hit.document.body}}</div>
+    <div class="uri truncate">https://{{hit.document.hostname}}{{hit.document.relativeURL}}</div>
+</a>`;
+
+        /**
          * constructor
          * 
          * @access  public
@@ -58,6 +71,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleClickEvent(event) {
+// console.log('wtf');
             let hit = this.get('hit');
             this.getWebComponent().dispatchCustomEvent('result.click', {event, hit});
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
@@ -129,6 +143,25 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * #__setTabindex
+         * 
+         * Neccessary method to account for the case where a custom template is
+         * defined, and the custom template doesn't have an [href] attribute
+         * applied.
+         * 
+         * @see     https://chatgpt.com/c/68990038-8970-8320-acb6-a2bef11bf487
+         * @access  private
+         * @return  Boolean
+         */
+        #__setTabindex() {
+            if (this._$element.hasAttribute('href') === true) {
+                return false;
+            }
+            this.setAttribute('tabindex', 0);
+            return true;
+        }
+
+        /**
          * _addEvents
          * 
          * @access  protected
@@ -170,6 +203,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             }
             this.#__renderTemplateVariables();
             this.#__setIndexAttribute();
+            this.#__setTabindex();
             super.render();
             return true;
         }

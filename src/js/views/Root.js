@@ -14,6 +14,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.RootView = window.annexSearch.RootView || class extends window.annexSearch.BaseView {
 
         /**
+         * #__markup
+         * 
+         * @access  public
+         * @var     String
+         */
+        static markup = `
+<div data-view-name="RootView" data-state-key="idle">
+    <div class="content"></div>
+</div>`;
+
+        /**
          * constructor
          * 
          * @access  public

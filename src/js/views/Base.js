@@ -82,6 +82,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         }
 
         /**
+         * getMarkup
+         * 
+         * @access  public
+         * @return  String
+         */
+        // getMarkup() {
+        //     let markup = this.#__markup;
+        //     return markup;
+        // }
+
+        /**
          * hide
          * 
          * @access  public

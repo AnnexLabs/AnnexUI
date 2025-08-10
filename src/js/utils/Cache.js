@@ -8,6 +8,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
     /**
      * window.annexSearch.CacheUtils
      * 
+     * @note    Not currently used (was being used with template loading).
+     *          Leaving in for now, as it's likely to be useful with plugins and
+     *          remote data requests later (e.g. GDPR).
      * @access  public
      */
     window.annexSearch.CacheUtils = window.annexSearch.CacheUtils || class extends window.annexSearch.BaseUtils {

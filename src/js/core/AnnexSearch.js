@@ -2,20 +2,15 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - Error logging cleanup
- * @todo    - bug with focus not coming back (related to found.results not being cleared)
- * 
+ * @todo    - custom templates
+ * @todo    - variable templating
  * @todo    - ensure multiple instantiations happen sequentially (to allow for /templates caching)
+ * @todo    - collection retrieval (for smart templates?)
+ * 
+ * @todo    - bug with focus not coming back (related to found.results not being cleared)
  * 
  * @todo    - bug with multiple open and query-ing
  * @todo    - multiple bugs (various)
- * 
- * @todo    - variable templating
- * @todo    - custom templates
- * @todo    - collection retriveal (for smart templates?)
- * 
- * @todo    - CacheUtils for /css and /templates lookups to speed things up (?)
- * @todo    -- Only for /templates since /css is direct linked (?)
  * 
  * @todo    [DONE] - dark mode
  * @todo    [DONE] - mobile
@@ -62,6 +57,10 @@
  * @todo    [PUNT] - UI for customizing and storing it on a server
  * @todo    [PUNT] - Arch cleanup to ensure object instances are directly tied to the respective $annexSearchWidget
  * @todo    [PUNT] -- Right now, this is messy. Should be standardized
+ * @todo    [DONE] - Error logging cleanup
+ * @todo    [PUNT] - Re-architect things so that config template functions receive data object(s)
+ * @todo    [PUNT] - CacheUtils for /css and /templates lookups to speed things up (?)
+ * @todo    [PUNT] -- Only for /templates since /css is direct linked (?)
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

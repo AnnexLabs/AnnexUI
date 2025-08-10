@@ -14,6 +14,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.FooterView = window.annexSearch.FooterView || class extends window.annexSearch.BaseView {
 
         /**
+         * #__markup
+         * 
+         * @access  public
+         * @var     String
+         */
+        static markup = `
+<div class="clearfix" data-view-name="FooterView">
+</div>`;
+
+        /**
          * constructor
          * 
          * @access  public

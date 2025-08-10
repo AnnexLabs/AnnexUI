@@ -14,6 +14,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.MetaBarHeaderView = window.annexSearch.MetaBarHeaderView || class extends window.annexSearch.BaseView {
 
         /**
+         * #__markup
+         * 
+         * @access  public
+         * @var     String
+         */
+        static markup = `
+<div data-view-name="MetaBarHeaderView">
+    Showing
+    <span class="showing">xx</span> of
+    <span class="found">yy</span>
+    matching results
+</div>`;
+
+        /**
          * constructor
          * 
          * @access  public

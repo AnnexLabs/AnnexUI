@@ -55,6 +55,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__timeout = null;
 
         /**
+         * #__markup
+         * 
+         * @access  public
+         * @var     String
+         */
+        static markup = `
+<div class="clearfix" data-view-name="FieldHeaderView">
+    <div class="label"></div>
+    <div class="input">
+        <input type="search" name="query" id="query" spellcheck="false" autocapitalize="off" autocorrect="off" />
+    </div>
+</div>`;
+
+        /**
          * constructor
          * 
          * @access  public

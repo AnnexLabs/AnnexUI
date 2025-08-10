@@ -13,6 +13,31 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
     window.annexSearch.ElementUtils = window.annexSearch.ElementUtils || class extends window.annexSearch.BaseUtils {
 
         /**
+         * #__getConfigTemplate
+         * 
+         * @see     https://chatgpt.com/c/68990349-0238-832f-bf0f-3bf14d1a7377
+         * @access  private
+         * @static
+         * @param   String templateId
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @return  null|String
+         */
+        static #__getConfigTemplate(templateId, $annexSearchWidget) {
+            let markup = $annexSearchWidget.getHelper('config').get('templates')[templateId];
+            if (markup === null) {
+                return null;
+            }
+            if (markup === undefined) {
+                return null;
+            }
+            if (typeof markup === 'function') {
+                let response = markup();
+                return response;
+            }
+            return markup;
+        }
+
+        /**
          * #__getTemplateElement
          * 
          * @see     https://chatgpt.com/c/6828cebf-a638-800f-bdf2-3e8642c89de6
@@ -23,15 +48,27 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @return  HTMLElement
          */
         static #__getTemplateElement(templateId, $annexSearchWidget) {
-            let templateContent = $annexSearchWidget.getHelper('config').get('templates')[templateId],
+            let viewName = this.#__getViewName(templateId),
+                markup = this.#__getConfigTemplate(templateId, $annexSearchWidget) || window.annexSearch[viewName].markup,
                 parser = new DOMParser(),
-                $document = parser.parseFromString(templateContent, 'text/html'),
-                $script = $document.querySelector('script[type]'),
-                $element;
-            templateContent = $script.textContent.trim(),
-            $document = parser.parseFromString(templateContent, 'text/html');
-            $element = $document.body.firstElementChild;
+                $document = parser.parseFromString(markup, 'text/html'),
+                $element = $document.body.firstElementChild;
             return $element;
+        }
+
+        /**
+         * #__getViewName
+         * 
+         * @access  private
+         * @static
+         * @param   String templateId
+         * @return  String
+         */
+        static #__getViewName(templateId) {
+            let viewName = templateId;
+            viewName = (viewName) + 'View';
+            viewName = viewName[0].toUpperCase() + viewName.slice(1);
+            return viewName;
         }
 
         /**

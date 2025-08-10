@@ -45,10 +45,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             callbacks: {
                 result: {
                     click: function(customEvent) {
-                        // console.log('result.click', customEvent.detail, this);
+                        console.log('result.click', customEvent.detail, this);
                     },
                     focus: function(customEvent) {
-                        // console.log('result.focus', customEvent.detail, this);
+                        console.log('result.focus', customEvent.detail, this);
                     },
                 },
                 results: {
@@ -184,7 +184,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                     'https://local.annexsearch.com/ts/css',
                     // 'https://local.annexsearch.com/ts/css2',
                 ],
-                templates: 'https://local.annexsearch.com/ts/templates',
+                // templates: 'https://local.annexsearch.com/ts/templates',
             },
 
             /**
@@ -290,20 +290,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @param   String templatesContent
          * @return  Boolean
          */
-        #__handleLoadTemplates(templatesContent) {
-            let expression = /<script\b[^>]*>[\s\S]*?<\/script>/gi,
-                matches = templatesContent.match(expression);
-            for (let match of matches) {
-                let matches = match.match(/data-template-id=["']([^"']+)["']/),
-                    id = matches ? matches[1] : null;
-                if (id === null) {
-                    continue;
-                }
-                this.#__data.templates[id] = match;
-            }
-            window.annexSearch.CacheUtils.set('templates', this.#__data.templates);
-            return true;
-        }
+        // #__handleLoadTemplates(templatesContent) {
+        //     let expression = /<script\b[^>]*>[\s\S]*?<\/script>/gi,
+        //         matches = templatesContent.match(expression);
+        //     for (let match of matches) {
+        //         let matches = match.match(/data-template-id=["']([^"']+)["']/),
+        //             id = matches ? matches[1] : null;
+        //         if (id === null) {
+        //             continue;
+        //         }
+        //         this.#__data.templates[id] = match;
+        //     }
+        //     window.annexSearch.CacheUtils.set('templates', this.#__data.templates);
+        //     return true;
+        // }
 
         /**
          * #__handleStylesheetErrorLoadEvent
@@ -371,13 +371,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @access  private
          * @return  Promise
          */
-        #__loadTemplates() {
-            let handler = this.#__handleLoadTemplates.bind(this),
-                promise = fetch(this.#__data.paths.templates).then(function(response) {
-                    return response.text();
-                }).then(handler);
-            return promise
-        }
+        // #__loadTemplates() {
+        //     let handler = this.#__handleLoadTemplates.bind(this),
+        //         promise = fetch(this.#__data.paths.templates).then(function(response) {
+        //             return response.text();
+        //         }).then(handler);
+        //     return promise
+        // }
 
         /**
          * get
@@ -431,16 +431,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @access  public
          * @return  Promise
          */
-        loadTemplates() {
-            let templates = window.annexSearch.CacheUtils.get('templates');
-            if (templates === undefined) {
-                let promise = this.#__loadTemplates();
-                return promise;
-            }
-            this.#__data.templates = templates;
-console.log('oh');
-            return true;
-        }
+//         loadTemplates() {
+//             let templates = window.annexSearch.CacheUtils.get('templates');
+//             if (templates === undefined) {
+//                 let promise = this.#__loadTemplates();
+//                 return promise;
+//             }
+//             this.#__data.templates = templates;
+// console.log('oh');
+//             return true;
+//         }
 
         /**
          * set
@@ -487,6 +487,7 @@ console.log('oh');
          * @return  Boolean
          */
         setData(data) {
+// console.log(data);
             this.#__data = window.annexSearch.DataUtils.deepMerge(this.#__data, data);
             return true;
         }

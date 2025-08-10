@@ -46,6 +46,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__scrollRatio = 0.65;
 
         /**
+         * #__markup
+         * 
+         * @access  public
+         * @var     String
+         */
+        static markup = `
+<div data-view-name="FoundResultsBodyView">
+</div>`;
+
+        /**
          * constructor
          * 
          * @access  public
@@ -190,6 +200,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         next() {
+// console.log('a');
             if (this.#__results.length === 0) {
                 return false;
             }

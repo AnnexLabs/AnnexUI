@@ -147,7 +147,7 @@ window.annexSearch.DependencyLoader.push([], function() {
             let helper = this.getHelper('config'),
                 handler = this.#__drawRoot.bind(this),
                 promise = helper.loadStylesheets(this)
-                    .then(helper.loadTemplates.bind(helper))
+                    // .then(helper.loadTemplates.bind(helper))
                     .then(handler)
                     .catch(function(error) {
                         console.log(error);

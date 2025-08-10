@@ -14,6 +14,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.StatusBarFooterView = window.annexSearch.StatusBarFooterView || class extends window.annexSearch.BaseView {
 
         /**
+         * #__markup
+         * 
+         * @access  public
+         * @var     String
+         */
+        static markup = `
+<div data-view-name="StatusBarFooterView">
+    <div class="message truncate"></div>
+</div>`;
+
+        /**
          * constructor
          * 
          * @access  public
