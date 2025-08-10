@@ -97,9 +97,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             /**
              * copy
              * 
-             * Series of copy variables which are dotted throughout the UI. For more
-             * comprehensive updates, templates may need to be defined. Supports
-             * HTML.
+             * Series of copy variables which are dotted throughout the UI. For
+             * more comprehensive updates, templates may need to be defined.
+             * Supports HTML.
              * 
              * @access  private
              * @var     Object
@@ -172,9 +172,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             /**
              * paths
              * 
-             * Map of arrays which are loaded into memory upon each page load. Core
-             * to the functionality, but extensible for being able to define custom
-             * styles and templating systems.
+             * Map of arrays which are loaded into memory upon each page load.
+             * Core to the functionality, but extensible for being able to
+             * define custom styles and templating systems.
              * 
              * @access  private
              * @var     Object
@@ -231,8 +231,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             /**
              * templates
              * 
-             * Map of strings corresponding to all the available templates used in
-             * the widget.
+             * Map of strings corresponding to all the available templates used
+             * in the widget.
              * 
              * @access  private
              * @var     Object
@@ -259,6 +259,29 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         constructor() {
             super();
         }
+        // getVersion
+
+        /**
+         * #__setPaths
+         * 
+         * @access  private
+         * @param   String templatesContent
+         * @return  Boolean
+         */
+        // #__setPaths(templatesContent) {
+        //     let expression = /<script\b[^>]*>[\s\S]*?<\/script>/gi,
+        //         matches = templatesContent.match(expression);
+        //     for (let match of matches) {
+        //         let matches = match.match(/data-template-id=["']([^"']+)["']/),
+        //             id = matches ? matches[1] : null;
+        //         if (id === null) {
+        //             continue;
+        //         }
+        //         this.#__data.templates[id] = match;
+        //     }
+        //     window.annexSearch.CacheUtils.set('templates', this.#__data.templates);
+        //     return true;
+        // }
 
         /**
          * #__handleLoadTemplates
