@@ -17,6 +17,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__markup
          * 
          * @access  public
+         * @static
          * @var     String
          */
         static markup = `
@@ -64,6 +65,22 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * #__addKeydownEventListener
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__addKeydownEventListener() {
+            if (this._$element.hasAttribute('href') === true) {
+                return false;
+            }
+            let $element = this._$element,
+                handler = this.#__handleKeydownEvent.bind(this);
+            $element.addEventListener('keydown', handler);
+            return true;
+        }
+
+        /**
          * #__handleClickEvent
          * 
          * @access  private
@@ -71,9 +88,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleClickEvent(event) {
-// console.log('wtf');
-            let hit = this.get('hit');
-            this.getWebComponent().dispatchCustomEvent('result.click', {event, hit});
+            let hit = this.get('hit'),
+                $result = this._$element,
+                map = {$result, event, hit};
+            this.getWebComponent().dispatchCustomEvent('result.click', map);
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             return true;
         }
@@ -86,10 +104,29 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleFocusEvent(event) {
-            let hit = this.get('hit');
-            this.getWebComponent().dispatchCustomEvent('result.focus', {event, hit});
+            let hit = this.get('hit'),
+                $result = this._$element,
+                map = {$result, event, hit};
+            this.getWebComponent().dispatchCustomEvent('result.focus', map);
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             return true;
+        }
+
+        /**
+         * #__handleKeydownEvent
+         * 
+         * @access  private
+         * @param   Object event
+         * @return  Boolean
+         */
+        #__handleKeydownEvent(event) {
+            let key = event.key;
+            key = key.toLowerCase();
+            if (key === 'enter') {
+                this.simulateClick(event);
+                return true;
+            }
+            return false;
         }
 
         /**
@@ -170,6 +207,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         _addEvents() {
             this.#__addClickEventListener();
             this.#__addFocusEventListener();
+            this.#__addKeydownEventListener();
             return true;
         }
 

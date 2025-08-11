@@ -5,6 +5,7 @@
  * @todo    - custom templates
  * @todo    - variable templating
  * @todo    - ensure multiple instantiations happen sequentially (to allow for /templates caching)
+ * @todo    -- Not required if /templates no longer used?
  * @todo    - collection retrieval (for smart templates?)
  * 
  * @todo    - bug with focus not coming back (related to found.results not being cleared)

@@ -12,6 +12,12 @@
 :host {
 
     /**
+     * Fonts
+     * 
+     */
+    --annex-search--font-family:                                -apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    /**
      * Colors
      * 
      */
@@ -44,6 +50,9 @@
     --annex-search-result-uri-color:                            rgba(0, 0, 0, 0.35);
     --annex-search-scrollbar-thumb-color:                       #dadce0;
     --annex-search-scrollbar-thumb-hover-color:                 #cccccc;
+    --annex-search-toast-background-color:                      rgba(0, 0, 0, 1.00);
+    --annex-search-toast-title-color:                           rgba(255, 255, 255, 0.90);
+    --annex-search-toast-message-color:                         rgba(255, 255, 255, 0.80);
 
     /**
      * Dimensions
@@ -111,5 +120,8 @@
         --annex-search-result-uri-color:                        var(--annex-search-dm-result-uri-color,                         rgba(255, 255, 255, 0.35));
         --annex-search-scrollbar-thumb-color:                   var(--annex-search-dm-scrollbar-thumb-color,                    #383838);
         --annex-search-scrollbar-thumb-hover-color:             var(--annex-search-dm-scrollbar-thumb-hover-color,              #4d4d4d);
+        --annex-search-toast-background-color:                  var(--annex-search-dm-toast-background-color,                   rgba(255, 255, 255, 1.00));
+        --annex-search-toast-title-color:                       var(--annex-search-dm-toast-title-color,                        rgba(0, 0, 0, 0.90));
+        --annex-search-toast-message-color:                     var(--annex-search-dm-toast-message-color,                      rgba(0, 0, 0, 0.80));
     }
 }

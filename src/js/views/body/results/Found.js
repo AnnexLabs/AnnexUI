@@ -49,6 +49,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__markup
          * 
          * @access  public
+         * @static
          * @var     String
          */
         static markup = `
@@ -251,6 +252,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         resetFocusedIndex() {
             let response = this.setFocusedIndex(null);
             return response;
+        }
+
+        /**
+         * render
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        render() {
+            super.render();
+            return true;
         }
 
         /**

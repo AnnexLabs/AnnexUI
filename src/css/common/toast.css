@@ -4,14 +4,14 @@
     opacity: 0.00;
     right: 12px;
     top: 12px;
-    background-color: rgba(0, 0, 0, 1.00);
+    background-color: var(--annex-search-toast-background-color);
     border-radius: 10px 10px 10px 10px;
-/*    height: 72px;*/
     width: 302px;
     padding: 12px 16px 12px 16px;
-    transition: all var(--annex-search-toast-duration);
+    transition: transform var(--annex-search-toast-duration), opacity var(--annex-search-toast-duration);
     transform: translateY(-100%);
     cursor: default;
+    will-change: transform, opacity;
 }
 [data-view-name="ToastView"].visible {
     pointer-events: auto;
@@ -22,13 +22,13 @@
     opacity: 0.90;
 }
 [data-view-name="ToastView"] > div.title {
-    color: rgba(255, 255, 255, 0.90);
+    color: var(--annex-search-toast-title-color);
     font-size: 13.5px;
     height: 22px;
     line-height: 22px;
 }
 [data-view-name="ToastView"] > div.message {
-    color: rgba(255, 255, 255, 0.80);
+    color: var(--annex-search-toast-message-color);
     font-size: 12.5px;
     line-height: 1.30em;
     min-height: 22px;

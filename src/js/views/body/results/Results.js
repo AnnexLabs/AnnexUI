@@ -17,6 +17,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * #__markup
          * 
          * @access  public
+         * @static
          * @var     String
          */
         static markup = `
