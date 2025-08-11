@@ -68,7 +68,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         render() {
             this.#__drawEmpty();
             this.#__drawFound();
-            super.render();
             return true;
         }
     }

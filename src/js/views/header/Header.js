@@ -59,6 +59,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         };
 
         /**
+         * #__addEvents
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__addEvents() {
+            this.#__addClickEventListener();
+            this.#__addHideClickEventListener();
+            return true;
+        }
+
+        /**
          * #__addHideClickEventListener
          * 
          * @access  private
@@ -125,18 +137,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         };
 
         /**
-         * _addEvents
-         * 
-         * @access  protected
-         * @return  Boolean
-         */
-        _addEvents() {
-            this.#__addClickEventListener();
-            this.#__addHideClickEventListener();
-            return true;
-        }
-
-        /**
          * blur
          * 
          * @access  public
@@ -167,7 +167,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         render() {
             this.#__drawField();
             this.#__drawMetaBar();
-            super.render();
+            this.#__addEvents();
             return true;
         }
 

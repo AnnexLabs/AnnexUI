@@ -68,6 +68,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * #__addEvents
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__addEvents() {
+            this.#__addScrollEventListener();
+            return true;
+        }
+
+        /**
          * #__addScrollEventListener
          * 
          * @access  private
@@ -112,17 +123,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 return false;
             }
             this.getView('root.header.field').loadMore();
-            return true;
-        }
-
-        /**
-         * _addEvents
-         * 
-         * @access  protected
-         * @return  Boolean
-         */
-        _addEvents() {
-            this.#__addScrollEventListener();
             return true;
         }
 
@@ -261,7 +261,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         render() {
-            super.render();
+            this.#__addEvents();
             return true;
         }
 

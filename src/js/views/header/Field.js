@@ -81,6 +81,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * #__addEvents
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__addEvents() {
+// console.log('a');
+            this.#__addInputInputEventListener();
+            return true;
+        }
+
+        /**
          * #__addInputInputEventListener
          * 
          * @access  private
@@ -311,18 +323,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * _addEvents
-         * 
-         * @access  protected
-         * @return  Boolean
-         */
-        _addEvents() {
-// console.log('a');
-            this.#__addInputInputEventListener();
-            return true;
-        }
-
-        /**
          * append
          * 
          * @access  public
@@ -433,7 +433,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         render() {
-            super.render();
+            this.#__addEvents();
             this.#__setInputPlaceholder();
             this.#__setKeyboardShortcutLabel();
             return true;

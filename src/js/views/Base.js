@@ -34,16 +34,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         }
 
         /**
-         * _addEvents
-         * 
-         * @access  protected
-         * @return  Boolean
-         */
-        _addEvents() {
-            return false;
-        }
-
-        /**
          * find
          * 
          * @access  public
@@ -82,28 +72,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         }
 
         /**
-         * getMarkup
-         * 
-         * @access  public
-         * @return  String
-         */
-        // getMarkup() {
-        //     let markup = this.#__markup;
-        //     return markup;
-        // }
-
-        /**
-         * hide
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        // hide() {
-        //     this._$element.classList.add('hidden');
-        //     return true;
-        // }
-
-        /**
          * removeAttribute
          * 
          * @access  public
@@ -112,19 +80,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          */
         removeAttribute(key) {
             this._$element.removeAttribute(key);
-            return true;
-        }
-
-        /**
-         * render
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        render() {
-// console.log(this);
-            this._addEvents();
-            // this.show();
             return true;
         }
 
@@ -158,16 +113,5 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
             this.set('views', views);
             return true;
         }
-
-        /**
-         * show
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        // show() {
-        //     // this._$element.classList.remove('hidden');
-        //     return true;
-        // }
     }
 });

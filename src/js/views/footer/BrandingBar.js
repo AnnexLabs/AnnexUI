@@ -43,7 +43,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         render() {
-            super.render();
             return true;
         }
     }

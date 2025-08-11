@@ -52,6 +52,19 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * #__addEvents
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__addEvents() {
+            this.#__addClickEventListener();
+            this.#__addFocusEventListener();
+            this.#__addKeydownEventListener();
+            return true;
+        }
+
+        /**
          * #__addFocusEventListener
          * 
          * @access  private
@@ -199,19 +212,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * _addEvents
-         * 
-         * @access  protected
-         * @return  Boolean
-         */
-        _addEvents() {
-            this.#__addClickEventListener();
-            this.#__addFocusEventListener();
-            this.#__addKeydownEventListener();
-            return true;
-        }
-
-        /**
          * dispatchCopyEvent
          * 
          * @access  public
@@ -258,7 +258,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.#__renderTemplateVariables();
             this.#__setIndexAttribute();
             this.#__setTabindex();
-            super.render();
+            this.#__addEvents();
             return true;
         }
 

@@ -37,6 +37,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * #__addEvents
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__addEvents() {
+            // window.annexSearch.KeyboardShortcutUtils.setup();
+            this.#__addOverlayClickEventListener();
+            return true;
+        }
+
+        /**
          * #__addOverlayClickEventListener
          * 
          * @access  private
@@ -105,18 +117,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * _addEvents
-         * 
-         * @access  protected
-         * @return  Boolean
-         */
-        _addEvents() {
-            // window.annexSearch.KeyboardShortcutUtils.setup();
-            this.#__addOverlayClickEventListener();
-            return true;
-        }
-
-        /**
          * blur
          * 
          * @access  public
@@ -148,7 +148,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.#__drawHeader();
             this.#__drawBody();
             this.#__drawFooter();
-            super.render();
+            this.#__addEvents();
             this.setStateKey('idle');
             this.getWebComponent().dispatchCustomEvent('results.idle');
             return true;

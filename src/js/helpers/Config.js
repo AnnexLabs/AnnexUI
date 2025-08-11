@@ -45,13 +45,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             callbacks: {
                 result: {
                     click: function(customEvent) {
-                        console.log('result.click', customEvent.detail, this);
+                        // console.log('result.click', customEvent.detail, this);
                     },
-                    // copy: function(customEvent) {
-                    //     console.log('result.copy', customEvent.detail, this);
-                    // },
+                    copy: function(customEvent) {
+                        // console.log('result.copy', customEvent.detail, this);
+                    },
                     focus: function(customEvent) {
-                        console.log('result.focus', customEvent.detail, this);
+                        // console.log('result.focus', customEvent.detail, this);
                     },
                 },
                 results: {
