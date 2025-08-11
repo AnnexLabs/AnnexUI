@@ -139,6 +139,22 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * mount
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        // mount() {
+        //     this.#__drawHeader();
+        //     this.#__drawBody();
+        //     this.#__drawFooter();
+        //     this.#__addEvents();
+        //     this.setStateKey('idle');
+        //     this.getWebComponent().dispatchCustomEvent('results.idle');
+        //     return true;
+        // }
+
+        /**
          * render
          * 
          * @access  public

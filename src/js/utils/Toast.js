@@ -99,7 +99,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          */
         static show($annexSearchWidget, options) {
             let $parent = this.#__getParent($annexSearchWidget),
-                view = window.annexSearch.ElementUtils.renderTemplate('toast', $parent);
+                data = {
+                    title: options.title,
+                    message: options.message
+                },
+                view = window.annexSearch.ElementUtils.renderTemplate('toast', $parent, data);
             this.#__toasts.push(view);
             options.hideTimeoutDuration && view.setHideTimeoutDuration(options.hideTimeoutDuration);
             options.message && view.setMessage(options.message);

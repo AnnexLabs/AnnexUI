@@ -2,8 +2,6 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - Problem w/ css dist file (min.css but maybe also non-min?)
- * 
  * @todo    - custom templates
  * @todo    - variable templating
  * @todo    - ensure multiple instantiations happen sequentially (to allow for /templates caching)
@@ -65,6 +63,8 @@
  * @todo    [PUNT] - CacheUtils for /css and /templates lookups to speed things up (?)
  * @todo    [PUNT] -- Only for /templates since /css is direct linked (?)
  * @todo    [PUNT] - Hook escape key to toasts (introduce escape utils class)
+ * @todo    [DONE] - Problem w/ css dist file (min.css but maybe also non-min?)
+ * @todo    [DONE] -- Possible issue w/ vars not being defined at top?
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

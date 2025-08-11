@@ -1,5 +1,4 @@
 #!/bin/bash
-
 ## 
 ## Init
 ## 
@@ -53,6 +52,42 @@ CSS_FILES=(
     "src/css/layouts/panel.responsive.css"
 )
 
+## 
+## Custom CSS minification function
+## 
+## 
+minify_css() {
+    local input_file="$1"
+    local output_file="$2"
+    
+    # Cleanup
+    # 
+    # This will:
+    # 1. Remove all CSS comments (/* ... */ and /** ... */) including multi-line ones
+    # 2. Remove leading/trailing whitespace from each line
+    # 3. Remove empty lines
+    # 4. Remove newlines (join into single line)
+    # 5. Remove redundant semicolons before closing braces (;} → })
+    perl -0777 -pe '
+        # Remove all comments /* ... */ and /** ... */ including multi-line
+        s|/\*\*?.*?\*/||gs;
+    ' "$input_file" \
+    | sed '
+        # Remove leading and trailing whitespace from each line
+        s|^[[:space:]]*||
+        s|[[:space:]]*$||
+        
+        # Skip/remove empty lines
+        /^$/d
+    ' \
+    | tr -d '\n' \
+    | sed 's/;}/}/g' \
+    > "$output_file"
+    
+    # Step 5: Add final newline for clean file ending
+    echo "" >> "$output_file"
+}
+
 
 ## 
 ## Cleanup
@@ -85,12 +120,10 @@ done
 
 ## Logging
 echo "Creating bundle.min.css (minified)..."
-echo "Minifying CSS via API..."
+echo "Minifying CSS with custom minifier..."
 
-## Minification
-curl -s -X POST https://www.toptal.com/developers/cssminifier/api/raw \
-    --data-urlencode "input@$UNMINIFIED_CSS_FILEPATH" \
-    -o "$MINIFIED_CSS_FILEPATH"
+## Minification using custom function
+minify_css "$UNMINIFIED_CSS_FILEPATH" "$MINIFIED_CSS_FILEPATH"
 echo "Done"
 echo ""
 
@@ -133,7 +166,8 @@ echo "Applying post-compilation modifications to JS..."
 VERSION=$(grep -o "static #__version = '[^']*'" "$UNMINIFIED_JS_FILEPATH" | sed "s/static #__version = '\([^']*\)'/\1/")
 if [ -n "$VERSION" ]; then
     echo "Found version: $VERSION"
-    sed -i.bak "s|https://local\.annexsearch\.com/ts/css|https://website.com/$VERSION/bundle.min.css|g" "$UNMINIFIED_JS_FILEPATH"
+    # sed -i.bak "s|https://local\.annexsearch\.com/ts/css|https://website.com/$VERSION/bundle.min.css|g" "$UNMINIFIED_JS_FILEPATH"
+    sed -i.bak "s|https://local\.annexsearch\.com/ts/css|https://local.annexsearch.com/bundle.min.css|g" "$UNMINIFIED_JS_FILEPATH"
     rm -f "$UNMINIFIED_JS_FILEPATH.bak"
     echo "Replaced URL with: http://website.com/$VERSION/bundle.min.js"
 else

@@ -113,6 +113,7 @@ window.annexSearch.DependencyLoader.push([], function() {
         #__drawRoot() {
             let $shadow = this.shadow,
                 view = window.annexSearch.ElementUtils.renderTemplate('root', $shadow, this),
+                // view = window.annexSearch.ElementUtils.renderTemplate('root', $shadow, {}, this),
                 layout = this.getConfig('layout'),
                 overlay = String(+this.getConfig('showOverlay')),
                 index = this.#__index;

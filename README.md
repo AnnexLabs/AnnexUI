@@ -299,6 +299,10 @@ causes.
 
 <hr />
 
+### Vendors
+- Lodash
+
+
 ### More examples
 
 #### Preset without config options

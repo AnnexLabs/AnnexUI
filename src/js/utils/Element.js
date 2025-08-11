@@ -45,13 +45,23 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @static
          * @param   String templateId
          * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @param   Object data (default: {})
          * @return  HTMLElement
          */
-        static #__getTemplateElement(templateId, $annexSearchWidget) {
+        static #__getTemplateElement(templateId, $annexSearchWidget, data = {}) {
+            // let viewName = this.#__getViewName(templateId),
+            //     markup = this.#__getConfigTemplate(templateId, $annexSearchWidget) || window.annexSearch[viewName].markup,
+            //     parser = new DOMParser(),
+            //     $document = parser.parseFromString(markup, 'text/html'),
+            //     $element = $document.body.firstElementChild;
+            // return $element;
+
             let viewName = this.#__getViewName(templateId),
                 markup = this.#__getConfigTemplate(templateId, $annexSearchWidget) || window.annexSearch[viewName].markup,
+                compiler = window.annexSearch.libs._.template(markup),
+                compiled = compiler(data).trim(),
                 parser = new DOMParser(),
-                $document = parser.parseFromString(markup, 'text/html'),
+                $document = parser.parseFromString(compiled, 'text/html'),
                 $element = $document.body.firstElementChild;
             return $element;
         }
@@ -132,12 +142,15 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @static
          * @param   String templateId
          * @param   HTMLElement $parent
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget (default: null)
+         * @param   Object data (default: {})
+     * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget (default: null)
          * @return  window.annexSearch.BaseView
          */
-        static renderTemplate(templateId, $parent, $annexSearchWidget = null) {
-            $annexSearchWidget = $annexSearchWidget || $parent.getRootNode().host;
-            let $element = this.#__getTemplateElement(templateId, $annexSearchWidget);
+        static renderTemplate(templateId, $parent, data = {}) {//, $annexSearchWidget = null) {
+// console.log($parent.getRootNode().host);
+            let $annexSearchWidget =  $parent.getRootNode().host;
+            // $annexSearchWidget = $annexSearchWidget || $parent.getRootNode().host;
+            let $element = this.#__getTemplateElement(templateId, $annexSearchWidget, data);
             $parent.appendChild($element);
             let viewName = $element.getAttribute('data-view-name'),
                 view = new window.annexSearch[viewName]($element);
