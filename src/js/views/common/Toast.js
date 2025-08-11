@@ -44,6 +44,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
 </div>`;
 
         /**
+         * #__showing
+         * 
+         * @access  private
+         * @var     Boolean (default: false)
+         */
+        #__showing = false;
+
+        /**
          * #__addClickEventListener
          * 
          * @access  private
@@ -132,6 +140,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         hide() {
+            this.#__showing = false;
             this._$element.classList.remove('visible');
             clearTimeout(this.#__hideTimeoutReference);
             var handler = this.#__destroy.bind(this);
@@ -147,6 +156,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         render() {
             super.render();
+            if (this.#__showing === true) {
+                this._$element.classList.add('visible');
+            }
             this.#__addEvents();
             return true;
         }
@@ -197,6 +209,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         show() {
+            if (this.#__showing === true) {
+                return false;
+            }
+            this.#__showing = true;
             this.#__hideOpenToasts();
             this.#__setTimeout();
             let $element = this._$element;

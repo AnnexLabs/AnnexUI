@@ -89,7 +89,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          */
         static __getConfigTemplateKey(view) {
             let key = view.constructor.name;
-console.log(key);
             key = key.replace(/View$/, '');
             key = key.charAt(0).toLowerCase() + key.slice(1);
             return key;
@@ -106,7 +105,7 @@ console.log(key);
          * @return  null|String
          */
         static __getTemplateMarkup(view, mutator = null) {
-            let $annexSearchWidget = view._$annexSearchWidget,
+            let $annexSearchWidget = view.getWebComponent(),
                 key = this.__getConfigTemplateKey(view),
                 markup = $annexSearchWidget.getHelper('config').get('templates')[key] || view.constructor.markup;
             if (typeof markup === 'function') {

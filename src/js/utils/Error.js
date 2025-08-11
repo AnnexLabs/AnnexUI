@@ -27,7 +27,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             'interactionUtils.multipleRegistered':                              'Multiple registered $annexSearchWidget elements found. Unable to determine which $element is the target.',
             'loggingUtils.fetchFailed.tip':                                     'Tip: Double check that {config.cluster.hostname} is defined and correct.',
             'stylesheets.failedLoading':                                        'Could not load stylesheets.',
-            'typesenseSearchRequest.abort':                                     'Abort method called against {window.annexSearch.TypesenseSearchRequest}',
+                'typesenseSearchRequest.abort':                                     'Abort method called against {window.annexSearch.TypesenseSearchRequest}',
             'typesenseHelper.options.q.empty':                                  'Invalid {q} value; found {empty string}',
             'typesenseHelper.options.q.null':                                   'Invalid {q} value; found {null}',
             'typesenseHelper.options.q.undefined':                              'Invalid {q} value; found {undefined}',

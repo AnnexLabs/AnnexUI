@@ -132,22 +132,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * #__renderTemplateVariables
+         * #__replaceHightlightTags
          * 
          * @access  private
-         * @return  Boolean
+         * @param   String markup
+         * @return  String
          */
-        // #__renderTemplateVariables() {
-        //     let html = this._$element.outerHTML,
-        //         hit = this.get('hit'),
-        //         map = {
-        //             hit: hit
-        //         };
-        //     html = window.annexSearch.ElementUtils.renderTemplateVariables(html, map);
-        //     html = this.getHelper('typesense').replaceHightlightTags(html);
-        //     this._$element = this.#__replaceOuterHTML(html);
-        //     return true;
-        // }
+        #__replaceHightlightTags(markup) {
+            markup = this.getHelper('typesense').replaceHightlightTags(markup);
+            return markup;
+        }
 
         /**
          * #__setIndexAttribute
@@ -212,18 +206,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 inline: 'nearest'
             });
             return true;
-        }
-
-        /**
-         * #__replaceHightlightTags
-         * 
-         * @access  private
-         * @param   String markup
-         * @return  String
-         */
-        #__replaceHightlightTags(markup) {
-            markup = this.getHelper('typesense').replaceHightlightTags(markup);
-            return markup;
         }
 
         /**

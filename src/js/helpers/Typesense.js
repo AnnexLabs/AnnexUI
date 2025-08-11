@@ -156,8 +156,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          */
         search(query, options = {}) {
             this.#__abortLastRequest();
-// console.log(this.)
-            let $annexSearchWidget = this._$annexSearchWidget,
+            let $annexSearchWidget = this.getWebComponent(),
                 request = new window.annexSearch.TypesenseSearchRequest($annexSearchWidget);
             request.setQuery(query);
             // query);

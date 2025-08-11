@@ -24,9 +24,11 @@ window.annexSearch.DependencyLoader.push([], function() {
          * constructor
          * 
          * @access  public
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
          * @return  void
          */
-        constructor() {
+        constructor($annexSearchWidget) {
+            this._$annexSearchWidget = $annexSearchWidget;
         }
 
         /**

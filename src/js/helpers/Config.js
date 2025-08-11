@@ -409,7 +409,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          * @return  Boolean
          */
         setData(data) {
-// console.log(data);
             this.#__data = window.annexSearch.DataUtils.deepMerge(this.#__data, data);
             return true;
         }

@@ -21,11 +21,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String
          */
         static markup = `
+        <%
+            let showing = 0;
+            if (data.typesenseSearchResponse) {
+                showing = (data.typesenseSearchResponse.page - 1) * (data.typesenseSearchResponse.request_params.per_page) + data.typesenseSearchResponse.hits.length;
+            }
+        %>
 <div data-view-name="MetaBarHeaderView">
     Showing
-    <span class="showing"><%- data?.typesenseSearchResponse?.found ?? 0 %></span> of
+    <span class="showing"><%- (showing) %></span> of
     <span class="found"><%- data?.typesenseSearchResponse?.found ?? 0 %></span>
     matching results
+    (<span class="duration"><%- data?.typesenseSearchResponse?.search_time_ms ?? 0 %>ms</span>)
 </div>`;
     }
 });

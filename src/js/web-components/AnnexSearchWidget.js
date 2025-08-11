@@ -35,7 +35,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @access  private
          * @var     Number (default: 2147483647)
          */
-        #__maxZIndexValue = 2147483647;
+        // #__maxZIndexValue = 2147483647;
 
         /**
          * #__mounted
@@ -91,18 +91,18 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @access  private
          * @return  Boolean
          */
-        #__setStyles() {
-            // let showing = window.annexSearch.AnnexSearch.getShowing();
-            // if (showing.length === 0) {
-            //     return false;
-            // }
-            // if (showing.length === 1) {
-            //     return false;
-            // }
-            let zIndex = this.#__maxZIndexValue - this.#__index;
-// console.log(zIndex);
-            return true;
-        }
+//         #__setStyles() {
+//             // let showing = window.annexSearch.AnnexSearch.getShowing();
+//             // if (showing.length === 0) {
+//             //     return false;
+//             // }
+//             // if (showing.length === 1) {
+//             //     return false;
+//             // }
+//             let zIndex = this.#__maxZIndexValue - this.#__index;
+// // console.log(zIndex);
+//             return true;
+//         }
 
         /**
          * #__mountRoot
@@ -110,19 +110,23 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @access  private
          * @return  Boolean
          */
-        #__setupRoot() {
-
-            // RootView
-            // let view = window.annexSearch.ElementUtils.composeView('root', this);
-            let view = new window.annexSearch.RootView(this);// window.annexSearch.ElementUtils.composeView('root', this);
+        #__mountRoot() {
+            let view = new window.annexSearch.RootView(this);
             this.#__views.root = view;
             this.#__views.root.mount(this.shadow);
+            return true;
+        }
 
-            // Attributes
+        /**
+         * #__setAttributes
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__setAttributes() {
             let layout = this.getConfig('layout'),
                 overlay = String(+this.getConfig('showOverlay')),
                 index = this.#__index;
-// console.log(overlay);
             if (this.getConfig('layout') === 'inline') {
                 overlay = 0;
             }
@@ -138,8 +142,18 @@ window.annexSearch.DependencyLoader.push([], function() {
                 let name = this.getConfig('name');
                 this.setAttribute('data-annex-search-name', name);
             }
+            return true;
+        }
 
-            // Show
+        /**
+         * #__setupRoot
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__setupRoot() {
+            this.#__mountRoot();
+            this.#__setAttributes();
             if (this.getConfig('layout') === 'inline') {
                 this.show();
             }
@@ -445,7 +459,7 @@ window.annexSearch.DependencyLoader.push([], function() {
             this.dispatchCustomEvent('root.show');
 // console.log('a');
             this.#__showing = true;
-            this.#__setStyles();
+            // this.#__setStyles();
 // console.log('b');
             this.setAttribute('data-annex-search-open', '1');
             this.removeAttribute('inert');

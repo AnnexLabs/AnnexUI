@@ -2,20 +2,15 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - ensure multiple instantiations happen sequentially (to allow for /templates caching)
- * @todo    -- Not required if /templates no longer used?
- * 
- * @todo    - collection retrieval (for smart templates?)
- * 
- * @todo    - State management for updating data while toast is showing
+ * @todo    - Bug with focus not coming back (related to found.results not being cleared)
  * 
  * @todo    - Add in logic to prevent accidental infinite XHR when scrollbar is missing but shouldn't be?
  * @todo    -- Toast to kill UI?
  * 
- * @todo    - bug with focus not coming back (related to found.results not being cleared)
+ * @todo    - Bug with multiple open and query-ing
+ * @todo    - Multiple bugs (various)
  * 
- * @todo    - bug with multiple open and query-ing
- * @todo    - multiple bugs (various)
+ * @todo    - Typesense collection retrieval (for smart templates?)
  * 
  * @todo    [DONE] - dark mode
  * @todo    [DONE] - mobile
@@ -71,6 +66,9 @@
  * @todo    [DONE] -- Possible issue w/ vars not being defined at top?
  * @todo    [DONE] - custom templates
  * @todo    [DONE] - variable templating
+ * @todo    [DONE] - State management for updating data while toast is showing
+ * @todo    [NOPE] - ensure multiple instantiations happen sequentially (to allow for /templates caching)
+ * @todo    [NOPE] -- Not required if /templates no longer used?
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -89,15 +87,6 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @var     null|window.annexSearch.AnnexSearchWidgetWebComponent (default: null)
          */
         static #__$active = null;
-
-        /**
-         * #__devMode
-         * 
-         * @access  private
-         * @static
-         * @var     Boolean (default: false)
-         */
-        // static #__devMode = false;
 
         /**
          * #__registered
@@ -180,18 +169,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * getDevMode
-         * 
-         * @access  public
-         * @static
-         * @return  Boolean
-         */
-        // static getDevMode() {
-        //     let devMode = this.#__devMode;
-        //     return devMode;
-        // }
-
-        /**
          * getRegistered
          * 
          * @access  public
@@ -258,19 +235,6 @@ window.annexSearch.DependencyLoader.push([], function() {
             this.#__$active = $annexSearchWidget;
             return true;
         }
-
-        /**
-         * setDevMode
-         * 
-         * @access  public
-         * @static
-         * @param   Boolean devMode
-         * @return  Boolean
-         */
-        // static setDevMode(devMode) {
-        //     this.#__devMode = devMode;
-        //     return true;
-        // }
 
         /**
          * setStyles

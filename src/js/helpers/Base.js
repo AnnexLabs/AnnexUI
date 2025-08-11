@@ -21,8 +21,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * @return  void
          */
         constructor($annexSearchWidget) {
-            super();
-            this._$annexSearchWidget = $annexSearchWidget;
+            super($annexSearchWidget);
         }
     }
 });
