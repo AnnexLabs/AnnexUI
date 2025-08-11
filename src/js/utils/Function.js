@@ -48,6 +48,21 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
+         * getPassThrough
+         * 
+         * @access  public
+         * @static
+         * @param   mixed value
+         * @return  Function
+         */
+        static getPassThrough() {
+            let fn = function(value) {
+                return value;
+            };
+            return fn;
+        }
+
+        /**
          * setup
          * 
          * @access  public

@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.ResultsBodyView = window.annexSearch.ResultsBodyView || class extends window.annexSearch.BaseView {
+    window.annexSearch.ResultsBodyView = window.annexSearch.ResultsBodyView || class ResultsBodyView extends window.annexSearch.BaseView {
 
         /**
          * #__markup
@@ -25,49 +25,44 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
 </div>`;
 
         /**
-         * constructor
-         * 
-         * @access  public
-         * @param   HTMLElement $element
-         * @return  void
-         */
-        constructor($element) {
-            super($element);
-        }
-
-        /**
-         * #__drawEmpty
+         * #__mountEmpty
          * 
          * @access  private
          * @return  Boolean
          */
-        #__drawEmpty() {
-            let view = window.annexSearch.ElementUtils.renderTemplate('emptyResultsBody', this._$element);
+        #__mountEmpty() {
+            let view = new window.annexSearch.EmptyResultsBodyView(this._$annexSearchWidget),
+                $container = this._$element;
             this.setView('empty', view);
+            view.mount($container);
             return true;
         }
 
         /**
-         * #__drawFound
+         * #__mountFound
          * 
          * @access  private
          * @return  Boolean
          */
-        #__drawFound() {
-            let view = window.annexSearch.ElementUtils.renderTemplate('foundResultsBody', this._$element);
+        #__mountFound() {
+            let view = new window.annexSearch.FoundResultsBodyView(this._$annexSearchWidget),
+                $container = this._$element;
             this.setView('found', view);
+            view.mount($container);
             return true;
         }
 
         /**
-         * render
+         * mount
          * 
          * @access  public
+         * @param   HTMLElement $container
          * @return  Boolean
          */
-        render() {
-            this.#__drawEmpty();
-            this.#__drawFound();
+        mount($container) {
+            super.mount($container);
+            this.#__mountEmpty();
+            this.#__mountFound();
             return true;
         }
     }

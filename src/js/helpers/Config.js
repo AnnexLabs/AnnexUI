@@ -3,15 +3,15 @@
  * /src/js/helpers/Config.js
  * 
  */
-window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], function() {
 
     /**
      * window.annexSearch.ConfigHelper
      * 
      * @access  public
-     * @extends window.annexSearch.BaseView
+     * @extends window.annexSearch.BaseHelper
      */
-    window.annexSearch.ConfigHelper = window.annexSearch.ConfigHelper || class extends window.annexSearch.BaseView {
+    window.annexSearch.ConfigHelper = window.annexSearch.ConfigHelper || class extends window.annexSearch.BaseHelper {
 
         /**
          * #__data
@@ -115,10 +115,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 error: {
                     message: 'Something went wrong...'
                 },
+                field: {
+                    placeholder: 'Search...'
+                },
                 idle: {
                     message: 'Start typing to begin your search...'
                 },
-                placeholder: 'Search...',
                 statusBar: {
                     message: 'Instantly search through our entire database'
                 },
@@ -194,9 +196,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             paths: {
                 css: [
                     'https://local.annexsearch.com/ts/css',
-                    // 'https://local.annexsearch.com/ts/css2',
                 ],
-                // templates: 'https://local.annexsearch.com/ts/templates',
             },
 
             /**
@@ -259,70 +259,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         };
 
         /**
-         * #__env
-         * 
-         * @access  private
-         * @var     String (default: 'prod')
-         */
-        // #__env = 'prod';
-        // #__env = 'local';
-
-        /**
-         * constructor
-         * 
-         * @access  public
-         * @return  void
-         */
-        constructor() {
-            super();
-        }
-        // getVersion
-
-        /**
-         * #__setPaths
-         * 
-         * @access  private
-         * @param   String templatesContent
-         * @return  Boolean
-         */
-        // #__setPaths(templatesContent) {
-        //     let expression = /<script\b[^>]*>[\s\S]*?<\/script>/gi,
-        //         matches = templatesContent.match(expression);
-        //     for (let match of matches) {
-        //         let matches = match.match(/data-template-id=["']([^"']+)["']/),
-        //             id = matches ? matches[1] : null;
-        //         if (id === null) {
-        //             continue;
-        //         }
-        //         this.#__data.templates[id] = match;
-        //     }
-        //     window.annexSearch.CacheUtils.set('templates', this.#__data.templates);
-        //     return true;
-        // }
-
-        /**
-         * #__handleLoadTemplates
-         * 
-         * @access  private
-         * @param   String templatesContent
-         * @return  Boolean
-         */
-        // #__handleLoadTemplates(templatesContent) {
-        //     let expression = /<script\b[^>]*>[\s\S]*?<\/script>/gi,
-        //         matches = templatesContent.match(expression);
-        //     for (let match of matches) {
-        //         let matches = match.match(/data-template-id=["']([^"']+)["']/),
-        //             id = matches ? matches[1] : null;
-        //         if (id === null) {
-        //             continue;
-        //         }
-        //         this.#__data.templates[id] = match;
-        //     }
-        //     window.annexSearch.CacheUtils.set('templates', this.#__data.templates);
-        //     return true;
-        // }
-
-        /**
          * #__handleStylesheetErrorLoadEvent
          * 
          * @access  private
@@ -383,20 +319,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * #__loadTemplates
-         * 
-         * @access  private
-         * @return  Promise
-         */
-        // #__loadTemplates() {
-        //     let handler = this.#__handleLoadTemplates.bind(this),
-        //         promise = fetch(this.#__data.paths.templates).then(function(response) {
-        //             return response.text();
-        //         }).then(handler);
-        //     return promise
-        // }
-
-        /**
          * get
          * 
          * @access  public
@@ -441,23 +363,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let promise = this.#__loadStylesheets($annexSearchWidget);
             return promise;
         }
-
-        /**
-         * loadTemplates
-         * 
-         * @access  public
-         * @return  Promise
-         */
-//         loadTemplates() {
-//             let templates = window.annexSearch.CacheUtils.get('templates');
-//             if (templates === undefined) {
-//                 let promise = this.#__loadTemplates();
-//                 return promise;
-//             }
-//             this.#__data.templates = templates;
-// console.log('oh');
-//             return true;
-//         }
 
         /**
          * set

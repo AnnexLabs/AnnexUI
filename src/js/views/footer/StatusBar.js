@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.StatusBarFooterView = window.annexSearch.StatusBarFooterView || class extends window.annexSearch.BaseView {
+    window.annexSearch.StatusBarFooterView = window.annexSearch.StatusBarFooterView || class StatusBarFooterView extends window.annexSearch.BaseView {
 
         /**
          * #__markup
@@ -22,48 +22,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         static markup = `
 <div data-view-name="StatusBarFooterView">
-    <div class="message truncate"></div>
+    <%
+        let val = data.config.copy.statusBar.message;
+    %>
+    <div class="message truncate"><%- (val) %></div>
 </div>`;
-
-        /**
-         * constructor
-         * 
-         * @access  public
-         * @param   HTMLElement $element
-         * @return  void
-         */
-        constructor($element) {
-            super($element);
-        }
-
-        /**
-         * #__setMessage
-         * 
-         * @access  private
-         * @return  Boolean
-         */
-        #__setMessage() {
-            let value = this.getHelper('config').get('copy').statusBar.message;
-            if (value === null) {
-                return false;
-            }
-            if (value === undefined) {
-                return false;
-            }
-            value = value.trim();
-            this.first('.message').innerHTML = value;
-            return true;
-        }
-
-        /**
-         * render
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        render() {
-            this.#__setMessage();
-            return true;
-        }
     }
 });

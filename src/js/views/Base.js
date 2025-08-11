@@ -25,12 +25,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * constructor
          * 
          * @access  public
-         * @param   HTMLElement $element
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
          * @return  void
          */
-        constructor($element) {
+        constructor($annexSearchWidget) {
             super();
-            this._$element = $element;
+            this._$annexSearchWidget = $annexSearchWidget;
+            this._$element = document.createElement('template');
         }
 
         /**
@@ -72,6 +73,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         }
 
         /**
+         * mount
+         * 
+         * @access  public
+         * @param   HTMLElement $container
+         * @return  Boolean
+         */
+        mount($container) {
+            this.render();
+            let $element = this._$element;
+            $container.appendChild($element);
+            return true;
+        }
+
+        /**
          * removeAttribute
          * 
          * @access  public
@@ -80,6 +95,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          */
         removeAttribute(key) {
             this._$element.removeAttribute(key);
+            return true;
+        }
+
+        /**
+         * render
+         * 
+         * @access  public
+         * @parma   null|Function mutator (default: null)
+         * @return  Boolean
+         */
+        render(mutator = null) {
+            let $element = window.annexSearch.ElementUtils.renderViewElement(this, mutator);
+            this._$element.replaceWith($element);
+            this._$element = $element;
             return true;
         }
 

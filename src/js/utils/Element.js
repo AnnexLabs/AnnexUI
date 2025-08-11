@@ -8,193 +8,156 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
     /**
      * window.annexSearch.ElementUtils
      * 
+     * @see     https://claude.ai/chat/617b9369-2714-47bf-9992-60f43718d2c5
      * @access  public
      */
     window.annexSearch.ElementUtils = window.annexSearch.ElementUtils || class extends window.annexSearch.BaseUtils {
 
         /**
-         * #__getConfigTemplate
+         * #__options
+         * 
+         * @see     https://claude.ai/chat/617b9369-2714-47bf-9992-60f43718d2c5
+         * @note    A number of the below properties appear to be the Lodash
+         *          defaults.
+         * @access  private
+         * @var     Object
+         */
+        static #__options = {
+
+            /**
+             * escape
+             * 
+             * Add support for escaped interpolation <%- %>
+             * 
+             * @access  private
+             * @var     RegExp
+             */
+            escape: /<%-([\s\S]+?)%>/g,
+
+            /**
+             * evaluate
+             * 
+             * Keep the default evaluate syntax for <% %>
+             * 
+             * @access  private
+             * @var     RegExp
+             */
+            evaluate: /<%([\s\S]+?)%>/g,
+
+            /**
+             * interpolate
+             * 
+             * Keep the default interpolate syntax for <%= %>
+             * 
+             * @access  private
+             * @var     RegExp
+             */
+            interpolate: /<%=([\s\S]+?)%>/g,
+
+            /**
+             * variable
+             * 
+             * Add custom interpolation for {{ }}
+             * 
+             * @access  private
+             * @var     String (default: 'data')
+             */
+            variable: 'data'
+        };
+
+        /**
+         * __getCompilerData
+         * 
+         * @access  protected
+         * @static
+         * @param   window.annexSearch.BaseView view
+         * @return  Object
+         */
+        static __getCompilerData(view) {
+            let data = view.get();
+            data.config = view.getHelper('config').get();
+            return data;
+        }
+
+        /**
+         * __getConfigTemplateKey
+         * 
+         * @access  private
+         * @static
+         * @param   window.annexSearch.BaseView view
+         * @return  String
+         */
+        static __getConfigTemplateKey(view) {
+            let key = view.constructor.name;
+console.log(key);
+            key = key.replace(/View$/, '');
+            key = key.charAt(0).toLowerCase() + key.slice(1);
+            return key;
+        }
+
+        /**
+         * __getTemplateMarkup
          * 
          * @see     https://chatgpt.com/c/68990349-0238-832f-bf0f-3bf14d1a7377
          * @access  private
          * @static
-         * @param   String templateId
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @param   window.annexSearch.BaseView view
+         * @param   null|Function mutator (default: null)
          * @return  null|String
          */
-        static #__getConfigTemplate(templateId, $annexSearchWidget) {
-            let markup = $annexSearchWidget.getHelper('config').get('templates')[templateId];
-            if (markup === null) {
-                return null;
-            }
-            if (markup === undefined) {
-                return null;
-            }
+        static __getTemplateMarkup(view, mutator = null) {
+            let $annexSearchWidget = view._$annexSearchWidget,
+                key = this.__getConfigTemplateKey(view),
+                markup = $annexSearchWidget.getHelper('config').get('templates')[key] || view.constructor.markup;
             if (typeof markup === 'function') {
-                let response = markup();
-                return response;
+                let data = view.get();
+                markup = markup(data);
             }
             return markup;
         }
 
         /**
-         * #__getTemplateElement
-         * 
-         * @see     https://chatgpt.com/c/6828cebf-a638-800f-bdf2-3e8642c89de6
-         * @access  private
-         * @static
-         * @param   String templateId
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
-         * @param   Object data (default: {})
-         * @return  HTMLElement
-         */
-        static #__getTemplateElement(templateId, $annexSearchWidget, data = {}) {
-            // let viewName = this.#__getViewName(templateId),
-            //     markup = this.#__getConfigTemplate(templateId, $annexSearchWidget) || window.annexSearch[viewName].markup,
-            //     parser = new DOMParser(),
-            //     $document = parser.parseFromString(markup, 'text/html'),
-            //     $element = $document.body.firstElementChild;
-            // return $element;
-
-            let viewName = this.#__getViewName(templateId),
-                markup = this.#__getConfigTemplate(templateId, $annexSearchWidget) || window.annexSearch[viewName].markup,
-                compiler = window.annexSearch.libs._.template(markup),
-                compiled = compiler(data).trim(),
-                parser = new DOMParser(),
-                $document = parser.parseFromString(compiled, 'text/html'),
-                $element = $document.body.firstElementChild;
-            return $element;
-        }
-
-        /**
-         * #__getViewName
-         * 
-         * @access  private
-         * @static
-         * @param   String templateId
-         * @return  String
-         */
-        static #__getViewName(templateId) {
-            let viewName = templateId;
-            viewName = (viewName) + 'View';
-            viewName = viewName[0].toUpperCase() + viewName.slice(1);
-            return viewName;
-        }
-
-        /**
-         * getEscapedHTML
-         * 
-         * @see     https://chatgpt.com/c/68911e4d-9784-8330-b358-a52ba952426b
-         * @see     https://chatgpt.com/c/68952ba0-eb34-8326-8389-f043ba0261be
-         * @access  public
-         * @static
-         * @param   String str
-         * @return  String
-         */
-        static getEscapedHTML(str) {
-            let escaped = str
-                .replace(/&(?!(?:[a-z\d]+|#\d+|#x[a-f\d]+);)/gi, '&amp;')
-                // .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#39;');
-            return escaped;
-        }
-
-        /**
-         * getValueFromPath
-         * 
-         * @access  public
-         * @static
-         * @param   String path
-         * @param   Object map
-         * @return  String
-         */
-        static getValueFromPath(path, map) {
-            let keys = path.split('.'),
-                value = map;
-            for (const key of keys) {
-                if (value && typeof value === 'object' && key in value) {
-                    value = value[key];
-                    continue;
-                }
-                return null;
-            }
-            if (value === null) {
-                return null;
-            }
-            if (value === undefined) {
-                return null;
-            }
-            value = value.trim();
-            if (value === '') {
-                return null;
-            }
-            value = String(value);
-            return value;
-        }
-
-        /**
-         * renderTemplate
-         * 
-         * @access  public
-         * @static
-         * @param   String templateId
-         * @param   HTMLElement $parent
-         * @param   Object data (default: {})
-     * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget (default: null)
-         * @return  window.annexSearch.BaseView
-         */
-        static renderTemplate(templateId, $parent, data = {}) {//, $annexSearchWidget = null) {
-// console.log($parent.getRootNode().host);
-            let $annexSearchWidget =  $parent.getRootNode().host;
-            // $annexSearchWidget = $annexSearchWidget || $parent.getRootNode().host;
-            let $element = this.#__getTemplateElement(templateId, $annexSearchWidget, data);
-            $parent.appendChild($element);
-            let viewName = $element.getAttribute('data-view-name'),
-                view = new window.annexSearch[viewName]($element);
-            $element.data = $element.data || {};
-            $element.data.view = view;
-            view.render();
-            return view;
-        }
-
-        /**
-         * renderTemplateVariables
+         * __processMarkup
          * 
          * @note    Ordered
-         * @access  public
+         * @access  private
          * @static
-         * @param   String html
-         * @param   Object map
+         * @param   String markup
          * @return  String
          */
-        static renderTemplateVariables(html, map) {
-            html = html.replace(/\{\{([^}]+)\}\}/g, function(match, expression) {
-                if (expression.includes('||') === true) {
-                    const paths = expression.split('||').map(function(piece) {
-                        return piece.trim();
-                    });
-                    for (const path of paths) {
-                        let value = window.annexSearch.ElementUtils.getValueFromPath(path, map);
-                        if (value === null) {
-                            continue;
-                        }
-                        value = window.annexSearch.ElementUtils.getEscapedHTML(value);
-                        return value;
-                    }
-                    return '';
-                }
-                expression = expression.trim();
-                let value = window.annexSearch.ElementUtils.getValueFromPath(expression, map);
-                if (value === null) {
-                    return '';
-                }
-                value = window.annexSearch.ElementUtils.getEscapedHTML(value);
-                return value;
-            });
-            return html;
+        static __processMarkup(markup) {
+            let response = markup;
+            response = response.replace(/\{\{\{([\s\S]+?)\}\}\}/g, '<%- $1 %>');
+            response = response.replace(/\{\{([\s\S]+?)\}\}/g, '<%= $1 %>');
+            return response;
+        }
+
+        /**
+         * renderViewElement
+         * 
+         * @see     https://chatgpt.com/c/689a37b9-9910-8321-8138-5db0e4cbdff2
+         * @see     https://chatgpt.com/c/689a5071-f5b0-8321-9bb7-ae06e22a473d
+         * @see     https://claude.ai/chat/617b9369-2714-47bf-9992-60f43718d2c5
+         * @access  public
+         * @static
+         * @param   window.annexSearch.BaseView view
+         * @param   null|Function mutator (default: null)
+         * @return  HTMLElement
+         */
+        static renderViewElement(view, mutator = null) {
+            mutator = mutator || window.annexSearch.FunctionUtils.getPassThrough()
+            let markup = this.__getTemplateMarkup(view),
+                compiled = window.annexSearch.libs._.template(
+                    this.__processMarkup(markup),
+                    this.#__options
+                ),
+                data = this.__getCompilerData(view),
+                response = compiled(data),
+                mutated = mutator(response),
+                parser = new DOMParser(),
+                $document = parser.parseFromString(mutated, 'text/html'),
+                $element = $document.body.firstElementChild;
+            return $element;
         }
 
         /**

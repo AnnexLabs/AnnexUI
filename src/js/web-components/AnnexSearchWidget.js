@@ -105,23 +105,27 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * #__drawRoot
+         * #__mountRoot
          * 
          * @access  private
          * @return  Boolean
          */
-        #__drawRoot() {
-            let $shadow = this.shadow,
-                view = window.annexSearch.ElementUtils.renderTemplate('root', $shadow, this),
-                // view = window.annexSearch.ElementUtils.renderTemplate('root', $shadow, {}, this),
-                layout = this.getConfig('layout'),
+        #__setupRoot() {
+
+            // RootView
+            // let view = window.annexSearch.ElementUtils.composeView('root', this);
+            let view = new window.annexSearch.RootView(this);// window.annexSearch.ElementUtils.composeView('root', this);
+            this.#__views.root = view;
+            this.#__views.root.mount(this.shadow);
+
+            // Attributes
+            let layout = this.getConfig('layout'),
                 overlay = String(+this.getConfig('showOverlay')),
                 index = this.#__index;
 // console.log(overlay);
             if (this.getConfig('layout') === 'inline') {
                 overlay = 0;
             }
-            this.#__views.root = view;
             this.setAttribute('id', this.#__uuid);
             let mode = this.getConfig('mode');
             this.setAttribute('data-annex-search-mode', mode);
@@ -134,6 +138,8 @@ window.annexSearch.DependencyLoader.push([], function() {
                 let name = this.getConfig('name');
                 this.setAttribute('data-annex-search-name', name);
             }
+
+            // Show
             if (this.getConfig('layout') === 'inline') {
                 this.show();
             }
@@ -148,30 +154,30 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         #__render() {
             let helper = this.getHelper('config'),
-                handler = this.#__drawRoot.bind(this),
+                handler = this.#__setupRoot.bind(this),
                 promise = helper.loadStylesheets(this)
                     // .then(helper.loadTemplates.bind(helper))
                     .then(handler)
-                    .catch(function(error) {
-                        console.log(error);
-                    });
+                    // .catch(function(error) {
+                    //     console.log(error);
+                    // });
             return promise;
         }
 
         /**
-         * #__setupHelpers
+         * #__mountHelpers
          * 
          * @access  private
          * @return  Boolean
          */
         #__setupHelpers() {
-            this.#__helpers.config = new window.annexSearch.ConfigHelper();
-            this.#__helpers.typesense = new window.annexSearch.TypesenseHelper();
+            this.#__helpers.config = new window.annexSearch.ConfigHelper(this);
+            this.#__helpers.typesense = new window.annexSearch.TypesenseHelper(this);
             return true;
         }
 
         /**
-         * #__setupShadow
+         * #__mountShadow
          * 
          * @access  private
          * @return  Boolean
@@ -437,12 +443,16 @@ window.annexSearch.DependencyLoader.push([], function() {
 // console.trace();
             window.annexSearch.AnnexSearch.setActive(this);
             this.dispatchCustomEvent('root.show');
+// console.log('a');
             this.#__showing = true;
             this.#__setStyles();
+// console.log('b');
             this.setAttribute('data-annex-search-open', '1');
             this.removeAttribute('inert');
+// console.log('b1');
             let found = this.#__views.root.getView('root.body.results.found'),
                 results = found.getResults();
+// console.log('c');
 // console.log(results);
             if (results.length === 0) {
 // console.log('a');

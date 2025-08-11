@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.FieldHeaderView = window.annexSearch.FieldHeaderView || class extends window.annexSearch.BaseView {
+    window.annexSearch.FieldHeaderView = window.annexSearch.FieldHeaderView || class FieldHeaderView extends window.annexSearch.BaseView {
 
         /**
          * #__lastTypesenseSearchRequest
@@ -63,22 +63,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         static markup = `
 <div class="clearfix" data-view-name="FieldHeaderView">
-    <div class="label"></div>
+    <%
+        let label = data?.config?.keyboardShortcut ?? '';
+        label = label.toUpperCase();
+        let placeholder = data?.config?.copy?.field?.placeholder ?? 'Search...';
+    %>
+    <div class="label"><%- (label) %></div>
     <div class="input">
-        <input type="search" name="query" id="query" spellcheck="false" autocapitalize="off" autocorrect="off" />
+        <input type="search" name="query" id="query" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="<%- (placeholder) %>" />
     </div>
 </div>`;
-
-        /**
-         * constructor
-         * 
-         * @access  public
-         * @param   HTMLElement $element
-         * @return  void
-         */
-        constructor($element) {
-            super($element);
-        }
 
         /**
          * #__addEvents
@@ -87,7 +81,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__addEvents() {
-// console.log('a');
             this.#__addInputInputEventListener();
             return true;
         }
@@ -104,21 +97,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             $element.addEventListener('input', handler);
             return true;
         };
-
-        /**
-         * #__getKeyboardShortcut
-         * 
-         * @access  private
-         * @return  null|String
-         */
-        #__getKeyboardShortcut() {
-            let value = this.getHelper('config').get('keyboardShortcut');
-            if (value === null) {
-                return null;
-            }
-            value = value.trim().toLowerCase();
-            return value;
-        }
 
         /**
          * #__handleFailedTypesenseSearchEvent
@@ -190,7 +168,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 return false;
             }
             let found = this.getView('root.body.results.found');
-            found.drawResults(response);
+            found.mountResults(response);
             this.#__updateMetaBar();
             return true;
         }
@@ -226,7 +204,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.getWebComponent().dispatchCustomEvent('results.loaded', {response});
             this.setStateKey('results');
             let found = this.getView('root.body.results.found');
-            found.drawResults(response);
+            found.mountResults(response);
             found.resetFocusedIndex();
             this.#__updateMetaBar();
             let containsScrollbar = found.containsScrollbar();
@@ -268,44 +246,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__searchTypesense(options = {}) {
             let header = this.getView('root.header');
+// console.trace();
+// console.log(this);
             header.showSpinner();
             let value = this.first('input').value.trim(),
                 handler = this.#__handleTypesenseSearchResponse.bind(this, options),
                 promise = this.getHelper('typesense').search(value, options).then(handler);
             return promise;
-        }
-
-        /**
-         * #__setInputPlaceholder
-         * 
-         * @access  private
-         * @return  Boolean
-         */
-        #__setInputPlaceholder() {
-            let placeholder = this.getHelper('config').get('copy').placeholder;
-            if (placeholder === null) {
-                return false;
-            }
-            if (placeholder === undefined) {
-                return false;
-            }
-            this.first('input').setAttribute('placeholder', placeholder);
-            return true;
-        };
-
-        /**
-         * #__setKeyboardShortcutLabel
-         * 
-         * @access  private
-         * @return  Boolean
-         */
-        #__setKeyboardShortcutLabel() {
-            let keyboardShortcut = this.#__getKeyboardShortcut();
-            if (keyboardShortcut === null) {
-                return false;
-            }
-            this.first('.label').innerHTML = keyboardShortcut.toUpperCase();
-            return true;
         }
 
         /**
@@ -433,9 +380,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         render() {
+            super.render();
             this.#__addEvents();
-            this.#__setInputPlaceholder();
-            this.#__setKeyboardShortcutLabel();
             return true;
         }
 

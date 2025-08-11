@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.HeaderView = window.annexSearch.HeaderView || class extends window.annexSearch.BaseView {
+    window.annexSearch.HeaderView = window.annexSearch.HeaderView || class HeaderView extends window.annexSearch.BaseView {
 
         /**
          * #__showingSpinner
@@ -33,17 +33,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     <div class="hide icon icon-plus icon-size-14"></div>
     <div class="spinner spinning icon icon-spinner"></div>
 </div>`;
-
-        /**
-         * constructor
-         * 
-         * @access  public
-         * @param   HTMLElement $element
-         * @return  void
-         */
-        constructor($element) {
-            super($element);
-        }
 
         /**
          * #__addClickEventListener
@@ -84,30 +73,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         };
 
         /**
-         * #__drawField
-         * 
-         * @access  private
-         * @return  Boolean
-         */
-        #__drawField() {
-            let view = window.annexSearch.ElementUtils.renderTemplate('fieldHeader', this._$element);
-            this.setView('field', view);
-            return true;
-        }
-
-        /**
-         * #__drawMetaBar
-         * 
-         * @access  private
-         * @return  Boolean
-         */
-        #__drawMetaBar() {
-            let view = window.annexSearch.ElementUtils.renderTemplate('metaBarHeader', this._$element);
-            this.setView('metaBar', view);
-            return true;
-        }
-
-        /**
          * #__handleClickEvent
          * 
          * @access  private
@@ -135,6 +100,34 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.hideWebComponent();
             return false;
         };
+
+        /**
+         * #__mountField
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__mountField() {
+            let view = new window.annexSearch.FieldHeaderView(this._$annexSearchWidget),
+                $container = this._$element;
+            this.setView('field', view);
+            view.mount($container);
+            return true;
+        }
+
+        /**
+         * #__mountMetaBar
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__mountMetaBar() {
+            let view = new window.annexSearch.MetaBarHeaderView(this._$annexSearchWidget),
+                $container = this._$element;
+            this.setView('metaBar', view);
+            view.mount($container);
+            return true;
+        }
 
         /**
          * blur
@@ -165,8 +158,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         render() {
-            this.#__drawField();
-            this.#__drawMetaBar();
+            super.render();
             this.#__addEvents();
             return true;
         }
@@ -202,18 +194,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * toggleSpinner
+         * mount
          * 
          * @access  public
+         * @param   HTMLElement $container
          * @return  Boolean
          */
-        // toggleSpinner() {
-        //     if (this.#__showingSpinner === true) {
-        //         let response = this.hideSpinner();
-        //         return response;
-        //     }
-        //     let response = this.showSpinner();
-        //     return response;
-        // }
+        mount($container) {
+            super.mount($container);
+            this.#__mountField();
+            this.#__mountMetaBar();
+            return true;
+        }
     }
 });

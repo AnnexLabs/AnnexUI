@@ -69,26 +69,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
-         * #__getParent
-         * 
-         * @access  public
-         * @static
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
-         * @return  Boolean
-         */
-        static #__getParent($annexSearchWidget) {
-            let $parent = $annexSearchWidget.shadow;
-            // if ($annexSearchWidget.getConfig('layout') === 'inline') {
-            //     $parent = $parent.querySelector('[data-view-name="RootView"] > div.content');
-            // }
-            // if ($annexSearchWidget.getConfig('layout') === 'panel-left') {
-            //     $parent = $parent.querySelector('[data-view-name="RootView"] > div.content');
-            // }
-                $parent = $parent.querySelector('[data-view-name="RootView"] > div.content');
-            return $parent;
-        }
-
-        /**
          * show
          * 
          * @access  public
@@ -98,16 +78,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @return  Boolean
          */
         static show($annexSearchWidget, options) {
-            let $parent = this.#__getParent($annexSearchWidget),
-                data = {
-                    title: options.title,
-                    message: options.message
-                },
-                view = window.annexSearch.ElementUtils.renderTemplate('toast', $parent, data);
+            let view = new window.annexSearch.ToastView($annexSearchWidget),
+                $container = $annexSearchWidget.shadow.querySelector('div.content');
+            view.set('title', options.title);
+            view.set('message', options.message);
             this.#__toasts.push(view);
-            options.hideTimeoutDuration && view.setHideTimeoutDuration(options.hideTimeoutDuration);
-            options.message && view.setMessage(options.message);
-            options.title && view.setTitle(options.title);
+            view.mount($container);
             view.show();
             return true;
         }

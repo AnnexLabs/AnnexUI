@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.FooterView = window.annexSearch.FooterView || class extends window.annexSearch.BaseView {
+    window.annexSearch.FooterView = window.annexSearch.FooterView || class FooterView extends window.annexSearch.BaseView {
 
         /**
          * #__markup
@@ -25,49 +25,44 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
 </div>`;
 
         /**
-         * constructor
-         * 
-         * @access  public
-         * @param   HTMLElement $element
-         * @return  void
-         */
-        constructor($element) {
-            super($element);
-        }
-
-        /**
-         * #__drawBrandingBar
+         * #__mountBrandingBar
          * 
          * @access  private
          * @return  Boolean
          */
-        #__drawBrandingBar() {
-            let view = window.annexSearch.ElementUtils.renderTemplate('brandingBarFooter', this._$element);
+        #__mountBrandingBar() {
+            let view = new window.annexSearch.BrandingBarFooterView(this._$annexSearchWidget),
+                $container = this._$element;
             this.setView('brandingBar', view);
+            view.mount($container);
             return true;
         }
 
         /**
-         * #__drawStatusBar
+         * #__mountStatusBar
          * 
          * @access  private
          * @return  Boolean
          */
-        #__drawStatusBar() {
-            let view = window.annexSearch.ElementUtils.renderTemplate('statusBarFooter', this._$element);
+        #__mountStatusBar() {
+            let view = new window.annexSearch.StatusBarFooterView(this._$annexSearchWidget),
+                $container = this._$element;
             this.setView('statusBar', view);
+            view.mount($container);
             return true;
         }
 
         /**
-         * render
+         * mount
          * 
          * @access  public
+         * @param   HTMLElement $container
          * @return  Boolean
          */
-        render() {
-            this.#__drawBrandingBar();
-            this.#__drawStatusBar();
+        mount($container) {
+            super.mount($container);
+            this.#__mountBrandingBar();
+            this.#__mountStatusBar();
             return true;
         }
     }

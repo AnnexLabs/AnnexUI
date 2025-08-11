@@ -3,14 +3,14 @@
  * /src/js/requests/TypesenseSearch.js
  * 
  */
-window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function() {
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseRequest'], function() {
 
     /**
      * window.annexSearch.TypesenseSearchRequest
      * 
-     * @extends window.annexSearch.Base
+     * @extends window.annexSearch.BaseRequest
      */
-    window.annexSearch.TypesenseSearchRequest = window.annexSearch.TypesenseSearchRequest || class extends window.annexSearch.Base {
+    window.annexSearch.TypesenseSearchRequest = window.annexSearch.TypesenseSearchRequest || class extends window.annexSearch.BaseRequest {
 
         /**
          * #__abortController
@@ -89,13 +89,30 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * @param   String query
          * @return  void
          */
-        constructor(query) {
-            super();
+//         constructor(query) {
+//             super();
+//             this.#__query = query;
+//             this.#__options.q = query;
+// // console.log(this, this.getHelper);//, this.getHelper('typesense'));
+//             this.#__options.highlight_end_tag = this.getHelper('typesense').getHighlightEndTag();
+//             this.#__options.highlight_start_tag = this.getHelper('typesense').getHighlightStartTag();
+//         }
+
+        /**
+         * setQuery
+         * 
+         * @access  private
+         * @param   String query
+         * @return  Boolean
+         */
+        setQuery(query) {
             this.#__query = query;
             this.#__options.q = query;
 // console.log(this, this.getHelper);//, this.getHelper('typesense'));
+// console.log(this);
             this.#__options.highlight_end_tag = this.getHelper('typesense').getHighlightEndTag();
             this.#__options.highlight_start_tag = this.getHelper('typesense').getHighlightStartTag();
+            return true;
         }
 
         /**

@@ -2,11 +2,15 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - custom templates
- * @todo    - variable templating
  * @todo    - ensure multiple instantiations happen sequentially (to allow for /templates caching)
  * @todo    -- Not required if /templates no longer used?
+ * 
  * @todo    - collection retrieval (for smart templates?)
+ * 
+ * @todo    - State management for updating data while toast is showing
+ * 
+ * @todo    - Add in logic to prevent accidental infinite XHR when scrollbar is missing but shouldn't be?
+ * @todo    -- Toast to kill UI?
  * 
  * @todo    - bug with focus not coming back (related to found.results not being cleared)
  * 
@@ -65,6 +69,8 @@
  * @todo    [PUNT] - Hook escape key to toasts (introduce escape utils class)
  * @todo    [DONE] - Problem w/ css dist file (min.css but maybe also non-min?)
  * @todo    [DONE] -- Possible issue w/ vars not being defined at top?
+ * @todo    [DONE] - custom templates
+ * @todo    [DONE] - variable templating
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

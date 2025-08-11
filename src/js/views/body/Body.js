@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.BodyView = window.annexSearch.BodyView || class extends window.annexSearch.BaseView {
+    window.annexSearch.BodyView = window.annexSearch.BodyView || class BodyView extends window.annexSearch.BaseView {
 
         /**
          * #__markup
@@ -25,62 +25,59 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
 </div>`;
 
         /**
-         * constructor
-         * 
-         * @access  public
-         * @param   HTMLElement $element
-         * @return  void
-         */
-        constructor($element) {
-            super($element);
-        }
-
-        /**
-         * #__drawError
+         * #__mountError
          * 
          * @access  private
          * @return  Boolean
          */
-        #__drawError() {
-            let view = window.annexSearch.ElementUtils.renderTemplate('errorBody', this._$element);
+        #__mountError() {
+            let view = new window.annexSearch.ErrorBodyView(this._$annexSearchWidget),
+                $container = this._$element;
             this.setView('error', view);
+            view.mount($container);
             return true;
         }
 
         /**
-         * #__drawIdle
+         * #__mountIdle
          * 
          * @access  private
          * @return  Boolean
          */
-        #__drawIdle() {
-            let view = window.annexSearch.ElementUtils.renderTemplate('idleBody', this._$element);
+        #__mountIdle() {
+            let view = new window.annexSearch.IdleBodyView(this._$annexSearchWidget),
+                $container = this._$element;
             this.setView('idle', view);
+            view.mount($container);
             return true;
         }
 
         /**
-         * #__drawResults
+         * #__mountResults
          * 
          * @access  private
          * @return  Boolean
          */
-        #__drawResults() {
-            let view = window.annexSearch.ElementUtils.renderTemplate('resultsBody', this._$element);
+        #__mountResults() {
+            let view = new window.annexSearch.ResultsBodyView(this._$annexSearchWidget),
+                $container = this._$element;
             this.setView('results', view);
+            view.mount($container);
             return true;
         }
 
         /**
-         * render
+         * mount
          * 
          * @access  public
+         * @param   HTMLElement $container
          * @return  Boolean
          */
-        render() {
-            this.#__drawError();
-            this.#__drawIdle();
-            this.#__drawResults();
+        mount($container) {
+            super.mount($container);
+            this.#__mountError();
+            this.#__mountIdle();
+            this.#__mountResults();
             return true;
         }
     }

@@ -45,12 +45,16 @@ window.annexSearch.DependencyLoader.push([], function() {
          * get
          * 
          * @access  public
-         * @param   String key
-         * @return  undefined|mixed
+         * @param   undefined|String key (default: undefined)
+         * @return  Object|undefined|mixed
          */
-        get(key) {
-            let value = this.#__data[key] || undefined;
-            return value;
+        get(key = undefined) {
+            if (key === undefined) {
+                let response = this.#__data;
+                return response;
+            }
+            let response = this.#__data[key] || undefined;
+            return response;
         }
 
         /**
@@ -58,7 +62,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  public
          * @param   String key
-         * @return  window.annexSearch.BaseView
+         * @return  window.annexSearch.BaseHelper
          */
         getHelper(key) {
             let webComponent = this.getWebComponent(),
@@ -101,8 +105,8 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  window.annexSearch.AnnexSearchWidgetWebComponent
          */
         getWebComponent() {
-            let $webComponent = this._$element?.getRootNode()?.host || window.annexSearch.AnnexSearch.getActive();
-            return $webComponent;
+            let webComponent = this._$annexSearchWidget;
+            return webComponent;
         }
 
         /**

@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.ToastView = window.annexSearch.ToastView || class extends window.annexSearch.BaseView {
+    window.annexSearch.ToastView = window.annexSearch.ToastView || class ToastView extends window.annexSearch.BaseView {
 
         /**
          * #__hideTimeoutDuration
@@ -19,7 +19,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @access  private
          * @var     Number (default: 5000)
          */
-        #__hideTimeoutDuration = 5000;
+        // #__hideTimeoutDuration = 5000;
+        #__hideTimeoutDuration = 100000;
 
         /**
          * #__hideTimeoutReference
@@ -30,22 +31,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__hideTimeoutReference = null;
 
         /**
-         * #__message
-         * 
-         * @access  private
-         * @var     String (default: '(message)')
-         */
-        #__message = '(message)';
-
-        /**
-         * #__title
-         * 
-         * @access  private
-         * @var     String (default: '(title)')
-         */
-        #__title = '(title)';
-
-        /**
          * #__markup
          * 
          * @access  public
@@ -54,20 +39,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         static markup = `
 <div data-view-name="ToastView">
-    <div class="title"></div>
-    <div class="message"></div>
+    <div class="title"><%= (data?.title ?? '(no title)') %></div>
+    <div class="message"><%= (data?.message ?? '(no message)') %></div>
 </div>`;
-
-        /**
-         * constructor
-         * 
-         * @access  public
-         * @param   HTMLElement $element
-         * @return  void
-         */
-        constructor($element) {
-            super($element);
-        }
 
         /**
          * #__addClickEventListener
@@ -89,9 +63,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__addEvents() {
-            if (this.#__title === null) {
-                return false;
-            }
             this.#__addClickEventListener();
             return true;
         }
@@ -175,9 +146,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         render() {
+            super.render();
             this.#__addEvents();
             return true;
         }
+
 
         /**
          * setHideTimeoutDuration
@@ -199,8 +172,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         setMessage(message) {
-            let $element = this.first('.message');
-            $element.innerHTML = message;
+            this.set('message', message);
+            this.render();
             return true;
         }
 
@@ -212,8 +185,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         setTitle(title) {
-            let $element = this.first('.title');
-            $element.innerHTML = title;
+            this.set('title', title);
+            this.render();
             return true;
         }
 

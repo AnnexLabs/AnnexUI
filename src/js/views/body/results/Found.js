@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.FoundResultsBodyView = window.annexSearch.FoundResultsBodyView || class extends window.annexSearch.BaseView {
+    window.annexSearch.FoundResultsBodyView = window.annexSearch.FoundResultsBodyView || class FoundResultsBodyView extends window.annexSearch.BaseView {
 
         /**
          * #__focusedIndex
@@ -57,17 +57,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
 </div>`;
 
         /**
-         * constructor
-         * 
-         * @access  public
-         * @param   HTMLElement $element
-         * @return  void
-         */
-        constructor($element) {
-            super($element);
-        }
-
-        /**
          * #__addEvents
          * 
          * @access  private
@@ -94,18 +83,27 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * #__drawResult
+         * #__mountResult
          * 
          * @note    Ordered
          * @access  private
          * @param   Object hit
          * @return  Boolean
          */
-        #__drawResult(hit) {
-            let view = window.annexSearch.ElementUtils.renderTemplate('resultFoundResultsBody', this._$element);
+        #__mountResult(hit) {
+            // let view = window.annexSearch.ElementUtils.renderTemplate('resultFoundResultsBody', this._$element);
+            // view.set('hit', hit);
+            // this.#__results.push(view);
+            // view.render();
+            // return true;
+
+
+            let view = new window.annexSearch.ResultFoundResultsBodyView(this._$annexSearchWidget),
+                $container = this._$element;
             view.set('hit', hit);
             this.#__results.push(view);
-            view.render();
+            // this.setView('results', view);
+            view.mount($container);
             return true;
         }
 
@@ -149,25 +147,26 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         containsScrollbar() {
+return true;
             let $element = this._$element,
                 response = $element.scrollHeight > $element.clientHeight;
             return response;
         }
 
         /**
-         * drawResults
+         * mountResults
          * 
          * @access  public
          * @param   Object typesenseResponse
          * @return  Boolean
          */
-        drawResults(typesenseResponse) {
+        mountResults(typesenseResponse) {
             let hits = typesenseResponse.hits || [];
             if (hits.length === 0) {
                 return false;
             }
             for (var hit of hits) {
-                this.#__drawResult(hit);
+                this.#__mountResult(hit);
             }
             return true;
         }
@@ -261,7 +260,22 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         render() {
+            super.render();
             this.#__addEvents();
+            return true;
+        }
+
+        /**
+         * scrollToTop
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        scrollToTop() {
+            let $element = this._$element;
+            window.annexSearch.ElementUtils.waitForAnimation().then(function() {
+                $element.scrollTop = 0;
+            });
             return true;
         }
 
@@ -287,20 +301,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         setFocusedIndexByResultView(result) {
             let index = this.#__results.indexOf(result);
             this.setFocusedIndex(index);
-            return true;
-        }
-
-        /**
-         * scrollToTop
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        scrollToTop() {
-            let $element = this._$element;
-            window.annexSearch.ElementUtils.waitForAnimation().then(function() {
-                $element.scrollTop = 0;
-            });
             return true;
         }
 

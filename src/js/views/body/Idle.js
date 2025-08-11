@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.IdleBodyView = window.annexSearch.IdleBodyView || class extends window.annexSearch.BaseView {
+    window.annexSearch.IdleBodyView = window.annexSearch.IdleBodyView || class IdleBodyView extends window.annexSearch.BaseView {
 
         /**
          * #__markup
@@ -22,49 +22,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         static markup = `
 <div data-view-name="IdleBodyView">
+    <%
+        let message = data?.config?.copy?.idle?.message ?? 'Start typing to begin your search...';
+        message = message.trim();
+    %>
     <div class="graphic"></div>
-    <div class="message"></div>
+    <div class="message"><%- (message) %></div>
 </div>`;
-
-        /**
-         * constructor
-         * 
-         * @access  public
-         * @param   HTMLElement $element
-         * @return  void
-         */
-        constructor($element) {
-            super($element);
-        }
-
-        /**
-         * #__setMessage
-         * 
-         * @access  private
-         * @return  Boolean
-         */
-        #__setMessage() {
-            let value = this.getHelper('config').get('copy').idle.message;
-            if (value === null) {
-                return false;
-            }
-            if (value === undefined) {
-                return false;
-            }
-            value = value.trim();
-            this.first('.message').innerHTML = value;
-            return true;
-        }
-
-        /**
-         * render
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        render() {
-            this.#__setMessage();
-            return true;
-        }
     }
 });

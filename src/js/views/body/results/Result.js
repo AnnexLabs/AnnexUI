@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.ResultFoundResultsBodyView = window.annexSearch.ResultFoundResultsBodyView || class extends window.annexSearch.BaseView {
+    window.annexSearch.ResultFoundResultsBodyView = window.annexSearch.ResultFoundResultsBodyView || class ResultFoundResultsBodyView extends window.annexSearch.BaseView {
 
         /**
          * #__markup
@@ -21,22 +21,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String
          */
         static markup = `
-<a data-view-name="ResultFoundResultsBodyView" href="https://{{hit.document.hostname}}{{hit.document.relativeURL}}">
-    <div class="title">{{hit.highlight.title.snippet || hit.document.title}}</div>
-    <div class="body">{{hit.highlight.body.snippet || hit.document.body}}</div>
-    <div class="uri truncate">https://{{hit.document.hostname}}{{hit.document.relativeURL}}</div>
+<a data-view-name="ResultFoundResultsBodyView" href="https://{{data.hit.document.hostname}}{{data.hit.document.relativeURL}}">
+    <div class="title">{{{data?.hit?.highlight?.title?.snippet || data?.hit?.document?.title || '(unknown title)'}}}</div>
+    <div class="body">{{{data?.hit?.highlight?.body?.snippet || data?.hit?.document?.body || '(unknown body)'}}}</div>
+    <div class="uri truncate">https://{{data.hit.document.hostname}}{{data.hit.document.relativeURL}}</div>
 </a>`;
-
-        /**
-         * constructor
-         * 
-         * @access  public
-         * @param   HTMLElement $element
-         * @return  void
-         */
-        constructor($element) {
-            super($element);
-        }
 
         /**
          * #__addClickEventListener
@@ -148,35 +137,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @access  private
          * @return  Boolean
          */
-        #__renderTemplateVariables() {
-            let html = this._$element.outerHTML,
-                hit = this.get('hit'),
-                map = {
-                    hit: hit
-                };
-            html = window.annexSearch.ElementUtils.renderTemplateVariables(html, map);
-            html = this.getHelper('typesense').replaceHightlightTags(html);
-            this._$element = this.#__replaceOuterHTML(html);
-            return true;
-        }
-
-        /**
-         * #__replaceOuterHTML
-         * 
-         * @see     https://chatgpt.com/c/68886a45-7668-8328-84b2-40f3673282e3
-         * @access  private
-         * @param   String html
-         * @return  HTMLElement
-         */
-        #__replaceOuterHTML(html) {
-            let $template = document.createElement('template');
-            $template.innerHTML = html.trim();
-            let $new = $template.content.firstChild,
-                data = this._$element.data || {};
-            this._$element.replaceWith($new);
-            $new.data = data;
-            return $new;
-        }
+        // #__renderTemplateVariables() {
+        //     let html = this._$element.outerHTML,
+        //         hit = this.get('hit'),
+        //         map = {
+        //             hit: hit
+        //         };
+        //     html = window.annexSearch.ElementUtils.renderTemplateVariables(html, map);
+        //     html = this.getHelper('typesense').replaceHightlightTags(html);
+        //     this._$element = this.#__replaceOuterHTML(html);
+        //     return true;
+        // }
 
         /**
          * #__setIndexAttribute
@@ -244,6 +215,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * #__replaceHightlightTags
+         * 
+         * @access  private
+         * @param   String markup
+         * @return  String
+         */
+        #__replaceHightlightTags(markup) {
+            markup = this.getHelper('typesense').replaceHightlightTags(markup);
+            return markup;
+        }
+
+        /**
          * render
          * 
          * @note    Ordered
@@ -251,11 +234,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         render() {
-            let hit = this.get('hit');
-            if (hit === undefined) {
-                return false;
-            }
-            this.#__renderTemplateVariables();
+            let mutator = this.#__replaceHightlightTags.bind(this);
+            super.render(mutator);
             this.#__setIndexAttribute();
             this.#__setTabindex();
             this.#__addEvents();

@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
      * @access  public
      * @extends window.annexSearch.BaseView
      */
-    window.annexSearch.RootView = window.annexSearch.RootView || class extends window.annexSearch.BaseView {
+    window.annexSearch.RootView = window.annexSearch.RootView || class RootView extends window.annexSearch.BaseView {
 
         /**
          * #__markup
@@ -24,17 +24,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
 <div data-view-name="RootView" data-state-key="idle">
     <div class="content"></div>
 </div>`;
-
-        /**
-         * constructor
-         * 
-         * @access  public
-         * @param   HTMLElement $element
-         * @return  void
-         */
-        constructor($element) {
-            super($element);
-        }
 
         /**
          * #__addEvents
@@ -62,45 +51,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         };
 
         /**
-         * #__drawBody
-         * 
-         * @access  private
-         * @return  Boolean
-         */
-        #__drawBody() {
-            let $content = this.first('.content'),
-                view = window.annexSearch.ElementUtils.renderTemplate('body', $content);
-            this.setView('body', view);
-            return true;
-        }
-
-        /**
-         * #__drawFooter
-         * 
-         * @access  private
-         * @return  Boolean
-         */
-        #__drawFooter() {
-            let $content = this.first('.content'),
-                view = window.annexSearch.ElementUtils.renderTemplate('footer', $content);
-            this.setView('footer', view);
-            return true;
-        }
-
-        /**
-         * #__drawHeader
-         * 
-         * @access  private
-         * @return  Boolean
-         */
-        #__drawHeader() {
-            let $content = this.first('.content'),
-                view = window.annexSearch.ElementUtils.renderTemplate('header', $content);
-            this.setView('header', view);
-            return true;
-        }
-
-        /**
          * #__handleOverlayClickEvent
          * 
          * @access  private
@@ -110,10 +60,52 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__handleOverlayClickEvent(event) {
             let $target = event.target;
             if ($target === this._$element) {
-                this.getWebComponent().hide();
+                this._$annexSearchWidget.hide();
                 return true;
             }
             return false;
+        }
+
+        /**
+         * #__mountBody
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__mountBody() {
+            let view = new window.annexSearch.BodyView(this._$annexSearchWidget),
+                $container = this.first('.content');
+            this.setView('body', view);
+            view.mount($container);
+            return true;
+        }
+
+        /**
+         * #__mountFooter
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__mountFooter() {
+            let view = new window.annexSearch.FooterView(this._$annexSearchWidget),
+                $container = this.first('.content');
+            this.setView('footer', view);
+            view.mount($container);
+            return true;
+        }
+
+        /**
+         * #__mountHeader
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__mountHeader() {
+            let view = new window.annexSearch.HeaderView(this._$annexSearchWidget),
+                $container = this.first('.content');
+            this.setView('header', view);
+            view.mount($container);
+            return true;
         }
 
         /**
@@ -142,16 +134,26 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * mount
          * 
          * @access  public
+         * @param   HTMLElement $container
          * @return  Boolean
          */
-        // mount() {
-        //     this.#__drawHeader();
-        //     this.#__drawBody();
-        //     this.#__drawFooter();
-        //     this.#__addEvents();
-        //     this.setStateKey('idle');
-        //     this.getWebComponent().dispatchCustomEvent('results.idle');
-        //     return true;
+        mount($container) {
+            super.mount($container);
+            this.#__mountHeader();
+            this.#__mountBody();
+            this.#__mountFooter();
+            this._$annexSearchWidget.dispatchCustomEvent('results.idle');
+            return true;
+        }
+
+        /**
+         * getMarkup
+         * 
+         * @access  public
+         * @return  String
+         */
+        // getMarkup() {
+        //     return this.markup;
         // }
 
         /**
@@ -161,12 +163,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         render() {
-            this.#__drawHeader();
-            this.#__drawBody();
-            this.#__drawFooter();
+            super.render();
             this.#__addEvents();
-            this.setStateKey('idle');
-            this.getWebComponent().dispatchCustomEvent('results.idle');
+console.log(this._$element);
             return true;
         }
 
