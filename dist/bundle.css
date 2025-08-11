@@ -12,6 +12,12 @@
 :host {
 
     /**
+     * Fonts
+     * 
+     */
+    --annex-search-font-family:                                -apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    /**
      * Colors
      * 
      */
@@ -44,6 +50,9 @@
     --annex-search-result-uri-color:                            rgba(0, 0, 0, 0.35);
     --annex-search-scrollbar-thumb-color:                       #dadce0;
     --annex-search-scrollbar-thumb-hover-color:                 #cccccc;
+    --annex-search-toast-background-color:                      rgba(0, 0, 0, 1.00);
+    --annex-search-toast-title-color:                           rgba(255, 255, 255, 0.90);
+    --annex-search-toast-message-color:                         rgba(255, 255, 255, 0.80);
 
     /**
      * Dimensions
@@ -111,7 +120,42 @@
         --annex-search-result-uri-color:                        var(--annex-search-dm-result-uri-color,                         rgba(255, 255, 255, 0.35));
         --annex-search-scrollbar-thumb-color:                   var(--annex-search-dm-scrollbar-thumb-color,                    #383838);
         --annex-search-scrollbar-thumb-hover-color:             var(--annex-search-dm-scrollbar-thumb-hover-color,              #4d4d4d);
+        --annex-search-toast-background-color:                  var(--annex-search-dm-toast-background-color,                   rgba(255, 255, 255, 1.00));
+        --annex-search-toast-title-color:                       var(--annex-search-dm-toast-title-color,                        rgba(0, 0, 0, 0.90));
+        --annex-search-toast-message-color:                     var(--annex-search-dm-toast-message-color,                      rgba(0, 0, 0, 0.80));
     }
+}
+:host([data-annex-search-mode="dark"]) {
+    --annex-search-root-overlay-color:                      var(--annex-search-dm-root-overlay-color,                       rgba(0, 0, 0, 0.30));
+    --annex-search-header-background-color:                 var(--annex-search-dm-header-background-color,                  #1a1b25);
+    --annex-search-header-label-color:                      var(--annex-search-dm-header-label-color,                       rgba(255, 255, 255, 0.80));
+    --annex-search-header-hide-button-color:                var(--annex-search-dm-header-hide-button-color,                 rgba(255, 255, 255, 1.00));
+    --annex-search-header-input-color:                      var(--annex-search-dm-header-input-color,                       rgba(255, 255, 255, 0.75));
+    --annex-search-header-input-focus-color:                var(--annex-search-dm-header-input-focus-color,                 rgba(255, 255, 255, 1.00));
+    --annex-search-header-input-placeholder-color:          var(--annex-search-dm-header-input-placeholder-color,           rgba(255, 255, 255, 0.30));
+    --annex-search-header-spinner-color:                    var(--annex-search-dm-header-spinner-color,                     rgba(255, 255, 255, 1.00));
+    --annex-search-metaBar-background-color:                var(--annex-search-dm-metaBar-background-color,                 #21222c);
+    --annex-search-metaBar-color:                           var(--annex-search-dm-metaBar-color,                            rgba(255, 255, 255, 0.50));
+    --annex-search-body-background-color:                   var(--annex-search-dm-body-background-color,                    #1a1b25);
+    --annex-search-body-message-color:                      var(--annex-search-dm-body-message-color,                       rgba(255, 255, 255, 0.60));
+    --annex-search-footer-background-color:                 var(--annex-search-dm-footer-background-color,                  #21222c);
+    --annex-search-statusBar-color:                         var(--annex-search-dm-statusBar-color,                          rgba(255, 255, 255, 0.50));
+    --annex-search-brandingBar-color:                       var(--annex-search-dm-brandingBar-color,                        rgba(255, 255, 255, 0.50));
+    --annex-search-brandingBar-anchor-color:                var(--annex-search-dm-brandingBar-anchor-color,                 rgba(255, 255, 255, 0.60));
+    --annex-search-brandingBar-anchor-border-color:         var(--annex-search-dm-brandingBar-anchor-border-color,          rgba(255, 255, 255, 0.20));
+    --annex-search-brandingBar-anchor-border-color-hover:   var(--annex-search-dm-brandingBar-anchor-border-color-hover,    rgba(255, 255, 255, 0.60));
+    --annex-search-border-color:                            var(--annex-search-dm-border-color,                             #383942);
+    --annex-search-result-hover-background-color:           var(--annex-search-dm-result-hover-background-color,            #31323b);
+    --annex-search-result-focus-background-color:           var(--annex-search-dm-result-focus-background-color,            #31323b);
+    --annex-search-result-focus-outline-color:              var(--annex-search-dm-result-focus-outline-color,               #3b82f6);
+    --annex-search-result-title-color:                      var(--annex-search-dm-result-title-color,                       rgba(255, 255, 255, 0.80));
+    --annex-search-result-body-color:                       var(--annex-search-dm-result-body-color,                        rgba(255, 255, 255, 0.50));
+    --annex-search-result-uri-color:                        var(--annex-search-dm-result-uri-color,                         rgba(255, 255, 255, 0.35));
+    --annex-search-scrollbar-thumb-color:                   var(--annex-search-dm-scrollbar-thumb-color,                    #383838);
+    --annex-search-scrollbar-thumb-hover-color:             var(--annex-search-dm-scrollbar-thumb-hover-color,              #4d4d4d);
+    --annex-search-toast-background-color:                  var(--annex-search-dm-toast-background-color,                   rgba(255, 255, 255, 1.00));
+    --annex-search-toast-title-color:                       var(--annex-search-dm-toast-title-color,                        rgba(0, 0, 0, 0.90));
+    --annex-search-toast-message-color:                     var(--annex-search-dm-toast-message-color,                      rgba(0, 0, 0, 0.80));
 }
 @keyframes spinning {
     from {
@@ -187,7 +231,7 @@
 :host * {
     all: unset;
     display: revert;
-    font-family: -apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: var(--annex-search-font-family);
     box-sizing: border-box;
 }
 :host .clearfix::after {
@@ -463,14 +507,14 @@
     opacity: 0.00;
     right: 12px;
     top: 12px;
-    background-color: rgba(0, 0, 0, 1.00);
+    background-color: var(--annex-search-toast-background-color);
     border-radius: 10px 10px 10px 10px;
-/*    height: 72px;*/
     width: 302px;
     padding: 12px 16px 12px 16px;
-    transition: all var(--annex-search-toast-duration);
+    transition: transform var(--annex-search-toast-duration), opacity var(--annex-search-toast-duration);
     transform: translateY(-100%);
     cursor: default;
+    will-change: transform, opacity;
 }
 [data-view-name="ToastView"].visible {
     pointer-events: auto;
@@ -481,13 +525,13 @@
     opacity: 0.90;
 }
 [data-view-name="ToastView"] > div.title {
-    color: rgba(255, 255, 255, 0.90);
+    color: var(--annex-search-toast-title-color);
     font-size: 13.5px;
     height: 22px;
     line-height: 22px;
 }
 [data-view-name="ToastView"] > div.message {
-    color: rgba(255, 255, 255, 0.80);
+    color: var(--annex-search-toast-message-color);
     font-size: 12.5px;
     line-height: 1.30em;
     min-height: 22px;

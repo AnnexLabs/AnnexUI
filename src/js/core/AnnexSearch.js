@@ -2,6 +2,8 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
+ * @todo    - Problem w/ css dist file (min.css but maybe also non-min?)
+ * 
  * @todo    - custom templates
  * @todo    - variable templating
  * @todo    - ensure multiple instantiations happen sequentially (to allow for /templates caching)
