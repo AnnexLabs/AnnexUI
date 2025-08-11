@@ -117,7 +117,34 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
              * @var     Boolean (default: true)
              */
             fieldEscape: true,
+
+            /**
+             * resultCopy
+             * 
+             * Keyboard detection for the Command+c / Ctrl+c keyboard
+             * combination, which when detected, will dispatch an event for the
+             * corresponding ResultFoundResultsBodyView.
+             * 
+             * @static
+             * @access  private
+             * @var     Boolean (default: true)
+             */
+            resultCopy: true,
         };
+
+        /**
+         * #__addDocumentCopyEventListener
+         * 
+         * @access  private
+         * @static
+         * @return  Boolean
+         */
+        // static #__addDocumentCopyEventListener() {
+        //     let $element = document,
+        //         handler = this.__handleDocumentCopyKeydownEvent.bind(this);
+        //     $element.addEventListener('copy', handler);
+        //     return true;
+        // }
 
         /**
          * #__addDocumentPasteEventListener
@@ -265,6 +292,38 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
+         * #__handleDocumentCopyKeydownEvent
+         * 
+         * @see     https://chatgpt.com/c/68993510-aa98-832b-bdd6-2356a4452616
+         * @access  private
+         * @static
+         * @param   Object event
+         * @return  Boolean
+         */
+        static #__handleDocumentCopyKeydownEvent(event) {
+            if (this.#__validKeydownEvent(event, 'resultCopy', 'c') === false) {
+                return false;
+            }
+            if (this.#__isModifierCombo(event) === false) {
+                return false;
+            }
+            let $annexSearchWidget = this.#__getActiveWebComponent(),
+                $activeElement = $annexSearchWidget.shadow.activeElement;
+            if ($activeElement === null) {
+                return false;
+            }
+            let found = this.#__getFound(),
+                results = found.getResults();
+            for (let result of results) {
+                if (result.getElement() === $activeElement) {
+                    result.dispatchCopyEvent(event);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
          * #__handleDocumentDeleteKeydownEvent
          * 
          * @access  private
@@ -393,12 +452,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 if (keyboardShortcut.charAt(0) !== '⌘') {
                     continue
                 }
-                let character = keyboardShortcut.charAt(1),
-                    isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-                if (
-                    (isMac && event.metaKey && event.key.toLowerCase() === character) ||
-                    (!isMac && event.ctrlKey && event.key.toLowerCase() === character)
-                ) {
+                if (this.#__isModifierCombo(event) === false) {
+                    continue;
+                }
+                let key = event.key.toLowerCase(),
+                    character = keyboardShortcut.charAt(1);
+                if (key === character) {
                     event.preventDefault();
                     $annexSearchWidget.toggle();
                     return true;
@@ -481,7 +540,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__validKeydownEvent(event, 'documentSelectAll', 'a') === false) {
                 return false;
             }
-            if (event.metaKey === false) {
+            if (this.#__isModifierCombo(event) === false) {
                 return false;
             }
             let field = this.#__getField();
@@ -602,6 +661,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__getRegisteredWebComponents().length === 0) {
                 return false;
             }
+            if (this.#__handleDocumentCopyKeydownEvent(event) === true) {
+                return true;
+            }
             if (this.#__handleDocumentKeyboardShortcutKeydownEvent(event) === true) {
                 return true;
             }
@@ -630,6 +692,28 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 return true;
             }
             return true;
+        }
+
+        /**
+         * #__isModifierCombo
+         * 
+         * @access  private
+         * @static
+         * @param   Object event
+         * @return  Boolean
+         */
+        static #__isModifierCombo() {
+            let mac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+            if (mac === true) {
+                if (event.metaKey === true) {
+                    return true;
+                }
+                return false;
+            }
+            if (event.ctrlKey === true) {
+                return true;
+            }
+            return false;
         }
 
         /**

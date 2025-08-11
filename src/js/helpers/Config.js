@@ -47,6 +47,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                     click: function(customEvent) {
                         console.log('result.click', customEvent.detail, this);
                     },
+                    // copy: function(customEvent) {
+                    //     console.log('result.copy', customEvent.detail, this);
+                    // },
                     focus: function(customEvent) {
                         console.log('result.focus', customEvent.detail, this);
                     },
@@ -98,8 +101,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
              * copy
              * 
              * Series of copy variables which are dotted throughout the UI. For
-             * more comprehensive updates, templates may need to be defined.
-             * Supports HTML.
+             * more comprehensive updates, templates can be used.
+             * 
+             * Copy properties support HTML.
              * 
              * @access  private
              * @var     Object
@@ -116,7 +120,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 },
                 placeholder: 'Search...',
                 statusBar: {
-                    message: 'Instantly search through 10,000+ results'
+                    message: 'Instantly search through our entire database'
                 },
             },
 
@@ -162,6 +166,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             layout: 'modal',
 
             /**
+             * mode
+             * 
+             * @access  private
+             * @var     String (default: 'auto')
+             */
+            mode: 'auto',
+
+            /**
              * name
              * 
              * @access  private
@@ -188,12 +200,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             },
 
             /**
-             * schema
+             * schemaKey
+             * 
+             * The key of the Annex Search defined schema that is being adhered
+             * to. This is useful for quicker "out of the box" setup, whereby
+             * the ResultFoundResultsBodyView template used will adhere to the
+             * fields defined in the schema JSON file.
              * 
              * @access  private
              * @var     String (default: 'webResource-v0.1.0')
              */
-            schema: 'webResource-v0.1.0',
+            schemaKey: 'webResource-v0.1.0',
 
             /**
              * searchOptions

@@ -212,6 +212,22 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * dispatchCopyEvent
+         * 
+         * @access  public
+         * @param   Object event
+         * @return  Boolean
+         */
+        dispatchCopyEvent(event) {
+            let hit = this.get('hit'),
+                $result = this._$element,
+                map = {$result, event, hit};
+            this.getWebComponent().dispatchCustomEvent('result.copy', map);
+            this.getView('root.body.results.found').setFocusedIndexByResultView(this);
+            return true;
+        }
+
+        /**
          * focus
          * 
          * @access  public

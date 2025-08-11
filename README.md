@@ -123,10 +123,11 @@ so.
 | debug                     | `Boolean`             | ❌         | `false`                   | Whether debugging information should be logged to console.                                                |
 | keyboardShortcut          | `null` \|\| `String`  | ❌         | `'⌘k'`                    | The keyboard shortcut that should be used to toggle Annex (does not apply to `inline` instances).         |
 | highlightTagName          | `String`              | ❌         | `'MARK'`                  | The `HTMLElement` that should be rendered around query matches.                                           |
-| layout                    | `String`              | ❌         | `'modal'`                 | The layout for Annex. Can be: `inline`, `modal`, `panel-left` or `panel-right`.                           |
+| layout                    | `String`              | ❌         | `'modal'`                 | The layout for Annex. Can be: `'inline'`, `'modal'`, `'panel-left'` or `'panel-right'`.                   |
+| mode                      | `String`              | ❌         | `'auto'`                  | The mode for Annex. Can be: `'mode'` or `'dark'`. When `'dark'` it will override device settings.         |
 | name                      | `String`              | ❌         | `null`                    | The name of the instance. Useful for differentiating between multiple `$annexSearchWidget` instances.     |
 | paths                     | `Object`              | ❌         | (see ...)                 | Map of `css` and `template` URLs that are loaded for an `$annexSearchWidget`.                             |
-| schema                    | `String`              | ❌         | `'webResource-v0.1.0'`    | Name of the schema associated with the Typesense cluster.                                                 |
+| schemaKey                 | `String`              | ❌         | `'webResource-v0.1.0'`    | Name of the schema associated with the Typesense cluster.                                                 |
 | searchOptions             | `Object`              | ✅         | (see ...)                 | Map of search options that are passed in a Typesense search query.                                        |
 | searchRequestMethod       | `String`              | ❌         | `'lifo'`                  | The type of search handling. Currently limited to just `lifo` (last in first out)                         |
 | showOverlay               | `Boolean`             | ❌         | `true`                    | Whether the overlay `HTMLElement` should be rendered.                                                     |

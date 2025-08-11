@@ -122,6 +122,8 @@ window.annexSearch.DependencyLoader.push([], function() {
             }
             this.#__views.root = view;
             this.setAttribute('id', this.#__uuid);
+            let mode = this.getConfig('mode');
+            this.setAttribute('data-annex-search-mode', mode);
             this.setAttribute('data-annex-search-layout', layout);
             this.setAttribute('data-annex-search-overlay', overlay);
             this.setAttribute('data-annex-search-ready', '1');

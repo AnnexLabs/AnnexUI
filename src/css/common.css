@@ -1,7 +1,7 @@
 :host * {
     all: unset;
     display: revert;
-    font-family: var(--annex-search--font-family);
+    font-family: var(--annex-search-font-family);
     box-sizing: border-box;
 }
 :host .clearfix::after {

@@ -62,6 +62,7 @@
  * @todo    [PUNT] - Re-architect things so that config template functions receive data object(s)
  * @todo    [PUNT] - CacheUtils for /css and /templates lookups to speed things up (?)
  * @todo    [PUNT] -- Only for /templates since /css is direct linked (?)
+ * @todo    [PUNT] - Hook escape key to toasts (introduce escape utils class)
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
