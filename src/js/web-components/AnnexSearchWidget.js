@@ -265,21 +265,21 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @see     https://chatgpt.com/c/68942c36-15a0-8328-a9aa-a0a5e682af61
          * @access  public
-         * @param   String eventName
+         * @param   String type
          * @param   Object map (default: {})
          * @return  Boolean
          */
-        dispatchCustomEvent(eventName, map = {}) {
+        dispatchCustomEvent(type, map = {}) {
 
             // CustomEvent
             map.$annexSearchWidget = this;
-            let event = new CustomEvent(eventName, {
+            let event = new CustomEvent(type, {
                 detail: map
             });
 
             // Callback
             let reference = this.getConfig('callbacks') || {},
-                pieces = eventName.split('.');
+                pieces = type.split('.');
             for (var piece of pieces) {
                 reference = reference[piece] ?? null;
                 if (reference === null) {

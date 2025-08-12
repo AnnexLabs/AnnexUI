@@ -2,16 +2,16 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
+ * @todo    - Look into event handling / foundational (e.g. toast set)
+ * @todo    - Look into config updates properly trigger attribute changes?
+ * @todo    -- Event related?
+ * @todo    -- e.g. changing color scheme should do it live
+ * 
  * @todo    - Add in logic to prevent accidental infinite XHR when scrollbar is missing but shouldn't be?
  * @todo    -- Toast to kill UI?
  * @todo    -- Throw error whenever needed (of specific type?) and catch it; then kill?
  * 
  * @todo    - Bug with focus not coming back (related to found.results not being cleared)
- * 
- * @todo    - Look into event handling / foundational (e.g. toast set)
- * @todo    - Look into config updates properly trigger attribute changes?
- * @todo    -- Event related?
- * @todo    -- e.g. changing color scheme should do it live
  * 
  * @todo    - Typesense collection retrieval (for smart templates?)
  * 

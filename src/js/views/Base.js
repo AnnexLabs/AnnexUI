@@ -49,13 +49,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * event
          * 
          * @access  public
-         * @param   String eventName
+         * @param   String type
          * @param   Function handler
          * @param   Boolean once (default: false)
          * @return  Boolean
          */
-        event(eventName, handler, once = false) {
-            this._$element.addEventListener(eventName, handler, {
+        event(type, handler, once = false) {
+            this._$element.addEventListener(type, handler, {
                 once: once
             });
             return true;
@@ -117,12 +117,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * once
          * 
          * @access  public
-         * @param   String eventName
+         * @param   String type
          * @param   Function handler
          * @return  Boolean
          */
-        once(eventName, handler) {
-            this.event(eventName, handler, true);
+        once(type, handler) {
+            this.event(type, handler, true);
             return true;
         }
 

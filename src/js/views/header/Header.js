@@ -96,7 +96,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleHideClickEvent(event) {
-            this.hideWebComponent();
+            this.getWebComponent().hide();
             return false;
         };
 

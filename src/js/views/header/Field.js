@@ -117,7 +117,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             header.hideSpinner();
             let response = typesenseSearchRequest.getResponse();
             this.#__lastTypesenseSearchResponse = response;
-            this.setStateKey('error');
+            this.getView('root').setStateKey('error');
             typesenseSearchRequest.logFailedEvent();
             return true;
         };
@@ -135,7 +135,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             if (value === '') {
                 this.nullifyLastTypesenseSearchResponse();
                 this.clear();
-                this.setStateKey('idle');
+                this.getView('root').setStateKey('idle');
                 this.getWebComponent().dispatchCustomEvent('results.idle');
                 return false;
             }
@@ -198,11 +198,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.getView('root.body.results.found').clearResults();
             if (response.hits.length === 0) {
                 this.getWebComponent().dispatchCustomEvent('results.empty');
-                this.setStateKey('empty');
+                this.getView('root').setStateKey('empty');
                 return false;
             }
             this.getWebComponent().dispatchCustomEvent('results.loaded', {response});
-            this.setStateKey('results');
+            this.getView('root').setStateKey('results');
             let found = this.getView('root.body.results.found');
             found.mountResults(response);
             found.resetFocusedIndex();

@@ -21,6 +21,15 @@ window.annexSearch.DependencyLoader.push([], function() {
         #__data = {};
 
         /**
+         * #__eventTarget
+         * 
+         * @see     https://chatgpt.com/c/682a6c39-abc8-800f-ac2d-9b758dfb8384
+         * @access  private
+         * @var     EventTarget
+         */
+        #__eventTarget = new EventTarget();
+
+        /**
          * constructor
          * 
          * @access  public
@@ -29,6 +38,50 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         constructor($annexSearchWidget) {
             this._$annexSearchWidget = $annexSearchWidget;
+        }
+
+        /**
+         * addEventListener
+         * 
+         * @access  public
+         * @param   String type
+         * @param   Function listener
+         * @param   Boolean once (default: false)
+         * @return  Boolean
+         */
+        addEventListener(type, listener, once = false) {
+            this._eventTarget.addEventListener(type, listener, {
+                once: once
+            });
+            return true;
+        }
+
+        /**
+         * on
+         * 
+         * @access  public
+         * @param   String type
+         * @param   Function listener
+         * @return  Boolean
+         */
+        // on(type, listener) {
+        //     this._eventTarget.addEventListener(type, listener);
+        //     return true;
+        // }
+
+        /**
+         * dispatchEvent
+         * 
+         * @access  public
+         * @param   String type
+         * @param   Object detail (default: {})
+         * @return  Boolean
+         */
+        dispatchEvent(type, detail = {}) {
+            this._eventTarget.dispatchEvent(new CustomEvent(type, {
+                detail: detail
+            }));
+            return true;
         }
 
         /**
@@ -117,11 +170,11 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @access  public
          * @return  Boolean
          */
-        hideWebComponent() {
-            let webComponent = this.getWebComponent();
-            webComponent.hide();
-            return true;
-        }
+        // hideWebComponent() {
+        //     let webComponent = this.getWebComponent();
+        //     webComponent.hide();
+        //     return true;
+        // }
 
         /**
          * set
@@ -143,9 +196,22 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @param   String stateKey
          * @return  Boolean
          */
-        setStateKey(stateKey) {
-            this.getView('root').setStateKey(stateKey);
-            return true;
-        }
+        // setStateKey(stateKey) {
+        //     this.getView('root').setStateKey(stateKey);
+        //     return true;
+        // }
+
+        /**
+         * removeEventListener
+         * 
+         * @access  public
+         * @param   String type
+         * @param   Function listener
+         * @return  Boolean
+         */
+        // removeEventListener(type, listener) {
+        //     this._eventTarget.removeEventListener(type, listener);
+        //     return true;
+        // }
     }
 });
