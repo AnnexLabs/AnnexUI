@@ -303,6 +303,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             // this.#__lastTypesenseSearchResponse = null;
             let $input = this.first('input');
             $input.value = '';
+
+// function blockOnce(e) {
+//   e.stopImmediatePropagation(); // stops other listeners
+//   e.preventDefault();           // cancels default behavior
+//   this.removeEventListener('input', blockOnce, true);
+// }
+
+// $input.addEventListener('input', blockOnce, true);
+
+
+//     $input.select();
+//     document.execCommand('delete');
             return true;
         }
 

@@ -1,3 +1,8 @@
+
+/**
+ * /src/css/layouts/inline.css
+ * 
+ */
 :host([data-annex-search-layout="inline"]) {
     position: static;
     opacity: 1;

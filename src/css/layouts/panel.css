@@ -1,3 +1,13 @@
+
+/**
+ * /src/css/layouts/panel.css
+ * 
+ */
+
+/**
+ * Panel
+ * 
+ */
 :host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content {
     width: 80%;
     max-width: 640px;
@@ -12,6 +22,11 @@
 :host([data-annex-search-layout^="panel"]) [data-view-name="FooterView"] {
     border-radius: 0;
 }
+
+/**
+ * Panel (left)
+ * 
+ */
 :host([data-annex-search-layout="panel-left"]) [data-view-name="RootView"] > div.content {
     left: 0;
     transform: translateX(-100%);
@@ -20,6 +35,11 @@
 :host([data-annex-search-layout="panel-left"][data-annex-search-open="1"]) [data-view-name="RootView"] > div.content {
     transform: translateX(0%);
 }
+
+/**
+ * Panel (right)
+ * 
+ */
 :host([data-annex-search-layout="panel-right"]) [data-view-name="RootView"] > div.content {
     right: 0;
     transform: translateX(100%);

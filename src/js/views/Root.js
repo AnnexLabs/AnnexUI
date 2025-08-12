@@ -32,7 +32,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__addEvents() {
-            // window.annexSearch.KeyboardShortcutUtils.setup();
             this.#__addOverlayClickEventListener();
             return true;
         }
@@ -146,16 +145,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * getMarkup
-         * 
-         * @access  public
-         * @return  String
-         */
-        // getMarkup() {
-        //     return this.markup;
-        // }
-
-        /**
          * render
          * 
          * @access  public
@@ -164,7 +153,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         render() {
             super.render();
             this.#__addEvents();
-console.log(this._$element);
             return true;
         }
 

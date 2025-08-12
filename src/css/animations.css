@@ -1,3 +1,8 @@
+
+/**
+ * /src/css/animations.css
+ * 
+ */
 @keyframes spinning {
     from {
         transform: rotate(0deg);

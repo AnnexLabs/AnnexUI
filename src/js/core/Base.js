@@ -30,6 +30,14 @@ window.annexSearch.DependencyLoader.push([], function() {
         #__eventTarget = new EventTarget();
 
         /**
+         * _$annexSearchWidget
+         * 
+         * @access  protected
+         * @var     null|window.annexSearch.AnnexSearchWidgetWebComponent (defautl: null)
+         */
+        _$annexSearchWidget = null;
+
+        /**
          * constructor
          * 
          * @access  public
@@ -55,19 +63,6 @@ window.annexSearch.DependencyLoader.push([], function() {
             });
             return true;
         }
-
-        /**
-         * on
-         * 
-         * @access  public
-         * @param   String type
-         * @param   Function listener
-         * @return  Boolean
-         */
-        // on(type, listener) {
-        //     this._eventTarget.addEventListener(type, listener);
-        //     return true;
-        // }
 
         /**
          * dispatchEvent
@@ -165,18 +160,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * hideWebComponent
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        // hideWebComponent() {
-        //     let webComponent = this.getWebComponent();
-        //     webComponent.hide();
-        //     return true;
-        // }
-
-        /**
          * set
          * 
          * @access  public
@@ -188,30 +171,5 @@ window.annexSearch.DependencyLoader.push([], function() {
             this.#__data[key] = value;
             return true;
         }
-
-        /**
-         * setStateKey
-         * 
-         * @access  public
-         * @param   String stateKey
-         * @return  Boolean
-         */
-        // setStateKey(stateKey) {
-        //     this.getView('root').setStateKey(stateKey);
-        //     return true;
-        // }
-
-        /**
-         * removeEventListener
-         * 
-         * @access  public
-         * @param   String type
-         * @param   Function listener
-         * @return  Boolean
-         */
-        // removeEventListener(type, listener) {
-        //     this._eventTarget.removeEventListener(type, listener);
-        //     return true;
-        // }
     }
 });

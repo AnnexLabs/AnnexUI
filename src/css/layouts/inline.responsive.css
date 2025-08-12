@@ -1,3 +1,8 @@
+
+/**
+ * /src/css/layouts/inline.responsive.css
+ * 
+ */
 @media only screen
     and (min-device-width: 320px)
     and (max-device-width: 960px) {

@@ -77,6 +77,14 @@
  * @todo    [NOPE] -- Not required if /templates no longer used?
  * @todo    [DONE] - CSS vars re:mode
  * @todo    [DONE] - Toast bug re:destroying
+ * @todo    [PUNT] - When hovering over toast, don't allow to hide
+ * @todo    [PUNT] -- Don't pause timer; wait until after mouseout and then close if appropriate
+ * @todo    [PUNT] - Handle $input history preservation w/ respect to keyboard shortcuts
+ * @todo    [PUNT] -- https://416.io/ss/f/5vo5uq
+ * @todo    [PUNT] -- https://chatgpt.com/c/689ac399-9424-8320-943f-6327140b2045
+ * @todo    [PUNT] -- https://claude.ai/chat/9ae0dab1-7637-4705-879d-65d62656b64a
+ * @todo    [PUNT] -- https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
+ * @todo    [PUNT] -- https://chatgpt.com/c/689ac1bd-644c-8321-9ee6-faa588d56ed1
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -113,17 +121,6 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @var     String (default: 'v0.1.0-dev')
          */
         static #__version = 'v0.1.0-dev';
-
-        /**
-         * #__parseAnnexSearchWidgets
-         * 
-         * @access  private
-         * @static
-         * @return  Boolean
-         */
-        // static #__parseAnnexSearchWidgets() {
-        //     return true;
-        // }
 
         /**
          * #__setupUtils
@@ -266,7 +263,6 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         static setup() {
             this.#__setupUtils();
-            // this.#__parseAnnexSearchWidgets();
             window.customElements.define('annex-search-widget', window.annexSearch.AnnexSearchWidgetWebComponent);
             return true;
         }

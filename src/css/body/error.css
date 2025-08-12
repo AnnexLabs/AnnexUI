@@ -1,3 +1,8 @@
+
+/**
+ * /src/css/body/error.css
+ * 
+ */
 [data-view-name="ErrorBodyView"] {
     display: none;
     justify-content: center;
@@ -10,8 +15,11 @@
 }
 [data-view-name="ErrorBodyView"] > div.graphic {
     background-repeat: no-repeat;
-    width: 128px;
-    height: 104px;
+    /*width: 128px;
+    height: 104px;*/
+    height: 20%;
+    min-height: 104px;
+    width: 100%;
     background-position: center center;
     background-size: contain;
     background-image: var(--annex-search-image-broken-robot);
