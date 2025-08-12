@@ -21,9 +21,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String
          */
         static markup = `
-<%
-    console.log(this);
-%>
 <a data-view-name="ResultFoundResultsBodyView" href="https://{{data.hit.document.hostname}}{{data.hit.document.relativeURL}}">
     <div class="title">{{{data?.hit?.highlight?.title?.snippet || data?.hit?.document?.title || '(unknown title)'}}}</div>
     <div class="body">{{{data?.hit?.highlight?.body?.snippet || data?.hit?.document?.body || '(unknown body)'}}}</div>

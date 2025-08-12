@@ -246,8 +246,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__searchTypesense(options = {}) {
             let header = this.getView('root.header');
-// console.trace();
-// console.log(this);
             header.showSpinner();
             let value = this.first('input').value.trim(),
                 handler = this.#__handleTypesenseSearchResponse.bind(this, options),
