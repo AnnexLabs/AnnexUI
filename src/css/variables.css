@@ -9,7 +9,8 @@
  * Variables (default)
  * 
  */
-:host {
+:host,
+:host([data-annex-search-color-scheme="light"]) {
 
     /**
      * Fonts
@@ -125,7 +126,7 @@
         --annex-search-toast-message-color:                     var(--annex-search-dm-toast-message-color,                      rgba(0, 0, 0, 0.80));
     }
 }
-:host([data-annex-search-mode="dark"]) {
+:host([data-annex-search-color-scheme="dark"]) {
     --annex-search-root-overlay-color:                      var(--annex-search-dm-root-overlay-color,                       rgba(0, 0, 0, 0.30));
     --annex-search-header-background-color:                 var(--annex-search-dm-header-background-color,                  #1a1b25);
     --annex-search-header-label-color:                      var(--annex-search-dm-header-label-color,                       rgba(255, 255, 255, 0.80));

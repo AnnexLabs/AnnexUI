@@ -92,8 +92,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__addInputInputEventListener() {
-            let handler = this.#__handleInputInputEvent.bind(this),
-                $element = this.first('input');
+            let $element = this.first('input'),
+                handler = this.#__handleInputInputEvent.bind(this);
             $element.addEventListener('input', handler);
             return true;
         };

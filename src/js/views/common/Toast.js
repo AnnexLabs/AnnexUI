@@ -14,13 +14,22 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.ToastView = window.annexSearch.ToastView || class ToastView extends window.annexSearch.BaseView {
 
         /**
+         * #__escapable
+         * 
+         * @access  private
+         * @var     Boolean (default: true)
+         */
+        #__escapable = true;
+
+        /**
          * #__hideTimeoutDuration
          * 
          * @access  private
          * @var     Number (default: 5000)
          */
         // #__hideTimeoutDuration = 5000;
-        #__hideTimeoutDuration = 100000;
+        #__hideTimeoutDuration = 1000;
+        // #__hideTimeoutDuration = 100000;
 
         /**
          * #__hideTimeoutReference
@@ -52,15 +61,29 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__showing = false;
 
         /**
+         * constructor
+         * 
+         * @access  public
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @param   null|String title (default: null)
+         * @param   null|String message (default: null)
+         * @return  void
+         */
+        constructor($annexSearchWidget, title = null, message = null) {
+            super($annexSearchWidget);
+            this.set('title', title);
+            this.set('message', message);
+        }
+
+        /**
          * #__addClickEventListener
          * 
          * @access  private
          * @return  Boolean
          */
         #__addClickEventListener() {
-            let $element = this._$element,
-                handler = this.#__handleClickEvent.bind(this);
-            $element.addEventListener('click', handler);
+            let handler = this.#__handleClickEvent.bind(this);
+            this.click(handler)
             return true;
         }
 
@@ -82,10 +105,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__destroy() {
-            // let $webComponent = this.getWebComponent();
             this._$element.remove();
-            // window.annexSearch.ToastUtils.remove($webComponent, this);
             window.annexSearch.ToastUtils.remove(this);
+console.log('removing');
             return true;
         }
 
@@ -97,6 +119,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleClickEvent(event) {
+            if (this.#__escapable === false) {
+                return false;
+            }
             this.hide();
             return true;
         }
@@ -126,6 +151,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__setTimeout() {
+            if (this.#__hideTimeoutDuration === null) {
+                return false;
+            }
             let handler = this.hide.bind(this),
                 timeout = this.#__hideTimeoutDuration,
                 reference = setTimeout(handler, timeout);
@@ -144,7 +172,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this._$element.classList.remove('visible');
             clearTimeout(this.#__hideTimeoutReference);
             var handler = this.#__destroy.bind(this);
-            this._$element.addEventListener('transitionend', handler);
+            this.once('transitionend', handler);
             return true;
         }
 
@@ -163,7 +191,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             return true;
         }
 
-
         /**
          * setHideTimeoutDuration
          * 
@@ -172,7 +199,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         setHideTimeoutDuration(hideTimeoutDuration = null) {
-            this.#__hideTimeoutDuration = hideTimeoutDuration || this.#__hideTimeoutDuration;
+            this.#__hideTimeoutDuration = hideTimeoutDuration;
             return true;
         }
 
@@ -199,6 +226,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         setTitle(title) {
             this.set('title', title);
             this.render();
+            return true;
+        }
+
+        /**
+         * setUnescapable
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        setUnescapable() {
+            this.#__escapable = false;
             return true;
         }
 

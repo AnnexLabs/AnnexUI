@@ -98,6 +98,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             },
 
             /**
+             * colorScheme
+             * 
+             * @access  private
+             * @var     String (default: 'auto')
+             */
+            colorScheme: 'auto',
+
+            /**
              * copy
              * 
              * Series of copy variables which are dotted throughout the UI. For
@@ -166,14 +174,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * @var     String (default: 'modal')
              */
             layout: 'modal',
-
-            /**
-             * mode
-             * 
-             * @access  private
-             * @var     String (default: 'auto')
-             */
-            mode: 'auto',
 
             /**
              * name

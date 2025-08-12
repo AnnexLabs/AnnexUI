@@ -40,6 +40,17 @@
 }
 
 /**
+ * Dead
+ * 
+ */
+:host([data-annex-search-dead="1"]) {
+    pointer-events: none;
+}
+:host([data-annex-search-dead="1"]) div.content > *:not([data-view-name="ToastView"]) {
+/*    opacity: 0.40;*/
+}
+
+/**
  * States (offset)
  * 
  */

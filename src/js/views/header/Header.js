@@ -41,9 +41,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__addClickEventListener() {
-            let handler = this.#__handleClickEvent.bind(this),
-                $element = this._$element;
-            $element.addEventListener('click', handler);
+            let handler = this.#__handleClickEvent.bind(this);
+            this.click(handler);
             return true;
         };
 
@@ -66,8 +65,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__addHideClickEventListener() {
-            let handler = this.#__handleHideClickEvent.bind(this),
-                $element = this.first('.hide');
+            let $element = this.first('.hide'),
+                handler = this.#__handleHideClickEvent.bind(this);
             $element.addEventListener('click', handler);
             return true;
         };
@@ -152,18 +151,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * render
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        render() {
-            super.render();
-            this.#__addEvents();
-            return true;
-        }
-
-        /**
          * hideSpinner
          * 
          * @access  public
@@ -175,6 +162,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             }
             this.#__showingSpinner = false;
             this.getView('root').setAttribute('data-searching', '0');
+            return true;
+        }
+
+        /**
+         * render
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        render() {
+            super.render();
+            this.#__addEvents();
             return true;
         }
 

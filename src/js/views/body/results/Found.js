@@ -74,11 +74,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__addScrollEventListener() {
-            let $element = this._$element,
-                handler = this.#__handleScrollEvent.bind(this),
+            let handler = this.#__handleScrollEvent.bind(this),
                 scrollDebounceDelay = this.#__scrollDebounceDelay,
                 debounced = window.annexSearch.FunctionUtils.debounce(handler, scrollDebounceDelay);
-            $element.addEventListener('scroll', debounced);
+            this.event('scroll', handler)
             return true;
         }
 
@@ -91,18 +90,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__mountResult(hit) {
-            // let view = window.annexSearch.ElementUtils.renderTemplate('resultFoundResultsBody', this._$element);
-            // view.set('hit', hit);
-            // this.#__results.push(view);
-            // view.render();
-            // return true;
-
-
             let view = new window.annexSearch.ResultFoundResultsBodyView(this._$annexSearchWidget),
                 $container = this._$element;
             view.set('hit', hit);
             this.#__results.push(view);
-            // this.setView('results', view);
             view.mount($container);
             return true;
         }

@@ -14,6 +14,14 @@ window.annexSearch.DependencyLoader.push([], function() {
     window.annexSearch.AnnexSearchWidgetWebComponent = window.annexSearch.AnnexSearchWidgetWebComponent || class extends HTMLElement {
 
         /**
+         * #__dead
+         * 
+         * @access  private
+         * @var     Boolean (default: false)
+         */
+        #__dead = false;
+
+        /**
          * #__helpers
          * 
          * @access  private
@@ -131,8 +139,8 @@ window.annexSearch.DependencyLoader.push([], function() {
                 overlay = 0;
             }
             this.setAttribute('id', this.#__uuid);
-            let mode = this.getConfig('mode');
-            this.setAttribute('data-annex-search-mode', mode);
+            let colorScheme = this.getConfig('colorScheme');
+            this.setAttribute('data-annex-search-color-scheme', colorScheme);
             this.setAttribute('data-annex-search-layout', layout);
             this.setAttribute('data-annex-search-overlay', overlay);
             this.setAttribute('data-annex-search-ready', '1');
@@ -170,7 +178,6 @@ window.annexSearch.DependencyLoader.push([], function() {
             let helper = this.getHelper('config'),
                 handler = this.#__setupRoot.bind(this),
                 promise = helper.loadStylesheets(this)
-                    // .then(helper.loadTemplates.bind(helper))
                     .then(handler)
                     // .catch(function(error) {
                     //     console.log(error);
@@ -240,6 +247,17 @@ window.annexSearch.DependencyLoader.push([], function() {
                 bubbles: true
             }));
             return true;
+        }
+
+        /**
+         * dead
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        dead() {
+            let response = this.#__dead;
+            return response;
         }
 
         /**
@@ -342,6 +360,24 @@ window.annexSearch.DependencyLoader.push([], function() {
             this.#__views.root.blur();
             this.setAttribute('data-annex-search-open', '0');
             this.setAttribute('inert', '');
+            return true;
+        }
+
+        /**
+         * kill
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        kill() {
+            if (this.#__dead === true) {
+                return false;
+            }
+            this.#__dead = true;
+            this.setAttribute('data-annex-search-dead', '1');
+            // this.setAttribute('inert');
+            let toast = this.showToast('Search disabled', 'Apologies but search has been disabled for the time being.', null);
+            toast.setUnescapable();
             return true;
         }
 
@@ -453,23 +489,15 @@ window.annexSearch.DependencyLoader.push([], function() {
             if (this.#__showing === true) {
                 return false;
             }
-// console.log('eff');
-// console.trace();
             window.annexSearch.AnnexSearch.setActive(this);
             this.dispatchCustomEvent('root.show');
-// console.log('a');
             this.#__showing = true;
             // this.#__setStyles();
-// console.log('b');
             this.setAttribute('data-annex-search-open', '1');
             this.removeAttribute('inert');
-// console.log('b1');
             let found = this.#__views.root.getView('root.body.results.found'),
                 results = found.getResults();
-// console.log('c');
-// console.log(results);
             if (results.length === 0) {
-// console.log('a');
                 this.#__views.root.focus();
                 return true;
             }
@@ -503,12 +531,14 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @param   String title
          * @param   String message
          * @param   null|Number hideTimeoutDuration (default: null)
-         * @return  Boolean
+         * @return  window.annexSearch.ToastView
          */
         showToast(title, message, hideTimeoutDuration = null) {
-            let options = {title, message, hideTimeoutDuration},
-                response = window.annexSearch.ToastUtils.show(this, options);
-            return response;
+            let options = {title, message},
+                view = window.annexSearch.ToastUtils.build(this, options);
+            view.setHideTimeoutDuration(hideTimeoutDuration);
+            view.show();
+            return view;
         }
 
         /**

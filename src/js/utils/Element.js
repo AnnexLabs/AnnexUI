@@ -66,28 +66,28 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         };
 
         /**
-         * __getCompilerData
+         * #__getCompilerData
          * 
-         * @access  protected
+         * @access  private
          * @static
          * @param   window.annexSearch.BaseView view
          * @return  Object
          */
-        static __getCompilerData(view) {
-            let data = view.get();
+        static #__getCompilerData(view) {
+            let data = Object.assign({}, view.get());
             data.config = view.getHelper('config').get();
             return data;
         }
 
         /**
-         * __getConfigTemplateKey
+         * #__getConfigTemplateKey
          * 
          * @access  private
          * @static
          * @param   window.annexSearch.BaseView view
          * @return  String
          */
-        static __getConfigTemplateKey(view) {
+        static #__getConfigTemplateKey(view) {
             let key = view.constructor.name;
             key = key.replace(/View$/, '');
             key = key.charAt(0).toLowerCase() + key.slice(1);
@@ -95,7 +95,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
-         * __getTemplateMarkup
+         * #__getTemplateMarkup
          * 
          * @see     https://chatgpt.com/c/68990349-0238-832f-bf0f-3bf14d1a7377
          * @access  private
@@ -104,19 +104,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @param   null|Function mutator (default: null)
          * @return  null|String
          */
-        static __getTemplateMarkup(view, mutator = null) {
+        static #__getTemplateMarkup(view, mutator = null) {
             let $annexSearchWidget = view.getWebComponent(),
-                key = this.__getConfigTemplateKey(view),
+                key = this.#__getConfigTemplateKey(view),
                 markup = $annexSearchWidget.getHelper('config').get('templates')[key] || view.constructor.markup;
             if (typeof markup === 'function') {
-                let data = view.get();
-                markup = markup(data);
+                let data = this.#__getCompilerData(view);
+                markup = markup.call(view, data);
             }
+            markup = markup || view.constructor.markup;
             return markup;
         }
 
         /**
-         * __processMarkup
+         * #__processMarkup
          * 
          * @note    Ordered
          * @access  private
@@ -124,7 +125,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @param   String markup
          * @return  String
          */
-        static __processMarkup(markup) {
+        static #__processMarkup(markup) {
             let response = markup;
             response = response.replace(/\{\{\{([\s\S]+?)\}\}\}/g, '<%- $1 %>');
             response = response.replace(/\{\{([\s\S]+?)\}\}/g, '<%= $1 %>');
@@ -145,17 +146,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          */
         static renderViewElement(view, mutator = null) {
             mutator = mutator || window.annexSearch.FunctionUtils.getPassThrough()
-            let markup = this.__getTemplateMarkup(view),
+            let markup = this.#__getTemplateMarkup(view),
                 compiled = window.annexSearch.libs._.template(
-                    this.__processMarkup(markup),
+                    this.#__processMarkup(markup),
                     this.#__options
                 ),
-                data = this.__getCompilerData(view),
-                response = compiled(data),
+                data = this.#__getCompilerData(view),
+                response = compiled.call(view, data),
                 mutated = mutator(response),
                 parser = new DOMParser(),
                 $document = parser.parseFromString(mutated, 'text/html'),
                 $element = $document.body.firstElementChild;
+            $element.uuid = window.annexSearch.StringUtils.generateUUID();
             return $element;
         }
 

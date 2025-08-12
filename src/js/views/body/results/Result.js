@@ -21,6 +21,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String
          */
         static markup = `
+<%
+    console.log(this);
+%>
 <a data-view-name="ResultFoundResultsBodyView" href="https://{{data.hit.document.hostname}}{{data.hit.document.relativeURL}}">
     <div class="title">{{{data?.hit?.highlight?.title?.snippet || data?.hit?.document?.title || '(unknown title)'}}}</div>
     <div class="body">{{{data?.hit?.highlight?.body?.snippet || data?.hit?.document?.body || '(unknown body)'}}}</div>
@@ -34,9 +37,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__addClickEventListener() {
-            let $element = this._$element,
-                handler = this.#__handleClickEvent.bind(this);
-            $element.addEventListener('click', handler);
+            let handler = this.#__handleClickEvent.bind(this);
+            this.click(handler);
             return true;
         }
 
@@ -60,9 +62,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__addFocusEventListener() {
-            let $element = this._$element,
-                handler = this.#__handleFocusEvent.bind(this);
-            $element.addEventListener('focus', handler);
+            let handler = this.#__handleFocusEvent.bind(this);
+            this.event('focus', handler);
             return true;
         }
 
@@ -76,9 +77,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             if (this._$element.hasAttribute('href') === true) {
                 return false;
             }
-            let $element = this._$element,
-                handler = this.#__handleKeydownEvent.bind(this);
-            $element.addEventListener('keydown', handler);
+            let handler = this.#__handleKeydownEvent.bind(this);
+            this.event('keydown', handler);
             return true;
         }
 

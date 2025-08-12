@@ -2,15 +2,21 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - Bug with focus not coming back (related to found.results not being cleared)
- * 
  * @todo    - Add in logic to prevent accidental infinite XHR when scrollbar is missing but shouldn't be?
  * @todo    -- Toast to kill UI?
+ * @todo    -- Throw error whenever needed (of specific type?) and catch it; then kill?
+ * 
+ * @todo    - Bug with focus not coming back (related to found.results not being cleared)
+ * 
+ * @todo    - Look into event handling / foundational (e.g. toast set)
+ * @todo    - Look into config updates properly trigger attribute changes?
+ * @todo    -- Event related?
+ * @todo    -- e.g. changing color scheme should do it live
+ * 
+ * @todo    - Typesense collection retrieval (for smart templates?)
  * 
  * @todo    - Bug with multiple open and query-ing
  * @todo    - Multiple bugs (various)
- * 
- * @todo    - Typesense collection retrieval (for smart templates?)
  * 
  * @todo    [DONE] - dark mode
  * @todo    [DONE] - mobile
@@ -53,12 +59,12 @@
  * @todo    [DONE] - Toast positioning...
  * @todo    [DONE] -- See getBoundingClientRect
  * @todo    [DONE] -- div.content with overflow: hidden;
- * @todo    [PUNT] - Further cleanup of error handling (e.g. don't define messages in TypesenseHelper?)
+ * @todo    [DONE] - Further cleanup of error handling (e.g. don't define messages in TypesenseHelper?)
  * @todo    [PUNT] - UI for customizing and storing it on a server
- * @todo    [PUNT] - Arch cleanup to ensure object instances are directly tied to the respective $annexSearchWidget
- * @todo    [PUNT] -- Right now, this is messy. Should be standardized
+ * @todo    [DONE] - Arch cleanup to ensure object instances are directly tied to the respective $annexSearchWidget
+ * @todo    [DONE] -- Right now, this is messy. Should be standardized
  * @todo    [DONE] - Error logging cleanup
- * @todo    [PUNT] - Re-architect things so that config template functions receive data object(s)
+ * @todo    [DONE] - Re-architect things so that config template functions receive data object(s)
  * @todo    [PUNT] - CacheUtils for /css and /templates lookups to speed things up (?)
  * @todo    [PUNT] -- Only for /templates since /css is direct linked (?)
  * @todo    [PUNT] - Hook escape key to toasts (introduce escape utils class)
@@ -69,6 +75,8 @@
  * @todo    [DONE] - State management for updating data while toast is showing
  * @todo    [NOPE] - ensure multiple instantiations happen sequentially (to allow for /templates caching)
  * @todo    [NOPE] -- Not required if /templates no longer used?
+ * @todo    [DONE] - CSS vars re:mode
+ * @todo    [DONE] - Toast bug re:destroying
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

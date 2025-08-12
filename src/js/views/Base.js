@@ -34,6 +34,34 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         }
 
         /**
+         * click
+         * 
+         * @access  public
+         * @param   Function handler
+         * @return  Boolean
+         */
+        click(handler) {
+            this.event('click', handler);
+            return true;
+        }
+
+        /**
+         * event
+         * 
+         * @access  public
+         * @param   String eventName
+         * @param   Function handler
+         * @param   Boolean once (default: false)
+         * @return  Boolean
+         */
+        event(eventName, handler, once = false) {
+            this._$element.addEventListener(eventName, handler, {
+                once: once
+            });
+            return true;
+        }
+
+        /**
          * find
          * 
          * @access  public
@@ -82,6 +110,19 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
             this.render();
             let $element = this._$element;
             $container.appendChild($element);
+            return true;
+        }
+
+        /**
+         * once
+         * 
+         * @access  public
+         * @param   String eventName
+         * @param   Function handler
+         * @return  Boolean
+         */
+        once(eventName, handler) {
+            this.event(eventName, handler, true);
             return true;
         }
 

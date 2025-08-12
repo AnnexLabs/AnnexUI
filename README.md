@@ -124,7 +124,7 @@ so.
 | keyboardShortcut          | `null` \|\| `String`  | ❌         | `'⌘k'`                    | The keyboard shortcut that should be used to toggle Annex (does not apply to `inline` instances).         |
 | highlightTagName          | `String`              | ❌         | `'MARK'`                  | The `HTMLElement` that should be rendered around query matches.                                           |
 | layout                    | `String`              | ❌         | `'modal'`                 | The layout for Annex. Can be: `'inline'`, `'modal'`, `'panel-left'` or `'panel-right'`.                   |
-| mode                      | `String`              | ❌         | `'auto'`                  | The mode for Annex. Can be: `'mode'` or `'dark'`. When `'dark'` it will override device settings.         |
+| colorScheme               | `String`              | ❌         | `'auto'`                  | The color scheme for Annex. Can be: `'auto'`, `'light'` or `'dark'`.                                      |
 | name                      | `String`              | ❌         | `null`                    | The name of the instance. Useful for differentiating between multiple `$annexSearchWidget` instances.     |
 | paths                     | `Object`              | ❌         | (see ...)                 | Map of `css` and `template` URLs that are loaded for an `$annexSearchWidget`.                             |
 | schemaKey                 | `String`              | ❌         | `'webResource-v0.1.0'`    | Name of the schema associated with the Typesense cluster.                                                 |
@@ -267,24 +267,27 @@ $('annex-search-widget').addEventListener('root.show', function(customEvent) {
 
 ### Overriding templates
 
+Template functions receive a single `data` object. Where specified (see below)
+the `data` object may contain properties beyond the `object.config` object.
 
-| Config property key               | Description                                                                                       | Params                |
-| ----------------------------------| --------------------------------------------------------------------------------------------------|-------------------    |
-| `rootView`                        | The "root" of the search UI. Broadly, a container for other containers.                           | `null`                |
-| `bodyView`                        | Contains the body of search results, including errors, idle states and empty result states.       | `null`                |
-| `errorBodyView`                   | Element that communicates an error took place during search.                                      | `null` ⚠️             |
-| `idleBodyView`                    | Element that communicates that no search has taken place yet.                                     | `null`                |
-| `emptyResultsBodyView`            | Element that communicates no matching search results were found.                                  | `null` ⚠️             |
-| `foundResultsBodyView`            | Element that contains a list of results.                                                          | `null`                |
-| `resultFoundResultsBodyView`      | The result element itself.                                                                        | `{hit}`               |
-| `resultsBodyView`                 | A container for the broad concept of results.                                                     | `{response}`          |
-| `toastView`                       | An element to communicate an alert.                                                               | `title`, `message`    |
-| `brandingBarFooterView`           | Element that communicates the Annex brand.                                                        | `null`                |
-| `footerView`                      | Container element for footer elements.                                                            | `null`                |
-| `statusBarFooterView`             | Element that communicates some status around the search UX.                                       | `null`                |
-| `fieldHeaderView`                 | Element that contains the keyboard shortcut, input field, hide button and spinner.                | `null`                |
-| `headerView`                      | Element that contains the `$fieldHeaderView`.                                                     | `null`                |
-| `metaBarHeaderView`               | Element that communicates meta data about a search (if any).                                      | `{response}`          |
+
+| Config property key               | Description                                                                                       | `data` properties                 |
+| ----------------------------------| --------------------------------------------------------------------------------------------------|-----------------------------------|
+| `root`                            | The "root" of the search UI. Broadly, a container for other containers.                           | `config`                          |
+| `body`                            | Contains the body of search results, including errors, idle states and empty result states.       | `config`                          |
+| `errorBody`                       | Element that communicates an error took place during search.                                      | `config` ⚠️                       |
+| `idleBody`                        | Element that communicates that no search has taken place yet.                                     | `config`                          |
+| `emptyResultsBody`                | Element that communicates no matching search results were found.                                  | `config` ⚠️                       |
+| `foundResultsBody`                | Element that contains a list of results.                                                          | `config`                          |
+| `resultFoundResultsBody`          | The result element itself.                                                                        | `config, hit                      |
+| `resultsBody`                     | A container for the broad concept of results.                                                     | `config, response`                |
+| `toast`                           | An element to communicate an alert.                                                               | `config, `title`, `message`       |
+| `brandingBarFooter`               | Element that communicates the Annex brand.                                                        | `config`                          |
+| `footer`                          | Container element for footer elements.                                                            | `config`                          |
+| `statusBarFooter`                 | Element that communicates some status around the search UX.                                       | `config`                          |
+| `fieldHeader`                     | Element that contains the keyboard shortcut, input field, hide button and spinner.                | `config`                          |
+| `header`                          | Element that contains the `$fieldHeader` element.                                                 | `config`                          |
+| `metaBarHeader`                   | Element that communicates meta data about a search (if any).                                      | `config, response`                |
 
 
 <hr />

@@ -44,9 +44,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__addOverlayClickEventListener() {
-            let $element = this._$element,
-                handler = this.#__handleOverlayClickEvent.bind(this);
-            $element.addEventListener('click', handler);
+            let handler = this.#__handleOverlayClickEvent.bind(this);
+            this.click(handler);
             return true;
         };
 

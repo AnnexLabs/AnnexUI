@@ -28,10 +28,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @static
          * @return  Array
          */
-        static all() {
-            let toasts = this.#__toasts;
-            return toasts;
-        }
+        // static all() {
+        //     let toasts = this.#__toasts;
+        //     return toasts;
+        // }
 
         /**
          * get
@@ -69,23 +69,21 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
-         * show
+         * build
          * 
          * @access  public
          * @static
          * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
-         * @param   Object options
-         * @return  Boolean
+         * @return  window.annexSearch.ToastView
          */
-        static show($annexSearchWidget, options) {
-            let view = new window.annexSearch.ToastView($annexSearchWidget),
+        static build($annexSearchWidget, options) {
+            let title = options.title,
+                message = options.message,
+                view = new window.annexSearch.ToastView($annexSearchWidget, title, message),
                 $container = $annexSearchWidget.shadow.querySelector('div.content');
-            view.set('title', options.title);
-            view.set('message', options.message);
             this.#__toasts.push(view);
             view.mount($container);
-            view.show();
-            return true;
+            return view;
         }
 
         /**
