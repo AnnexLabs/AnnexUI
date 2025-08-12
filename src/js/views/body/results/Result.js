@@ -14,13 +14,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.ResultFoundResultsBodyView = window.annexSearch.ResultFoundResultsBodyView || class ResultFoundResultsBodyView extends window.annexSearch.BaseView {
 
         /**
-         * #__markup
+         * _markup
          * 
-         * @access  public
+         * @access  protected
          * @static
          * @var     String
          */
-        static markup = `
+        _markup = `
 <a data-view-name="ResultFoundResultsBodyView" href="https://{{data.hit.document.hostname}}{{data.hit.document.relativeURL}}">
     <div class="title">{{{data?.hit?.highlight?.title?.snippet || data?.hit?.document?.title || '(unknown title)'}}}</div>
     <div class="body">{{{data?.hit?.highlight?.body?.snippet || data?.hit?.document?.body || '(unknown body)'}}}</div>

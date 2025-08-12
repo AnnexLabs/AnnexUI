@@ -14,13 +14,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.ErrorBodyView = window.annexSearch.ErrorBodyView || class ErrorBodyView extends window.annexSearch.BaseView {
 
         /**
-         * #__markup
+         * _markup
          * 
-         * @access  public
+         * @access  protected
          * @static
          * @var     String
          */
-        static markup = `
+        _markup = `
 <div data-view-name="ErrorBodyView">
     <%
         let message = data?.config?.copy?.error?.message ?? 'Something went wrong...';

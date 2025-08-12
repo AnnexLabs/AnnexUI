@@ -14,13 +14,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.IdleBodyView = window.annexSearch.IdleBodyView || class IdleBodyView extends window.annexSearch.BaseView {
 
         /**
-         * #__markup
+         * _markup
          * 
-         * @access  public
+         * @access  protected
          * @static
          * @var     String
          */
-        static markup = `
+        _markup = `
 <div data-view-name="IdleBodyView">
     <%
         let message = data?.config?.copy?.idle?.message ?? 'Start typing to begin your search...';

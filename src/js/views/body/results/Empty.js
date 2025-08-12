@@ -14,13 +14,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.EmptyResultsBodyView = window.annexSearch.EmptyResultsBodyView || class EmptyResultsBodyView extends window.annexSearch.BaseView {
 
         /**
-         * #__markup
+         * _markup
          * 
-         * @access  public
+         * @access  protected
          * @static
          * @var     String
          */
-        static markup = `
+        _markup = `
 <div data-view-name="EmptyResultsBodyView">
     <%
         let message = data?.config?.copy?.empty?.message ?? 'Something went wrong...';

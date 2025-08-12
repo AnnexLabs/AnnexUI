@@ -100,6 +100,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         }
 
         /**
+         * getMarkup
+         * 
+         * @access  public
+         * @return  String
+         */
+        getMarkup() {
+            let markup = this._markup;
+            return markup;
+        }
+
+        /**
          * mount
          * 
          * @access  public

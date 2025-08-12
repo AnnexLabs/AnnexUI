@@ -14,6 +14,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.ToastView = window.annexSearch.ToastView || class ToastView extends window.annexSearch.BaseView {
 
         /**
+         * #__duration
+         * 
+         * @access  private
+         * @var     Number (default: window.annexSearch.ToastUtils.getDuration())
+         */
+        #__duration = window.annexSearch.ToastUtils.getDuration();
+
+        /**
          * #__escapable
          * 
          * @access  private
@@ -22,43 +30,33 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__escapable = true;
 
         /**
-         * #__hideTimeoutDuration
-         * 
-         * @access  private
-         * @var     Number (default: 5000)
-         */
-        // #__hideTimeoutDuration = 5000;
-        #__hideTimeoutDuration = 1000;
-        // #__hideTimeoutDuration = 100000;
-
-        /**
-         * #__hideTimeoutReference
-         * 
-         * @access  private
-         * @var     null|Number (default: null)
-         */
-        #__hideTimeoutReference = null;
-
-        /**
-         * #__markup
-         * 
-         * @access  public
-         * @static
-         * @var     String
-         */
-        static markup = `
-<div data-view-name="ToastView">
-    <div class="title"><%= (data?.title ?? '(no title)') %></div>
-    <div class="message"><%= (data?.message ?? '(no message)') %></div>
-</div>`;
-
-        /**
          * #__showing
          * 
          * @access  private
          * @var     Boolean (default: false)
          */
         #__showing = false;
+
+        /**
+         * #__timeout
+         * 
+         * @access  private
+         * @var     null|Number (default: null)
+         */
+        #__timeout = null;
+
+        /**
+         * _markup
+         * 
+         * @access  protected
+         * @static
+         * @var     String
+         */
+        _markup = `
+<div data-view-name="ToastView">
+    <div class="title"><%= (data?.title ?? '(no title)') %></div>
+    <div class="message"><%= (data?.message ?? '(no message)') %></div>
+</div>`;
 
         /**
          * constructor
@@ -151,13 +149,14 @@ console.log('removing');
          * @return  Boolean
          */
         #__setTimeout() {
-            if (this.#__hideTimeoutDuration === null) {
+            if (this.#__duration === null) {
+// console.log('a');
                 return false;
             }
             let handler = this.hide.bind(this),
-                timeout = this.#__hideTimeoutDuration,
-                reference = setTimeout(handler, timeout);
-            this.#__hideTimeoutReference = reference;
+                duration = this.#__duration,
+                reference = setTimeout(handler, duration);
+            this.#__timeout = reference;
             return true;
         };
 
@@ -170,7 +169,7 @@ console.log('removing');
         hide() {
             this.#__showing = false;
             this._$element.classList.remove('visible');
-            clearTimeout(this.#__hideTimeoutReference);
+            clearTimeout(this.#__timeout);
             var handler = this.#__destroy.bind(this);
             this.once('transitionend', handler);
             return true;
@@ -192,14 +191,14 @@ console.log('removing');
         }
 
         /**
-         * setHideTimeoutDuration
+         * setDuration
          * 
          * @access  public
-         * @param   null|Number hideTimeoutDuration (default: null)
+         * @param   null|Number duration (default: null)
          * @return  Boolean
          */
-        setHideTimeoutDuration(hideTimeoutDuration = null) {
-            this.#__hideTimeoutDuration = hideTimeoutDuration;
+        setDuration(duration = null) {
+            this.#__duration = duration;
             return true;
         }
 

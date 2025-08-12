@@ -13,6 +13,15 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
     window.annexSearch.ToastUtils = window.annexSearch.ToastUtils || class extends window.annexSearch.BaseUtils {
 
         /**
+         * #__duration
+         * 
+         * @access  private
+         * @static
+         * @var     Number (default: 5000)
+         */
+        static #__duration = 5000;
+
+        /**
          * #__toasts
          * 
          * @access  private
@@ -34,6 +43,25 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         // }
 
         /**
+         * build
+         * 
+         * @access  public
+         * @static
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @param   Object options
+         * @return  window.annexSearch.ToastView
+         */
+        static build($annexSearchWidget, options) {
+            let title = options.title,
+                message = options.message,
+                view = new window.annexSearch.ToastView($annexSearchWidget, title, message),
+                $container = $annexSearchWidget.shadow.querySelector('div.content');
+            this.#__toasts.push(view);
+            view.mount($container);
+            return view;
+        }
+
+        /**
          * get
          * 
          * @access  public
@@ -52,6 +80,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
+         * getDuration
+         * 
+         * @access  public
+         * @static
+         * @return  Number
+         */
+        static getDuration() {
+            let duration = this.#__duration;
+            return duration;
+        }
+
+        /**
          * remove
          * 
          * @access  public
@@ -66,24 +106,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             }
             this.#__toasts.splice(index, 1);
             return true;
-        }
-
-        /**
-         * build
-         * 
-         * @access  public
-         * @static
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
-         * @return  window.annexSearch.ToastView
-         */
-        static build($annexSearchWidget, options) {
-            let title = options.title,
-                message = options.message,
-                view = new window.annexSearch.ToastView($annexSearchWidget, title, message),
-                $container = $annexSearchWidget.shadow.querySelector('div.content');
-            this.#__toasts.push(view);
-            view.mount($container);
-            return view;
         }
 
         /**

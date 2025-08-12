@@ -530,13 +530,14 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @access  public
          * @param   String title
          * @param   String message
-         * @param   null|Number hideTimeoutDuration (default: null)
+         * @param   null|Number duration (default: window.annexSearch.ToastUtils.getDuration())
          * @return  window.annexSearch.ToastView
          */
-        showToast(title, message, hideTimeoutDuration = null) {
+        showToast(title, message, duration = window.annexSearch.ToastUtils.getDuration()) {
+// console.log(duration);
             let options = {title, message},
                 view = window.annexSearch.ToastUtils.build(this, options);
-            view.setHideTimeoutDuration(hideTimeoutDuration);
+            view.setDuration(duration);
             view.show();
             return view;
         }

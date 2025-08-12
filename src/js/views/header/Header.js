@@ -22,13 +22,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__showingSpinner = false;
 
         /**
-         * #__markup
+         * _markup
          * 
-         * @access  public
+         * @access  protected
          * @static
          * @var     String
          */
-        static markup = `
+        _markup = `
 <div data-view-name="HeaderView">
     <div class="hide icon icon-plus icon-size-14"></div>
     <div class="spinner spinning icon icon-spinner"></div>

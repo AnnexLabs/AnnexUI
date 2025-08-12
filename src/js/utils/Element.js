@@ -95,6 +95,28 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
+         * #__getProcessedMarkup
+         * 
+         * @access  private
+         * @static
+         * @param   window.annexSearch.BaseView view
+         * @param   null|Function mutator
+         * @return  HTMLElement
+         */
+        static #__getProcessedMarkup(view, mutator) {
+            mutator = mutator || window.annexSearch.FunctionUtils.getPassThrough();
+            let markup = this.#__getTemplateMarkup(view),
+                compiled = window.annexSearch.libs._.template(
+                    this.#__replaceMarkupVariables(markup),
+                    this.#__options
+                ),
+                data = this.#__getCompilerData(view),
+                response = compiled.apply(view, [data]),
+                mutated = mutator(response);
+            return mutated;
+        }
+
+        /**
          * #__getTemplateMarkup
          * 
          * @see     https://chatgpt.com/c/68990349-0238-832f-bf0f-3bf14d1a7377
@@ -107,17 +129,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         static #__getTemplateMarkup(view, mutator = null) {
             let $annexSearchWidget = view.getWebComponent(),
                 key = this.#__getConfigTemplateKey(view),
-                markup = $annexSearchWidget.getHelper('config').get('templates')[key] || view.constructor.markup;
+                markup = $annexSearchWidget.getHelper('config').get('templates')[key] || view.getMarkup();
             if (typeof markup === 'function') {
                 let data = this.#__getCompilerData(view);
-                markup = markup.call(view, data);
+                markup = markup.apply(view, [data]);
             }
-            markup = markup || view.constructor.markup;
+            markup = markup || view.getMarkup();
             return markup;
         }
 
         /**
-         * #__processMarkup
+         * #__replaceMarkupVariables
          * 
          * @note    Ordered
          * @access  private
@@ -125,7 +147,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @param   String markup
          * @return  String
          */
-        static #__processMarkup(markup) {
+        static #__replaceMarkupVariables(markup) {
             let response = markup;
             response = response.replace(/\{\{\{([\s\S]+?)\}\}\}/g, '<%- $1 %>');
             response = response.replace(/\{\{([\s\S]+?)\}\}/g, '<%= $1 %>');
@@ -145,17 +167,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @return  HTMLElement
          */
         static renderViewElement(view, mutator = null) {
-            mutator = mutator || window.annexSearch.FunctionUtils.getPassThrough()
-            let markup = this.#__getTemplateMarkup(view),
-                compiled = window.annexSearch.libs._.template(
-                    this.#__processMarkup(markup),
-                    this.#__options
-                ),
-                data = this.#__getCompilerData(view),
-                response = compiled.call(view, data),
-                mutated = mutator(response),
+            let markup = this.#__getProcessedMarkup(view, mutator),
                 parser = new DOMParser(),
-                $document = parser.parseFromString(mutated, 'text/html'),
+                $document = parser.parseFromString(markup, 'text/html'),
                 $element = $document.body.firstElementChild;
             $element.uuid = window.annexSearch.StringUtils.generateUUID();
             return $element;

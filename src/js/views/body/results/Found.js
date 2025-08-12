@@ -46,13 +46,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__scrollRatio = 0.65;
 
         /**
-         * #__markup
+         * _markup
          * 
-         * @access  public
+         * @access  protected
          * @static
          * @var     String
          */
-        static markup = `
+        _markup = `
 <div data-view-name="FoundResultsBodyView">
 </div>`;
 

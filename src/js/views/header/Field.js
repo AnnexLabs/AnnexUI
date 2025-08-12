@@ -55,13 +55,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__timeout = null;
 
         /**
-         * #__markup
+         * _markup
          * 
-         * @access  public
+         * @access  protected
          * @static
          * @var     String
          */
-        static markup = `
+        _markup = `
 <div class="clearfix" data-view-name="FieldHeaderView">
     <%
         let label = data?.config?.keyboardShortcut ?? '';
