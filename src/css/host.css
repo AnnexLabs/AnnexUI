@@ -48,7 +48,7 @@
  * Dead
  * 
  */
-:host([data-annex-search-dead="1"]) {
+:host([data-annex-search-dead="1"]) [data-view-name="RootView"] > div.content > div {
     pointer-events: none;
 }
 :host([data-annex-search-dead="1"]) div.content > *:not([data-view-name="ToastView"]) {

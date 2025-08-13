@@ -2,14 +2,6 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - Add in logic to prevent accidental infinite XHR when scrollbar is missing but shouldn't be?
- * @todo    -- Kill logic/UX/UI
- * @todo    -- try/catch blocks
- * @todo    -- Look into copyToClipboard catch
- * @todo    -- Cleaner error throwing? https://416.io/ss/f/njj7y3
- * @todo    -- Toast to kill UI?
- * @todo    -- Throw error whenever needed (of specific type?) and catch it; then kill?
- * 
  * @todo    - Bug with focus not coming back (related to found.results not being cleared)
  * 
  * @todo    - Bug with multiple open and query-ing
@@ -96,6 +88,13 @@
  * @todo    [PUNT] - Hook up all config properties with respective custom event listeners (e.g. placeholder swapping)
  * @todo    [PUNT] -- This will require re-rendering of views (which should be fine now..)
  * @todo    [PUNT] - Test CSS vars (see panel-right.inc.php)
+ * @todo    [DONE] - Add in logic to prevent accidental infinite XHR when scrollbar is missing but shouldn't be?
+ * @todo    [DONE] - Kill logic/UX/UI
+ * @todo    [DONE] -- Toast to kill UI?
+ * @todo    [PUNT] - try/catch blocks
+ * @todo    [DONE] - Look into copyToClipboard catch
+ * @todo    [PUNT] - Cleaner error throwing? https://416.io/ss/f/njj7y3
+ * @todo    [PUNT] - Throw error whenever needed (of specific type?) and catch it; then kill?
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

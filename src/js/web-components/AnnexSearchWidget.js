@@ -31,6 +31,14 @@ window.annexSearch.DependencyLoader.push([], function() {
         #__helpers = {};
 
         /**
+         * #__mounted
+         * 
+         * @access  private
+         * @var     Boolean (default: false)
+         */
+        #__mounted = false;
+
+        /**
          * #__ready
          * 
          * @access  private
@@ -70,21 +78,26 @@ window.annexSearch.DependencyLoader.push([], function() {
         /**
          * #__getContainer
          * 
-         * @throws  Error
          * @access  public
          * @param   null|HTMLElement $container (default: null)
          * @return  null|HTMLElement
          */
         #__getContainer($container = null) {
             $container = $container || this.getConfig('$container') || null;
-            if ($container === null) {
-                if (this.getConfig('layout') === 'inline') {
-                    let message = window.annexSearch.ErrorUtils.getMessage('annexSearchWidget.ccontainer.error');
+            if (this.getConfig('layout') === 'inline') {
+                if ($container === null) {
+                    let message = window.annexSearch.ErrorUtils.getMessage('annexSearchWidget.container.null');
                     this.#__helpers.webComponentUI.error(message);
                     return null;
                 }
-                $container = (document.body || document.head || document.documentElement);
+                return $container;
             }
+            if ($container === null) {
+                $container = (document.body || document.head || document.documentElement);
+                return $container;
+            }
+            // let message = window.annexSearch.ErrorUtils.getMessage('annexSearchWidget.container.notNull');
+            // this.#__helpers.webComponentUI.error(message);
             return $container;
         }
 
@@ -101,6 +114,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  window.annexSearch.AnnexSearchWidgetWebComponent
          */
         #__handleReadyEvent() {
+            this.#__mounted = true;
             this.#__ready = true;
             this.dispatchCustomEvent('ready');
             return this;
@@ -138,22 +152,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * #__render
-         * 
-         * @access  private
-         * @return  Promise
-         */
-        #__render() {
-            let handler = this.#__handleRenderEvent.bind(this),
-                promise = this.#__helpers.config.loadStylesheets(this)
-                    .then(handler)
-                    // .catch(function(error) {
-                    //     console.log(error);
-                    // });
-            return promise;
-        }
-
-        /**
          * #__register
          * 
          * @access  private
@@ -162,6 +160,21 @@ window.annexSearch.DependencyLoader.push([], function() {
         #__register() {
             window.annexSearch.AnnexSearch.register(this);
             return true;
+        }
+
+        /**
+         * #__render
+         * 
+         * @access  private
+         * @return  Promise
+         */
+        #__render() {
+            let handler = this.#__handleRenderEvent.bind(this),
+                $annexSearchWidget = this,
+                promise = this.#__helpers.config.loadStylesheets(this).then(handler).catch(function(error) {
+                    return $annexSearchWidget;
+                });
+            return promise;
         }
 
         /**
@@ -332,7 +345,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         /**
          * mount
          * 
-         * @throws  Error
          * @access  public
          * @param   null|HTMLElement $container (default: null)
          * @return  Promise
@@ -340,15 +352,37 @@ window.annexSearch.DependencyLoader.push([], function() {
         mount($container = null) {
             $container = this.#__getContainer($container);
             if ($container === null) {
-                let promise = new Promise(function(resolve, reject) {
-                    reject();
-                });
+                this.#__mounted = false;
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(this);
                 return promise;
             }
             let promise = this.#__render();
             $container.appendChild(this);
             return promise;
         }
+
+        /**
+         * mounted
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        mounted() {
+            let mounted = this.#__mounted;
+            return mounted;
+        }
+
+        /**
+         * on
+         * 
+         * @access  public
+         * @return  undefined
+         */
+        // on() {
+        //     let args = Array.from(arguments),
+        //         response = this.addEventListener(... args);
+        //     return response;
+        // }
 
         /**
          * query

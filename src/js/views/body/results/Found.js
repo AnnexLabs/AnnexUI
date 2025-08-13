@@ -138,7 +138,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         containsScrollbar() {
-return true;
             let $element = this._$element,
                 response = $element.scrollHeight > $element.clientHeight;
             return response;

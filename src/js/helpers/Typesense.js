@@ -162,6 +162,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             // query);
             request.setOptions(options);
             if (this.#__validSearchOptions(request) === false) {
+                // let promise = window.annexSearch.FunctionUtils.getEmptyPromise($annexSearchWidget, request);
                 let promise = window.annexSearch.FunctionUtils.getEmptyPromise(request);
                 return promise;
             }

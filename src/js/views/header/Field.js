@@ -366,11 +366,19 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         /**
          * loadMore
          * 
+         * @note    Ordered
          * @access  public
          * @return  Boolean
          */
         loadMore() {
             if (this.#__loadingMore === true) {
+                return false;
+            }
+            if (window.annexSearch.FunctionUtils.limitReached(this.loadMore, 10, 10000) === true) {
+                let message = window.annexSearch.ErrorUtils.getMessage('fieldHeaderView.loadMore.limitReached');
+                this.error(message);
+                this.getView('root').setStateKey('error');
+                this.getWebComponent().kill();
                 return false;
             }
             this.#__loadingMore = true;

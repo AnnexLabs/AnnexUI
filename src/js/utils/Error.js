@@ -20,7 +20,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @var     Object
          */
         static #__messageMap = {
-            'annexSearchWidget.ccontainer.error':                               'Inline web components must have a $container defined before mounting.',
+            'dataUtils.copyToClipboard.failed':                                 'Could not copy string to clipboard.',
+            'fieldHeaderView.loadMore.limitReached':                            'Possible infinite loop during search query fetching. Check your result view template is visible.',
+            'annexSearchWidget.container.null':                                 'Inline web components must have a $container defined before mounting.',
+            'annexSearchWidget.container.null':                                 'Inline web components must have a $container defined before mounting.',
+            // 'annexSearchWidget.container.notNull':                              'Web components that have a layout value not equal to \'inline\' should not have a $container defined before mounting.',
             'base.get.key.invalid':                                             'Invalid {key} value passed to {base.get}; found {%0}',
             'base.set.key.undefined':                                           'Invalid {key} value passed to {base.set}; found {undefined}',
             'base.set.value.undefined':                                         'Invalid {value} value passed to {base.set}; found {undefined}',
