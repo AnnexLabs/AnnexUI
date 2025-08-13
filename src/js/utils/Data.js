@@ -22,7 +22,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @return  Promise
          */
         static copyToClipboard(str) {
-            let promise = window.navigator.clipboard.writeText(str);
+            let promise = window.navigator.clipboard.writeText(str).catch(function() {
+            });
             return promise;
         }
 

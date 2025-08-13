@@ -4,6 +4,9 @@
  * 
  * @todo    - Add in logic to prevent accidental infinite XHR when scrollbar is missing but shouldn't be?
  * @todo    -- Kill logic/UX/UI
+ * @todo    -- try/catch blocks
+ * @todo    -- Look into copyToClipboard catch
+ * @todo    -- Cleaner error throwing? https://416.io/ss/f/njj7y3
  * @todo    -- Toast to kill UI?
  * @todo    -- Throw error whenever needed (of specific type?) and catch it; then kill?
  * 
