@@ -56,6 +56,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleOverlayClickEvent(event) {
+            let showOverlay = this.getHelper('config').get('showOverlay');
+            if (showOverlay === false) {
+                return false;
+            }
             let $target = event.target;
             if ($target === this._$element) {
                 this._$annexSearchWidget.hide();

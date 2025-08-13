@@ -89,10 +89,28 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * #__handleReadyEvent
+         * 
+         * Handler which formally marks the web component as ready, including
+         * dispatching a customer event. It's important for this to be it's own
+         * handler, called after wiating for the next animation frame, in order
+         * for smooth effects (like a panel layout sliding out properly when
+         * it's set to be shown immediately upon DOM load).
+         * 
+         * @access  private
+         * @return  window.annexSearch.AnnexSearchWidgetWebComponent
+         */
+        #__handleReadyEvent() {
+            this.#__ready = true;
+            this.dispatchCustomEvent('ready');
+            return this;
+        }
+
+        /**
          * #__handleRenderEvent
          * 
          * @access  private
-         * @return  Boolean
+         * @return  Promise
          */
         #__handleRenderEvent() {
             this.#__mountRoot();
@@ -100,9 +118,9 @@ window.annexSearch.DependencyLoader.push([], function() {
             this.#__helpers.webComponentUI.setUUID();
             this.#__helpers.webComponentUI.setAttributes();
             this.#__helpers.webComponentUI.autoShow();
-            this.#__ready = true;
-            this.dispatchCustomEvent('ready');
-            return true;
+            let handler = this.#__handleReadyEvent.bind(this),
+                promise = window.annexSearch.ElementUtils.waitForAnimation().then(handler);
+            return promise;
         };
 
         /**
@@ -126,9 +144,8 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Promise
          */
         #__render() {
-            let config = this.#__helpers.config,
-                handler = this.#__handleRenderEvent.bind(this),
-                promise = config.loadStylesheets(this)
+            let handler = this.#__handleRenderEvent.bind(this),
+                promise = this.#__helpers.config.loadStylesheets(this)
                     .then(handler)
                     // .catch(function(error) {
                     //     console.log(error);

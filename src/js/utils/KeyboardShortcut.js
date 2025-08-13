@@ -295,6 +295,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * #__handleDocumentCopyKeydownEvent
          * 
          * @see     https://chatgpt.com/c/68993510-aa98-832b-bdd6-2356a4452616
+         * @note    shiftKey check is to prevent impeding web inspector
          * @access  private
          * @static
          * @param   Object event
@@ -305,6 +306,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 return false;
             }
             if (this.#__isModifierCombo(event) === false) {
+                return false;
+            }
+            if (event.shiftKey === true) {
                 return false;
             }
             let $annexSearchWidget = this.#__getActiveWebComponent(),

@@ -31,7 +31,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * @access  private
              * @var     null|HTMLElement (default: null)
              */
-            // $container: (document.body || document.head || document.documentElement),
             $container: null,
 
             /**
@@ -137,17 +136,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             /**
              * debug
              * 
+             * @note    noop
              * @access  private
              * @var     Boolean (default: false)
              */
-            // debug: false,
-            debug: true,
+            debug: false,
 
             /**
              * keyboardShortcut
              * 
-             * The keyboard combination which when pressed, toggles the widget
-             * to be shown or hidden. If null, no listener is created.
+             * The keyboard combination which when pressed, toggles the web
+             * component to be shown or hidden. If null, no listener is created.
              * 
              * @access  private
              * @var     null|String (default: '⌘k')
@@ -165,7 +164,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             /**
              * layout
              * 
-             * The UI layout for the widget. Currently supports:
+             * The UI layout for the web component. Currently supports:
+             * - inline
              * - modal
              * - panel-left
              * - panel-right
@@ -184,16 +184,19 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             name: null,
 
             /**
-             * paths
+             * resources
              * 
              * Map of arrays which are loaded into memory upon each page load.
              * Core to the functionality, but extensible for being able to
-             * define custom styles and templating systems.
+             * define custom styles.
+             * 
+             * Currently limited to CSS resources, but likely to be extended
+             * later.
              * 
              * @access  private
              * @var     Object
              */
-            paths: {
+            resources: {
                 css: [
                     'https://local.annexsearch.com/ts/css',
                 ],
@@ -207,6 +210,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * the ResultFoundResultsBodyView template used will adhere to the
              * fields defined in the schema JSON file.
              * 
+             * @note    noop
              * @access  private
              * @var     String (default: 'webResource-v0.1.0')
              */
@@ -227,6 +231,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             /**
              * searchRequestMethod
              * 
+             * @note    noop
              * @access  private
              * @var     String (default: 'lifo')
              */
@@ -236,9 +241,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             /**
              * showOverlay
              * 
-             * Whether an overlay should be shown. Currently doesn't effect the
-             * click listener which when detected outside of the widget,
-             * triggers the widget to be hidden.
+             * Whether an overlay should be shown. Prevents the click event from
+             * hiding a hidable-web-component.
              * 
              * @access  private
              * @var     Boolean (default: true)
@@ -248,14 +252,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             /**
              * templates
              * 
-             * Map of strings corresponding to all the available templates used
-             * in the widget.
+             * Map of strings corresponding to custom templates for views.
              * 
              * @access  private
-             * @var     Object
+             * @var     Object (default: {})
              */
-            templates: {
-            }
+            templates: {}
         };
 
         /**
@@ -281,7 +283,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          * @return  Boolean
          */
         #__handleStylesheetSuccessfulLoadEvent(resolve) {
-// console.log('emdfgfd');
             window.annexSearch.ElementUtils.waitForAnimation().then(resolve);
             return true;
         }
@@ -300,10 +301,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             let $shadow = $annexSearchWidget.shadow,
                 errorHandler = this.#__handleStylesheetErrorLoadEvent.bind(this),
                 successfulHandler = this.#__handleStylesheetSuccessfulLoadEvent.bind(this),
-                paths = Array.from(
-                    new Set(this.get('paths').css)
+                resources = Array.from(
+                    new Set(this.get('resources').css)
                 ),
-                promises = paths.map(function(href) {
+                promises = resources.map(function(href) {
                     return new Promise(function(resolve, reject) {
                         let $link = document.createElement('link');
                         $link.rel = 'stylesheet';

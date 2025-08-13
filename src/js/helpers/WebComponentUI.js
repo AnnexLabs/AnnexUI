@@ -86,6 +86,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
                 $annexSearchWidget.setAttribute('data-annex-search-overlay', '0');
                 return true;
             }
+            let showOverlay = this.getHelper('config').get('showOverlay');
+            if (showOverlay === false) {
+                $annexSearchWidget.setAttribute('data-annex-search-overlay', '0');
+                return true;
+            }
             $annexSearchWidget.setAttribute('data-annex-search-overlay', '1');
             return true;
         }
@@ -213,7 +218,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          */
         setUUID() {
             this.#__uuid = window.annexSearch.StringUtils.generateUUID();
-            this.getWebComponent().setAttribute('id', this.#__uuid);
+            this.getWebComponent().setAttribute('data-annex-search-id', this.#__uuid);
             return true;
         }
 

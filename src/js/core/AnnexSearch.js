@@ -246,19 +246,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * setStyles
-         * 
-         * @access  public
-         * @static
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
-         * @return  Boolean
-         */
-        // static setStyles($annexSearchWidget) {
-        //     this.#__$active = $annexSearchWidget;
-        //     return true;
-        // }
-
-        /**
          * setup
          * 
          * @access  public

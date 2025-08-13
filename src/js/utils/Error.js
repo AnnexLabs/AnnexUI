@@ -20,7 +20,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @var     Object
          */
         static #__messageMap = {
-            'annexSearchWidget.ccontainer.error':                               'Inline widgets must have a $container defined before mounting.',
+            'annexSearchWidget.ccontainer.error':                               'Inline web components must have a $container defined before mounting.',
             'base.get.key.invalid':                                             'Invalid {key} value passed to {base.base.get}; found {%0}',
             'base.set.key.undefined':                                           'Invalid {key} value passed to {base.base.set}; found {undefined}',
             'base.set.value.undefined':                                         'Invalid {value} value passed to {base.base.set}; found {undefined}',
