@@ -3,6 +3,7 @@
  * /src/js/core/AnnexSearch.js
  * 
  * @todo    - Add in logic to prevent accidental infinite XHR when scrollbar is missing but shouldn't be?
+ * @todo    -- Kill logic/UX/UI
  * @todo    -- Toast to kill UI?
  * @todo    -- Throw error whenever needed (of specific type?) and catch it; then kill?
  * 
@@ -91,6 +92,7 @@
  * @todo    [PUNT] - Revert to .tmpl files and include them in build script?
  * @todo    [PUNT] - Hook up all config properties with respective custom event listeners (e.g. placeholder swapping)
  * @todo    [PUNT] -- This will require re-rendering of views (which should be fine now..)
+ * @todo    [PUNT] - Test CSS vars (see panel-right.inc.php)
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

@@ -73,7 +73,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @throws  Error
          * @access  public
          * @param   null|HTMLElement $container (default: null)
-         * @return  HTMLElement
+         * @return  null|HTMLElement
          */
         #__getContainer($container = null) {
             $container = $container || this.getConfig('$container') || null;
@@ -81,7 +81,7 @@ window.annexSearch.DependencyLoader.push([], function() {
                 if (this.getConfig('layout') === 'inline') {
                     let message = window.annexSearch.ErrorUtils.getMessage('annexSearchWidget.ccontainer.error');
                     this.#__helpers.webComponentUI.error(message);
-                    throw new Error('Check console.');
+                    return null;
                 }
                 $container = (document.body || document.head || document.documentElement);
             }
@@ -339,6 +339,12 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         mount($container = null) {
             $container = this.#__getContainer($container);
+            if ($container === null) {
+                let promise = new Promise(function(resolve, reject) {
+                    reject();
+                });
+                return promise;
+            }
             let promise = this.#__render();
             $container.appendChild(this);
             return promise;

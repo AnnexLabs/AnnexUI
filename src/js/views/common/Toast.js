@@ -107,7 +107,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__destroy() {
             this._$element.remove();
             window.annexSearch.ToastUtils.remove(this);
-console.log('removing');
+// console.log('removing');
             return true;
         }
 

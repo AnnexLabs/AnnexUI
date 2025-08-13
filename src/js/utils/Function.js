@@ -63,6 +63,21 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
+         * getPromise
+         * 
+         * @access  public
+         * @static
+         * @return  Promise
+         */
+        // static getPromise() {
+        //     let args = Array.from(arguments),
+        //         promise = new Promise(function(resolve, reject) {
+        //             resolve.apply(window, args);
+        //         });
+        //     return promise;
+        // }
+
+        /**
          * setup
          * 
          * @access  public
