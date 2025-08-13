@@ -642,6 +642,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 field.nullifyLastTypesenseSearchResponse();
                 found.clearResults();
                 found.getView('root').setStateKey('idle');
+                $annexSearchWidget.getHelper('config').triggerCallback('results.idle');
                 $annexSearchWidget.dispatchCustomEvent('results.idle');
                 return true;
             }

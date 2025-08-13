@@ -10,7 +10,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseRequest'], fun
      * 
      * @extends window.annexSearch.BaseRequest
      */
-    window.annexSearch.TypesenseCollectionRequest = window.annexSearch.TypesenseCollectionRequest || class extends window.annexSearch.BaseRequest {
+    window.annexSearch.TypesenseCollectionRequest = window.annexSearch.TypesenseCollectionRequest || class TypesenseCollectionRequest extends window.annexSearch.BaseRequest {
 
         /**
          * constructor

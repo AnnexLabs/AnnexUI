@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
      * @access  public
      * @extends window.annexSearch.Base
      */
-    window.annexSearch.BaseView = window.annexSearch.BaseView || class extends window.annexSearch.Base {
+    window.annexSearch.BaseView = window.annexSearch.BaseView || class BaseView extends window.annexSearch.Base {
 
         /**
          * _$element
@@ -20,6 +20,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * @var     null|HTMLElement (default: null)
          */
         _$element = null;
+
+        /**
+         * _data
+         * 
+         * @access  protected
+         * @var     Object
+         */
+        _data = {
+            views: {}
+        };
 
         /**
          * constructor
@@ -185,10 +195,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * @return  Boolean
          */
         setView(key, view) {
-            let views = this.get('views');
-            if (views === undefined) {
-                views = {};
-            }
+            let views = this.get('views') || {};
             views[key] = view;
             this.set('views', views);
             return true;

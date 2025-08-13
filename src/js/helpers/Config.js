@@ -11,15 +11,15 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
      * @access  public
      * @extends window.annexSearch.BaseHelper
      */
-    window.annexSearch.ConfigHelper = window.annexSearch.ConfigHelper || class extends window.annexSearch.BaseHelper {
+    window.annexSearch.ConfigHelper = window.annexSearch.ConfigHelper || class ConfigHelper extends window.annexSearch.BaseHelper {
 
         /**
-         * #__data
+         * _data
          * 
-         * @access  private
+         * @access  protected
          * @var     Object
          */
-        #__data = {
+        _data = {
 
             /**
              * $container
@@ -281,6 +281,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          * @return  Boolean
          */
         #__handleStylesheetSuccessfulLoadEvent(resolve) {
+// console.log('emdfgfd');
             window.annexSearch.ElementUtils.waitForAnimation().then(resolve);
             return true;
         }
@@ -294,6 +295,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          * @return  Promise
          */
         #__loadStylesheets($annexSearchWidget) {
+// console.log($annexSearchWidget.shadow);
+// console.log(this.get());
             let $shadow = $annexSearchWidget.shadow,
                 errorHandler = this.#__handleStylesheetErrorLoadEvent.bind(this),
                 successfulHandler = this.#__handleStylesheetSuccessfulLoadEvent.bind(this),
@@ -319,40 +322,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         }
 
         /**
-         * get
-         * 
-         * @access  public
-         * @param   undefined|String key
-         * @return  mixed
-         */
-        get(key) {
-            if (key === undefined) {
-                let data = this.#__data;
-                return data;
-            }
-            let value = this.#__data[key];
-            if (value !== undefined) {
-                return value;
-            }
-            let pieces = key.split('.');
-            if (pieces.length === 1) {
-                let message = window.annexSearch.ErrorUtils.getMessage('configHelper.get.key.invalid', key);
-                this.error(message);
-                return undefined;
-            }
-            value = this.#__data;
-            for (let piece of pieces) {
-                value = value[piece];
-                if (value === undefined) {
-                    let message = window.annexSearch.ErrorUtils.getMessage('configHelper.get.key.invalid', key);
-                    this.error(message);
-                    return undefined;
-                }
-            }
-            return value;
-        }
-
-        /**
          * loadStylesheets
          * 
          * @access  public
@@ -365,51 +334,28 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         }
 
         /**
-         * set
+         * triggerCallback
          * 
          * @access  public
-         * @param   String key
-         * @param   mixed value
+         * @param   String type
+         * @param   Object detail (default: {})
          * @return  Boolean
          */
-        set(key, value) {
-            if (key === undefined) {
-                let message = window.annexSearch.ErrorUtils.getMessage('configHelper.set.key.undefined');
-                this.error(message);
-                return false;
-            }
-            if (value === undefined) {
-                let message = window.annexSearch.ErrorUtils.getMessage('configHelper.set.value.undefined');
-                this.error(message);
-                return false;
-            }
-            if (this.get(key) === undefined) {
-                return false;
-            }
-            let parent = this.#__data,
-                reference = this.#__data[key],
-                piece = key;
-            if (reference === undefined) {
-                let pieces = key.split('.');
-                reference = this.#__data;
-                for (piece of pieces) {
-                    parent = reference;
-                    reference = reference[piece];
+        triggerCallback(type, detail = {}) {
+            let reference = this._data.callbacks || {},
+                pieces = type.split('.');
+            for (var piece of pieces) {
+                reference = reference[piece] ?? null;
+                if (reference === null) {
+                    return false;
                 }
             }
-            parent[piece] = value;
-            return true;
-        }
-
-        /**
-         * setData
-         * 
-         * @access  public
-         * @param   Object data
-         * @return  Boolean
-         */
-        setData(data) {
-            this.#__data = window.annexSearch.DataUtils.deepMerge(this.#__data, data);
+            let $annexSearchWidget = this.getWebComponent();
+            detail.$annexSearchWidget = $annexSearchWidget;
+            let customEvent = new CustomEvent(type, {
+                detail: detail
+            });
+            reference.apply($annexSearchWidget, [customEvent]);
             return true;
         }
     }

@@ -13,7 +13,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
      * @access  public
      * @extends window.annexSearch.BaseHelper
      */
-    window.annexSearch.TypesenseHelper = window.annexSearch.TypesenseHelper || class extends window.annexSearch.BaseHelper {
+    window.annexSearch.TypesenseHelper = window.annexSearch.TypesenseHelper || class TypesenseHelper extends window.annexSearch.BaseHelper {
 
         /**
          * _lastRequest

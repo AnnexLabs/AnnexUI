@@ -11,7 +11,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
      * @access  public
      * @extends window.annexSearch.Base
      */
-    window.annexSearch.BaseHelper = window.annexSearch.BaseHelper || class extends window.annexSearch.Base {
+    window.annexSearch.BaseHelper = window.annexSearch.BaseHelper || class BaseHelper extends window.annexSearch.Base {
 
         /**
          * constructor

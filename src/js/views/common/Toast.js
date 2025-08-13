@@ -93,6 +93,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__addEvents() {
             this.#__addClickEventListener();
+            this.addCustomEventListener('data.set.message', this.render.bind(this));
+            this.addCustomEventListener('data.set.title', this.render.bind(this));
             return true;
         }
 
@@ -199,32 +201,6 @@ console.log('removing');
          */
         setDuration(duration = null) {
             this.#__duration = duration;
-            return true;
-        }
-
-        /**
-         * setMessage
-         * 
-         * @access  public
-         * @param   String message
-         * @return  Boolean
-         */
-        setMessage(message) {
-            this.set('message', message);
-            this.render();
-            return true;
-        }
-
-        /**
-         * setTitle
-         * 
-         * @access  public
-         * @param   String title
-         * @return  Boolean
-         */
-        setTitle(title) {
-            this.set('title', title);
-            this.render();
             return true;
         }
 

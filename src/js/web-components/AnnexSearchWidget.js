@@ -9,9 +9,10 @@ window.annexSearch.DependencyLoader.push([], function() {
      * window.annexSearch.AnnexSearchWidgetWebComponent
      * 
      * @see     https://chatgpt.com/c/68952fc2-4a9c-8323-9de9-8857960241d8
+     * @see     https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements
      * @extends HTMLElement
      */
-    window.annexSearch.AnnexSearchWidgetWebComponent = window.annexSearch.AnnexSearchWidgetWebComponent || class extends HTMLElement {
+    window.annexSearch.AnnexSearchWidgetWebComponent = window.annexSearch.AnnexSearchWidgetWebComponent || class AnnexSearchWidgetWebComponent extends HTMLElement {
 
         /**
          * #__dead
@@ -30,30 +31,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         #__helpers = {};
 
         /**
-         * #__index
-         * 
-         * @access  private
-         * @var     null|Number (default: null)
-         */
-        #__index = null;
-
-        /**
-         * #__maxZIndexValue
-         * 
-         * @access  private
-         * @var     Number (default: 2147483647)
-         */
-        // #__maxZIndexValue = 2147483647;
-
-        /**
-         * #__mounted
-         * 
-         * @access  private
-         * @var     Boolean (default: false)
-         */
-        #__mounted = false;
-
-        /**
          * #__showing
          * 
          * @access  private
@@ -62,12 +39,12 @@ window.annexSearch.DependencyLoader.push([], function() {
         #__showing = false;
 
         /**
-         * #__uuid
+         * #__ready
          * 
          * @access  private
-         * @var     null|String (default: null)
+         * @var     Boolean (default: false)
          */
-        #__uuid = null;
+        #__ready = false;
 
         /**
          * #__views
@@ -85,32 +62,48 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         constructor() {
             super();
-            this.#__index = window.annexSearch.AnnexSearch.getRegistered().length;
-            window.annexSearch.AnnexSearch.register(this);
-            this.#__setupShadow();
+            this.#__register();
             this.#__setupHelpers();
-            this.#__setUUID();
-            this.#__render();
+            this.#__setupShadow();
         }
 
         /**
-         * #__setStyles
+         * #__getContainer
+         * 
+         * @throws  Error
+         * @access  public
+         * @param   null|HTMLElement $container (default: null)
+         * @return  HTMLElement
+         */
+        #__getContainer($container = null) {
+            $container = $container || this.getConfig('$container') || null;
+            if ($container === null) {
+                if (this.getConfig('layout') === 'inline') {
+                    let message = window.annexSearch.ErrorUtils.getMessage('annexSearchWidget.ccontainer.error');
+                    this.#__helpers.webComponentUI.error(message);
+                    throw new Error('Check console.');
+                }
+                $container = (document.body || document.head || document.documentElement);
+            }
+            return $container;
+        }
+
+        /**
+         * #__handleRenderEvent
          * 
          * @access  private
          * @return  Boolean
          */
-//         #__setStyles() {
-//             // let showing = window.annexSearch.AnnexSearch.getShowing();
-//             // if (showing.length === 0) {
-//             //     return false;
-//             // }
-//             // if (showing.length === 1) {
-//             //     return false;
-//             // }
-//             let zIndex = this.#__maxZIndexValue - this.#__index;
-// // console.log(zIndex);
-//             return true;
-//         }
+        #__handleRenderEvent() {
+            this.#__mountRoot();
+            this.#__helpers.webComponentUI.setupConfigHelperCustomEventListeners();
+            this.#__helpers.webComponentUI.setUUID();
+            this.#__helpers.webComponentUI.setAttributes();
+            this.#__helpers.webComponentUI.autoShow();
+            this.#__ready = true;
+            this.dispatchCustomEvent('ready');
+            return true;
+        };
 
         /**
          * #__mountRoot
@@ -119,52 +112,10 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         #__mountRoot() {
-            let view = new window.annexSearch.RootView(this);
+            let view = new window.annexSearch.RootView(this),
+                $container = this.shadow;
             this.#__views.root = view;
-            this.#__views.root.mount(this.shadow);
-            return true;
-        }
-
-        /**
-         * #__setAttributes
-         * 
-         * @access  private
-         * @return  Boolean
-         */
-        #__setAttributes() {
-            let layout = this.getConfig('layout'),
-                overlay = String(+this.getConfig('showOverlay')),
-                index = this.#__index;
-            if (this.getConfig('layout') === 'inline') {
-                overlay = 0;
-            }
-            this.setAttribute('id', this.#__uuid);
-            let colorScheme = this.getConfig('colorScheme');
-            this.setAttribute('data-annex-search-color-scheme', colorScheme);
-            this.setAttribute('data-annex-search-layout', layout);
-            this.setAttribute('data-annex-search-overlay', overlay);
-            this.setAttribute('data-annex-search-ready', '1');
-            this.setAttribute('data-annex-search-index', index);
-            this.setAttribute('data-annex-search-open', '0');
-            if (this.getConfig('name') !== null) {
-                let name = this.getConfig('name');
-                this.setAttribute('data-annex-search-name', name);
-            }
-            return true;
-        }
-
-        /**
-         * #__setupRoot
-         * 
-         * @access  private
-         * @return  Boolean
-         */
-        #__setupRoot() {
-            this.#__mountRoot();
-            this.#__setAttributes();
-            if (this.getConfig('layout') === 'inline') {
-                this.show();
-            }
+            this.#__views.root.mount($container);
             return true;
         }
 
@@ -175,9 +126,9 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Promise
          */
         #__render() {
-            let helper = this.getHelper('config'),
-                handler = this.#__setupRoot.bind(this),
-                promise = helper.loadStylesheets(this)
+            let config = this.#__helpers.config,
+                handler = this.#__handleRenderEvent.bind(this),
+                promise = config.loadStylesheets(this)
                     .then(handler)
                     // .catch(function(error) {
                     //     console.log(error);
@@ -186,7 +137,18 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * #__mountHelpers
+         * #__register
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__register() {
+            window.annexSearch.AnnexSearch.register(this);
+            return true;
+        }
+
+        /**
+         * #__setupHelpers
          * 
          * @access  private
          * @return  Boolean
@@ -194,6 +156,7 @@ window.annexSearch.DependencyLoader.push([], function() {
         #__setupHelpers() {
             this.#__helpers.config = new window.annexSearch.ConfigHelper(this);
             this.#__helpers.typesense = new window.annexSearch.TypesenseHelper(this);
+            this.#__helpers.webComponentUI = new window.annexSearch.WebComponentUIHelper(this);
             return true;
         }
 
@@ -207,17 +170,6 @@ window.annexSearch.DependencyLoader.push([], function() {
             this.shadow = this.attachShadow({
                 mode: 'closed'
             });
-            return true;
-        }
-
-        /**
-         * #__setUUID
-         * 
-         * @access  private
-         * @return  Boolean
-         */
-        #__setUUID() {
-            this.#__uuid = window.annexSearch.StringUtils.generateUUID();
             return true;
         }
 
@@ -266,30 +218,15 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @see     https://chatgpt.com/c/68942c36-15a0-8328-a9aa-a0a5e682af61
          * @access  public
          * @param   String type
-         * @param   Object map (default: {})
+         * @param   Object detail (default: {})
          * @return  Boolean
          */
-        dispatchCustomEvent(type, map = {}) {
-
-            // CustomEvent
-            map.$annexSearchWidget = this;
-            let event = new CustomEvent(type, {
-                detail: map
+        dispatchCustomEvent(type, detail = {}) {
+            detail.$annexSearchWidget = this;
+            let customEvent = new CustomEvent(type, {
+                detail: detail
             });
-
-            // Callback
-            let reference = this.getConfig('callbacks') || {},
-                pieces = type.split('.');
-            for (var piece of pieces) {
-                reference = reference[piece] ?? null;
-                if (reference === null) {
-                    break;
-                }
-            }
-            reference && reference && reference.apply(this, [event]);
-
-            // Dispatching
-            this.dispatchEvent(event);
+            this.dispatchEvent(customEvent);
             return true;
         }
 
@@ -312,7 +249,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         getConfig(key) {
-            let value = this.getHelper('config').get(key);
+            let value = this.#__helpers.config.get(key);
             return value;
         }
 
@@ -354,12 +291,9 @@ window.annexSearch.DependencyLoader.push([], function() {
             if (this.#__showing === false) {
                 return false;
             }
-            window.annexSearch.AnnexSearch.clearActive();
-            this.dispatchCustomEvent('root.hide');
             this.#__showing = false;
-            this.#__views.root.blur();
-            this.setAttribute('data-annex-search-open', '0');
-            this.setAttribute('inert', '');
+            window.annexSearch.AnnexSearch.clearActive();
+            this.#__helpers.webComponentUI.hide();
             return true;
         }
 
@@ -374,31 +308,23 @@ window.annexSearch.DependencyLoader.push([], function() {
                 return false;
             }
             this.#__dead = true;
-            this.setAttribute('data-annex-search-dead', '1');
-            // this.setAttribute('inert');
-            let toast = this.showToast('Search disabled', 'Apologies but search has been disabled for the time being.', null);
-            toast.setUnescapable();
+            this.#__helpers.webComponentUI.kill();
             return true;
         }
 
         /**
          * mount
          * 
+         * @throws  Error
          * @access  public
-         * @param   HTMLElement $container (default: null)
-         * @return  Boolean
+         * @param   null|HTMLElement $container (default: null)
+         * @return  Promise
          */
         mount($container = null) {
-            $container = $container || this.getConfig('$container') || null;
-            if ($container === null) {
-                if (this.getConfig('layout') === 'inline') {
-                    return false;
-                }
-                $container = (document.body || document.head || document.documentElement);
-            }
+            $container = this.#__getContainer($container);
+            let promise = this.#__render();
             $container.appendChild(this);
-            this.#__mounted = true;
-            return true;
+            return promise;
         }
 
         /**
@@ -433,30 +359,21 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Promise
          */
         ready() {
-            if (this.#__mounted === false) {
+            if (this.#__ready === true) {
                 let promise = new Promise(function(resolve, reject) {
-                    reject();
+                    resolve(this);
                 });
                 return promise;
             }
             let $annexSearchWidget = this,
-                ready = this.getAttribute('data-annex-search-ready');
-            if (ready === null) {
-                let promise = new Promise(function(resolve, reject) {
-                    let interval = setInterval(function() {
-// console.log('eff');
-                        let ready = $annexSearchWidget.getAttribute('data-annex-search-ready');
-                        if (ready !== null) {
-                            clearInterval(interval);
-                            resolve($annexSearchWidget);
-                        }
-                    }, 10);
+                promise = new Promise(function(resolve, reject) {
+                    let handler = function(customEvent) {
+                        resolve($annexSearchWidget);
+                    };
+                    $annexSearchWidget.addEventListener('ready', handler, {
+                        once: true
+                    });
                 });
-                return promise;
-            }
-            let promise = new Promise(function(resolve, reject) {
-                resolve();
-            });
             return promise;
         }
 
@@ -464,16 +381,16 @@ window.annexSearch.DependencyLoader.push([], function() {
          * setConfig
          * 
          * @access  public
-         * @param   String key
+         * @param   Object|String key
          * @param   mixed value
          * @return  Boolean
          */
         setConfig(key, value) {
             if (typeof key === 'object') {
-                let response = this.getHelper('config').setData(key);
+                let response = this.#__helpers.config.merge(key);
                 return response;
             }
-            let response = this.getHelper('config').set(key, value);
+            let response = this.#__helpers.config.set(key, value);
             return response;
         }
 
@@ -489,27 +406,9 @@ window.annexSearch.DependencyLoader.push([], function() {
             if (this.#__showing === true) {
                 return false;
             }
-            window.annexSearch.AnnexSearch.setActive(this);
-            this.dispatchCustomEvent('root.show');
             this.#__showing = true;
-            // this.#__setStyles();
-            this.setAttribute('data-annex-search-open', '1');
-            this.removeAttribute('inert');
-            let found = this.#__views.root.getView('root.body.results.found'),
-                results = found.getResults();
-            if (results.length === 0) {
-                this.#__views.root.focus();
-                return true;
-            }
-            let focusedIndex = found.getFocusedIndex();
-            if (focusedIndex === null) {
-                focusedIndex = 0;
-            }
-            let result = results[focusedIndex];
-            if (result === undefined) {
-                return true;
-            }
-            result.focus();
+            window.annexSearch.AnnexSearch.setActive(this);
+            this.#__helpers.webComponentUI.show();
             return true;
         }
 
@@ -534,7 +433,6 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  window.annexSearch.ToastView
          */
         showToast(title, message, duration = window.annexSearch.ToastUtils.getDuration()) {
-// console.log(duration);
             let options = {title, message},
                 view = window.annexSearch.ToastUtils.build(this, options);
             view.setDuration(duration);
@@ -549,7 +447,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         toggle() {
-            this.dispatchCustomEvent('root.toggle');
+            this.#__helpers.webComponentUI.toggle();
             if (this.#__showing === true) {
                 let response = this.hide();
                 return response;

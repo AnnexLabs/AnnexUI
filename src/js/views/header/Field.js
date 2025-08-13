@@ -112,7 +112,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             if (key === 'abort') {
                 return false;
             }
-            this.getWebComponent().dispatchCustomEvent('results.error', {error});
+            let detail = {error};
+            this.getWebComponent().getHelper('config').triggerCallback('results.error', detail);
+            this.getWebComponent().dispatchCustomEvent('results.error', detail);
             let header = this.getView('root.header');
             header.hideSpinner();
             let response = typesenseSearchRequest.getResponse();
@@ -136,6 +138,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 this.nullifyLastTypesenseSearchResponse();
                 this.clear();
                 this.getView('root').setStateKey('idle');
+                this.getWebComponent().getHelper('config').triggerCallback('results.idle');
                 this.getWebComponent().dispatchCustomEvent('results.idle');
                 return false;
             }
@@ -160,8 +163,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleLoadMoreSuccessfulTypesenseSearchEvent(options, typesenseSearchRequest) {
-            let response = typesenseSearchRequest.getResponse();
-            this.getWebComponent().dispatchCustomEvent('results.loaded', {response});
+            let response = typesenseSearchRequest.getResponse(),
+                detail = {response};
+            this.getWebComponent().getHelper('config').triggerCallback('results.loaded', detail);
+            this.getWebComponent().dispatchCustomEvent('results.loaded', detail);
             this.#__lastTypesenseSearchResponse = response;
             this.#__loadingMore = false;
             if (response.hits.length === 0) {
@@ -197,11 +202,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.#__lastTypesenseSearchResponse = response;
             this.getView('root.body.results.found').clearResults();
             if (response.hits.length === 0) {
+                this.getWebComponent().getHelper('config').triggerCallback('results.empty');
                 this.getWebComponent().dispatchCustomEvent('results.empty');
                 this.getView('root').setStateKey('empty');
                 return false;
             }
-            this.getWebComponent().dispatchCustomEvent('results.loaded', {response});
+            let detail = {response};
+            this.getWebComponent().getHelper('config').triggerCallback('results.loaded', detail);
+            this.getWebComponent().dispatchCustomEvent('results.loaded', detail);
             this.getView('root').setStateKey('results');
             let found = this.getView('root.body.results.found');
             found.mountResults(response);

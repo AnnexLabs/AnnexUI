@@ -20,9 +20,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @var     Object
          */
         static #__messageMap = {
-            'configHelper.get.key.invalid':                                     'Invalid {key} value passed to {base.configHelper.get}; found {%0}',
-            'configHelper.set.key.undefined':                                   'Invalid {key} value passed to {base.configHelper.set}; found {undefined}',
-            'configHelper.set.value.undefined':                                 'Invalid {value} value passed to {base.configHelper.set}; found {undefined}',
+            'annexSearchWidget.ccontainer.error':                               'Inline widgets must have a $container defined before mounting.',
+            'base.get.key.invalid':                                             'Invalid {key} value passed to {base.base.get}; found {%0}',
+            'base.set.key.undefined':                                           'Invalid {key} value passed to {base.base.set}; found {undefined}',
+            'base.set.value.undefined':                                         'Invalid {value} value passed to {base.base.set}; found {undefined}',
             'interactionUtils.zeroRegistered':                                  'No registered $annexSearchWidget elements found',
             'interactionUtils.multipleRegistered':                              'Multiple registered $annexSearchWidget elements found. Unable to determine which $element is the target.',
             'loggingUtils.fetchFailed.tip':                                     'Tip: Double check that {config.cluster.hostname} is defined and correct.',

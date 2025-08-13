@@ -89,8 +89,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__handleClickEvent(event) {
             let hit = this.get('hit'),
                 $result = this._$element,
-                map = {$result, event, hit};
-            this.getWebComponent().dispatchCustomEvent('result.click', map);
+                detail = {$result, event, hit};
+            this.getWebComponent().getHelper('config').triggerCallback('result.click', detail);
+            this.getWebComponent().dispatchCustomEvent('result.click', detail);
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             return true;
         }
@@ -105,8 +106,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__handleFocusEvent(event) {
             let hit = this.get('hit'),
                 $result = this._$element,
-                map = {$result, event, hit};
-            this.getWebComponent().dispatchCustomEvent('result.focus', map);
+                detail = {$result, event, hit};
+            this.getWebComponent().getHelper('config').triggerCallback('result.focus', detail);
+            this.getWebComponent().dispatchCustomEvent('result.focus', detail);
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             return true;
         }
@@ -183,8 +185,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         dispatchCopyEvent(event) {
             let hit = this.get('hit'),
                 $result = this._$element,
-                map = {$result, event, hit};
-            this.getWebComponent().dispatchCustomEvent('result.copy', map);
+                detail = {$result, event, hit};
+            this.getWebComponent().getHelper('config').triggerCallback('result.copy', detail);
+            this.getWebComponent().dispatchCustomEvent('result.copy', detail);
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             return true;
         }

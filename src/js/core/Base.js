@@ -10,15 +10,7 @@ window.annexSearch.DependencyLoader.push([], function() {
      * 
      * @access  public
      */
-    window.annexSearch.Base = window.annexSearch.Base || class {
-
-        /**
-         * #__data
-         * 
-         * @access  private
-         * @var     Object (default: {})
-         */
-        #__data = {};
+    window.annexSearch.Base = window.annexSearch.Base || class Base {
 
         /**
          * #__eventTarget
@@ -38,6 +30,14 @@ window.annexSearch.DependencyLoader.push([], function() {
         _$annexSearchWidget = null;
 
         /**
+         * _data
+         * 
+         * @access  protected
+         * @var     Object (default: {})
+         */
+        _data = {};
+
+        /**
          * constructor
          * 
          * @access  public
@@ -49,7 +49,34 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * addEventListener
+         * #__handleMergeCustomEvent
+         * 
+         * @access  private
+         * @param   String pathArr
+         * @param   mixed oldVal
+         * @param   mixed newVal
+         * @return  Boolean
+         */
+        #__handleMergeCustomEvent(pathArr, oldVal, newVal) {
+
+            // Event (broad)
+            let type = 'data.set',
+                detail = {};
+            detail.key = pathArr.join('.');
+            detail.value = newVal;
+            this.dispatchCustomEvent(type, detail);
+
+            // Event (specific)
+            type = 'data.set.' + (pathArr.join('.'));
+            this.dispatchCustomEvent(type, detail);
+
+            // console.log("Replaced %s:", pathArr.join("."), oldVal, "→", newVal);
+            // console.log("Replaced %s:", pathArr.join("."), oldVal, "→", newVal);
+            return true;
+        }
+
+        /**
+         * addCustomEventListener
          * 
          * @access  public
          * @param   String type
@@ -57,25 +84,27 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @param   Boolean once (default: false)
          * @return  Boolean
          */
-        addEventListener(type, listener, once = false) {
-            this._eventTarget.addEventListener(type, listener, {
+        addCustomEventListener(type, listener, once = false) {
+            this.#__eventTarget.addEventListener(type, listener, {
                 once: once
             });
             return true;
         }
 
         /**
-         * dispatchEvent
+         * dispatchCustomEvent
          * 
          * @access  public
          * @param   String type
          * @param   Object detail (default: {})
          * @return  Boolean
          */
-        dispatchEvent(type, detail = {}) {
-            this._eventTarget.dispatchEvent(new CustomEvent(type, {
+        dispatchCustomEvent(type, detail = {}) {
+            detail.$annexSearchWidget = this.getWebComponent();
+            let customEvent = new CustomEvent(type, {
                 detail: detail
-            }));
+            });
+            this.#__eventTarget.dispatchEvent(customEvent);
             return true;
         }
 
@@ -99,12 +128,40 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Object|undefined|mixed
          */
         get(key = undefined) {
+            // if (key === undefined) {
+            //     let response = this._data;
+            //     return response;
+            // }
+            // let response = this._data[key] || undefined;
+            // return response;
+
+
+
             if (key === undefined) {
-                let response = this.#__data;
-                return response;
+                let data = this._data;
+                return data;
             }
-            let response = this.#__data[key] || undefined;
-            return response;
+            let value = this._data[key];
+            if (value !== undefined) {
+                return value;
+            }
+            let pieces = key.split('.');
+            if (pieces.length === 1) {
+// console.log(pieces, this._data);
+                let message = window.annexSearch.ErrorUtils.getMessage('base.get.key.invalid', key);
+                this.error(message);
+                return undefined;
+            }
+            value = this._data;
+            for (let piece of pieces) {
+                value = value[piece];
+                if (value === undefined) {
+                    let message = window.annexSearch.ErrorUtils.getMessage('base.get.key.invalid', key);
+                    this.error(message);
+                    return undefined;
+                }
+            }
+            return value;
         }
 
         /**
@@ -128,6 +185,9 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  undefined|BaseView
          */
         getView(key) {
+            // key = 'views.' + (key);
+            // let response = this.get(key);
+            // return response;
             let views = this.get('views') || {},
                 view = views[key] || undefined;
             if (view !== undefined) {
@@ -160,6 +220,22 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * merge
+         * 
+         * @access  public
+         * @param   Object data
+         * @return  Boolean
+         */
+        merge(data) {
+            let handler = this.#__handleMergeCustomEvent.bind(this);
+            window.annexSearch.DataUtils.deepMerge(this._data, data, handler);
+            let type = 'data.merge',
+                detail = {data};
+            this.dispatchCustomEvent(type, detail);
+            return true;
+        }
+
+        /**
          * set
          * 
          * @access  public
@@ -168,8 +244,56 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         set(key, value) {
-            this.#__data[key] = value;
+
+            // Validation
+            if (key === undefined) {
+                let message = window.annexSearch.ErrorUtils.getMessage('base.set.key.undefined');
+                this.error(message);
+                return false;
+            }
+            if (value === undefined) {
+                let message = window.annexSearch.ErrorUtils.getMessage('base.set.value.undefined');
+                this.error(message);
+                return false;
+            }
+
+            // Let's do this!
+            let parent = this._data,
+                reference = this._data[key],
+                piece = key;
+            if (reference === undefined) {
+                let pieces = key.split('.');
+                reference = this._data;
+                for (piece of pieces) {
+                    parent = reference;
+                    reference = reference[piece];
+                }
+            }
+            parent[piece] = value;
+
+            // Events
+            let detail = {key, value};
+            this.dispatchCustomEvent('data.set', detail);
+            let type = 'data.set.' + (key);
+            this.dispatchCustomEvent(type, detail);
             return true;
         }
+
+        /**
+         * set
+         * 
+         * @access  public
+         * @param   String key
+         * @param   mixed value
+         * @return  Boolean
+         */
+        // set__(key, value) {
+        //     this._data[key] = value;
+        //     let detail = {key, value};
+        //     this.dispatchCustomEvent('data.set', detail);
+        //     let type = 'data.set.' + (key);
+        //     this.dispatchCustomEvent(type, detail);
+        //     return true;
+        // }
     }
 });

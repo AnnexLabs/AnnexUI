@@ -27,11 +27,11 @@
  * Open
  * 
  */
-:host([data-annex-search-open="1"]) {
+:host([data-annex-search-showing="1"]) {
     opacity: 1;
     pointer-events: auto;
 }
-:host([data-annex-search-open="0"]) {
+:host([data-annex-search-showing="0"]) {
 /*    opacity: 1;*/
 /*    pointer-events: auto;*/
 }

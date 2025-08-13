@@ -2,21 +2,16 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - Look into event handling / foundational (e.g. toast set)
- * @todo    - Look into config updates properly trigger attribute changes?
- * @todo    -- Event related?
- * @todo    -- e.g. changing color scheme should do it live
- * 
  * @todo    - Add in logic to prevent accidental infinite XHR when scrollbar is missing but shouldn't be?
  * @todo    -- Toast to kill UI?
  * @todo    -- Throw error whenever needed (of specific type?) and catch it; then kill?
  * 
  * @todo    - Bug with focus not coming back (related to found.results not being cleared)
  * 
- * @todo    - Typesense collection retrieval (for smart templates?)
- * 
  * @todo    - Bug with multiple open and query-ing
  * @todo    - Multiple bugs (various)
+ * 
+ * @todo    - Typesense collection retrieval (for smart templates?)
  * 
  * @todo    [DONE] - dark mode
  * @todo    [DONE] - mobile
@@ -85,6 +80,15 @@
  * @todo    [PUNT] -- https://claude.ai/chat/9ae0dab1-7637-4705-879d-65d62656b64a
  * @todo    [PUNT] -- https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
  * @todo    [PUNT] -- https://chatgpt.com/c/689ac1bd-644c-8321-9ee6-faa588d56ed1
+ * @todo    [PUNT] - Cleanup dirty classes functions (e.g. https://416.io/ss/f/2e6vyo)
+ * @todo    [DONE] - Look into event handling / foundational (e.g. toast set)
+ * @todo    [DONE] - Look into config updates properly trigger attribute changes?
+ * @todo    [DONE] -- Event related?
+ * @todo    [DONE] -- e.g. changing color scheme should do it live
+ * @todo    [DONE] - $annexSearchWidget mount/render logic
+ * @todo    [PUNT] - SchemaUtils which provides template logic according to schemas?
+ * @todo    [PUNT] -- Define yaml, html or tmpl files for each schema type?
+ * @todo    [PUNT] - Revert to .tmpl files and include them in build script?
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -93,7 +97,7 @@ window.annexSearch.DependencyLoader.push([], function() {
      * 
      * @access  public
      */
-    window.annexSearch.AnnexSearch = window.annexSearch.AnnexSearch || class {
+    window.annexSearch.AnnexSearch = window.annexSearch.AnnexSearch || class AnnexSearch {
 
         /**
          * #__$active

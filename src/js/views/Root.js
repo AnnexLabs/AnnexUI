@@ -140,6 +140,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.#__mountHeader();
             this.#__mountBody();
             this.#__mountFooter();
+            this._$annexSearchWidget.getHelper('config').triggerCallback('results.idle');
             this._$annexSearchWidget.dispatchCustomEvent('results.idle');
             return true;
         }

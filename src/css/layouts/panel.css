@@ -32,7 +32,7 @@
     transform: translateX(-100%);
     transition: transform var(--annex-search-open-panel-duration);
 }
-:host([data-annex-search-layout="panel-left"][data-annex-search-open="1"]) [data-view-name="RootView"] > div.content {
+:host([data-annex-search-layout="panel-left"][data-annex-search-showing="1"]) [data-view-name="RootView"] > div.content {
     transform: translateX(0%);
 }
 
@@ -45,6 +45,6 @@
     transform: translateX(100%);
     transition: transform var(--annex-search-open-panel-duration);
 }
-:host([data-annex-search-layout="panel-right"][data-annex-search-open="1"]) [data-view-name="RootView"] > div.content {
+:host([data-annex-search-layout="panel-right"][data-annex-search-showing="1"]) [data-view-name="RootView"] > div.content {
     transform: translateX(0%);
 }

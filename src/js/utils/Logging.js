@@ -37,6 +37,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             args.unshift(styles);
             args.unshift(message);
             window.console && window.console.log && window.console.log.apply(window, args);
+// console.trace();
             return true;
         }
 
