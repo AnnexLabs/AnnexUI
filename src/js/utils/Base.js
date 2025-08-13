@@ -10,7 +10,7 @@ window.annexSearch.DependencyLoader.push([], function() {
      * 
      * @access  public
      */
-    window.annexSearch.BaseUtils = window.annexSearch.BaseUtils || class {
+    window.annexSearch.BaseUtils = window.annexSearch.BaseUtils || class BaseUtils {
 
         /**
          * #__setup

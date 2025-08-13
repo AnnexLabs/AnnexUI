@@ -10,7 +10,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
      * 
      * @access  public
      */
-    window.annexSearch.LoggingUtils = window.annexSearch.LoggingUtils || class extends window.annexSearch.BaseUtils {
+    window.annexSearch.LoggingUtils = window.annexSearch.LoggingUtils || class LoggingUtils extends window.annexSearch.BaseUtils {
 
         /**
          * #__labels

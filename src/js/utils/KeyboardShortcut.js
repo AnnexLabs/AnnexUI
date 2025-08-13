@@ -10,7 +10,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
      * 
      * @access  public
      */
-    window.annexSearch.KeyboardShortcutUtils = window.annexSearch.KeyboardShortcutUtils || class extends window.annexSearch.BaseUtils {
+    window.annexSearch.KeyboardShortcutUtils = window.annexSearch.KeyboardShortcutUtils || class KeyboardShortcutUtils extends window.annexSearch.BaseUtils {
 
         /**
          * #__active

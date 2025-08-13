@@ -10,7 +10,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
      * 
      * @access  public
      */
-    window.annexSearch.ToastUtils = window.annexSearch.ToastUtils || class extends window.annexSearch.BaseUtils {
+    window.annexSearch.ToastUtils = window.annexSearch.ToastUtils || class ToastUtils extends window.annexSearch.BaseUtils {
 
         /**
          * #__duration

@@ -10,7 +10,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
      * 
      * @access  public
      */
-    window.annexSearch.DataUtils = window.annexSearch.DataUtils || class extends window.annexSearch.BaseUtils {
+    window.annexSearch.DataUtils = window.annexSearch.DataUtils || class DataUtils extends window.annexSearch.BaseUtils {
 
         /**
          * copyToClipboard

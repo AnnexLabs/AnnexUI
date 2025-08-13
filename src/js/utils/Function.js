@@ -10,7 +10,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
      * 
      * @access  public
      */
-    window.annexSearch.FunctionUtils = window.annexSearch.FunctionUtils || class extends window.annexSearch.BaseUtils {
+    window.annexSearch.FunctionUtils = window.annexSearch.FunctionUtils || class FunctionUtils extends window.annexSearch.BaseUtils {
 
         /**
          * debounce

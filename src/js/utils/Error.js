@@ -10,7 +10,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
      * 
      * @access  public
      */
-    window.annexSearch.ErrorUtils = window.annexSearch.ErrorUtils || class extends window.annexSearch.BaseUtils {
+    window.annexSearch.ErrorUtils = window.annexSearch.ErrorUtils || class ErrorUtils extends window.annexSearch.BaseUtils {
 
         /**
          * #__messageMap

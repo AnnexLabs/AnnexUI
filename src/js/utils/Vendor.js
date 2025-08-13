@@ -10,7 +10,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
      * 
      * @access  public
      */
-    window.annexSearch.VendorUtils = window.annexSearch.VendorUtils || class extends window.annexSearch.BaseUtils {
+    window.annexSearch.VendorUtils = window.annexSearch.VendorUtils || class VendorUtils extends window.annexSearch.BaseUtils {
 
         /**
          * #__setupLodash

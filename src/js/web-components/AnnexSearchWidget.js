@@ -31,20 +31,20 @@ window.annexSearch.DependencyLoader.push([], function() {
         #__helpers = {};
 
         /**
-         * #__showing
-         * 
-         * @access  private
-         * @var     Boolean (default: false)
-         */
-        #__showing = false;
-
-        /**
          * #__ready
          * 
          * @access  private
          * @var     Boolean (default: false)
          */
         #__ready = false;
+
+        /**
+         * #__showing
+         * 
+         * @access  private
+         * @var     Boolean (default: false)
+         */
+        #__showing = false;
 
         /**
          * #__views

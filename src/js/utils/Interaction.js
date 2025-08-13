@@ -10,7 +10,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
      * 
      * @access  public
      */
-    window.annexSearch.InteractionUtils = window.annexSearch.InteractionUtils || class extends window.annexSearch.BaseUtils {
+    window.annexSearch.InteractionUtils = window.annexSearch.InteractionUtils || class InteractionUtils extends window.annexSearch.BaseUtils {
 
         /**
          * #__addDocumentClickEventListener

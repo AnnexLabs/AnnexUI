@@ -10,7 +10,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
      * 
      * @access  public
      */
-    window.annexSearch.StringUtils = window.annexSearch.StringUtils || class extends window.annexSearch.BaseUtils {
+    window.annexSearch.StringUtils = window.annexSearch.StringUtils || class StringUtils extends window.annexSearch.BaseUtils {
 
         /**
          * generateUUID
