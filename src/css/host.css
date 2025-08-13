@@ -41,7 +41,7 @@
  * 
  */
 :host([data-annex-search-ready="1"]) {
-    transition: opacity var(--annex-search-open-duration);
+    transition: opacity var(--annex-search-show-duration);
 }
 
 /**

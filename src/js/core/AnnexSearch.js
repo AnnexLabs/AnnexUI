@@ -89,6 +89,8 @@
  * @todo    [PUNT] - SchemaUtils which provides template logic according to schemas?
  * @todo    [PUNT] -- Define yaml, html or tmpl files for each schema type?
  * @todo    [PUNT] - Revert to .tmpl files and include them in build script?
+ * @todo    [PUNT] - Hook up all config properties with respective custom event listeners (e.g. placeholder swapping)
+ * @todo    [PUNT] -- This will require re-rendering of views (which should be fine now..)
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

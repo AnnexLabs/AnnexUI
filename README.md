@@ -5,9 +5,8 @@ running in a few minutes. Just include a link to the JS, set your Typesense
 cluster settings, and then press `⌘k` to see Annex up and running.
 
 It's currently in early-development.
-
-
 <hr />
+
 
 ### Quick links
 1. Quick demos
@@ -19,24 +18,21 @@ It's currently in early-development.
 6. `$annexSearchWidget` interactions
 7. Config overriding
 8. Events
-
-
 <hr />
+
 
 ### Quick demos
 1. Inline: <a href="https://local.annexsearch.com/demos/inline" target="_blank">https://local.annexsearch.com/demos/inline</a>
 2. Modal: <a href="https://local.annexsearch.com/demos/modal" target="_blank">https://local.annexsearch.com/demos/modal</a>
 3. Panel (left): <a href="https://local.annexsearch.com/demos/panel-left" target="_blank">https://local.annexsearch.com/demos/panel-left</a>
 4. Panel (right): <a href="https://local.annexsearch.com/demos/panel-right" target="_blank">https://local.annexsearch.com/demos/panel-right</a>
-
-
 <hr />
+
 
 ### Quick preview
 ![](https://416.io/ss/f/x43xuv/r)
-
-
 <hr />
+
 
 ### Quick intro
 Annex uses [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
@@ -68,9 +64,8 @@ to understand are:
 - Annex currently employs a "Last in, first out" approach to queries
   - This means that if users type quickly, previous searches will be aborted to lower server and bandwidth burden
 - Analytics can be facilitate through Events
-
-
 <hr />
+
 
 ### Quick start
 Below you'll find a few lines to get up and running quickly. Just swap out your
@@ -101,9 +96,8 @@ Typesense cluster settings.
     })();
 </script>
 ```
-
-
 <hr />
+
 
 ### Config
 Below you'll find a high-level breakdown of configuration options that can be
@@ -132,17 +126,15 @@ so.
 | searchRequestMethod       | `String`              | ❌         | `'lifo'`                  | The type of search handling. Currently limited to just `lifo` (last in first out)                         |
 | showOverlay               | `Boolean`             | ❌         | `true`                    | Whether the overlay `HTMLElement` should be rendered.                                                     |
 | templates                 | `Object`              | ❌         | (see ...)                 | Map of templates that should be used in Annex rendering.                                                  |
-
-
 <hr />
+
 
 ### Debugging
 Annex tries to communicate installation and instantiation errors clealy through
 DevTools console. During integration, ensure you have your console open to view
 tips on how to get your integration working properly.
-
-
 <hr />
+
 
 ### `$annexSearchWidget` interactions
 Below is a list of supported actions which can be bound to elements on a page.
@@ -171,9 +163,8 @@ Note #2:
 <a href="#test" data-annex-search="toggle">toggle the $annexSearchWidget</a>
 <a href="#test" data-annex-search-query="search query">show the $annexSearchWidget, insert query and search</a>
 ````
-
-
 <hr />
+
 
 ### Config overriding
 Below are examples of code that can be executed against a `$annexSearchWidget`
@@ -186,9 +177,8 @@ $('annex-search-widget').setConfig('searchOptions', {
     snippet_threshold: 20
 });
 ```
-
-
 <hr />
+
 
 ### Events
 Events can be processed either through the config options passed in during
@@ -210,8 +200,6 @@ accessible via the `event.detail` property.
 | `root.hide`           | Dispatched when the `$annexSearchWidget` is hidden.                                                                       |
 | `root.show`           | Dispatched when the `$annexSearchWidget` is shown.                                                                        |
 | `root.toggle`         | Dispatched when the `$annexSearchWidget` is toggled.                                                                      |
-
-
 <hr />
 
 
@@ -233,9 +221,8 @@ element, only the ones below are currently supported.
 | `showing`         | `Boolean`         | Returns whether or not the `$annexSearchWidget` is currently showing.                                             |
 | `showToast`       | `Boolean`         | Shows a toast in the search UI, accepting `title`, `message` and `hideTimeoutDuration` params.                    |
 | `toggle`          | `Boolean`         | Shows or hides the `$annexSearchWidget` depending on it's currently state.                                        |
-
-
 <hr />
+
 
 ### Supported callback handling
 ``` javascript
@@ -243,9 +230,8 @@ function(...args) {
     console.log(arguments);
 }
 ```
-
-
 <hr />
+
 
 ### Supported `$annexSearchWidget` event handling
 ``` javascript
@@ -254,15 +240,15 @@ $('annex-search-widget').addEventListener('root.show', function(customEvent) {
     console.log(customEvent.detail);
 });
 ```
-
-
 <hr />
+
 
 ### Template variables
 - `{{response.found}}`
 - `{{response.out_of}}`
 - `{{response.page}}`
 - `{{response.search_time_ms}}`
+<hr />
 
 
 ### Overriding templates
@@ -288,9 +274,8 @@ the `data` object may contain properties beyond the `object.config` object.
 | `fieldHeader`                     | Element that contains the keyboard shortcut, input field, hide button and spinner.                | `config`                          |
 | `header`                          | Element that contains the `$fieldHeader` element.                                                 | `config`                          |
 | `metaBarHeader`                   | Element that communicates meta data about a search (if any).                                      | `config, response`                |
-
-
 <hr />
+
 
 ### Common problems / gotchas
 Below are a list of possible issues developers may run into, along with possible
@@ -298,17 +283,30 @@ causes.
 
 - You've defined your cluster settings correctly, but your searches are failing
   - Ensure your `cluster.apiKey` is associated with an `apiKey` that has permission to perform queries
-
-
 <hr />
+
+
+### Styling (using vars)
+```html
+<style type="text/css">
+    annex-search-widget {
+        --annex-search-show-panel-duration: 2000ms;
+    }
+</style>
+```
+<hr />
+
 
 ### Vendors
 - Lodash
+<hr />
 
 
 ### More examples
+<hr />
 
-#### Preset without config options
+
+### Preset without config options
 The code below shows the simplest example of Annex. By specifying a `presetName`
 Annex knows how to perform the query. Along with that, the default config
 options (e.g. `'⌘k'` for the keyboard shortcut, `layout` being `'modal'`, etc.)
@@ -331,6 +329,7 @@ are good enough to get going.
     })();
 </script>
 ```
+<hr />
 
 
 ### Edge cases considered

@@ -30,7 +30,7 @@
 :host([data-annex-search-layout="panel-left"]) [data-view-name="RootView"] > div.content {
     left: 0;
     transform: translateX(-100%);
-    transition: transform var(--annex-search-open-panel-duration);
+    transition: transform var(--annex-search-show-panel-duration);
 }
 :host([data-annex-search-layout="panel-left"][data-annex-search-showing="1"]) [data-view-name="RootView"] > div.content {
     transform: translateX(0%);
@@ -43,7 +43,7 @@
 :host([data-annex-search-layout="panel-right"]) [data-view-name="RootView"] > div.content {
     right: 0;
     transform: translateX(100%);
-    transition: transform var(--annex-search-open-panel-duration);
+    transition: transform var(--annex-search-show-panel-duration);
 }
 :host([data-annex-search-layout="panel-right"][data-annex-search-showing="1"]) [data-view-name="RootView"] > div.content {
     transform: translateX(0%);
