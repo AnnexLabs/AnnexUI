@@ -176,6 +176,22 @@ fi
 
 
 ## 
+## Unminified JS (debug replacement)
+## 
+## 
+
+## Logging
+echo "Replacing debug: true with debug: false..."
+
+# Let's do this!
+sed -i.bak 's/debug: true/debug: false/g' "$UNMINIFIED_JS_FILEPATH"
+rm -f "$UNMINIFIED_JS_FILEPATH.bak"
+
+## Logging
+echo "Debug mode disabled in production build"
+
+
+## 
 ## Minified JS
 ## 
 ## 
