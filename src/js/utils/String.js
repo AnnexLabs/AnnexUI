@@ -48,5 +48,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         static setup() {
             return true;
         }
+
+        /**
+         * validURL
+         * 
+         * @note    RegExp can't be in the template due to Lodash engine issues
+         * @see     https://claude.ai/chat/3ef05620-90bd-4176-a7af-f0012ab44106
+         * @access  public
+         * @static
+         * @param   String url
+         * @return  Boolean
+         */
+        static validURL(str) {
+            let valid = /^(https?:\/\/)?([\w\-]+\.)+[a-z]{2,}(:\d+)?(\/\S*)?$/i.test(str);
+            return valid;
+        }
     }
 });

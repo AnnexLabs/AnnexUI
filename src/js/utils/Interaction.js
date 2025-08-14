@@ -83,6 +83,23 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
+         * #__handleBlurInteraction
+         * 
+         * @access  private
+         * @static
+         * @param   Object event
+         * @return  Boolean
+         */
+        static #__handleBlurInteraction(event) {
+            let $target = event.target;
+            if ($target.constructor === window.annexSearch.AnnexSearchWidgetWebComponent) {
+                return false;
+            }
+            window.annexSearch.AnnexSearch.setFocused(null);
+            return false;
+        }
+
+        /**
          * #__handleDocumentClickEvent
          * 
          * @access  private
@@ -92,6 +109,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          */
         static #__handleDocumentClickEvent(event) {
             if (this.#__handleBehaviorInteraction(event) === true) {
+                return true;
+            }
+            if (this.#__handleBlurInteraction(event) === true) {
                 return true;
             }
             if (this.#__handleQueryInteraction(event) === true) {

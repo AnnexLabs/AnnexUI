@@ -175,15 +175,15 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
-         * #__getActiveWebComponent
+         * #__getFocusedWebComponent
          * 
          * @access  private
          * @static
          * @return  null|window.annexSearch.AnnexSearchWidgetWebComponent
          */
-        static #__getActiveWebComponent() {
-            let $active = window.annexSearch.AnnexSearch.getActive();
-            return $active;
+        static #__getFocusedWebComponent() {
+            let $focusedWebComponent = window.annexSearch.AnnexSearch.getFocused();
+            return $focusedWebComponent;
         }
 
         /**
@@ -206,7 +206,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @return  window.annexSearch.BaseView
          */
         static #__getField() {
-            let $annexSearchWidget = this.#__getActiveWebComponent(),
+            let $annexSearchWidget = this.#__getFocusedWebComponent(),
                 field = $annexSearchWidget.getView('root').getView('header.field');
             return field;
         }
@@ -219,7 +219,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @return  window.annexSearch.BaseView
          */
         static #__getFound() {
-            let $annexSearchWidget = this.#__getActiveWebComponent(),
+            let $annexSearchWidget = this.#__getFocusedWebComponent(),
                 found = $annexSearchWidget.getView('root').getView('body.results.found');
             return found;
         }
@@ -239,7 +239,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__active.documentCatchAll === false) {
                 return false;
             }
-            let $annexSearchWidget = this.#__getActiveWebComponent();
+            let $annexSearchWidget = this.#__getFocusedWebComponent();
             if ($annexSearchWidget === null) {
                 return false;
             }
@@ -311,7 +311,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (event.shiftKey === true) {
                 return false;
             }
-            let $annexSearchWidget = this.#__getActiveWebComponent(),
+            let $annexSearchWidget = this.#__getFocusedWebComponent(),
                 $activeElement = $annexSearchWidget.shadow.activeElement;
             if ($activeElement === null) {
                 return false;
@@ -339,7 +339,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__validKeydownEvent(event, 'documentDelete', 'backspace') === false) {
                 return false;
             }
-            let $annexSearchWidget = this.#__getActiveWebComponent(),
+            let $annexSearchWidget = this.#__getFocusedWebComponent(),
                 $activeElement = $annexSearchWidget.shadow.activeElement,
                 field = this.#__getField(),
                 found = this.#__getFound();
@@ -380,7 +380,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__validKeydownEvent(event, 'documentEscape', 'escape') === false) {
                 return false;
             }
-            let $annexSearchWidget = this.#__getActiveWebComponent(),
+            let $annexSearchWidget = this.#__getFocusedWebComponent(),
                 $activeElement = $annexSearchWidget.shadow.activeElement;
             if ($activeElement === null) {
                 let field = this.#__getField();
@@ -408,6 +408,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__validKeydownEvent(event, 'documentKeyboardNavigation', validKeys) === false) {
                 return false;
             }
+            if (this.#__isModifierCombo() === true) {
+                return false;
+            }
             let key = event.key.toLowerCase();
             event.preventDefault();
             let direction = 'previous';
@@ -424,7 +427,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 found.next();
                 return true;
             }
-            found.previous() || this.#__getActiveWebComponent().getView('root').focus();
+            found.previous() || this.#__getFocusedWebComponent().getView('root').focus();
             return true;
         }
 
@@ -442,9 +445,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             }
             let registered = this.#__getRegisteredWebComponents();
             for (let $annexSearchWidget of registered) {
-                if ($annexSearchWidget.getConfig('layout') === 'inline') {
-                    continue;
-                }
+                // if ($annexSearchWidget.getConfig('layout') === 'inline') {
+                //     continue;
+                // }
                 let keyboardShortcut = $annexSearchWidget.getHelper('config').get('keyboardShortcut');
                 if (keyboardShortcut === null) {
                     continue
@@ -463,6 +466,28 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                     character = keyboardShortcut.charAt(1);
                 if (key === character) {
                     event.preventDefault();
+                    if ($annexSearchWidget.getConfig('layout') === 'inline') {
+    console.log('a');
+                        $annexSearchWidget.focus();
+                        return true;
+                    }
+                    if ($annexSearchWidget.showing() === true) {
+                        if ($annexSearchWidget.focused() === true) {
+                            // console.log('showing & focused');
+                            $annexSearchWidget.toggle();
+                            if (window.annexSearch.AnnexSearch.getShowing().length > 0) {
+                                // console.log('Others still showing');
+                                window.annexSearch.AnnexSearch.getShowing()[0].focus();
+                                return true;
+                            }
+                            return true;
+                        }
+                        // console.log('showing & not focused');
+                        $annexSearchWidget.getHelper('webComponentUI').setZIndex();
+                        $annexSearchWidget.focus();
+                        return true;
+                    }
+                    // console.log('not showing');
                     $annexSearchWidget.toggle();
                     return true;
                 }
@@ -483,10 +508,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__getRegisteredWebComponents().length === 0) {
                 return false;
             }
-            if (this.#__getActiveWebComponent() === null) {
+            if (this.#__getFocusedWebComponent() === null) {
                 return false;
             }
-            let $annexSearchWidget = this.#__getActiveWebComponent();
+            let $annexSearchWidget = this.#__getFocusedWebComponent();
             if ($annexSearchWidget.showing() === false) {
                 return false;
             }
@@ -547,6 +572,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__isModifierCombo(event) === false) {
                 return false;
             }
+            event.preventDefault();
             let field = this.#__getField();
             field.focus();
             field.select();
@@ -565,7 +591,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__validKeydownEvent(event, 'documentSlash', '/') === false) {
                 return false;
             }
-            let $annexSearchWidget = this.#__getActiveWebComponent(),
+            let $annexSearchWidget = this.#__getFocusedWebComponent(),
                 $activeElement = $annexSearchWidget.shadow.activeElement,
                 field = this.#__getField();
             if ($activeElement === null) {
@@ -591,7 +617,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__validKeydownEvent(event, 'fieldEnter', 'enter') === false) {
                 return false;
             }
-            let $annexSearchWidget = this.#__getActiveWebComponent(),
+            let $annexSearchWidget = this.#__getFocusedWebComponent(),
                 $activeElement = $annexSearchWidget.shadow.activeElement;
             if ($activeElement === null) {
                 return false;
@@ -627,7 +653,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__validKeydownEvent(event, 'fieldEscape', 'escape') === false) {
                 return false;
             }
-            let $annexSearchWidget = this.#__getActiveWebComponent(),
+            let $annexSearchWidget = this.#__getFocusedWebComponent(),
                 $activeElement = $annexSearchWidget.shadow.activeElement;
             if ($activeElement === null) {
                 return false;
@@ -696,6 +722,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__handleDocumentCatchAllKeydownEvent(event) === true) {
                 return true;
             }
+// console.log('hmm');
             return true;
         }
 
@@ -735,7 +762,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__getRegisteredWebComponents().length === 0) {
                 return false;
             }
-            let $annexSearchWidget = this.#__getActiveWebComponent();
+            let $annexSearchWidget = this.#__getFocusedWebComponent();
             if ($annexSearchWidget === null) {
                 return false;
             }

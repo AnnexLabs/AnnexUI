@@ -15,6 +15,22 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
     window.annexSearch.WebComponentUIHelper = window.annexSearch.WebComponentUIHelper || class WebComponentUIHelper extends window.annexSearch.BaseHelper {
 
         /**
+         * #__$activeElement
+         * 
+         * @access  private
+         * @var     null|EventTarget (default: null)
+         */
+        #__$activeElement = null;
+
+        /**
+         * #__maxZIndex
+         * 
+         * @access  private
+         * @var     Number (default: 2147483647)
+         */
+        #__maxZIndex = 2147483647;
+
+        /**
          * #__uuid
          * 
          * @access  private
@@ -54,6 +70,43 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         #__setInertAttribute() {
             let $annexSearchWidget = this.getWebComponent();
             $annexSearchWidget.setAttribute('inert', '');
+            return true;
+        }
+
+        /**
+         * #__setModalOrderAttribute
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__setModalOrderAttribute() {
+            let registered = window.annexSearch.AnnexSearch.getRegistered();
+            if (registered.length === 0) {
+                return false;
+            }
+            if (registered.length === 1) {
+                return false;
+            }
+            let $annexSearchWidget = this.getWebComponent(),
+                order = 0;
+            for (let index in registered.reverse()) {
+                let $webComponent = registered[index];
+                $webComponent.removeAttribute('data-annex-search-modal-order');
+                // if ($webComponent === $annexSearchWidget) {
+                //     continue;
+                // }
+                if ($webComponent.getHelper('config').get('layout') !== 'modal') {
+                    continue;
+                }
+                if ($webComponent.showing() === false) {
+                    continue;
+                }
+                $webComponent.setAttribute('data-annex-search-modal-order', order);
+                order++;
+// console.log($annexSearchWidget);
+                // let zIndex = maxZIndex - index - 1;
+                // $webComponent.style.zIndex = zIndex;
+            }
             return true;
         }
 
@@ -138,6 +191,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             $annexSearchWidget.getView('root').blur();
             this.#__setShowingAttribute();
             this.#__setInertAttribute();
+            this.#__setModalOrderAttribute();
+            let $activeElement = this.#__$activeElement;
+            window.annexSearch.ElementUtils.waitForAnimation().then(function() {
+                $activeElement && $activeElement.focus();
+            });
             return true;
         }
 
@@ -165,11 +223,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             let $annexSearchWidget = this.getWebComponent(),
                 colorScheme = this.getHelper('config').get('colorScheme'),
                 index = window.annexSearch.AnnexSearch.getRegistered().indexOf($annexSearchWidget),
-                layout = this.getHelper('config').get('layout');
+                layout = this.getHelper('config').get('layout'),
+                schemaKey = this.getHelper('config').get('schemaKey');
             $annexSearchWidget.setAttribute('data-annex-search-color-scheme', colorScheme);
             $annexSearchWidget.setAttribute('data-annex-search-index', index);
             $annexSearchWidget.setAttribute('data-annex-search-layout', layout);
             $annexSearchWidget.setAttribute('data-annex-search-ready', '1');
+            $annexSearchWidget.setAttribute('data-annex-search-schemaKey', schemaKey);
             this.#__setNameAttribute();
             this.#__setShowingAttribute();
             this.#__setOverlayAttribute();
@@ -223,17 +283,51 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         }
 
         /**
+         * setZIndex
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        setZIndex() {
+            let registered = window.annexSearch.AnnexSearch.getRegistered();
+            if (registered.length === 0) {
+                return false;
+            }
+            if (registered.length === 1) {
+                return false;
+            }
+            let maxZIndex = this.#__maxZIndex,
+                $annexSearchWidget = this.getWebComponent();
+            $annexSearchWidget.style.zIndex = maxZIndex;
+            for (let index in registered) {
+                let $webComponent = registered[index];
+                if ($webComponent === $annexSearchWidget) {
+                    continue;
+                }
+                if ($webComponent.showing() === false) {
+                    continue;
+                }
+                let zIndex = maxZIndex - index - 1;
+                $webComponent.style.zIndex = zIndex;
+            }
+            return true;
+        }
+
+        /**
          * show
          * 
          * @access  public
          * @return  Boolean
          */
         show() {
+            this.#__$activeElement = document.activeElement || null;
             let $annexSearchWidget = this.getWebComponent();
             this.getHelper('config').triggerCallback('root.show');
             $annexSearchWidget.dispatchCustomEvent('root.show');
             this.#__setShowingAttribute();
             this.#__removeInertAttribute();
+            this.#__setModalOrderAttribute();
+            this.setZIndex();
             let found = $annexSearchWidget.getView('root').getView('root.body.results.found'),
                 results = found.getResults();
             if (results.length === 0) {

@@ -7,15 +7,33 @@
         "fields": [
             {
                 "key": "title",
+                "type": "string",
+                "optional": false,
                 "dscription": "The title of the web resource"
             },
             {
                 "key": "body",
+                "type": "string",
+                "optional": false,
                 "dscription": "The searchable body content of the web resource"
             },
             {
                 "key": "uri",
+                "type": "string",
+                "optional": false,
                 "dscription": "Fully resolvable URI of the web resource"
+            },
+            {
+                "key": "imageUrl",
+                "type": "string",
+                "optional": true,
+                "dscription": "Fully resolvable URL of an image representing the web resource (e.g. it's open graph image)"
+            },
+            {
+                "key": "score",
+                "type": "int32",
+                "optional": true,
+                "dscription": "Score representing the importance of the web resource (e.g. a homepage often has a high score value)"
             }
         ]
     }

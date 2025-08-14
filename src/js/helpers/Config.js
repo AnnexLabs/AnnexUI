@@ -136,11 +136,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             /**
              * debug
              * 
-             * @note    noop
              * @access  private
              * @var     Boolean (default: false)
              */
-            debug: false,
+            debug: true,
 
             /**
              * keyboardShortcut
@@ -211,10 +210,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * the ResultFoundResultsBodyView template used will adhere to the
              * fields defined in the schema JSON file.
              * 
-             * @note    noop
              * @access  private
              * @var     String (default: 'webResource-v0.1.0')
              */
+            // schemaKey: 'custom',
             schemaKey: 'webResource-v0.1.0',
 
             /**

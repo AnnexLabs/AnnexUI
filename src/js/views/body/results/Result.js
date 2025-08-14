@@ -21,11 +21,23 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String
          */
         _markup = `
-<a data-view-name="ResultFoundResultsBodyView" href="https://{{data.hit.document.hostname}}{{data.hit.document.relativeURL}}">
-    <div class="title">{{{data?.hit?.highlight?.title?.snippet || data?.hit?.document?.title || '(unknown title)'}}}</div>
-    <div class="body">{{{data?.hit?.highlight?.body?.snippet || data?.hit?.document?.body || '(unknown body)'}}}</div>
-    <div class="uri truncate">https://{{data.hit.document.hostname}}{{data.hit.document.relativeURL}}</div>
+<a data-view-name="ResultFoundResultsBodyView">
+    <div class="title">(no valid template defined)</div>
+    <div class="body">(no valid template defined)</div>
+    <div class="uri truncate">(no valid template defined)</div>
 </a>`;
+
+        /**
+         * constructor
+         * 
+         * @access  public
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @return  void
+         */
+        constructor($annexSearchWidget) {
+            super($annexSearchWidget);
+            this._markup = window.annexSearch.SchemaUtils.getMarkup('result', this) || this._markup;
+        }
 
         /**
          * #__addClickEventListener
@@ -48,6 +60,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__addEvents() {
             this.#__addClickEventListener();
             this.#__addFocusEventListener();
+            this.#__addImageLoadEventListener();
             this.#__addKeydownEventListener();
             return true;
         }
@@ -61,6 +74,22 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__addFocusEventListener() {
             let handler = this.#__handleFocusEvent.bind(this);
             this.event('focus', handler);
+            return true;
+        }
+
+        /**
+         * #__addImageLoadEventListener
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__addImageLoadEventListener() {
+            let $element = this.first('img');
+            if ($element === null) {
+                return false;
+            }
+            let handler = this.#__handleImageLoadEvent.bind(this);
+            $element.addEventListener('load', handler);
             return true;
         }
 
@@ -110,6 +139,22 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.getWebComponent().getHelper('config').triggerCallback('result.focus', detail);
             this.getWebComponent().dispatchCustomEvent('result.focus', detail);
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
+            this.getView('root.body.results.found').clearFocused();
+// console.log(this._$element);
+            this._$element.classList.add('focused');
+            return true;
+        }
+
+        /**
+         * #__handleImageLoadEvent
+         * 
+         * @access  private
+         * @param   Object event
+         * @return  Boolean
+         */
+        #__handleImageLoadEvent(event) {
+            let $element = this.first('img');
+            $element.parentNode.classList.add('loaded');
             return true;
         }
 
@@ -192,6 +237,15 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             return true;
         }
 
+        // /**
+        //  * _remo
+        //  * 
+        //  * @access  public
+        //  * @return  Boolean
+        //  */
+        // _remo() {
+        // }
+
         /**
          * focus
          * 
@@ -199,6 +253,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         focus() {
+// console.log($focused);
             this._$element.focus();
             this._$element.scrollIntoView({
                 behavior: 'smooth',

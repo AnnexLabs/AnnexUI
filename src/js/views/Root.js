@@ -32,9 +32,35 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__addEvents() {
+            this.#__addClickEventListener();
+            this.#__addFocusinEventListener();
             this.#__addOverlayClickEventListener();
             return true;
         }
+
+        /**
+         * #__addClickEventListener
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__addClickEventListener() {
+            let handler = this.#__handleClickEvent.bind(this);
+            this.click(handler);
+            return true;
+        };
+
+        /**
+         * #__addFocusinEventListener
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__addFocusinEventListener() {
+            let handler = this.#__handleFocusinEvent.bind(this);
+            this.event('focusin', handler);
+            return true;
+        };
 
         /**
          * #__addOverlayClickEventListener
@@ -47,6 +73,33 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.click(handler);
             return true;
         };
+
+        /**
+         * #__handleClickEvent
+         * 
+         * @access  private
+         * @param   Object event
+         * @return  Boolean
+         */
+        #__handleClickEvent(event) {
+            let $annexSearchWidget = this.getWebComponent();
+            window.annexSearch.AnnexSearch.setFocused($annexSearchWidget);
+            $annexSearchWidget.focus();
+            return true;
+        }
+
+        /**
+         * #__handleFocusinEvent
+         * 
+         * @access  private
+         * @param   Object event
+         * @return  Boolean
+         */
+        #__handleFocusinEvent(event) {
+            let $annexSearchWidget = this.getWebComponent();
+            window.annexSearch.AnnexSearch.setFocused($annexSearchWidget);
+            return true;
+        }
 
         /**
          * #__handleOverlayClickEvent

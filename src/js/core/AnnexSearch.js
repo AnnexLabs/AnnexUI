@@ -2,10 +2,12 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - Bug with focus not coming back (related to found.results not being cleared)
+ * @todo    - Allow for keyboard shortcuts with inline (to focus)?
+ * @todo    -- But don't show field.label?
  * 
- * @todo    - Bug with multiple open and query-ing
- * @todo    - Multiple bugs (various)
+ * @todo    - Track order of "showing" modals in registered?
+ * @todo    - Fundametally need to get this sorted, and then revisit keyboard shortcut toggle work
+ * @todo    - Multiple-modal stacking (w/ offsets)
  * 
  * @todo    - Typesense collection retrieval (for smart templates?)
  * 
@@ -25,6 +27,7 @@
  * @todo    [PUNT] -- Tooltip class for communicating error messages
  * @todo    [PUNT] -- https://claude.ai/chat/b775bedd-d31a-464e-8e10-49c42a5a3644
  * @todo    [PUNT] - On toggle, restore $input focus state if focused
+ * @todo    [PUNT] -- This is important to reinforce statefulness and UX focus
  * @todo    [PUNT] - thumbnails
  * @todo    [PUNT] - Look into CSV fields and commas being encoded in XHRs
  * @todo    [DONE] - loadMore bug re:adding and not clearing
@@ -95,6 +98,36 @@
  * @todo    [DONE] - Look into copyToClipboard catch
  * @todo    [PUNT] - Cleaner error throwing? https://416.io/ss/f/njj7y3
  * @todo    [PUNT] - Throw error whenever needed (of specific type?) and catch it; then kill?
+ * @todo    [PUNT] - Give users ability to hide a result (via keyboard shortcut?)
+ * @todo    [DONE] - Bug with focus not coming back (related to found.results not being cleared)
+ * @todo    [DONE] -- See here: https://416.io/ss/f/93p03u
+ * @todo    [PUNT] - Define custom results that are always inserted (at top initially)
+ * @todo    [PUNT] - setConfig on global window.annexSearch.AnnexSearch class, which trickles down (but can be overridden) to web components
+ * @todo    [PUNT] - Attempting to re-focus when multiple web components is limited to the $this itself; can't focus in on $result
+ * @todo    [PUNT] -- Would need to internally track this, and pass it down via $annexWebComponent.focus call
+ * @todo    [DONE] - Bug with multiple open and query-ing
+ * @todo    [DONE] - Multiple bugs (various)
+ * @todo    [DONE] -- Focus/click
+ * @todo    [DONE] -- z-indexing
+ * @todo    [PUNT] - Error handling for multiple panel-left / panel-right instances?
+ * @todo    [PUNT] -- Possible to support with offset (translateX) animations?
+ * @todo    [DONE] - Prevent blur when click on $result
+ * @todo    [DONE] -- Instead added .focused class
+ * @todo    [PUNT] - Command + delete to clear entire input value (from non-input focused $element)
+ * @todo    [PUNT] - Better logic for image/container "height flashing" re:content sibling $div
+ * @todo    [DONE] - Image support for demo (see setMutator)
+ * @todo    [DONE] -- Image fading in after load
+ * @todo    [DONE] - When multiple open, have keyboard shortcut "bring to front" an already open web component that has a lower z-index value
+ * @todo    [DONE] -- See: https://416.io/ss/f/b8x7qp
+ * @todo    [PUNT] - Add support for more than > 2 showing with toggling/hiding
+ * @todo    [PUNT] -- See: https://416.io/ss/f/zl6bct
+ * @todo    [PUNT] - Allow for Command+up/down, which should go to top of scrollable area
+ * @todo    [DONE] - Thumbs broken on tall images: https://416.io/ss/f/26alrd
+ * @todo    [DONE] -- I thought this was fixed, but new issues with stupid flex box
+ * @todo    [DONE] -- Likely better to just go back to original
+ * @todo    [DONE] - Schemas (for Typesense demos)
+ * @todo    [DONE] - New problem w/ clicking $result and losing focused class.. ach..
+ * @todo    [DONE] -- Problem with new $webComponent click/focus handlers and propagatong up to focus on $input?
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -106,13 +139,13 @@ window.annexSearch.DependencyLoader.push([], function() {
     window.annexSearch.AnnexSearch = window.annexSearch.AnnexSearch || class AnnexSearch {
 
         /**
-         * #__$active
+         * #__$focused
          * 
          * @access  private
          * @static
          * @var     null|window.annexSearch.AnnexSearchWidgetWebComponent (default: null)
          */
-        static #__$active = null;
+        static #__$focused = null;
 
         /**
          * #__registered
@@ -160,27 +193,27 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * clearActive
+         * clearFocused
          * 
          * @access  public
          * @static
          * @return  Boolean
          */
-        static clearActive() {
-            this.#__$active = null;
+        static clearFocused() {
+            this.#__$focused = null;
             return true;
         }
 
         /**
-         * getActive
+         * getFocused
          * 
          * @access  public
          * @static
          * @return  window.annexSearch.AnnexSearchWidgetWebComponent
          */
-        static getActive() {
-            let active = this.#__$active;
-            return active;
+        static getFocused() {
+            let $focused = this.#__$focused;
+            return $focused;
         }
 
         /**
@@ -228,12 +261,20 @@ window.annexSearch.DependencyLoader.push([], function() {
         /**
          * register
          * 
+         * @see     https://chatgpt.com/c/689d593e-6478-8323-bf55-a6bdc876ad22
          * @access  public
          * @static
          * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
          * @return  Boolean
          */
         static register($annexSearchWidget) {
+            if (this.#__registered.includes($annexSearchWidget) === false) {
+                this.#__registered.push($annexSearchWidget);
+                return true;
+            }
+            this.#__registered = this.#__registered.filter(function(item) {
+                return item !== $annexSearchWidget;
+            });
             this.#__registered.push($annexSearchWidget);
             return true;
         }
@@ -243,11 +284,17 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  public
          * @static
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @param   null|window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
          * @return  Boolean
          */
-        static setActive($annexSearchWidget) {
-            this.#__$active = $annexSearchWidget;
+        static setFocused($annexSearchWidget) {
+// console.log('focusing: ' + $annexSearchWidget.getAttribute('data-annex-search-id'));
+// console.trace();
+            this.#__$focused = $annexSearchWidget;
+            if ($annexSearchWidget === null) {
+                return false;
+            }
+            this.register($annexSearchWidget);
             return true;
         }
 

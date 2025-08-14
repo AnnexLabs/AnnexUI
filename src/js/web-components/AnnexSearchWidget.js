@@ -39,6 +39,14 @@ window.annexSearch.DependencyLoader.push([], function() {
         #__mounted = false;
 
         /**
+         * #__mutators
+         * 
+         * @access  private
+         * @var     Object (default: {})
+         */
+        #__mutators = {};
+
+        /**
          * #__ready
          * 
          * @access  private
@@ -127,11 +135,19 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Promise
          */
         #__handleRenderEvent() {
-            this.#__mountRoot();
-            this.#__helpers.webComponentUI.setupConfigHelperCustomEventListeners();
-            this.#__helpers.webComponentUI.setUUID();
-            this.#__helpers.webComponentUI.setAttributes();
-            this.#__helpers.webComponentUI.autoShow();
+            try {
+                this.#__mountRoot();
+                this.#__helpers.webComponentUI.setupConfigHelperCustomEventListeners();
+                this.#__helpers.webComponentUI.setUUID();
+                this.#__helpers.webComponentUI.setAttributes();
+                this.#__helpers.webComponentUI.autoShow();
+            } catch (err) {
+                let debug = this.#__helpers.config.get('debug');
+                if (debug === true) {
+                    console.log(err);
+                    console.trace();
+                }
+            }
             let handler = this.#__handleReadyEvent.bind(this),
                 promise = window.annexSearch.ElementUtils.waitForAnimation().then(handler);
             return promise;
@@ -210,21 +226,12 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         clear() {
-            // if (this.#__showing === true) {
-            //     return false;
-            // }
-// console.log('clearing');
             let field = this.getView('root').getView('root.header.field'),
                 found = this.getView('root').getView('body.results.found');
             field.focus();
             field.clear();
             field.nullifyLastTypesenseSearchResponse();
-            // field.append(query);
-            // found.smoothScrollToTop();
             found.resetFocusedIndex();
-            // window.annexSearch.ElementUtils.waitForAnimation().then(function() {
-            //     field.setCaret();
-            // });
             field.first('input').dispatchEvent(new Event('input', {
                 bubbles: true
             }));
@@ -267,8 +274,25 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         focus() {
+            let focused = this.focused();
+            if (focused === true) {
+console.log('0');
+                return false;
+            }
+// console.log('1');
             let response = this.getView('root').focus();
             return response;
+        }
+
+        /**
+         * focused
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        focused() {
+            let focused = window.annexSearch.AnnexSearch.getFocused() === this;
+            return focused;
         }
 
         /**
@@ -293,6 +317,19 @@ window.annexSearch.DependencyLoader.push([], function() {
         getHelper(key) {
             let helper = this.#__helpers[key];
             return helper;
+        }
+
+        /**
+         * getMutator
+         * 
+         * @access  public
+         * @param   String key
+         * @param   Function mutator
+         * @return  Boolean
+         */
+        getMutator(key) {
+            let mutator = this.#__mutators[key] || null;
+            return mutator;
         }
 
         /**
@@ -322,7 +359,7 @@ window.annexSearch.DependencyLoader.push([], function() {
                 return false;
             }
             this.#__showing = false;
-            window.annexSearch.AnnexSearch.clearActive();
+            window.annexSearch.AnnexSearch.clearFocused();
             this.#__helpers.webComponentUI.hide();
             return true;
         }
@@ -452,6 +489,19 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * setMutator
+         * 
+         * @access  public
+         * @param   String key
+         * @param   Function mutator
+         * @return  Boolean
+         */
+        setMutator(key, mutator) {
+            this.#__mutators[key] = mutator;
+            return true;
+        }
+
+        /**
          * show
          * 
          * @note    The logic below is to ensure state is preserved between
@@ -464,7 +514,7 @@ window.annexSearch.DependencyLoader.push([], function() {
                 return false;
             }
             this.#__showing = true;
-            window.annexSearch.AnnexSearch.setActive(this);
+            window.annexSearch.AnnexSearch.setFocused(this);
             this.#__helpers.webComponentUI.show();
             return true;
         }
@@ -508,6 +558,19 @@ window.annexSearch.DependencyLoader.push([], function() {
             if (this.#__showing === true) {
                 let response = this.hide();
                 return response;
+//                 let registered = window.annexSearch.AnnexSearch.getRegistered();
+//                 if (registered.length === 1) {
+//                     let response = this.hide();
+//                     return response;
+//                 }
+// console.log('sdf', window.annexSearch.AnnexSearch.getFocused());
+//                 if (this === window.annexSearch.AnnexSearch.getFocused()) {
+// console.log('sdf2');
+//                     let response = this.hide();
+//                     return response;
+//                 }
+//                 this.#__helpers.webComponentUI.__setZIndex();
+//                 return false;
             }
             let response = this.show();
             return response;

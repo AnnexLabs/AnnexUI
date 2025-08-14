@@ -266,6 +266,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseRequest'], fun
             if (json.ok === false) {
                 alert('hmmm');
             }
+            this.#__processMutator();
+// console.log(json);
             // this.#__response = json;
             return this;
         }
@@ -281,6 +283,22 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseRequest'], fun
             let handler = this.#__handleSuccessfulRequestJSONDecoding.bind(this),
                 promise = response.json().then(handler);
             return promise;
+        }
+
+        /**
+         * #__processMutator
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__processMutator() {
+            let $annexSearchWidget = this.getWebComponent(),
+                mutator = $annexSearchWidget.getMutator('typesenseSearchResponse') || null;
+            if (mutator === null) {
+                return false;
+            }
+            mutator && mutator.apply($annexSearchWidget, [this]);
+            return true;
         }
 
         /**

@@ -116,12 +116,29 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * clearFocused
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        clearFocused() {
+// console.log('clearing');
+// console.trace();
+            let $focused = this.find('.focused');
+            for (let $result of $focused) {
+                $result.classList.remove('focused');
+            }
+            return true;
+        }
+
+        /**
          * clearResults
          * 
          * @access  public
          * @return  Boolean
          */
         clearResults() {
+// console.log('clearing', this);
             this.#__results = [];
             while (this._$element.firstChild) {
                 this._$element.removeChild(this._$element.firstChild);

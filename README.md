@@ -292,6 +292,16 @@ causes.
     annex-search-widget {
         --annex-search-show-panel-duration: 2000ms;
     }
+    annex-search-widget::part(result-price) {
+        background-color: rgba(0, 0, 0, 0.60);
+        color: #ffffff;
+    }
+    @media (prefers-color-scheme: dark) {
+        annex-search-widget::part(result-price) {
+            background-color: #ffffff;
+            color: rgba(0, 0, 0, 0.60);
+        }
+    }
 </style>
 ```
 <hr />

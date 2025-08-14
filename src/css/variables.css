@@ -45,6 +45,7 @@
     --annex-search-brandingBar-anchor-color:                    rgba(0, 0, 0, 0.60);
     --annex-search-brandingBar-anchor-border-color:             rgba(0, 0, 0, 0.20);
     --annex-search-brandingBar-anchor-border-color-hover:       rgba(0, 0, 0, 0.60);
+    --annex-search-thumbnail-background-color:                  #ffffff;
     --annex-search-border-color:                                #e5e7eb;
     --annex-search-mark-color:                                  #3b82f6;
     --annex-search-mark-background-color:                       #3b82f61a;
@@ -117,6 +118,7 @@
         --annex-search-brandingBar-anchor-color:                var(--annex-search-dm-brandingBar-anchor-color,                 rgba(255, 255, 255, 0.60));
         --annex-search-brandingBar-anchor-border-color:         var(--annex-search-dm-brandingBar-anchor-border-color,          rgba(255, 255, 255, 0.20));
         --annex-search-brandingBar-anchor-border-color-hover:   var(--annex-search-dm-brandingBar-anchor-border-color-hover,    rgba(255, 255, 255, 0.60));
+        --annex-search-thumbnail-background-color:              var(--annex-search-dm-thumbnail-background-color,               #21222c);
         --annex-search-border-color:                            var(--annex-search-dm-border-color,                             #383942);
         --annex-search-result-hover-background-color:           var(--annex-search-dm-result-hover-background-color,            #31323b);
         --annex-search-result-focus-background-color:           var(--annex-search-dm-result-focus-background-color,            #31323b);
@@ -150,6 +152,7 @@
     --annex-search-brandingBar-anchor-color:                var(--annex-search-dm-brandingBar-anchor-color,                 rgba(255, 255, 255, 0.60));
     --annex-search-brandingBar-anchor-border-color:         var(--annex-search-dm-brandingBar-anchor-border-color,          rgba(255, 255, 255, 0.20));
     --annex-search-brandingBar-anchor-border-color-hover:   var(--annex-search-dm-brandingBar-anchor-border-color-hover,    rgba(255, 255, 255, 0.60));
+    --annex-search-thumbnail-background-color:              var(--annex-search-dm-thumbnail-background-color,               #21222c);
     --annex-search-border-color:                            var(--annex-search-dm-border-color,                             #383942);
     --annex-search-result-hover-background-color:           var(--annex-search-dm-result-hover-background-color,            #31323b);
     --annex-search-result-focus-background-color:           var(--annex-search-dm-result-focus-background-color,            #31323b);

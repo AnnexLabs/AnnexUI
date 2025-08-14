@@ -138,6 +138,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 this.nullifyLastTypesenseSearchResponse();
                 this.clear();
                 this.getView('root').setStateKey('idle');
+                this.getView('root.body.results.found').clearResults();
                 this.getWebComponent().getHelper('config').triggerCallback('results.idle');
                 this.getWebComponent().dispatchCustomEvent('results.idle');
                 return false;
@@ -356,6 +357,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         focus() {
+            let found = this.getView('root.body.results.found');
+            found.clearFocused();
             let $input = this.first('input');
             window.annexSearch.ElementUtils.waitForAnimation().then(function() {
                 $input.focus();
@@ -374,7 +377,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             if (this.#__loadingMore === true) {
                 return false;
             }
-            if (window.annexSearch.FunctionUtils.limitReached(this.loadMore, 10, 10000) === true) {
+            if (window.annexSearch.FunctionUtils.limitReached(this.loadMore, 10, 7500) === true) {
                 let message = window.annexSearch.ErrorUtils.getMessage('fieldHeaderView.loadMore.limitReached');
                 this.error(message);
                 this.getView('root').setStateKey('error');

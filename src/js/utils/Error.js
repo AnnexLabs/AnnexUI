@@ -29,7 +29,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             'base.set.key.undefined':                                           'Invalid {key} value passed to {base.set}; found {undefined}',
             'base.set.value.undefined':                                         'Invalid {value} value passed to {base.set}; found {undefined}',
             'interactionUtils.zeroRegistered':                                  'No registered $annexSearchWidget elements found',
-            'interactionUtils.multipleRegistered':                              'Multiple registered $annexSearchWidget elements found. Unable to determine which $element is the target.',
+            'interactionUtils.multipleRegistered':                              'Multiple registered $annexSearchWidget elements found. Unable to determine which $annexSearchWidget is the target.',
             'loggingUtils.fetchFailed.tip':                                     'Tip: Double check that {config.cluster.hostname} is defined and correct.',
             'stylesheets.failedLoading':                                        'Could not load stylesheets.',
                 'typesenseSearchRequest.abort':                                     'Abort method called against {window.annexSearch.TypesenseSearchRequest}',
