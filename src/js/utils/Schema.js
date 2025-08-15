@@ -273,4 +273,3 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
     }
 });
-
