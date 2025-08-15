@@ -92,6 +92,22 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
+         * hideAll
+         * 
+         * @access  public
+         * @static
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @return  Boolean
+         */
+        static hideAll($annexSearchWidget) {
+            let toasts = this.get($annexSearchWidget);
+            for (let toast of toasts) {
+                toast.hide();
+            }
+            return true;
+        }
+
+        /**
          * remove
          * 
          * @access  public

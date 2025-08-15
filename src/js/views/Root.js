@@ -22,6 +22,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         _markup = `
 <div data-view-name="RootView" data-state-key="idle" part="root">
+    <div class="overlay" part="root-overlay"></div>
     <div class="content" part="root-content"></div>
 </div>`;
 
@@ -114,7 +115,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 return false;
             }
             let $target = event.target;
-            if ($target === this._$element) {
+            if ($target === null) {
+                return false;
+            }
+            if ($target === undefined) {
+                return false;
+            }
+            if ($target.matches('.overlay') === true) {
                 this._$annexSearchWidget.hide();
                 return true;
             }

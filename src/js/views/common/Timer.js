@@ -77,6 +77,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__destroy() {
             this._$element.remove();
             window.annexSearch.TimerUtils.remove(this);
+            // this.dispatchCustomEvent('complete');
             return true;
         }
 

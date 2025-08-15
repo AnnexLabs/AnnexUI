@@ -31,14 +31,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         #__maxZIndex = 2147483647;
 
         /**
-         * #__uuid
-         * 
-         * @access  private
-         * @var     null|String (default: null)
-         */
-        #__uuid = null;
-
-        /**
          * constructor
          * 
          * @access  public
@@ -111,22 +103,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         }
 
         /**
-         * #__setNameAttribute
-         * 
-         * @access  private
-         * @return  Boolean
-         */
-        #__setNameAttribute() {
-            let name = this.getHelper('config').get('name');
-            if (name === null) {
-                return false;
-            }
-            let $annexSearchWidget = this.getWebComponent();
-            $annexSearchWidget.setAttribute('data-annex-search-name', name);
-            return true;
-        }
-
-        /**
          * #__setOverlayAttribute
          * 
          * @access  private
@@ -179,6 +155,33 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         }
 
         /**
+         * enable
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        enable() {
+            let $annexSearchWidget = this.getWebComponent();
+            $annexSearchWidget.removeAttribute('data-annex-search-disabled');
+            window.annexSearch.ToastUtils.hideAll($annexSearchWidget);
+            return true;
+        }
+
+        /**
+         * disable
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        disable() {
+            let $annexSearchWidget = this.getWebComponent();
+            $annexSearchWidget.setAttribute('data-annex-search-disabled', '1');
+            let toast = $annexSearchWidget.showToast('Search disabled', 'Apologies but search has been disabled for the time being.', null);
+            toast.setUnescapable();
+            return true;
+        }
+
+        /**
          * hide
          * 
          * @access  public
@@ -200,20 +203,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         }
 
         /**
-         * kill
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        kill() {
-            let $annexSearchWidget = this.getWebComponent();
-            $annexSearchWidget.setAttribute('data-annex-search-dead', '1');
-            let toast = $annexSearchWidget.showToast('Search disabled', 'Apologies but search has been disabled for the time being.', null);
-            toast.setUnescapable();
-            return true;
-        }
-
-        /**
          * setAttributes
          * 
          * @access  public
@@ -222,15 +211,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         setAttributes() {
             let $annexSearchWidget = this.getWebComponent(),
                 colorScheme = this.getHelper('config').get('colorScheme'),
+                id = this.getHelper('config').get('id'),
                 index = window.annexSearch.AnnexSearch.getRegistered().indexOf($annexSearchWidget),
                 layout = this.getHelper('config').get('layout'),
                 schemaKey = this.getHelper('config').get('schemaKey');
             $annexSearchWidget.setAttribute('data-annex-search-color-scheme', colorScheme);
+            $annexSearchWidget.setAttribute('data-annex-search-id', id);
             $annexSearchWidget.setAttribute('data-annex-search-index', index);
             $annexSearchWidget.setAttribute('data-annex-search-layout', layout);
             $annexSearchWidget.setAttribute('data-annex-search-ready', '1');
             $annexSearchWidget.setAttribute('data-annex-search-schemaKey', schemaKey);
-            this.#__setNameAttribute();
             this.#__setShowingAttribute();
             this.#__setOverlayAttribute();
             return true;
@@ -268,18 +258,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
                 $annexSearchWidget.getHelper('webComponentUI').setAttributes();
                 return true;
             });
-        }
-
-        /**
-         * setUUID
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        setUUID() {
-            this.#__uuid = window.annexSearch.StringUtils.generateUUID();
-            this.getWebComponent().setAttribute('data-annex-search-id', this.#__uuid);
-            return true;
         }
 
         /**

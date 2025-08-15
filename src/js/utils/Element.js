@@ -179,6 +179,25 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
+         * visible
+         *
+         * @see     https://chatgpt.com/c/689f96f3-20fc-8332-b530-e8693299801b
+         * @access  public
+         * @static
+         * @param   EventTarget $eventTarget
+         * @return  Boolean
+         */
+        static visible($eventTarget) {
+            let rect = $eventTarget.getBoundingClientRect();
+            return (
+                rect.top < window.innerHeight &&
+                rect.bottom > 0 &&
+                rect.left < window.innerWidth &&
+                rect.right > 0
+            );
+        }
+
+        /**
          * waitForAnimation
          *
          * @see     https://chatgpt.com/c/682a39f4-d464-800f-bd7c-9793d2bf0349

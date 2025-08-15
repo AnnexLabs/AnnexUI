@@ -10,7 +10,6 @@
  */
 :host {
     all: initial;
-/*    position: absolute;*/
     position: fixed;
     top: 0;
     right: 0;
@@ -29,11 +28,9 @@
  */
 :host([data-annex-search-showing="1"]) {
     opacity: 1;
-    pointer-events: auto;
 }
-:host([data-annex-search-showing="0"]) {
-/*    opacity: 1;*/
-/*    pointer-events: auto;*/
+:host([data-annex-search-showing="1"]) * {
+    pointer-events: auto;
 }
 
 /**
@@ -48,25 +45,9 @@
  * Dead
  * 
  */
-:host([data-annex-search-dead="1"]) [data-view-name="RootView"] > div.content > div {
+:host([data-annex-search-disabled="1"]) [data-view-name="RootView"] > div.content * {
     pointer-events: none;
 }
-:host([data-annex-search-dead="1"]) div.content > *:not([data-view-name="ToastView"]) {
-/*    opacity: 0.40;*/
-}
-
-/**
- * States (offset)
- * 
- */
-/*:host [data-view-name="RootView"] > div.content {*/
-/*    overflow: hidden;*/
-/*}*/
-:host([data-annex-search-index="0"]) [data-view-name="RootView"] > div.content {
-/*    background-color: red !important;*/
-/*    --offset: attr(data-annex-search-index px);*/
-/*    transform: translateY(-10px) translateX(-10px);*/
-
-    /*margin-top: -10px;
-    margin-left: -10px;*/
+:host([data-annex-search-disabled="1"][data-annex-search-showing="1"]) [data-view-name="RootView"] > div.overlay {
+    pointer-events: auto;
 }

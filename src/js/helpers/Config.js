@@ -161,6 +161,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             highlightTagName: 'MARK',
 
             /**
+             * id
+             * 
+             * Useful for interaction attributes such that specific
+             * $annexSearchWidget instances can be targeted.
+             * 
+             * @access  private
+             * @var     String (default: window.annexSearch.StringUtils.generateUUID())
+             */
+            id: window.annexSearch.StringUtils.generateUUID(),
+
+            /**
              * layout
              * 
              * The UI layout for the web component. Currently supports:
@@ -173,14 +184,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * @var     String (default: 'modal')
              */
             layout: 'modal',
-
-            /**
-             * name
-             * 
-             * @access  private
-             * @var     null|String (default: null)
-             */
-            name: null,
 
             /**
              * resources

@@ -2,6 +2,10 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
+ * @todo    - Kill doesn't work
+ * @todo    - Prevent auto focus due to page jacking..
+ * @todo    - Auto focus on scrolling and it becoming visible
+ * 
  * @todo    - Allow for keyboard shortcuts with inline (to focus)?
  * @todo    -- But don't show field.label?
  * @todo    - Track order of "showing" modals in registered?
@@ -128,6 +132,7 @@
  * @todo    [DONE] - Image bug: https://416.io/ss/f/juxbd9
  * @todo    [DONE] - Typesense collection retrieval (for smart templates?)
  * @todo    [DONE] -- Settled (for now) on an 'auto' schema which looks for property keys. See here: https://416.io/ss/f/y0l1kg
+ * @todo    [DONE] - Timer UI
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -226,6 +231,24 @@ window.annexSearch.DependencyLoader.push([], function() {
         static getRegistered() {
             let registered = this.#__registered;
             return registered;
+        }
+
+        /**
+         * getRegisteredById
+         * 
+         * @access  public
+         * @static
+         * @param   String id
+         * @return  null|window.annexSearch.AnnexSearchWidgetWebComponent
+         */
+        static getRegisteredById(id) {
+            let registered = this.#__registered;
+            for (let $annexSearchWidget of registered) {
+                if ($annexSearchWidget.getAttribute('data-annex-search-id') === id) {
+                    return $annexSearchWidget;
+                }
+            }
+            return null;
         }
 
         /**

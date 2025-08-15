@@ -163,6 +163,15 @@ Note #2:
 <a href="#test" data-annex-search="toggle">toggle the $annexSearchWidget</a>
 <a href="#test" data-annex-search-query="search query">show the $annexSearchWidget, insert query and search</a>
 ````
+
+``` html
+<a href="#test" data-annex-search="id:clear">clear the $annexSearchWidget $input</a>
+<a href="#test" data-annex-search="id:focus">focus on the $annexSearchWidget</a>
+<a href="#test" data-annex-search="id:hide">hide the $annexSearchWidget</a>
+<a href="#test" data-annex-search="id:show">show the $annexSearchWidget</a>
+<a href="#test" data-annex-search="id:toggle">toggle the $annexSearchWidget</a>
+<a href="#test" data-annex-search-query="id:search query">show the $annexSearchWidget, insert query and search</a>
+````
 <hr />
 
 

@@ -219,7 +219,15 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                         || window.annexSearch.DataUtils.findKeyInsensitiveValue(data?.hit?.document, key)
                         || null;
                 }
-                return `<div data-view-name="ResultFoundResultsBodyView" class="clearfix" part="result">
+                return `
+                <%
+                    let validUri = window.annexSearch.StringUtils.validURL('` + (uri) + `');
+                    if (validUri === true) {
+                %>
+                    <a data-view-name="ResultFoundResultsBodyView" class="clearfix" part="result" href="` + (uri) + `">
+                <% } else { %>
+                    <div data-view-name="ResultFoundResultsBodyView" class="clearfix" part="result">
+                <% } %>
                     <%
                         let validImage = window.annexSearch.StringUtils.validURL('` + (imageUrl) + `');
                         if (validImage === true) {
@@ -232,13 +240,19 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                         <div class="title" part="result-content-title">` + (title || '(no title found)') + `</div>
                         <div class="body" part="result-content-body">` + (body || '(no body found)') + `</div>
                         <%
-                            let validUri = window.annexSearch.StringUtils.validURL('` + (uri) + `');
                             if (validUri === true) {
+                                // let uri = 
+                                // uri = uri.replace(/^https?:\/\//, '');
+                                // replace(/^https?:\/\/(www\.)?/, '');
                         %>
                             <div class="uri truncate" part="result-content-uri">` + (uri) + `</div>
                         <% } %>
                     </div>
-                </div>`;
+                <% if (validUri === true) { %>
+                    </a>
+                <% } else { %>
+                    </div>
+                <% } %>`;
             };
         }
 

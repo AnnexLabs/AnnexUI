@@ -27,6 +27,91 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
+         * #__getAttributeDefinedId
+         * 
+         * @access  private
+         * @static
+         * @param   String attributeValue
+         * @return  null|String
+         */
+        static #__getAttributeDefinedId(attributeValue) {
+            let pieces = attributeValue.split(':');
+            if (pieces.length === 0) {
+                return null;
+            }
+            if (pieces.length === 1) {
+                return null;
+            }
+            let id = pieces[0];
+            return id;
+        }
+
+        /**
+         * #__getBehaviorInteractionKey
+         * 
+         * @access  private
+         * @static
+         * @param   String attributeValue
+         * @return  String
+         */
+        static #__getBehaviorInteractionKey(attributeValue) {
+            let pieces = attributeValue.split(':'),
+                interactionKey = attributeValue;
+            if (pieces.length === 0) {
+                return interactionKey;
+            }
+            if (pieces.length === 1) {
+                return interactionKey;
+            }
+            pieces.shift();
+            interactionKey = pieces.join('');
+            return interactionKey;
+        }
+
+        /**
+         * #__getQueryValue
+         * 
+         * @access  private
+         * @static
+         * @param   String attributeValue
+         * @return  String
+         */
+        static #__getQueryValue(attributeValue) {
+            let pieces = attributeValue.split(':'),
+                query = attributeValue;
+            if (pieces.length === 0) {
+                return query;
+            }
+            if (pieces.length === 1) {
+                return query;
+            }
+            pieces.shift();
+            query = pieces.join('');
+            return query;
+        }
+
+        /**
+         * #__getRegisteredById
+         * 
+         * @access  private
+         * @static
+         * @param   String str
+         * @return  null|window.annexSearch.AnnexSearchWidgetWebComponent
+         */
+        static #__getRegisteredById(str) {
+            let pieces = str.split(':');
+            if (pieces.length === 0) {
+                return null;
+            }
+            if (pieces.length === 1) {
+                return null;
+            }
+            let id = pieces[0],
+                $annexSearchWidget = window.annexSearch.AnnexSearch.getRegisteredById(id);
+            return $annexSearchWidget;
+        }
+
+        /**
          * #__handleBehaviorInteraction
          * 
          * @access  private
@@ -40,42 +125,50 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__validEventTarget(event, 'data-annex-search') === false) {
                 return false;
             }
-// console.log('s');
+
             // Invalid layout (clear is always supported)
             let $target = event.target,
                 value = $target.getAttribute('data-annex-search'),
-                registered = window.annexSearch.AnnexSearch.getRegistered(),
-                $annexSearchWidget = registered[0];
+                $annexSearchWidget = this.#__getRegisteredById(value) || window.annexSearch.AnnexSearch.getRegistered()[0],
+                interactionKey = this.#__getBehaviorInteractionKey(value);
             if ($annexSearchWidget.getConfig('layout') === 'inline') {
-                if (value !== 'clear' && value !== 'focus') {
+                if (interactionKey !== 'clear' && interactionKey !== 'disable' && interactionKey !== 'enable' && interactionKey !== 'focus') {
                     return false;
                 }
             }
 
-            // Unsupported value
-            let validBehaviorInteractions = ['clear', 'focus', 'hide', 'show', 'toggle'];
-            if (validBehaviorInteractions.includes(value) === false) {
+            // Unsupported interaction key
+            let validBehaviorInteractions = ['clear', 'disable', 'enable', 'focus', 'hide', 'show', 'toggle'];
+            if (validBehaviorInteractions.includes(interactionKey) === false) {
                 return false;
             }
 
             // Processing
-            if (value === 'clear') {
-                let response = $annexSearchWidget.clear();
+            if (interactionKey === 'clear') {
+                let response = $annexSearchWidget.disabled() === false && $annexSearchWidget.clear();
                 return response;
             }
-            if (value === 'focus') {
-                let response = $annexSearchWidget.focus();
+            if (interactionKey === 'focus') {
+                let response = $annexSearchWidget.disabled() === false && $annexSearchWidget.focus();
                 return response;
             }
-            if (value === 'hide') {
+            if (interactionKey === 'hide') {
                 let response = $annexSearchWidget.hide();
                 return response;
             }
-            if (value === 'show') {
+            if (interactionKey === 'disable') {
+                let response = $annexSearchWidget.disable();
+                return response;
+            }
+            if (interactionKey === 'enable') {
+                let response = $annexSearchWidget.enable();
+                return response;
+            }
+            if (interactionKey === 'show') {
                 let response = $annexSearchWidget.show();
                 return response;
             }
-            if (value === 'toggle') {
+            if (interactionKey === 'toggle') {
                 let response = $annexSearchWidget.toggle();
                 return response;
             }
@@ -138,9 +231,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             // Invalid value
             let $target = event.target,
                 value = $target.getAttribute('data-annex-search-query'),
-                registered = window.annexSearch.AnnexSearch.getRegistered(),
-                $annexSearchWidget = registered[0],
-                query = value;
+                $annexSearchWidget = this.#__getRegisteredById(value) || window.annexSearch.AnnexSearch.getRegistered()[0];
+            if ($annexSearchWidget.disabled() === true) {
+                return false;
+            }
+            let query = this.#__getQueryValue(value);
             $annexSearchWidget.show();
             $annexSearchWidget.query(query);
             return true;
@@ -156,6 +251,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @return  Boolean
          */
         static #__validEventTarget(event, attributeName) {
+
+            // Invalid $target
             let $target = event.target || null;
             if ($target === null) {
                 return false;
@@ -164,22 +261,19 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if ($target.matches(selector) === false) {
                 return false;
             }
+
+            // Valid target; prevent event
             event.preventDefault();
+
+            // Nothing registered
             let registered = window.annexSearch.AnnexSearch.getRegistered();
             if (registered.length === 0) {
                 let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.zeroRegistered');
                 window.annexSearch.LoggingUtils.error(message);
-                // this.#__logDevModeMessage('interactionUtils.zeroRegistered');
-                return false;
-            }
-            if (registered.length > 1) {
-                let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.multipleRegistered');
-                window.annexSearch.LoggingUtils.error(message);
-                // this.#__logDevModeMessage('interactionUtils.multipleRegistered');
                 return false;
             }
 
-            // Invalid value
+            // Value checks (existence)
             let value = $target.getAttribute(attributeName);
             if (value === null) {
                 return false;
@@ -192,7 +286,30 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 return false;
             }
 
-            // All good..
+            // No id defined
+            let id = this.#__getAttributeDefinedId(value);
+            if (id === null) {
+
+                // Valid (since only one that could be the target)
+                if (registered.length === 1) {
+                    return true;
+                }
+
+                // Invalid
+                let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.multipleRegistered');
+                window.annexSearch.LoggingUtils.error(message);
+                return false;
+            }
+
+            // Id defined; invalid
+            let $annexSearchWidget = window.annexSearch.AnnexSearch.getRegisteredById(id);
+            if ($annexSearchWidget === null) {
+                let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.unknownId');
+                window.annexSearch.LoggingUtils.error(message);
+                return false;
+            }
+
+            // Valid
             return true;
         }
 

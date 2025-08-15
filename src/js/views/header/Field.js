@@ -360,8 +360,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let found = this.getView('root.body.results.found');
             found.clearFocused();
             let $input = this.first('input');
+        // console.log($input);
             window.annexSearch.ElementUtils.waitForAnimation().then(function() {
+                if (window.annexSearch.ElementUtils.visible($input) === false) {
+                    return false;
+                }
                 $input.focus();
+                return true;
             })
             return true;
         }
@@ -381,7 +386,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 let message = window.annexSearch.ErrorUtils.getMessage('fieldHeaderView.loadMore.limitReached');
                 this.error(message);
                 this.getView('root').setStateKey('error');
-                this.getWebComponent().kill();
+                this.getWebComponent().disable();
                 return false;
             }
             this.#__loadingMore = true;

@@ -251,16 +251,22 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         /**
          * focus
          * 
+         * @see     https://chatgpt.com/c/689f9790-47b8-8324-8ae6-8ac464a5e0c5
          * @access  public
          * @return  Boolean
          */
         focus() {
-// console.log($focused);
             this._$element.focus();
-            this._$element.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-                inline: 'nearest'
+            // this._$element.scrollIntoView({
+            //     behavior: 'smooth',
+            //     block: 'center',
+            //     inline: 'nearest'
+            // });
+            let $element = this._$element,
+                $container = this.getView('root.body.results.found').getElement();
+            $container.scrollTo({
+                top: $element.offsetTop - $container.offsetTop - ($container.clientHeight / 2),
+                behavior: 'smooth'
             });
             return true;
         }

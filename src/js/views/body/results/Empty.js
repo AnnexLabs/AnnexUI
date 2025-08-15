@@ -27,7 +27,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         message = message.trim();
     %>
     <div class="graphic" part="empty-graphic"></div>
-    <div class="message" part="empty-message"><%= (message) %></div>
+    <div class="message" part="empty-message"><%- (message) %></div>
 </div>`;
     }
 });

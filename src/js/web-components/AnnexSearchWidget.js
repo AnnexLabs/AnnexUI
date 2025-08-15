@@ -15,12 +15,12 @@ window.annexSearch.DependencyLoader.push([], function() {
     window.annexSearch.AnnexSearchWidgetWebComponent = window.annexSearch.AnnexSearchWidgetWebComponent || class AnnexSearchWidgetWebComponent extends HTMLElement {
 
         /**
-         * #__dead
+         * #__disabled
          * 
          * @access  private
          * @var     Boolean (default: false)
          */
-        #__dead = false;
+        #__disabled = false;
 
         /**
          * #__helpers
@@ -138,7 +138,7 @@ window.annexSearch.DependencyLoader.push([], function() {
             try {
                 this.#__mountRoot();
                 this.#__helpers.webComponentUI.setupConfigHelperCustomEventListeners();
-                this.#__helpers.webComponentUI.setUUID();
+                // this.#__helpers.webComponentUI.setUUID();
                 this.#__helpers.webComponentUI.setAttributes();
                 this.#__helpers.webComponentUI.autoShow();
             } catch (err) {
@@ -239,13 +239,28 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
-         * dead
+         * disable
          * 
          * @access  public
          * @return  Boolean
          */
-        dead() {
-            let response = this.#__dead;
+        disable() {
+            if (this.#__disabled === true) {
+                return false;
+            }
+            this.#__disabled = true;
+            this.#__helpers.webComponentUI.disable();
+            return true;
+        }
+
+        /**
+         * disabled
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        disabled() {
+            let response = this.#__disabled;
             return response;
         }
 
@@ -264,6 +279,21 @@ window.annexSearch.DependencyLoader.push([], function() {
                 detail: detail
             });
             this.dispatchEvent(customEvent);
+            return true;
+        }
+
+        /**
+         * enable
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        enable() {
+            if (this.#__disabled === false) {
+                return false;
+            }
+            this.#__disabled = false;
+            this.#__helpers.webComponentUI.enable();
             return true;
         }
 
@@ -361,21 +391,6 @@ console.log('0');
             this.#__showing = false;
             window.annexSearch.AnnexSearch.clearFocused();
             this.#__helpers.webComponentUI.hide();
-            return true;
-        }
-
-        /**
-         * kill
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        kill() {
-            if (this.#__dead === true) {
-                return false;
-            }
-            this.#__dead = true;
-            this.#__helpers.webComponentUI.kill();
             return true;
         }
 
