@@ -42,7 +42,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                             <div class="body" part="result-content-body">{{{data?.hit?.highlight?.description?.snippet || data?.hit?.document?.description || '(unknown description)'}}}</div>
                             <div class="price badge" part="result-content-price">\${{{data?.hit?.document?.price.toLocaleString() || '(unknown price)'}}}</div>
                         </div>
-                    </div>`,
+                    </div>`
             },
             'webResource-v0.1.0': {
                 result: `
@@ -147,6 +147,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                         'titleText',
                     ],
                     bodyKeys = [
+                        'article',
                         'articleBody',
                         'body',
                         'content',
@@ -164,16 +165,28 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                         'text',
                     ],
                     uriKeys = [
+                        'canonical',
+                        'canonicalUri',
                         'canonicalUrl',
+                        'endpoint',
+                        'endpointUri',
+                        'endpointUrl',
+                        'fullUri',
                         'fullUrl',
                         'href',
                         'link',
-                        'pageUrl',
+                        'linkUri',
+                        'linkUrl',
+                        'pageUri',
                         'pageUrl',
                         'permalink',
-                        'permaLink',
+                        'permalinkUri',
+                        'permalinkUrl',
+                        'redirectUri',
                         'redirectUrl',
+                        'sourceUri',
                         'sourceUrl',
+                        'targetUri',
                         'targetUrl',
                         'uri',
                         'url',
