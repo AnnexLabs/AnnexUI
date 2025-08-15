@@ -129,7 +129,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
                     message: 'Start typing to begin your search...'
                 },
                 statusBar: {
-                    message: 'Instantly search through our entire database'
+                    message: 'Instantly search through our database'
                 },
             },
 
@@ -210,11 +210,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * the ResultFoundResultsBodyView template used will adhere to the
              * fields defined in the schema JSON file.
              * 
+             * Valid options currently are:
+             * - auto-v0.1.0
+             * - custom
+             * - sku-v0.1.0
+             * - webResource-v0.1.0
+             * 
              * @access  private
-             * @var     String (default: 'webResource-v0.1.0')
+             * @var     String (default: 'auto-v0.1.0')
              */
-            // schemaKey: 'custom',
-            schemaKey: 'webResource-v0.1.0',
+            schemaKey: 'auto-v0.1.0',
 
             /**
              * searchOptions

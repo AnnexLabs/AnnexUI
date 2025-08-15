@@ -27,12 +27,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 showing = (data.typesenseSearchResponse.page - 1) * (data.typesenseSearchResponse.request_params.per_page) + data.typesenseSearchResponse.hits.length;
             }
         %>
-<div data-view-name="MetaBarHeaderView">
+<div data-view-name="MetaBarHeaderView" part="metaBar">
     Showing
-    <span class="showing"><%- showing.toLocaleString() %></span> of
-    <span class="found"><%- data?.typesenseSearchResponse?.found.toLocaleString() ?? 0 %></span>
+    <span class="showing" part="metaBar-showing"><%- showing.toLocaleString() %></span> of
+    <span class="found" part="metaBar-found"><%- data?.typesenseSearchResponse?.found.toLocaleString() ?? 0 %></span>
     matching results
-    (<span class="duration"><%- data?.typesenseSearchResponse?.search_time_ms.toLocaleString() ?? 0 %>ms</span>)
+    (<span class="duration" part="metaBar-duration"><%- data?.typesenseSearchResponse?.search_time_ms.toLocaleString() ?? 0 %>ms</span>)
 </div>`;
     }
 });

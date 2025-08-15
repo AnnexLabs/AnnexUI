@@ -9,8 +9,6 @@
  * @todo    - Fundametally need to get this sorted, and then revisit keyboard shortcut toggle work
  * @todo    - Multiple-modal stacking (w/ offsets)
  * 
- * @todo    - Typesense collection retrieval (for smart templates?)
- * 
  * @todo    [DONE] - dark mode
  * @todo    [DONE] - mobile
  * @todo    [DONE] - Panels: https://416.io/ss/f/50li0m
@@ -128,6 +126,9 @@
  * @todo    [DONE] - Schemas (for Typesense demos)
  * @todo    [DONE] - New problem w/ clicking $result and losing focused class.. ach..
  * @todo    [DONE] -- Problem with new $webComponent click/focus handlers and propagatong up to focus on $input?
+ * @todo    [DONE] - Image bug: https://416.io/ss/f/juxbd9
+ * @todo    [DONE] - Typesense collection retrieval (for smart templates?)
+ * @todo    [DONE] -- Settled (for now) on an 'auto' schema which looks for property keys. See here: https://416.io/ss/f/y0l1kg
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

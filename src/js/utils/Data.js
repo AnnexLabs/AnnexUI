@@ -120,6 +120,23 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
+         * findKeyInsensitiveValue
+         * 
+         * @see     https://claude.ai/chat/99737548-7130-4c08-8eee-7fc6e6c9a801
+         * @access  public
+         * @static
+         * @return  null|String
+         */
+        static findKeyInsensitiveValue(obj, targetKey) {
+            let keys = Object.keys(obj),
+                foundKey = keys.find(function(key) {
+                    return key.toLowerCase() === targetKey.toLowerCase();
+                }),
+                value = foundKey ? obj[foundKey] : null;
+            return value;
+        }
+
+        /**
          * setup
          * 
          * @access  public

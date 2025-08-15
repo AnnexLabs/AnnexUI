@@ -53,7 +53,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String
          */
         _markup = `
-<div data-view-name="FoundResultsBodyView">
+<div data-view-name="FoundResultsBodyView" part="found">
 </div>`;
 
         /**

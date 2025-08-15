@@ -21,11 +21,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String
          */
         _markup = `
-<div data-view-name="StatusBarFooterView">
+<div data-view-name="StatusBarFooterView" part="statusBar">
     <%
         let val = data.config.copy.statusBar.message;
     %>
-    <div class="message truncate"><%- (val) %></div>
+    <div class="message truncate" part="statusBar-message"><%- (val) %></div>
 </div>`;
     }
 });

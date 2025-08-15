@@ -21,7 +21,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String
          */
         _markup = `
-<div data-view-name="BodyView">
+<div data-view-name="BodyView" part="body">
 </div>`;
 
         /**

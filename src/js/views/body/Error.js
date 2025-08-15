@@ -21,13 +21,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String
          */
         _markup = `
-<div data-view-name="ErrorBodyView">
+<div data-view-name="ErrorBodyView" part="error">
     <%
         let message = data?.config?.copy?.error?.message ?? 'Something went wrong...';
         message = message.trim();
     %>
-    <div class="graphic"></div>
-    <div class="message"><%= (message) %></div>
+    <div class="graphic" part="error-graphic"></div>
+    <div class="message" part="error-message"><%= (message) %></div>
 </div>`;
     }
 });

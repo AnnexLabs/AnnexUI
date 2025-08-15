@@ -21,13 +21,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String
          */
         _markup = `
-<div data-view-name="IdleBodyView">
+<div data-view-name="IdleBodyView" part="idle">
     <%
         let message = data?.config?.copy?.idle?.message ?? 'Start typing to begin your search...';
         message = message.trim();
     %>
-    <div class="graphic"></div>
-    <div class="message"><%- (message) %></div>
+    <div class="graphic" part="idle-graphic"></div>
+    <div class="message" part="idle-graphic"><%- (message) %></div>
 </div>`;
     }
 });

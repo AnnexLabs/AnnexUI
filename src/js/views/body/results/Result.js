@@ -21,10 +21,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String
          */
         _markup = `
-<a data-view-name="ResultFoundResultsBodyView">
-    <div class="title">(no valid template defined)</div>
-    <div class="body">(no valid template defined)</div>
-    <div class="uri truncate">(no valid template defined)</div>
+<a data-view-name="ResultFoundResultsBodyView" part="result">
+    <div class="content" part="result-content">
+        <div class="title" part="result-content-title">(no valid template defined)</div>
+        <div class="body" part="result-content-body">(no valid template defined)</div>
+        <div class="uri truncate" part="result-content-uri">(no valid template defined)</div>
+    </div>
 </a>`;
 
         /**

@@ -387,6 +387,8 @@ console.log('0');
          * @return  Promise
          */
         mount($container = null) {
+//             let schemaKey = this.getConfig('schemaKey');
+// console.log(schemaKey);
             $container = this.#__getContainer($container);
             if ($container === null) {
                 this.#__mounted = false;

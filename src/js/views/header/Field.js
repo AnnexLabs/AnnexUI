@@ -62,15 +62,15 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String
          */
         _markup = `
-<div class="clearfix" data-view-name="FieldHeaderView">
+<div class="clearfix" data-view-name="FieldHeaderView" part="field">
     <%
         let label = data?.config?.keyboardShortcut ?? '';
         label = label.toUpperCase();
         let placeholder = data?.config?.copy?.field?.placeholder ?? 'Search...';
     %>
-    <div class="label"><%- (label) %></div>
-    <div class="input">
-        <input type="search" name="query" id="query" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="<%- (placeholder) %>" />
+    <div class="label" part="field-label"><%- (label) %></div>
+    <div class="input" part="field-input">
+        <input type="search" name="query" id="query" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="<%- (placeholder) %>" part="field-input-input" />
     </div>
 </div>`;
 

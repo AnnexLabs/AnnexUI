@@ -29,9 +29,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String
          */
         _markup = `
-<div data-view-name="HeaderView">
-    <div class="hide icon icon-plus icon-size-14"></div>
-    <div class="spinner spinning icon icon-spinner"></div>
+<div data-view-name="HeaderView" part="header">
+    <div class="hide icon icon-plus icon-size-14" part="header-hide"></div>
+    <div class="spinner spinning icon icon-spinner" part="metaBar-spinner"></div>
 </div>`;
 
         /**

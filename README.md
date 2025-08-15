@@ -121,7 +121,7 @@ so.
 | colorScheme               | `String`              | ❌         | `'auto'`                  | The color scheme for Annex. Can be: `'auto'`, `'light'` or `'dark'`.                                      |
 | name                      | `String`              | ❌         | `null`                    | The name of the instance. Useful for differentiating between multiple `$annexSearchWidget` instances.     |
 | paths                     | `Object`              | ❌         | (see ...)                 | Map of `css` and `template` URLs that are loaded for an `$annexSearchWidget`.                             |
-| schemaKey                 | `String`              | ❌         | `'webResource-v0.1.0'`    | Name of the schema associated with the Typesense cluster.                                                 |
+| schemaKey                 | `String`              | ❌         | `'webResource-v0.1.0'`    | Name of the schema associated with the Typesense cluster. Valid values are: ...                           |
 | searchOptions             | `Object`              | ✅         | (see ...)                 | Map of search options that are passed in a Typesense search query.                                        |
 | searchRequestMethod       | `String`              | ❌         | `'lifo'`                  | The type of search handling. Currently limited to just `lifo` (last in first out)                         |
 | showOverlay               | `Boolean`             | ❌         | `true`                    | Whether the overlay `HTMLElement` should be rendered.                                                     |
@@ -292,12 +292,12 @@ causes.
     annex-search-widget {
         --annex-search-show-panel-duration: 2000ms;
     }
-    annex-search-widget::part(result-price) {
+    annex-search-widget::part(result-content-price) {
         background-color: rgba(0, 0, 0, 0.60);
         color: #ffffff;
     }
     @media (prefers-color-scheme: dark) {
-        annex-search-widget::part(result-price) {
+        annex-search-widget::part(result-content-price) {
             background-color: #ffffff;
             color: rgba(0, 0, 0, 0.60);
         }

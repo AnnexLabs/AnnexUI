@@ -9,6 +9,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
      * window.annexSearch.ElementUtils
      * 
      * @see     https://claude.ai/chat/617b9369-2714-47bf-9992-60f43718d2c5
+     * @see     https://github.com/advisories/GHSA-35jh-r3h4-6jhm
+     * @see     https://www.npmjs.com/package/lodash.template
+     * @see     https://socket.dev/npm/package/eta
      * @access  public
      */
     window.annexSearch.ElementUtils = window.annexSearch.ElementUtils || class ElementUtils extends window.annexSearch.BaseUtils {

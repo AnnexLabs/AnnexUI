@@ -53,9 +53,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String
          */
         _markup = `
-<div data-view-name="ToastView">
-    <div class="title"><%= (data?.title ?? '(no title)') %></div>
-    <div class="message"><%= (data?.message ?? '(no message)') %></div>
+<div data-view-name="ToastView" part="toast">
+    <div class="title" part="toast-title"><%= (data?.title ?? '(no title)') %></div>
+    <div class="message" part="toast-message"><%= (data?.message ?? '(no message)') %></div>
 </div>`;
 
         /**
@@ -107,7 +107,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__destroy() {
             this._$element.remove();
             window.annexSearch.ToastUtils.remove(this);
-// console.log('removing');
             return true;
         }
 

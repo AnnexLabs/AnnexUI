@@ -21,8 +21,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String
          */
         _markup = `
-<div data-view-name="BrandingBarFooterView">
-    Powered by <a href="https://annexsearch.com/" target="_blank">Annex Search</a>
+<div data-view-name="BrandingBarFooterView" part="brandingBar">
+    Built with <a href="https://annexsearch.com/" target="_blank" part="brandingBar-anchor">Annex</a>
+    <!--Powered by <a href="https://annexsearch.com/" target="_blank">Annex</a>-->
 </div>`;
     }
 });
