@@ -272,7 +272,8 @@ window.annexSearch.DependencyLoader.push([], function() {
             parent[piece] = value;
 
             // Events
-            let detail = {key, value};
+            reference = this;
+            let detail = {key, value, reference};
             this.dispatchCustomEvent('data.set', detail);
             let type = 'data.set.' + (key);
             this.dispatchCustomEvent(type, detail);

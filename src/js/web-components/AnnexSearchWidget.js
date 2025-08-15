@@ -533,6 +533,20 @@ console.log('0');
         }
 
         /**
+         * showTimer
+         * 
+         * @access  public
+         * @param   Number seconds
+         * @return  Promise
+         */
+        showTimer(seconds) {
+            let options = {seconds},
+                view = window.annexSearch.TimerUtils.build(this, options),
+                promise = view.show();
+            return promise;
+        }
+
+        /**
          * showToast
          * 
          * @access  public
