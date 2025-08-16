@@ -325,9 +325,9 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  private
          * @static
-         * @var     String (default: 'v0.1.0-dev')
+         * @var     String (default: '0.1.0-dev')
          */
-        static #__version = 'v0.1.0-dev';
+        static #__version = '0.1.0-dev';
 
         /**
          * #__setupUtils
@@ -1023,7 +1023,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              */
             resources: {
                 css: [
-                    'https://cdn.jsdelivr.net/gh/annex-search/AnnexUI@v0.1.0-dev/dist/bundle.min.css',
+                    'https://cdn.jsdelivr.net/gh/annex-search/AnnexUI@0.1.0-dev/dist/bundle.min.css',
                     // 'https://annexsearch.com/ts/css',
                 ],
             },
@@ -2945,7 +2945,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          */
         static debounce(func, delay) {
             let timeout;
-            return function (...args) {
+            return function(...args) {
                 clearTimeout(timeout);
                 timeout = setTimeout(function() {
                     func.apply(this, args);
