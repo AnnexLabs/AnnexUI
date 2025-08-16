@@ -33,7 +33,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          */
         static debounce(func, delay) {
             let timeout;
-            return function (...args) {
+            return function(...args) {
                 clearTimeout(timeout);
                 timeout = setTimeout(function() {
                     func.apply(this, args);
