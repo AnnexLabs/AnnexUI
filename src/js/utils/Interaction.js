@@ -120,7 +120,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @return  Boolean
          */
         static #__handleBehaviorInteraction(event) {
-
+// alert(event);
             // Broadly invalid
             if (this.#__validEventTarget(event, 'data-annex-search') === false) {
                 return false;

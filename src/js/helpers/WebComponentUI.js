@@ -252,7 +252,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
                 $annexSearchWidget.getHelper('webComponentUI').setAttributes();
                 return true;
             });
-            helper.addCustomEventListener('data.set.name', function(customEvent) {
+            helper.addCustomEventListener('data.set.id', function(customEvent) {
                 let detail = customEvent.detail,
                     $annexSearchWidget = detail.$annexSearchWidget;
                 $annexSearchWidget.getHelper('webComponentUI').setAttributes();

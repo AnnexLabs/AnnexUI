@@ -133,6 +133,8 @@
  * @todo    [DONE] - Typesense collection retrieval (for smart templates?)
  * @todo    [DONE] -- Settled (for now) on an 'auto' schema which looks for property keys. See here: https://416.io/ss/f/y0l1kg
  * @todo    [DONE] - Timer UI
+ * @todo    [PUNT] - Have mobile modal stacking be transform/zoom based?
+ * @todo    [PUNT] -- Possibly also for desktop?
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
