@@ -200,9 +200,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              */
             resources: {
                 css: [
-                    // 'https://local.annexsearch.com/ts/css2',
-                    // 'https://local.annexsearch.com/ts/css',
-                    'https://annexsearch.com/ts/css',
+                    'https://local.annexsearch.com/ts/css',
+                    // 'https://annexsearch.com/ts/css',
                 ],
             },
 
