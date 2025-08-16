@@ -12,6 +12,7 @@
     background-color: var(--annex-search-toast-background-color);
     border-radius: 10px 10px 10px 10px;
     width: 302px;
+    max-width: 90%;
     padding: 12px 16px 12px 16px;
     transition: transform var(--annex-search-toast-duration), opacity var(--annex-search-toast-duration);
     transform: translateY(-100%);

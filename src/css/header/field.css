@@ -2,6 +2,7 @@
 /**
  * /src/css/header/field.css
  * 
+ * @see     https://chatgpt.com/c/68a00a3c-65a4-832c-bbcd-2986ade8a6fe
  */
 [data-view-name="FieldHeaderView"] {
     height: var(--annex-search-header-height);
@@ -31,6 +32,10 @@
     font-size: 14px;
     color: var(--annex-search-header-input-color);
     transition: 250ms color;
+
+    font-size: 16px;
+    transform: scale(0.88);
+    transform-origin: 0 0;
 }
 [data-view-name="FieldHeaderView"] > div.input > input:focus {
     color: var(--annex-search-header-input-focus-color);
