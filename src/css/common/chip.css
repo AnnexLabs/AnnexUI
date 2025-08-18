@@ -1,0 +1,23 @@
+
+/**
+ * /src/css/common/chip.css
+ * 
+ */
+[data-view-name="ChipView"] {
+    display: inline;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 4px 4px 4px 4px;
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 4px 12px 4px 12px;
+    transition: border-color 450ms;
+    cursor: pointer;
+    will-change: transform, opacity;
+}
+* [data-view-name="ChipView"]:not(:last-child) {
+    margin: 0 4px 0 0;
+}
+[data-view-name="ChipView"]:hover {
+    border-color: rgba(0, 0, 0, 0.32);
+}

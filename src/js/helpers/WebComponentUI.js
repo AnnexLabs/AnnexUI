@@ -162,6 +162,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          */
         enable() {
             let $annexSearchWidget = this.getWebComponent();
+            this.getHelper('config').triggerCallback('root.enable');
+            $annexSearchWidget.dispatchCustomEvent('root.enable');
             $annexSearchWidget.removeAttribute('data-annex-search-disabled');
             window.annexSearch.ToastUtils.hideAll($annexSearchWidget);
             return true;
@@ -175,6 +177,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          */
         disable() {
             let $annexSearchWidget = this.getWebComponent();
+            this.getHelper('config').triggerCallback('root.disable');
+            $annexSearchWidget.dispatchCustomEvent('root.disable');
             $annexSearchWidget.setAttribute('data-annex-search-disabled', '1');
             let toast = $annexSearchWidget.showToast('Search disabled', 'Apologies but search has been disabled for the time being.', null);
             toast.setUnescapable();

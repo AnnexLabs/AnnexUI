@@ -2,6 +2,10 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
+ * @todo    - Allow for disable messaging override
+ * @todo    - Timer UI not working on bundled up js/css? (cdn)
+ * @todo    - Prevent mobile "return" key from triggering init click
+ * 
  * @todo    - Kill doesn't work
  * @todo    - Prevent auto focus due to page jacking..
  * @todo    - Auto focus on scrolling and it becoming visible
@@ -135,6 +139,9 @@
  * @todo    [DONE] - Timer UI
  * @todo    [PUNT] - Have mobile modal stacking be transform/zoom based?
  * @todo    [PUNT] -- Possibly also for desktop?
+ * @todo    [PUNT] - What to do w/ defined/default keyboard shortcuts on touch devices?
+ * @todo    [PUNT] -- At least hide the label?
+ * @todo    [PUNT] - Should root.{type} event be moved to $webComponent?
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

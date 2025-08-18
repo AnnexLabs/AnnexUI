@@ -81,6 +81,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             },
 
             /**
+             * chips
+             * 
+             * @access  private
+             * @var     Object
+             */
+            chips: {
+                idle: []
+            },
+
+            /**
              * cluster
              * 
              * Authentication and configuration details specifically for the
@@ -126,6 +136,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
                     placeholder: 'Search...'
                 },
                 idle: {
+                    chips: 'Popular searches:',
                     message: 'Start typing to begin your search...'
                 },
                 statusBar: {

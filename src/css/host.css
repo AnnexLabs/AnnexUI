@@ -45,6 +45,10 @@
  * Dead
  * 
  */
+:host([data-annex-search-disabled="1"]) [data-view-name="RootView"] > div.content *,
+:host([data-annex-search-disabled="1"]) [data-view-name="RootView"] > div.content * input {
+    user-select: none;
+}
 :host([data-annex-search-disabled="1"]) [data-view-name="RootView"] > div.content * {
     pointer-events: none;
 }
