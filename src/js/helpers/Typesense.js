@@ -32,6 +32,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         #__requests = [];
 
         /**
+         * constructor
+         * 
+         * @access  public
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @return  void
+         */
+        constructor($annexSearchWidget) {
+            super($annexSearchWidget);
+        }
+
+        /**
          * _abortLastRequest
          * 
          * @access  private

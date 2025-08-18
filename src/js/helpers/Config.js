@@ -87,17 +87,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * @var     Object
              */
             chips: {
-                // idle: []
-                idle: [
-                    {
-                        copy: 'aws',
-                        query: 'aws'
-                    },
-                    {
-                        copy: 'fotos',
-                        query: 'fotos'
-                    }
-                ]
+                idle: []
             },
 
             /**
@@ -288,6 +278,76 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              */
             templates: {}
         };
+
+        /**
+         * constructor
+         * 
+         * @access  public
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @return  void
+         */
+        constructor($annexSearchWidget) {
+            super($annexSearchWidget);
+            this.#__addCustomEventListeners();
+        }
+
+        /**
+         * #__addCustomEventListeners
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__addCustomEventListeners() {
+            this.#__addDataSetCustomEventListener();
+            return true;
+        }
+
+        /**
+         * #__addDataSetCustomEventListener
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__addDataSetCustomEventListener() {
+            let handler = this.#__handleDataSetCustomEvent.bind(this);
+            this.addCustomEventListener('data.set', handler);
+            return true;
+        }
+
+        /**
+         * #__handleChipsNormalization
+         * 
+         * @access  private
+         * @param   Object event
+         * @return  Boolean
+         */
+        #__handleChipsNormalization(event) {
+            let type = event.type,
+                chips = this._data.chips,
+                idle = chips.idle || [];
+            for (let index in idle) {
+                let chip = idle[index];
+                if (chip.constructor === String) {
+                    idle[index] = {
+                        copy: chip,
+                        query: chip
+                    };
+                }
+            }
+            return true;
+        }
+
+        /**
+         * #__handleDataSetCustomEvent
+         * 
+         * @access  private
+         * @param   Object event
+         * @return  Boolean
+         */
+        #__handleDataSetCustomEvent(event) {
+            this.#__handleChipsNormalization(event);
+            return true;
+        }
 
         /**
          * #__handleStylesheetErrorLoadEvent
