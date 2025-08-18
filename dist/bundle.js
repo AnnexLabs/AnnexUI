@@ -159,6 +159,13 @@ window.annexSearch.DependencyLoader = (function() {
 /**
  * /src/js/core/AnnexSearch.js
  * 
+ * @todo    - Cleaner /css loading based on hostname of JS?
+ * @todo    -- Or update dist.sh file for more correct things?
+ * 
+ * @todo    - Allow for disable messaging override
+ * @todo    - Timer UI not working on bundled up js/css? (cdn)
+ * @todo    - Prevent mobile "return" key from triggering init click
+ * 
  * @todo    - Kill doesn't work
  * @todo    - Prevent auto focus due to page jacking..
  * @todo    - Auto focus on scrolling and it becoming visible
@@ -292,6 +299,9 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    [DONE] - Timer UI
  * @todo    [PUNT] - Have mobile modal stacking be transform/zoom based?
  * @todo    [PUNT] -- Possibly also for desktop?
+ * @todo    [PUNT] - What to do w/ defined/default keyboard shortcuts on touch devices?
+ * @todo    [PUNT] -- At least hide the label?
+ * @todo    [PUNT] - Should root.{type} event be moved to $webComponent?
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -904,6 +914,26 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             },
 
             /**
+             * chips
+             * 
+             * @access  private
+             * @var     Object
+             */
+            chips: {
+                // idle: []
+                idle: [
+                    {
+                        copy: 'aws',
+                        query: 'aws'
+                    },
+                    {
+                        copy: 'fotos',
+                        query: 'fotos'
+                    }
+                ]
+            },
+
+            /**
              * cluster
              * 
              * Authentication and configuration details specifically for the
@@ -949,6 +979,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
                     placeholder: 'Search...'
                 },
                 idle: {
+                    chips: 'Popular searches:',
                     message: 'Start typing to begin your search...'
                 },
                 statusBar: {
@@ -1531,6 +1562,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          */
         enable() {
             let $annexSearchWidget = this.getWebComponent();
+            this.getHelper('config').triggerCallback('root.enable');
+            $annexSearchWidget.dispatchCustomEvent('root.enable');
             $annexSearchWidget.removeAttribute('data-annex-search-disabled');
             window.annexSearch.ToastUtils.hideAll($annexSearchWidget);
             return true;
@@ -1544,6 +1577,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          */
         disable() {
             let $annexSearchWidget = this.getWebComponent();
+            this.getHelper('config').triggerCallback('root.disable');
+            $annexSearchWidget.dispatchCustomEvent('root.disable');
             $annexSearchWidget.setAttribute('data-annex-search-disabled', '1');
             let toast = $annexSearchWidget.showToast('Search disabled', 'Apologies but search has been disabled for the time being.', null);
             toast.setUnescapable();
@@ -2432,6 +2467,77 @@ window.annexSearch.DependencyLoader.push([], function() {
                 return true;
             }
             return false
+        }
+    }
+});
+
+/**
+ * /src/js/utils/Chip.js
+ * 
+ */
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
+
+    /**
+     * window.annexSearch.ChipUtils
+     * 
+     * @access  public
+     */
+    window.annexSearch.ChipUtils = window.annexSearch.ChipUtils || class ChipUtils extends window.annexSearch.BaseUtils {
+
+        /**
+         * #__chips
+         * 
+         * @access  private
+         * @static
+         * @var     Array (default: [])
+         */
+        static #__chips = [];
+
+        /**
+         * build
+         * 
+         * @access  public
+         * @static
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @param   Object options
+         * @return  window.annexSearch.ChipView
+         */
+        static build($annexSearchWidget, options) {
+            let copy = options.copy,
+                href = options.href,
+                view = new window.annexSearch.ChipView($annexSearchWidget, copy),
+                $container = $annexSearchWidget.shadow.querySelector('div.content');
+            this.#__chips.push(view);
+            view.mount($container);
+            return view;
+        }
+
+        /**
+         * remove
+         * 
+         * @access  public
+         * @static
+         * @param   window.annexSearch.ChipView chip
+         * @return  Boolean
+         */
+        static remove(chip) {
+            let index = this.#__chips.indexOf(chip);
+            if (index === -1) {
+                return false;
+            }
+            this.#__chips.splice(index, 1);
+            return true;
+        }
+
+        /**
+         * setup
+         * 
+         * @access  public
+         * @static
+         * @return  Boolean
+         */
+        static setup() {
+            return true;
         }
     }
 });
@@ -5191,6 +5297,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.IdleBodyView = window.annexSearch.IdleBodyView || class IdleBodyView extends window.annexSearch.BaseView {
 
         /**
+         * #__chips
+         * 
+         * @access  private
+         * @var     Array (default: [])
+         */
+        #__chips = [];
+
+        /**
          * _markup
          * 
          * @access  protected
@@ -5203,9 +5317,61 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         let message = data?.config?.copy?.idle?.message ?? 'Start typing to begin your search...';
         message = message.trim();
     %>
+    <div class="chips">
+        <div class="label"><%- (data?.config?.copy?.idle?.chips) %></div>
+        <div class="list">
+        </div>
+    </div>
     <div class="graphic" part="idle-graphic"></div>
     <div class="message" part="idle-message"><%- (message) %></div>
 </div>`;
+
+        /**
+         * #__mountChip
+         * 
+         * @note    Ordered
+         * @access  private
+         * @param   Object chip
+         * @return  Boolean
+         */
+        #__mountChip(chip) {
+            let view = new window.annexSearch.ChipView(this._$annexSearchWidget),
+                $container = this.first('.chips .list');
+            view.set('chip', chip);
+            this.#__chips.push(view);
+            view.mount($container);
+            return true;
+        }
+
+        /**
+         * #__mountChips
+         * 
+         * @access  protected
+         * @return  Boolean
+         */
+        #__mountChips() {
+            let chips = this.getHelper('config').get('chips.idle') || [];
+            if (chips.length === 0) {
+                this.first('.chips').remove();
+                return false;
+            }
+            for (var chip of chips) {
+                this.#__mountChip(chip);
+            }
+            return true;
+        }
+
+        /**
+         * render
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        render() {
+            super.render();
+            this.#__mountChips();
+            return true;
+        }
     }
 });
 
@@ -5947,6 +6113,98 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             super.mount($container);
             this.#__mountEmpty();
             this.#__mountFound();
+            return true;
+        }
+    }
+});
+
+/**
+ * /src/js/views/common/Chip.js
+ * 
+ */
+window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], function() {
+
+    /**
+     * window.annexSearch.ChipView
+     * 
+     * @access  public
+     * @extends window.annexSearch.BaseView
+     */
+    window.annexSearch.ChipView = window.annexSearch.ChipView || class ChipView extends window.annexSearch.BaseView {
+
+        /**
+         * _markup
+         * 
+         * @access  protected
+         * @static
+         * @var     String
+         */
+        _markup = `
+<a data-view-name="ChipView" href="#" part="chip">
+    <span class="copy" part-chip-copy"><%= (data.chip.copy) %></span>
+</a>`;
+
+        /**
+         * constructor
+         * 
+         * @access  public
+         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
+         * @param   Object options
+         * @return  void
+         */
+        constructor($annexSearchWidget, options) {
+            super($annexSearchWidget);
+        }
+
+        /**
+         * #__addClickEventListener
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__addClickEventListener() {
+            let handler = this.#__handleClickEvent.bind(this);
+            this.click(handler);
+            return true;
+        }
+
+        /**
+         * #__addEvents
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__addEvents() {
+            this.#__addClickEventListener();
+            return true;
+        }
+
+        /**
+         * #__handleClickEvent
+         * 
+         * @access  private
+         * @param   Object event
+         * @return  Boolean
+         */
+        #__handleClickEvent(event) {
+            event.preventDefault();
+            let chip = this.get('chip'),
+                query = chip.query,
+                $annexSearchWidget = this.getWebComponent();
+            $annexSearchWidget.query(query);
+            return true;
+        }
+
+        /**
+         * render
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        render() {
+            super.render();
+            this.#__addEvents();
+// console.log(this.get('chip'));
             return true;
         }
     }

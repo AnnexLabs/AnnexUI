@@ -63,6 +63,10 @@
     --annex-search-toast-title-color:                           rgba(255, 255, 255, 0.90);
     --annex-search-toast-message-color:                         rgba(255, 255, 255, 0.80);
 
+    --annex-search-chip-border-color:                           rgba(0, 0, 0, 0.12);
+    --annex-search-chip-border-color-hover:                     rgba(0, 0, 0, 0.32);
+    --annex-search-chip-anchor-color:                           rgba(0, 0, 0, 0.75);
+
     /**
      * Dimensions
      * 
@@ -136,6 +140,9 @@
         --annex-search-toast-background-color:                  var(--annex-search-dm-toast-background-color,                   rgba(255, 255, 255, 1.00));
         --annex-search-toast-title-color:                       var(--annex-search-dm-toast-title-color,                        rgba(0, 0, 0, 0.90));
         --annex-search-toast-message-color:                     var(--annex-search-dm-toast-message-color,                      rgba(0, 0, 0, 0.80));
+        --annex-search-chip-border-color:                       var(--annex-search-dm-chip-border-color,                        rgba(255, 255, 255, 0.12));
+        --annex-search-chip-border-color-hover:                 var(--annex-search-dm-chip-border-color-hover,                  rgba(255, 255, 255, 0.32));
+        --annex-search-chip-anchor-color:                       var(--annex-search-dm-chip-anchor-color,                        rgba(255, 255, 255, 0.75));
     }
 }
 :host([data-annex-search-color-scheme="dark"]) {
@@ -172,6 +179,9 @@
     --annex-search-toast-background-color:                  var(--annex-search-dm-toast-background-color,                   rgba(255, 255, 255, 1.00));
     --annex-search-toast-title-color:                       var(--annex-search-dm-toast-title-color,                        rgba(0, 0, 0, 0.90));
     --annex-search-toast-message-color:                     var(--annex-search-dm-toast-message-color,                      rgba(0, 0, 0, 0.80));
+    --annex-search-chip-border-color:                       var(--annex-search-dm-chip-border-color,                        rgba(255, 255, 255, 0.12));
+    --annex-search-chip-border-color-hover:                 var(--annex-search-dm-chip-border-color-hover,                  rgba(255, 255, 255, 0.32));
+    --annex-search-chip-anchor-color:                       var(--annex-search-dm-chip-anchor-color,                        rgba(255, 255, 255, 0.75));
 }
 
 /**
@@ -323,6 +333,10 @@
  * Dead
  * 
  */
+:host([data-annex-search-disabled="1"]) [data-view-name="RootView"] > div.content *,
+:host([data-annex-search-disabled="1"]) [data-view-name="RootView"] > div.content * input {
+    user-select: none;
+}
 :host([data-annex-search-disabled="1"]) [data-view-name="RootView"] > div.content * {
     pointer-events: none;
 }
@@ -429,6 +443,7 @@
  */
 [data-view-name="IdleBodyView"] {
     display: none;
+    position: relative;
     justify-content: center;
     align-items: center;
     height: 100%;
@@ -436,6 +451,27 @@
 }
 [data-view-name="RootView"][data-state-key="idle"] [data-view-name="IdleBodyView"] {
     display: flex;
+}
+[data-view-name="IdleBodyView"] > div.chips {
+    position: absolute;
+    left: 0;
+    top: 0;
+/*    line-height: 48px;*/
+    padding: 12px 24px 0 16px;
+}
+[data-view-name="IdleBodyView"] > div.chips > div.label {
+    font-size: 12px;
+    color: var(--annex-search-body-message-color);
+/*    font-style: italic;*/
+/*    display: inline-block;*/
+    display: block;
+    height: 18px;
+    line-height: 18px;
+}
+[data-view-name="IdleBodyView"] > div.chips > div.list {
+    display: inline-block;
+    height: 48px;
+    padding: 4px 0 0 0;
 }
 [data-view-name="IdleBodyView"] > div.graphic {
     background-repeat: no-repeat;
