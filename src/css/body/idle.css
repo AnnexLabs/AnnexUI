@@ -23,7 +23,7 @@
 }
 [data-view-name="IdleBodyView"] > div.chips > div.label {
     font-size: 12px;
-    color: rgba(0, 0, 0, 0.50);
+    color: var(--annex-search-body-message-color);
 /*    font-style: italic;*/
 /*    display: inline-block;*/
     display: block;

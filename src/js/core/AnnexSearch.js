@@ -2,6 +2,9 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
+ * @todo    - Cleaner /css loading based on hostname of JS?
+ * @todo    -- Or update dist.sh file for more correct things?
+ * 
  * @todo    - Allow for disable messaging override
  * @todo    - Timer UI not working on bundled up js/css? (cdn)
  * @todo    - Prevent mobile "return" key from triggering init click

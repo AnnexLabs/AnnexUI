@@ -87,7 +87,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * @var     Object
              */
             chips: {
-                idle: []
+                // idle: []
+                idle: [
+                    {
+                        copy: 'aws',
+                        query: 'aws'
+                    },
+                    {
+                        copy: 'fotos',
+                        query: 'fotos'
+                    }
+                ]
             },
 
             /**
