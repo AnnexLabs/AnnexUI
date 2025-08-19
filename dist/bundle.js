@@ -160,9 +160,7 @@ window.annexSearch.DependencyLoader = (function() {
  * /src/js/core/AnnexSearch.js
  * 
  * @todo    - Auto focus on scrolling and it becoming visible
-
  * @todo    - Prevent auto focus due to page jacking..
- * 
  * @todo    - Add clear option; important for mobile
  * @todo    -- Complicated: does the X then close modal _after_ $input is cleared?
  * 
@@ -396,7 +394,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  public
          * @static
-         * @return  window.annexSearch.AnnexSearchWidgetWebComponent
+         * @return  null|window.annexSearch.AnnexSearchWidgetWebComponent
          */
         static getFocused() {
             let $focused = this.#__$focused;
@@ -3052,6 +3050,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             'base.get.key.invalid':                                             'Invalid {key} value passed to {base.get}; found {%0}',
             'base.set.key.undefined':                                           'Invalid {key} value passed to {base.set}; found {undefined}',
             'base.set.value.undefined':                                         'Invalid {value} value passed to {base.set}; found {undefined}',
+            'interactionUtils.disabled':                                        'Interaction not valid while $annexSearchWidget is disabled.',
+
             'interactionUtils.zeroRegistered':                                  'No registered $annexSearchWidget elements found',
             'interactionUtils.unknownId':                                       'Interaction attempt references an unknown $annexSearchWidget id.',
             'interactionUtils.multipleRegistered':                              'Multiple registered $annexSearchWidget elements found. Unable to determine which $annexSearchWidget is the target without a leader "id:" attribute value.',
@@ -3379,11 +3379,21 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
 
             // Processing
             if (interactionKey === 'clear') {
-                let response = $annexSearchWidget.disabled() === false && $annexSearchWidget.clear();
+                if ($annexSearchWidget.disabled() === true) {
+                    let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.disabled');
+                    window.annexSearch.LoggingUtils.error(message);
+                    return false;
+                }
+                let response = $annexSearchWidget.clear();
                 return response;
             }
             if (interactionKey === 'focus') {
-                let response = $annexSearchWidget.disabled() === false && $annexSearchWidget.focus();
+                if ($annexSearchWidget.disabled() === true) {
+                    let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.disabled');
+                    window.annexSearch.LoggingUtils.error(message);
+                    return false;
+                }
+                let response = $annexSearchWidget.focus();
                 return response;
             }
             if (interactionKey === 'hide') {
@@ -3467,6 +3477,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 value = $target.getAttribute('data-annex-search-query'),
                 $annexSearchWidget = this.#__getRegisteredById(value) || window.annexSearch.AnnexSearch.getRegistered()[0];
             if ($annexSearchWidget.disabled() === true) {
+                let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.disabled');
+                window.annexSearch.LoggingUtils.error(message);
                 return false;
             }
             let query = this.#__getQueryValue(value);
