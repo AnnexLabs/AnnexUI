@@ -113,7 +113,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 reference = setInterval(handler, duration);
             this.#__interval = reference;
             return true;
-        };
+        }
 
         /**
          * hide

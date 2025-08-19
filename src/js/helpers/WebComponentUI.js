@@ -228,9 +228,24 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
 // console.log(index);
             $annexSearchWidget.setAttribute('data-annex-search-layout', layout);
             $annexSearchWidget.setAttribute('data-annex-search-ready', '1');
-            $annexSearchWidget.setAttribute('data-annex-search-schemaKey', schemaKey);
+            $annexSearchWidget.setAttribute('data-annex-search-schema-key', schemaKey);
             this.#__setShowingAttribute();
             this.#__setOverlayAttribute();
+            return true;
+        }
+
+        /**
+         * setQueryAttribute
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        setQueryAttribute() {
+            let $annexSearchWidget = this.getWebComponent(),
+                field = $annexSearchWidget.getView('root').getView('header.field'),
+                query = field.first('input').value;
+            query = query.trim();
+            $annexSearchWidget.setAttribute('data-annex-search-query', query);
             return true;
         }
 

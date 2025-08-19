@@ -4,14 +4,14 @@
  * 
  * @todo    - Index attribute bug: https://416.io/ss/f/n0bc1a
  * 
+ * @todo    - Different icons re:hide / clearInput
+ * @todo    - Affix to the top?
+ * @todo    - Modal slim version re:idle state?
+ * 
  * @todo    - Auto focus on scrolling and it becoming visible
  * @todo    - Prevent auto focus due to page jacking..
  * @todo    - Add clear option; important for mobile
  * @todo    -- Complicated: does the X then close modal _after_ $input is cleared?)
- * 
- * @todo    - Different icons re:hide / clearInput
- * @todo    - Affix to the top?
- * @todo    - Modal slim version re:idle state?
  * 
  * @todo    - [Keyboard Shortcut]
  * @todo    -- Allow for keyboard shortcuts with inline (to focus)?

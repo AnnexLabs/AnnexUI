@@ -44,7 +44,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let handler = this.#__handleClickEvent.bind(this);
             this.click(handler);
             return true;
-        };
+        }
 
         /**
          * #__addEvents
@@ -69,7 +69,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 handler = this.#__handleHideClickEvent.bind(this);
             $element.addEventListener('click', handler);
             return true;
-        };
+        }
 
         /**
          * #__handleClickEvent
@@ -86,7 +86,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             }
             this.focus();
             return true;
-        };
+        }
 
         /**
          * #__handleHideClickEvent
@@ -98,7 +98,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__handleHideClickEvent(event) {
             this.getWebComponent().hide();
             return false;
-        };
+        }
 
         /**
          * #__mountField

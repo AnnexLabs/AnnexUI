@@ -69,10 +69,24 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         let placeholder = data?.config?.copy?.field?.placeholder ?? 'Search...';
     %>
     <div class="label" part="field-label"><%- (label) %></div>
+    <div class="clear icon icon-plus icon-size-14" part="field-clear"></div>
     <div class="input" part="field-input">
         <input type="search" name="query" id="query" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="<%- (placeholder) %>" part="field-input-input" />
     </div>
 </div>`;
+
+        /**
+         * #__addClearClickEventListener
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__addClearClickEventListener() {
+            let $element = this.first('.clear'),
+                handler = this.#__handleClearClickEvent.bind(this);
+            $element.addEventListener('click', handler);
+            return true;
+        }
 
         /**
          * #__addEvents
@@ -81,6 +95,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__addEvents() {
+            this.#__addClearClickEventListener();
             this.#__addInputInputEventListener();
             return true;
         }
@@ -96,7 +111,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 handler = this.#__handleInputInputEvent.bind(this);
             $element.addEventListener('input', handler);
             return true;
-        };
+        }
+
+        /**
+         * #__handleClearClickEvent
+         * 
+         * @access  private
+         * @param   Object event
+         * @return  Boolean
+         */
+        #__handleClearClickEvent(event) {
+            event.preventDefault();
+// console.log(event);
+            return true;
+        }
 
         /**
          * #__handleFailedTypesenseSearchEvent
@@ -122,7 +150,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.getView('root').setStateKey('error');
             typesenseSearchRequest.logFailedEvent();
             return true;
-        };
+        }
 
         /**
          * #__handleInputInputEvent
@@ -134,6 +162,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__handleInputInputEvent(event) {
 // console.log('ummm');
             let value = this.first('input').value.trim();
+            this.getWebComponent().getHelper('webComponentUI').setQueryAttribute();
             if (value === '') {
                 this.getHelper('typesense').abortLastRequest();
                 this.getView('root.header').hideSpinner();
@@ -155,7 +184,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             clearTimeout(this.#__timeout);
             this.#__timeout = setTimeout(this.#__searchTypesense.bind(this), this.#__searchDebounceDelay);
             return true;
-        };
+        }
 
         /**
          * #__handleLoadMoreSuccessfulTypesenseSearchEvent
@@ -225,7 +254,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             }
             this.loadMore();
             return true;
-        };
+        }
 
         /**
          * #__handleTypesenseSearchResponse

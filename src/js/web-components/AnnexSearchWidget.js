@@ -151,7 +151,7 @@ window.annexSearch.DependencyLoader.push([], function() {
             let handler = this.#__handleReadyEvent.bind(this),
                 promise = window.annexSearch.ElementUtils.waitForAnimation().then(handler);
             return promise;
-        };
+        }
 
         /**
          * #__mountRoot

@@ -51,7 +51,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let handler = this.#__handleClickEvent.bind(this);
             this.click(handler);
             return true;
-        };
+        }
 
         /**
          * #__addFocusinEventListener
@@ -63,7 +63,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let handler = this.#__handleFocusinEvent.bind(this);
             this.event('focusin', handler);
             return true;
-        };
+        }
 
         /**
          * #__addOverlayClickEventListener
@@ -75,7 +75,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let handler = this.#__handleOverlayClickEvent.bind(this);
             this.click(handler);
             return true;
-        };
+        }
 
         /**
          * #__handleClickEvent

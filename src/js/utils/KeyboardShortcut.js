@@ -471,7 +471,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 if (key === character) {
                     event.preventDefault();
                     if ($annexSearchWidget.getConfig('layout') === 'inline') {
-    console.log('a');
+    // console.log('a');
                         $annexSearchWidget.focus();
                         return true;
                     }
@@ -679,6 +679,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 }
                 let field = this.#__getField();
                 field.clear();
+                $annexSearchWidget.getHelper('webComponentUI').setQueryAttribute();
                 field.nullifyLastTypesenseSearchResponse();
                 found.clearResults();
                 found.getView('root').setStateKey('idle');

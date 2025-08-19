@@ -159,7 +159,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 reference = setTimeout(handler, duration);
             this.#__timeout = reference;
             return true;
-        };
+        }
 
         /**
          * hide
