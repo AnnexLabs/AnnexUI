@@ -2,17 +2,23 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
+ * @todo    - Index attribute bug: https://416.io/ss/f/n0bc1a
+ * 
  * @todo    - Auto focus on scrolling and it becoming visible
  * @todo    - Prevent auto focus due to page jacking..
  * @todo    - Add clear option; important for mobile
- * @todo    -- Complicated: does the X then close modal _after_ $input is cleared?
+ * @todo    -- Complicated: does the X then close modal _after_ $input is cleared?)
+ * 
+ * @todo    - Different icons re:hide / clearInput
+ * @todo    - Affix to the top?
+ * @todo    - Modal slim version re:idle state?
  * 
  * @todo    - [Keyboard Shortcut]
  * @todo    -- Allow for keyboard shortcuts with inline (to focus)?
  * @todo    --- But don't show field.label?
  * @todo    -- Track order of "showing" modals in registered?
  * @todo    -- Fundametally need to get this sorted, and then revisit keyboard shortcut toggle work
- * @todo    -- Multiple-modal stacking (w/ offsets)
+ * @todo    -- Multiple-modal stacking (w/ offsets
  * 
  * @todo    [DONE] - dark mode
  * @todo    [DONE] - mobile
@@ -156,6 +162,9 @@
  * @todo    [DONE] - Add in env var in Config
  * @todo    [DONE] - Update dist.sh for env var
  * @todo    [DONE] - Timer UI not working on bundled up js/css? (cdn)
+ * @todo    [PUNT] - Handle layout change via setConfig transitions
+ * @todo    [PUNT] -- Right now, ugly do to triggering transform changes. Fix that via no-animate class
+ * @todo    [DONE] - Bug w/ cleared input and header spinner still showing
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -318,6 +327,7 @@ window.annexSearch.DependencyLoader.push([], function() {
                 this.#__registered.push($annexSearchWidget);
                 return true;
             }
+// console.log('again');
             this.#__registered = this.#__registered.filter(function(item) {
                 return item !== $annexSearchWidget;
             });
@@ -341,7 +351,7 @@ window.annexSearch.DependencyLoader.push([], function() {
                 return false;
             }
             this.register($annexSearchWidget);
-            return true;
+            // return true;
         }
 
         /**

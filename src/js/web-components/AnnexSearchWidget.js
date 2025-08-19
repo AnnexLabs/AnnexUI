@@ -136,9 +136,9 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         #__handleRenderEvent() {
             try {
+// console.log('render');
                 this.#__mountRoot();
                 this.#__helpers.webComponentUI.setupConfigHelperCustomEventListeners();
-                // this.#__helpers.webComponentUI.setUUID();
                 this.#__helpers.webComponentUI.setAttributes();
                 this.#__helpers.webComponentUI.autoShow();
             } catch (err) {

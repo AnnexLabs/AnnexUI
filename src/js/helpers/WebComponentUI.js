@@ -215,6 +215,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          * @return  Boolean
          */
         setAttributes() {
+// console.log('setAttributes');
             let $annexSearchWidget = this.getWebComponent(),
                 colorScheme = this.getHelper('config').get('colorScheme'),
                 id = this.getHelper('config').get('id'),
@@ -224,6 +225,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             $annexSearchWidget.setAttribute('data-annex-search-color-scheme', colorScheme);
             $annexSearchWidget.setAttribute('data-annex-search-id', id);
             $annexSearchWidget.setAttribute('data-annex-search-index', index);
+// console.log(index);
             $annexSearchWidget.setAttribute('data-annex-search-layout', layout);
             $annexSearchWidget.setAttribute('data-annex-search-ready', '1');
             $annexSearchWidget.setAttribute('data-annex-search-schemaKey', schemaKey);
@@ -246,6 +248,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
                 $annexSearchWidget.getHelper('webComponentUI').setAttributes();
                 return true;
             });
+            helper.addCustomEventListener('data.set.id', function(customEvent) {
+                let detail = customEvent.detail,
+                    $annexSearchWidget = detail.$annexSearchWidget;
+                $annexSearchWidget.getHelper('webComponentUI').setAttributes();
+                return true;
+            });
             helper.addCustomEventListener('data.set.layout', function(customEvent) {
                 let detail = customEvent.detail,
                     $annexSearchWidget = detail.$annexSearchWidget;
@@ -258,12 +266,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
                 $annexSearchWidget.getHelper('webComponentUI').setAttributes();
                 return true;
             });
-            helper.addCustomEventListener('data.set.id', function(customEvent) {
-                let detail = customEvent.detail,
-                    $annexSearchWidget = detail.$annexSearchWidget;
-                $annexSearchWidget.getHelper('webComponentUI').setAttributes();
-                return true;
-            });
+            return true;
         }
 
         /**
