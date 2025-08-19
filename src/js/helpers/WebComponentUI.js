@@ -180,7 +180,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             this.getHelper('config').triggerCallback('root.disable');
             $annexSearchWidget.dispatchCustomEvent('root.disable');
             $annexSearchWidget.setAttribute('data-annex-search-disabled', '1');
-            let toast = $annexSearchWidget.showToast('Search disabled', 'Apologies but search has been disabled for the time being.', null);
+            let title = this.getHelper('config').get('copy.disabled.title'),
+                message = this.getHelper('config').get('copy.disabled.message'),
+                toast = $annexSearchWidget.showToast(title, message, null);
             toast.setUnescapable();
             return true;
         }

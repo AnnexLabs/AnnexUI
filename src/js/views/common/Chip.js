@@ -22,7 +22,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         _markup = `
 <a data-view-name="ChipView" href="#" part="chip">
-    <span class="copy" part-chip-copy"><%= (data.chip.copy) %></span>
+    <span class="label" part-chip-label"><%= (data.chip.label) %></span>
 </a>`;
 
         /**

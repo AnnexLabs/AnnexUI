@@ -358,6 +358,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         focus() {
+            let disabled = this._$annexSearchWidget.disabled();
+            if (disabled === true) {
+// console.log('s');
+                return false;
+            }
             let found = this.getView('root.body.results.found');
             found.clearFocused();
             let $input = this.first('input');

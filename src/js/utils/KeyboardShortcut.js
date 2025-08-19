@@ -380,8 +380,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__validKeydownEvent(event, 'documentEscape', 'escape') === false) {
                 return false;
             }
-            let $annexSearchWidget = this.#__getFocusedWebComponent(),
-                $activeElement = $annexSearchWidget.shadow.activeElement;
+            let $annexSearchWidget = this.#__getFocusedWebComponent();
+            if ($annexSearchWidget.disabled() === true) {
+                $annexSearchWidget.hide();
+                return true;
+            }
+            let $activeElement = $annexSearchWidget.shadow.activeElement;
             if ($activeElement === null) {
                 let field = this.#__getField();
                 field.focus();

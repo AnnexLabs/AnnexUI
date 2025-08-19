@@ -126,6 +126,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * @var     Object
              */
             copy: {
+                disabled: {
+                    title: 'Search disabled',
+                    message: 'Apologies but search has been disabled for the time being.'
+                },
                 empty: {
                     message: 'No results found...'
                 },
@@ -288,6 +292,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         constructor($annexSearchWidget) {
             super($annexSearchWidget);
             this.#__addCustomEventListeners();
+            this.#__setResources();
         }
 
         /**
@@ -298,6 +303,21 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          */
         #__addCustomEventListeners() {
             this.#__addDataSetCustomEventListener();
+            return true;
+        }
+
+        /**
+         * #__setResources
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__setResources() {
+            let env = window.annexSearch.AnnexSearch.getEnv();
+            if (env === 'prod') {
+                return false;
+            }
+// console.log(env);
             return true;
         }
 
@@ -328,7 +348,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
                 let chip = idle[index];
                 if (chip.constructor === String) {
                     idle[index] = {
-                        copy: chip,
+                        label: chip,
                         query: chip
                     };
                 }

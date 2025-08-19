@@ -5,11 +5,10 @@
  * @todo    - Cleaner /css loading based on hostname of JS?
  * @todo    -- Or update dist.sh file for more correct things?
  * 
+ * @todo    - Timer UI not working on bundled up js/css? (cdn)
+ * 
  * @todo    - Add clear option; important for mobile
  * @todo    -- Complicated: does the X then close modal _after_ $input is cleared?
- * 
- * @todo    - Allow for disable messaging override
- * @todo    - Timer UI not working on bundled up js/css? (cdn)
  * 
  * @todo    - Prevent auto focus due to page jacking..
  * @todo    - Auto focus on scrolling and it becoming visible
@@ -154,6 +153,9 @@
  * @todo    [DONE] - Sometimes clearing out input on mobile doesn't trigger idle state
  * @todo    [DONE] -- Also happening on desktop
  * @todo    [DONE] -- Required aborting when empty $input value. See: https://416.io/ss/f/t27dr4
+ * @todo    [DONE] - Allow for disable messaging override
+ * @todo    [DONE] - When disabled, if focus command, prevent focus
+ * @todo    [DONE] - When disabled, if escape key, hide modal
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -172,6 +174,15 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @var     null|window.annexSearch.AnnexSearchWidgetWebComponent (default: null)
          */
         static #__$focused = null;
+
+        /**
+         * #__env
+         * 
+         * @access  private
+         * @static
+         * @var     String (default: 'local')
+         */
+        static #__env = 'local';
 
         /**
          * #__registered
@@ -228,6 +239,18 @@ window.annexSearch.DependencyLoader.push([], function() {
         static clearFocused() {
             this.#__$focused = null;
             return true;
+        }
+
+        /**
+         * getEnv
+         * 
+         * @access  public
+         * @static
+         * @return  String
+         */
+        static getEnv() {
+            let env = this.#__env;
+            return env;
         }
 
         /**
