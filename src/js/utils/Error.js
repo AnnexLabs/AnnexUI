@@ -27,6 +27,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             'base.get.key.invalid':                                             'Invalid {key} value passed to {base.get}; found {%0}',
             'base.set.key.undefined':                                           'Invalid {key} value passed to {base.set}; found {undefined}',
             'base.set.value.undefined':                                         'Invalid {value} value passed to {base.set}; found {undefined}',
+            'interactionUtils.disabled':                                        'Interaction not valid while $annexSearchWidget is disabled.',
+
             'interactionUtils.zeroRegistered':                                  'No registered $annexSearchWidget elements found',
             'interactionUtils.unknownId':                                       'Interaction attempt references an unknown $annexSearchWidget id.',
             'interactionUtils.multipleRegistered':                              'Multiple registered $annexSearchWidget elements found. Unable to determine which $annexSearchWidget is the target without a leader "id:" attribute value.',

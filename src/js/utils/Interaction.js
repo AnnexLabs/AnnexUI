@@ -145,11 +145,21 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
 
             // Processing
             if (interactionKey === 'clear') {
-                let response = $annexSearchWidget.disabled() === false && $annexSearchWidget.clear();
+                if ($annexSearchWidget.disabled() === true) {
+                    let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.disabled');
+                    window.annexSearch.LoggingUtils.error(message);
+                    return false;
+                }
+                let response = $annexSearchWidget.clear();
                 return response;
             }
             if (interactionKey === 'focus') {
-                let response = $annexSearchWidget.disabled() === false && $annexSearchWidget.focus();
+                if ($annexSearchWidget.disabled() === true) {
+                    let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.disabled');
+                    window.annexSearch.LoggingUtils.error(message);
+                    return false;
+                }
+                let response = $annexSearchWidget.focus();
                 return response;
             }
             if (interactionKey === 'hide') {
@@ -233,6 +243,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 value = $target.getAttribute('data-annex-search-query'),
                 $annexSearchWidget = this.#__getRegisteredById(value) || window.annexSearch.AnnexSearch.getRegistered()[0];
             if ($annexSearchWidget.disabled() === true) {
+                let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.disabled');
+                window.annexSearch.LoggingUtils.error(message);
                 return false;
             }
             let query = this.#__getQueryValue(value);
