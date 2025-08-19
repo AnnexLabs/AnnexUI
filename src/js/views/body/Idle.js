@@ -36,8 +36,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     %>
     <div class="chips">
         <div class="label"><%- (data?.config?.copy?.idle?.chips) %></div>
-        <div class="list">
-        </div>
+        <div class="list"></div>
     </div>
     <div class="graphic" part="idle-graphic"></div>
     <div class="message" part="idle-message"><%- (message) %></div>

@@ -306,7 +306,7 @@ window.annexSearch.DependencyLoader.push([], function() {
         focus() {
             let focused = this.focused();
             if (focused === true) {
-console.log('0');
+// console.log('0');
                 return false;
             }
 // console.log('1');

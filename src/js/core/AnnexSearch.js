@@ -2,6 +2,10 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
+ * @todo    - Add clear option; important for mobile
+ * @todo    - Sometimes clearing out input on mobile doesn't trigger idle state
+ * @todo    - Hide keyboard shortcut label on mobile (since can't be triggered)
+ * 
  * @todo    - Cleaner /css loading based on hostname of JS?
  * @todo    -- Or update dist.sh file for more correct things?
  * 
@@ -145,6 +149,7 @@
  * @todo    [PUNT] - What to do w/ defined/default keyboard shortcuts on touch devices?
  * @todo    [PUNT] -- At least hide the label?
  * @todo    [PUNT] - Should root.{type} event be moved to $webComponent?
+ * @todo    [PUNT] - Add support for $idle $chips keyboard navigation
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

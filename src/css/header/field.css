@@ -32,7 +32,6 @@
     font-size: 14px;
     color: var(--annex-search-header-input-color);
     transition: 250ms color;
-
     font-size: 16px;
     transform: scale(0.88);
     transform-origin: 0 0;

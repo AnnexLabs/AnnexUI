@@ -13,24 +13,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
     window.annexSearch.DataUtils = window.annexSearch.DataUtils || class DataUtils extends window.annexSearch.BaseUtils {
 
         /**
-         * copyToClipboard
-         * 
-         * @see     https://chatgpt.com/c/6899376c-1860-832a-8a04-1e8135f98a00
-         * @see     https://chatgpt.com/c/689cd2f3-acf8-8326-883a-601ac7ad320b
-         * @access  public
-         * @static
-         * @param   String str
-         * @return  Promise
-         */
-        static copyToClipboard(str) {
-            let promise = window.navigator.clipboard.writeText(str).catch(function() {
-                let message = window.annexSearch.ErrorUtils.getMessage('dataUtils.copyToClipboard.failed');
-                this.error(message);
-            });
-            return promise;
-        }
-
-        /**
          * deepMerge
          * 
          * @see     https://claude.ai/chat/1af14a8b-4076-4d73-ad69-69aa4ee03c7a

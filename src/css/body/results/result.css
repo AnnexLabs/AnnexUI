@@ -56,7 +56,6 @@ max-height: 92px;
     line-height: 16px;
     color: var(--annex-search-result-title-color);
     font-size: 13px;
-
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;  
@@ -67,7 +66,6 @@ max-height: 92px;
     color: var(--annex-search-result-body-color);
     font-size: 12px;
     line-height: 1.25em;
-
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;  

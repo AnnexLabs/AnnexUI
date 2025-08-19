@@ -85,7 +85,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         render() {
             super.render();
             this.#__addEvents();
-// console.log(this.get('chip'));
             return true;
         }
     }

@@ -20,7 +20,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @var     Object
          */
         static #__messageMap = {
-            'dataUtils.copyToClipboard.failed':                                 'Could not copy string to clipboard.',
+            'clientUtils.copyToClipboard.failed':                               'Could not copy string to clipboard.',
             'fieldHeaderView.loadMore.limitReached':                            'Possible infinite loop during search query fetching. Check your result view template is visible.',
             'annexSearchWidget.container.null':                                 'Inline web components must have a $container defined before mounting.',
             // 'annexSearchWidget.container.notNull':                              'Web components that have a layout value not equal to \'inline\' should not have a $container defined before mounting.',
