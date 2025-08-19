@@ -22,6 +22,19 @@
 [data-view-name="RootView"] > div.content {
     overflow: hidden;
 }
+[data-view-name="RootView"] > div.content > div.disabled {
+    opacity: 0.00;
+    content: '';
+    background-color: var(--annex-search-root-overlay-color);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    transition: opacity 350ms;
+    pointer-events: none;
+}
 :host([data-annex-search-overlay="0"]) [data-view-name="RootView"] > div.overlay {
     display: none;
 }

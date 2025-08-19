@@ -23,7 +23,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         _markup = `
 <div data-view-name="RootView" data-state-key="idle" part="root">
     <div class="overlay" part="root-overlay"></div>
-    <div class="content" part="root-content"></div>
+    <div class="content" part="root-content">
+        <div class="disabled" part="root-content-disabled"></div>
+    </div>
 </div>`;
 
         /**

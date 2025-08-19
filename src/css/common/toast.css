@@ -18,6 +18,7 @@
     transform: translateY(-100%);
     cursor: default;
     will-change: transform, opacity;
+    z-index: 3;
 }
 [data-view-name="ToastView"].visible {
     pointer-events: auto;
