@@ -16,6 +16,8 @@
 ## 
 ## Config
 ## 
+## CSS files listed here is important since they need to be concatenated in the
+## specific order.
 ## 
 SOURCE_DIR="./src"
 UNMINIFIED_CSS_FILEPATH="./dist/bundle.css"

@@ -3,9 +3,7 @@
  * /src/js/core/AnnexSearch.js
  * 
  * @todo    - Auto focus on scrolling and it becoming visible
-
  * @todo    - Prevent auto focus due to page jacking..
- * 
  * @todo    - Add clear option; important for mobile
  * @todo    -- Complicated: does the X then close modal _after_ $input is cleared?
  * 
@@ -239,7 +237,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  public
          * @static
-         * @return  window.annexSearch.AnnexSearchWidgetWebComponent
+         * @return  null|window.annexSearch.AnnexSearchWidgetWebComponent
          */
         static getFocused() {
             let $focused = this.#__$focused;
