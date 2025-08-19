@@ -157,6 +157,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             debug: true,
 
             /**
+             * env
+             * 
+             * A config variable which is useful for tracking where Annex is
+             * deployed. Specifically, whether it's running in a local, dev,
+             * prod etc environment.
+             * 
+             * @access  private
+             * @var     String (default: 'local')
+             */
+            env: 'local',
+
+            /**
              * keyboardShortcut
              * 
              * The keyboard combination which when pressed, toggles the web
@@ -307,21 +319,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         }
 
         /**
-         * #__setResources
-         * 
-         * @access  private
-         * @return  Boolean
-         */
-        #__setResources() {
-            let env = window.annexSearch.AnnexSearch.getEnv();
-            if (env === 'prod') {
-                return false;
-            }
-// console.log(env);
-            return true;
-        }
-
-        /**
          * #__addDataSetCustomEventListener
          * 
          * @access  private
@@ -428,6 +425,21 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
                     });
                 })
             return promise;
+        }
+
+        /**
+         * #__setResources
+         * 
+         * @note    noop
+         * @access  private
+         * @return  Boolean
+         */
+        #__setResources() {
+            let env = this.get('env');
+            if (env === 'prod') {
+                return false;
+            }
+            return true;
         }
 
         /**

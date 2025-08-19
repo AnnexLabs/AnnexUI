@@ -164,6 +164,8 @@ echo "Applying post-compilation modifications to JS..."
 
 # Extract version from the compiled JS
 VERSION=$(grep -o "static #__version = '[^']*'" "$UNMINIFIED_JS_FILEPATH" | sed "s/static #__version = '\([^']*\)'/\1/")
+
+# Make replacements
 if [ -n "$VERSION" ]; then
     echo "Found version: $VERSION"
     # https://cdn.jsdelivr.net/gh/annex-search/AnnexUI@v0.1.0-dev/dist/bundle.min.css
@@ -185,6 +187,7 @@ fi
 echo "Replacing debug: true with debug: false..."
 
 # Let's do this!
+sed -i.bak "s/env: 'local'/env: 'prod'/g" "$UNMINIFIED_JS_FILEPATH"
 sed -i.bak 's/debug: true/debug: false/g' "$UNMINIFIED_JS_FILEPATH"
 rm -f "$UNMINIFIED_JS_FILEPATH.bak"
 

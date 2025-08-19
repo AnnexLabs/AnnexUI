@@ -176,15 +176,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         static #__$focused = null;
 
         /**
-         * #__env
-         * 
-         * @access  private
-         * @static
-         * @var     String (default: 'local')
-         */
-        static #__env = 'local';
-
-        /**
          * #__registered
          * 
          * @access  private
@@ -239,18 +230,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         static clearFocused() {
             this.#__$focused = null;
             return true;
-        }
-
-        /**
-         * getEnv
-         * 
-         * @access  public
-         * @static
-         * @return  String
-         */
-        static getEnv() {
-            let env = this.#__env;
-            return env;
         }
 
         /**
