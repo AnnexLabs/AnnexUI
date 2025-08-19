@@ -179,20 +179,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
-         * touchDevice
-         *
-         * @see     https://chatgpt.com/c/68a00e40-f680-8330-92bc-978befdd0db6
-         * @access  public
-         * @static
-         * @return  Boolean
-         */
-        static touchDevice($eventTarget) {
-            return (('ontouchstart' in window) ||
-                (navigator.maxTouchPoints > 0) ||
-                (navigator.msMaxTouchPoints > 0));
-        }
-
-        /**
          * visible
          *
          * @see     https://chatgpt.com/c/689f96f3-20fc-8332-b530-e8693299801b
@@ -202,13 +188,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @return  Boolean
          */
         static visible($eventTarget) {
-            let rect = $eventTarget.getBoundingClientRect();
-            return (
-                rect.top < window.innerHeight &&
-                rect.bottom > 0 &&
-                rect.left < window.innerWidth &&
-                rect.right > 0
-            );
+            let rect = $eventTarget.getBoundingClientRect(),
+                visible = (
+                    rect.top < window.innerHeight
+                    && rect.bottom > 0
+                    && rect.left < window.innerWidth
+                    && rect.right > 0
+                );
+            return visible;
         }
 
         /**

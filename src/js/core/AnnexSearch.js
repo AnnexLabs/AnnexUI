@@ -2,26 +2,24 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - Add clear option; important for mobile
- * @todo    - Sometimes clearing out input on mobile doesn't trigger idle state
- * @todo    - Hide keyboard shortcut label on mobile (since can't be triggered)
- * 
  * @todo    - Cleaner /css loading based on hostname of JS?
  * @todo    -- Or update dist.sh file for more correct things?
  * 
+ * @todo    - Add clear option; important for mobile
+ * @todo    -- Complicated: does the X then close modal _after_ $input is cleared?
+ * 
  * @todo    - Allow for disable messaging override
  * @todo    - Timer UI not working on bundled up js/css? (cdn)
- * @todo    - Prevent mobile "return" key from triggering init click
  * 
- * @todo    - Kill doesn't work
  * @todo    - Prevent auto focus due to page jacking..
  * @todo    - Auto focus on scrolling and it becoming visible
  * 
- * @todo    - Allow for keyboard shortcuts with inline (to focus)?
- * @todo    -- But don't show field.label?
- * @todo    - Track order of "showing" modals in registered?
- * @todo    - Fundametally need to get this sorted, and then revisit keyboard shortcut toggle work
- * @todo    - Multiple-modal stacking (w/ offsets)
+ * @todo    - [Keyboard Shortcut]
+ * @todo    -- Allow for keyboard shortcuts with inline (to focus)?
+ * @todo    --- But don't show field.label?
+ * @todo    -- Track order of "showing" modals in registered?
+ * @todo    -- Fundametally need to get this sorted, and then revisit keyboard shortcut toggle work
+ * @todo    -- Multiple-modal stacking (w/ offsets)
  * 
  * @todo    [DONE] - dark mode
  * @todo    [DONE] - mobile
@@ -150,6 +148,12 @@
  * @todo    [PUNT] -- At least hide the label?
  * @todo    [PUNT] - Should root.{type} event be moved to $webComponent?
  * @todo    [PUNT] - Add support for $idle $chips keyboard navigation
+ * @todo    [DONE] - Hide keyboard shortcut label on mobile (since can't be triggered)
+ * @todo    [DONE] - Kill doesn't work
+ * @todo    [DONE] - Prevent mobile "return" key from triggering init click
+ * @todo    [DONE] - Sometimes clearing out input on mobile doesn't trigger idle state
+ * @todo    [DONE] -- Also happening on desktop
+ * @todo    [DONE] -- Required aborting when empty $input value. See: https://416.io/ss/f/t27dr4
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

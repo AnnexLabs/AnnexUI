@@ -608,6 +608,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         /**
          * #__handleFieldEnterKeydownEvent
          * 
+         * @see     https://chatgpt.com/c/68a3d3e5-12fc-8320-9ed8-94cc0262429e
          * @access  private
          * @static
          * @param   Object event
@@ -615,6 +616,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          */
         static #__handleFieldEnterKeydownEvent(event) {
             if (this.#__validKeydownEvent(event, 'fieldEnter', 'enter') === false) {
+                return false;
+            }
+            if (window.annexSearch.ClientUtils.isTouchDevice() === true) {
+                // event.preventDefault();
+                document.activeElement && document.activeElement.blur()
                 return false;
             }
             let $annexSearchWidget = this.#__getFocusedWebComponent(),
@@ -689,6 +695,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @return  Boolean
          */
         static #__handleKeydownEvent(event) {
+// console.log(event);
             if (this.#__getRegisteredWebComponents().length === 0) {
                 return false;
             }

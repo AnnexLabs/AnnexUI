@@ -31,6 +31,34 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
+         * isMac
+         *
+         * @access  public
+         * @static
+         * @return  Boolean
+         */
+        static isMac() {
+            let mac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+            return mac;
+        }
+
+        /**
+         * isTouchDevice
+         *
+         * @see     https://chatgpt.com/c/68a00e40-f680-8330-92bc-978befdd0db6
+         * @see     https://chatgpt.com/c/68a3d3e5-12fc-8320-9ed8-94cc0262429e
+         * @access  public
+         * @static
+         * @return  Boolean
+         */
+        static isTouchDevice() {
+            let touchDevice = (('ontouchstart' in window)
+                || (navigator.maxTouchPoints > 0)
+                || (navigator.msMaxTouchPoints > 0));
+            return touchDevice;
+        }
+
+        /**
          * setup
          * 
          * @access  public

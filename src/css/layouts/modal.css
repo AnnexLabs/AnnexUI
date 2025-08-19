@@ -18,7 +18,11 @@
 :host([data-annex-search-layout="modal"]) [data-view-name="RootView"][data-state-key="results"] > div.content {
     max-height: 540px;
 }
-
+@media (pointer: coarse) {
+    :host([data-annex-search-layout="modal"]) [data-view-name="HeaderView"] > [data-view-name="FieldHeaderView"] > div.label {
+        display: none;
+    }
+}
 /*:host([data-annex-search-layout="modal"][data-annex-search-modal-order]) [data-view-name="RootView"] > div.content {
     background-color: red;
     margin-top: calc(attr(data-annex-search-order integer, 0) * -10px);

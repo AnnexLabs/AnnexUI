@@ -10,13 +10,15 @@
     font-size: 11px;
     color: var(--annex-search-chip-anchor-color);
     padding: 4px 12px 4px 12px;
-    transition: border-color 450ms;
+    transition: border-color 325ms, opacity 325ms;
     cursor: pointer;
     will-change: transform, opacity;
+    opacity: 0.80;
 }
 * [data-view-name="ChipView"]:not(:last-child) {
     margin: 0 4px 0 0;
 }
 [data-view-name="ChipView"]:hover {
     border-color: var(--annex-search-chip-border-color-hover);
+    opacity: 0.90;
 }

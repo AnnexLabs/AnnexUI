@@ -22,6 +22,12 @@
 :host([data-annex-search-layout^="panel"]) [data-view-name="FooterView"] {
     border-radius: 0;
 }
+@media (pointer: coarse) {
+    :host([data-annex-search-layout^="panel"]) [data-view-name="HeaderView"] > [data-view-name="FieldHeaderView"] > div.label {
+        display: none;
+    }
+}
+
 
 /**
  * Panel (left)

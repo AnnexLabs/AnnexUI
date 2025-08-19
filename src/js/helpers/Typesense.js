@@ -16,7 +16,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
     window.annexSearch.TypesenseHelper = window.annexSearch.TypesenseHelper || class TypesenseHelper extends window.annexSearch.BaseHelper {
 
         /**
-         * _lastRequest
+         * #__lastRequest
          * 
          * @access  private
          * @var     null|window.annexSearch.TypesenseSearchRequest (default null)
@@ -24,7 +24,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         #__lastRequest = null;
 
         /**
-         * _requests
+         * #__requests
          * 
          * @access  private
          * @var     Array (default [])
@@ -43,28 +43,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         }
 
         /**
-         * _abortLastRequest
-         * 
-         * @access  private
-         * @return  Boolean
-         */
-        #__abortLastRequest() {
-            if (this.#__lastRequest === null) {
-                return false;
-            }
-            let request = this.#__lastRequest;
-            this.#__lastRequest = null;
-            request.abort();
-            let index = this.#__requests.indexOf(request);
-            if (index === -1) {
-                return false;
-            }
-            this.#__requests.splice(index, 1);
-            return true;
-        }
-
-        /**
-         * _validSearchOptions
+         * #__validSearchOptions
          * 
          * @see     https://416.io/ss/f/fm0aua
          * @access  private
@@ -111,6 +90,27 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
                 request.setError(key, message);
                 return false;
             }
+            return true;
+        }
+
+        /**
+         * abortLastRequest
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        abortLastRequest() {
+            if (this.#__lastRequest === null) {
+                return false;
+            }
+            let request = this.#__lastRequest;
+            this.#__lastRequest = null;
+            request.abort();
+            let index = this.#__requests.indexOf(request);
+            if (index === -1) {
+                return false;
+            }
+            this.#__requests.splice(index, 1);
             return true;
         }
 
@@ -166,7 +166,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          * @return  Promise
          */
         search(query, options = {}) {
-            this.#__abortLastRequest();
+            this.abortLastRequest();
+// console.log('searching');
             let $annexSearchWidget = this.getWebComponent(),
                 request = new window.annexSearch.TypesenseSearchRequest($annexSearchWidget);
             request.setQuery(query);

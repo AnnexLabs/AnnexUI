@@ -135,6 +135,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
 // console.log('ummm');
             let value = this.first('input').value.trim();
             if (value === '') {
+                this.getHelper('typesense').abortLastRequest();
                 this.nullifyLastTypesenseSearchResponse();
                 this.clear();
                 this.getView('root').setStateKey('idle');
