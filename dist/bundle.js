@@ -159,17 +159,23 @@ window.annexSearch.DependencyLoader = (function() {
 /**
  * /src/js/core/AnnexSearch.js
  * 
+ * @todo    - Index attribute bug: https://416.io/ss/f/n0bc1a
+ * 
+ * @todo    - Different icons re:hide / clearInput
+ * @todo    - Affix to the top?
+ * @todo    - Modal slim version re:idle state?
+ * 
  * @todo    - Auto focus on scrolling and it becoming visible
  * @todo    - Prevent auto focus due to page jacking..
  * @todo    - Add clear option; important for mobile
- * @todo    -- Complicated: does the X then close modal _after_ $input is cleared?
+ * @todo    -- Complicated: does the X then close modal _after_ $input is cleared?)
  * 
  * @todo    - [Keyboard Shortcut]
  * @todo    -- Allow for keyboard shortcuts with inline (to focus)?
  * @todo    --- But don't show field.label?
  * @todo    -- Track order of "showing" modals in registered?
  * @todo    -- Fundametally need to get this sorted, and then revisit keyboard shortcut toggle work
- * @todo    -- Multiple-modal stacking (w/ offsets)
+ * @todo    -- Multiple-modal stacking (w/ offsets
  * 
  * @todo    [DONE] - dark mode
  * @todo    [DONE] - mobile
@@ -313,6 +319,9 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    [DONE] - Add in env var in Config
  * @todo    [DONE] - Update dist.sh for env var
  * @todo    [DONE] - Timer UI not working on bundled up js/css? (cdn)
+ * @todo    [PUNT] - Handle layout change via setConfig transitions
+ * @todo    [PUNT] -- Right now, ugly do to triggering transform changes. Fix that via no-animate class
+ * @todo    [DONE] - Bug w/ cleared input and header spinner still showing
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -475,6 +484,7 @@ window.annexSearch.DependencyLoader.push([], function() {
                 this.#__registered.push($annexSearchWidget);
                 return true;
             }
+// console.log('again');
             this.#__registered = this.#__registered.filter(function(item) {
                 return item !== $annexSearchWidget;
             });
@@ -498,7 +508,7 @@ window.annexSearch.DependencyLoader.push([], function() {
                 return false;
             }
             this.register($annexSearchWidget);
-            return true;
+            // return true;
         }
 
         /**
@@ -1729,6 +1739,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          * @return  Boolean
          */
         setAttributes() {
+// console.log('setAttributes');
             let $annexSearchWidget = this.getWebComponent(),
                 colorScheme = this.getHelper('config').get('colorScheme'),
                 id = this.getHelper('config').get('id'),
@@ -1738,11 +1749,27 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             $annexSearchWidget.setAttribute('data-annex-search-color-scheme', colorScheme);
             $annexSearchWidget.setAttribute('data-annex-search-id', id);
             $annexSearchWidget.setAttribute('data-annex-search-index', index);
+// console.log(index);
             $annexSearchWidget.setAttribute('data-annex-search-layout', layout);
             $annexSearchWidget.setAttribute('data-annex-search-ready', '1');
-            $annexSearchWidget.setAttribute('data-annex-search-schemaKey', schemaKey);
+            $annexSearchWidget.setAttribute('data-annex-search-schema-key', schemaKey);
             this.#__setShowingAttribute();
             this.#__setOverlayAttribute();
+            return true;
+        }
+
+        /**
+         * setQueryAttribute
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        setQueryAttribute() {
+            let $annexSearchWidget = this.getWebComponent(),
+                field = $annexSearchWidget.getView('root').getView('header.field'),
+                query = field.first('input').value;
+            query = query.trim();
+            $annexSearchWidget.setAttribute('data-annex-search-query', query);
             return true;
         }
 
@@ -1760,6 +1787,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
                 $annexSearchWidget.getHelper('webComponentUI').setAttributes();
                 return true;
             });
+            helper.addCustomEventListener('data.set.id', function(customEvent) {
+                let detail = customEvent.detail,
+                    $annexSearchWidget = detail.$annexSearchWidget;
+                $annexSearchWidget.getHelper('webComponentUI').setAttributes();
+                return true;
+            });
             helper.addCustomEventListener('data.set.layout', function(customEvent) {
                 let detail = customEvent.detail,
                     $annexSearchWidget = detail.$annexSearchWidget;
@@ -1772,12 +1805,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
                 $annexSearchWidget.getHelper('webComponentUI').setAttributes();
                 return true;
             });
-            helper.addCustomEventListener('data.set.id', function(customEvent) {
-                let detail = customEvent.detail,
-                    $annexSearchWidget = detail.$annexSearchWidget;
-                $annexSearchWidget.getHelper('webComponentUI').setAttributes();
-                return true;
-            });
+            return true;
         }
 
         /**
@@ -4051,7 +4079,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 if (key === character) {
                     event.preventDefault();
                     if ($annexSearchWidget.getConfig('layout') === 'inline') {
-    console.log('a');
+    // console.log('a');
                         $annexSearchWidget.focus();
                         return true;
                     }
@@ -4259,6 +4287,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 }
                 let field = this.#__getField();
                 field.clear();
+                $annexSearchWidget.getHelper('webComponentUI').setQueryAttribute();
                 field.nullifyLastTypesenseSearchResponse();
                 found.clearResults();
                 found.getView('root').setStateKey('idle');
@@ -6433,7 +6462,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 reference = setInterval(handler, duration);
             this.#__interval = reference;
             return true;
-        };
+        }
 
         /**
          * hide
@@ -6651,7 +6680,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 reference = setTimeout(handler, duration);
             this.#__timeout = reference;
             return true;
-        };
+        }
 
         /**
          * hide
@@ -6927,10 +6956,24 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         let placeholder = data?.config?.copy?.field?.placeholder ?? 'Search...';
     %>
     <div class="label" part="field-label"><%- (label) %></div>
+    <div class="clear icon icon-plus icon-size-14" part="field-clear"></div>
     <div class="input" part="field-input">
         <input type="search" name="query" id="query" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="<%- (placeholder) %>" part="field-input-input" />
     </div>
 </div>`;
+
+        /**
+         * #__addClearClickEventListener
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__addClearClickEventListener() {
+            let $element = this.first('.clear'),
+                handler = this.#__handleClearClickEvent.bind(this);
+            $element.addEventListener('click', handler);
+            return true;
+        }
 
         /**
          * #__addEvents
@@ -6939,6 +6982,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__addEvents() {
+            this.#__addClearClickEventListener();
             this.#__addInputInputEventListener();
             return true;
         }
@@ -6954,7 +6998,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 handler = this.#__handleInputInputEvent.bind(this);
             $element.addEventListener('input', handler);
             return true;
-        };
+        }
+
+        /**
+         * #__handleClearClickEvent
+         * 
+         * @access  private
+         * @param   Object event
+         * @return  Boolean
+         */
+        #__handleClearClickEvent(event) {
+            event.preventDefault();
+// console.log(event);
+            return true;
+        }
 
         /**
          * #__handleFailedTypesenseSearchEvent
@@ -6980,7 +7037,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this.getView('root').setStateKey('error');
             typesenseSearchRequest.logFailedEvent();
             return true;
-        };
+        }
 
         /**
          * #__handleInputInputEvent
@@ -6992,8 +7049,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__handleInputInputEvent(event) {
 // console.log('ummm');
             let value = this.first('input').value.trim();
+            this.getWebComponent().getHelper('webComponentUI').setQueryAttribute();
             if (value === '') {
                 this.getHelper('typesense').abortLastRequest();
+                this.getView('root.header').hideSpinner();
                 this.nullifyLastTypesenseSearchResponse();
                 this.clear();
                 this.getView('root').setStateKey('idle');
@@ -7012,7 +7071,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             clearTimeout(this.#__timeout);
             this.#__timeout = setTimeout(this.#__searchTypesense.bind(this), this.#__searchDebounceDelay);
             return true;
-        };
+        }
 
         /**
          * #__handleLoadMoreSuccessfulTypesenseSearchEvent
@@ -7082,7 +7141,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             }
             this.loadMore();
             return true;
-        };
+        }
 
         /**
          * #__handleTypesenseSearchResponse
@@ -7359,7 +7418,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let handler = this.#__handleClickEvent.bind(this);
             this.click(handler);
             return true;
-        };
+        }
 
         /**
          * #__addEvents
@@ -7384,7 +7443,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 handler = this.#__handleHideClickEvent.bind(this);
             $element.addEventListener('click', handler);
             return true;
-        };
+        }
 
         /**
          * #__handleClickEvent
@@ -7401,7 +7460,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             }
             this.focus();
             return true;
-        };
+        }
 
         /**
          * #__handleHideClickEvent
@@ -7413,7 +7472,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__handleHideClickEvent(event) {
             this.getWebComponent().hide();
             return false;
-        };
+        }
 
         /**
          * #__mountField
@@ -7613,7 +7672,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let handler = this.#__handleClickEvent.bind(this);
             this.click(handler);
             return true;
-        };
+        }
 
         /**
          * #__addFocusinEventListener
@@ -7625,7 +7684,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let handler = this.#__handleFocusinEvent.bind(this);
             this.event('focusin', handler);
             return true;
-        };
+        }
 
         /**
          * #__addOverlayClickEventListener
@@ -7637,7 +7696,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let handler = this.#__handleOverlayClickEvent.bind(this);
             this.click(handler);
             return true;
-        };
+        }
 
         /**
          * #__handleClickEvent
@@ -7936,9 +7995,9 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         #__handleRenderEvent() {
             try {
+// console.log('render');
                 this.#__mountRoot();
                 this.#__helpers.webComponentUI.setupConfigHelperCustomEventListeners();
-                // this.#__helpers.webComponentUI.setUUID();
                 this.#__helpers.webComponentUI.setAttributes();
                 this.#__helpers.webComponentUI.autoShow();
             } catch (err) {
@@ -7951,7 +8010,7 @@ window.annexSearch.DependencyLoader.push([], function() {
             let handler = this.#__handleReadyEvent.bind(this),
                 promise = window.annexSearch.ElementUtils.waitForAnimation().then(handler);
             return promise;
-        };
+        }
 
         /**
          * #__mountRoot

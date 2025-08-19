@@ -858,7 +858,7 @@ max-height: 92px;
 }
 
 /**
- * Close
+ * Hide
  * 
  */
 [data-view-name="HeaderView"] > div.hide {
@@ -938,6 +938,25 @@ max-height: 92px;
     float: left;
     opacity: 0.50;
 }
+[data-view-name="FieldHeaderView"] > div.clear {
+    display: none;
+    position: absolute;
+    right: 10px;
+    top: calc((var(--annex-search-header-height) - var(--annex-search-header-hide-button-size)) / 2);
+    height: var(--annex-search-header-hide-button-size);
+    width: var(--annex-search-header-hide-button-size);
+    transform: rotate(45deg);
+    background-color: var(--annex-search-header-hide-button-color);
+    opacity: 0.30;
+    cursor: pointer;
+    transition: 250ms all;
+    -webkit-mask-size: 14px !important;
+            mask-size: 14px !important;
+}
+[data-view-name="FieldHeaderView"] > div.clear:hover {
+    transform: scale(1.20) rotate(135deg);
+    opacity: 0.50;
+}
 [data-view-name="FieldHeaderView"] > div.input {
     height: 20px;
     float: left;
@@ -965,6 +984,14 @@ max-height: 92px;
     -webkit-appearance: none;
     appearance: none;
     display: none;
+}
+
+/**
+ * State
+ * 
+ */
+:host([data-annex-search-query]:not([data-annex-search-query=""])) [data-view-name="FieldHeaderView"] > div.clear {
+/*    display: block;*/
 }
 
 /**
