@@ -609,7 +609,6 @@ max-height: 92px;
     line-height: 16px;
     color: var(--annex-search-result-title-color);
     font-size: 13px;
-
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;  
@@ -620,7 +619,6 @@ max-height: 92px;
     color: var(--annex-search-result-body-color);
     font-size: 12px;
     line-height: 1.25em;
-
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;  
@@ -673,6 +671,64 @@ max-height: 92px;
  */
 :host([data-annex-search-schemakey="sku-v0.1.0"]) [data-view-name="ResultFoundResultsBodyView"] {
     cursor: default;
+}
+
+/**
+ * /src/css/common/chip.css
+ * 
+ */
+[data-view-name="ChipView"] {
+    display: inline;
+    border: 1px solid var(--annex-search-chip-border-color);
+    border-radius: 4px 4px 4px 4px;
+    font-size: 11px;
+    color: var(--annex-search-chip-anchor-color);
+    padding: 4px 12px 4px 12px;
+    transition: border-color 325ms, opacity 325ms;
+    cursor: pointer;
+    will-change: transform, opacity;
+    opacity: 0.80;
+}
+* [data-view-name="ChipView"]:not(:last-child) {
+    margin: 0 4px 0 0;
+}
+[data-view-name="ChipView"]:hover {
+    border-color: var(--annex-search-chip-border-color-hover);
+    opacity: 0.90;
+}
+
+/**
+ * /src/css/common/timer.css
+ * 
+ */
+[data-view-name="TimerView"] {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.00;
+    left: 12px;
+    top: 12px;
+    background-color: var(--annex-search-timer-background-color);
+    border-radius: 100px 100px 100px 100px;
+    width: 48px;
+    height: 48px;
+    transition: opacity var(--annex-search-timer-duration);
+    cursor: default;
+    will-change: transform, opacity;
+}
+[data-view-name="TimerView"].visible {
+    pointer-events: auto;
+    opacity: 0.96;
+}
+[data-view-name="TimerView"].visible:hover {
+    opacity: 0.90;
+}
+[data-view-name="TimerView"] > div.remaining {
+    color: var(--annex-search-timer-remaining-color);
+    font-size: 18px;
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    line-height: 48px;
 }
 
 /**
@@ -875,7 +931,6 @@ max-height: 92px;
     font-size: 14px;
     color: var(--annex-search-header-input-color);
     transition: 250ms color;
-
     font-size: 16px;
     transform: scale(0.88);
     transform-origin: 0 0;
@@ -977,7 +1032,11 @@ max-height: 92px;
 :host([data-annex-search-layout="modal"]) [data-view-name="RootView"][data-state-key="results"] > div.content {
     max-height: 540px;
 }
-
+@media (pointer: coarse) {
+    :host([data-annex-search-layout="modal"]) [data-view-name="HeaderView"] > [data-view-name="FieldHeaderView"] > div.label {
+        display: none;
+    }
+}
 /*:host([data-annex-search-layout="modal"][data-annex-search-modal-order]) [data-view-name="RootView"] > div.content {
     background-color: red;
     margin-top: calc(attr(data-annex-search-order integer, 0) * -10px);
@@ -1051,6 +1110,12 @@ max-height: 92px;
 :host([data-annex-search-layout^="panel"]) [data-view-name="FooterView"] {
     border-radius: 0;
 }
+@media (pointer: coarse) {
+    :host([data-annex-search-layout^="panel"]) [data-view-name="HeaderView"] > [data-view-name="FieldHeaderView"] > div.label {
+        display: none;
+    }
+}
+
 
 /**
  * Panel (left)
