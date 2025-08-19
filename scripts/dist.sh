@@ -30,6 +30,7 @@ CSS_FILES=(
     "src/css/host.css"
     "src/css/scrollbars.css"
     "src/css/root.css"
+
     "src/css/body/body.css"
     "src/css/body/error.css"
     "src/css/body/idle.css"
@@ -37,13 +38,19 @@ CSS_FILES=(
     "src/css/body/results/empty.css"
     "src/css/body/results/found.css"
     "src/css/body/results/result.css"
+
+    "src/css/common/chip.css"
+    "src/css/common/timer.css"
     "src/css/common/toast.css"
+
     "src/css/footer/footer.css"
     "src/css/footer/brandingBar.css"
     "src/css/footer/statusBar.css"
+
     "src/css/header/header.css"
     "src/css/header/field.css"
     "src/css/header/metaBar.css"
+    
     "src/css/layouts/inline.css"
     "src/css/layouts/inline.responsive.css"
     "src/css/layouts/modal.css"
