@@ -2,9 +2,6 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - Cleaner /css loading based on hostname of JS?
- * @todo    -- Or update dist.sh file for more correct things?
- * 
  * @todo    - Timer UI not working on bundled up js/css? (cdn)
  * 
  * @todo    - Add clear option; important for mobile
@@ -156,6 +153,10 @@
  * @todo    [DONE] - Allow for disable messaging override
  * @todo    [DONE] - When disabled, if focus command, prevent focus
  * @todo    [DONE] - When disabled, if escape key, hide modal
+ * @todo    [NOPE] - Cleaner /css loading based on hostname of JS?
+ * @todo    [NOPE] -- Or update dist.sh file for more correct things?
+ * @todo    [DONE] - Add in env var in Config
+ * @todo    [DONE] - Update dist.sh for env var
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
