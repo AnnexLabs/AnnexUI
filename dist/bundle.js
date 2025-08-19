@@ -159,13 +159,12 @@ window.annexSearch.DependencyLoader = (function() {
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - Timer UI not working on bundled up js/css? (cdn)
+ * @todo    - Auto focus on scrolling and it becoming visible
+
+ * @todo    - Prevent auto focus due to page jacking..
  * 
  * @todo    - Add clear option; important for mobile
  * @todo    -- Complicated: does the X then close modal _after_ $input is cleared?
- * 
- * @todo    - Prevent auto focus due to page jacking..
- * @todo    - Auto focus on scrolling and it becoming visible
  * 
  * @todo    - [Keyboard Shortcut]
  * @todo    -- Allow for keyboard shortcuts with inline (to focus)?
@@ -285,6 +284,7 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    [PUNT] - Add support for more than > 2 showing with toggling/hiding
  * @todo    [PUNT] -- See: https://416.io/ss/f/zl6bct
  * @todo    [PUNT] - Allow for Command+up/down, which should go to top of scrollable area
+ * @todo    [PUNT] -- It seems like I can get this to work natively by blurring the $input after a null-click / focus
  * @todo    [DONE] - Thumbs broken on tall images: https://416.io/ss/f/26alrd
  * @todo    [DONE] -- I thought this was fixed, but new issues with stupid flex box
  * @todo    [DONE] -- Likely better to just go back to original
@@ -314,6 +314,7 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    [NOPE] -- Or update dist.sh file for more correct things?
  * @todo    [DONE] - Add in env var in Config
  * @todo    [DONE] - Update dist.sh for env var
+ * @todo    [DONE] - Timer UI not working on bundled up js/css? (cdn)
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -7572,7 +7573,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         _markup = `
 <div data-view-name="RootView" data-state-key="idle" part="root">
     <div class="overlay" part="root-overlay"></div>
-    <div class="content" part="root-content"></div>
+    <div class="content" part="root-content">
+        <div class="disabled" part="root-content-disabled"></div>
+    </div>
 </div>`;
 
         /**

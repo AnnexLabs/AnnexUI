@@ -340,9 +340,15 @@
 :host([data-annex-search-disabled="1"]) [data-view-name="RootView"] > div.content * {
     pointer-events: none;
 }
+:host([data-annex-search-disabled="1"]) [data-view-name="RootView"] > div.content > div.disabled {
+    opacity: 1.00;
+}
 :host([data-annex-search-disabled="1"][data-annex-search-showing="1"]) [data-view-name="RootView"] > div.overlay {
     pointer-events: auto;
 }
+/*:host([data-annex-search-disabled="1"][data-annex-search-showing="1"]) [data-view-name="RootView"] > div.disabled {
+    pointer-events: auto;
+}*/
 
 /**
  * /src/css/scrollbars.css
@@ -387,6 +393,19 @@
 }
 [data-view-name="RootView"] > div.content {
     overflow: hidden;
+}
+[data-view-name="RootView"] > div.content > div.disabled {
+    opacity: 0.00;
+    content: '';
+    background-color: var(--annex-search-root-overlay-color);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    transition: opacity 350ms;
+    pointer-events: none;
 }
 :host([data-annex-search-overlay="0"]) [data-view-name="RootView"] > div.overlay {
     display: none;
@@ -750,6 +769,7 @@ max-height: 92px;
     transform: translateY(-100%);
     cursor: default;
     will-change: transform, opacity;
+    z-index: 3;
 }
 [data-view-name="ToastView"].visible {
     pointer-events: auto;
