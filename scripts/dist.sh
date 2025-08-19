@@ -218,5 +218,27 @@ echo "Minifying JS via API..."
 curl -s -X POST https://www.toptal.com/developers/javascript-minifier/api/raw \
     --data-urlencode "input@$UNMINIFIED_JS_FILEPATH" \
     -o "$MINIFIED_JS_FILEPATH"
+
+
+## 
+## Logging
+## 
+## Useful for jsDelivr purging
+## 
+echo ""
+echo "/dist URLs"
+echo "https://cdn.jsdelivr.net/gh/annex-search/AnnexUI@$VERSION/dist/bundle.css"
+echo "https://cdn.jsdelivr.net/gh/annex-search/AnnexUI@$VERSION/dist/bundle.min.css"
+echo "https://cdn.jsdelivr.net/gh/annex-search/AnnexUI@$VERSION/dist/bundle.js"
+echo "https://cdn.jsdelivr.net/gh/annex-search/AnnexUI@$VERSION/dist/bundle.min.js"
+
+
+## 
+## Done
+## 
+## 
+
+## Logging
+echo ""
 echo "Done"
 echo ""
