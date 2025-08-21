@@ -20,29 +20,36 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @var     Object
          */
         static #__markup = {
+            // 'default': {
             'auto-v0.1.0': {
                 result: this.#__getAutoSchemaKeyMarkup()
             },
             'sku-v0.1.0': {
-                result: `
-                    <div data-view-name="ResultFoundResultsBodyView" class="clearfix" part="result">
-                        <%
-                            let imageUrl = data.hit.document.imageUrl || '',
-                                validImage = window.annexSearch.StringUtils.validURL(imageUrl);
-                            if (validImage === true) {
-                        %>
-                            <div class="image" part="result-image">
-                                <img src="<%- (imageUrl) %>" part="result-image-img" />
+                // templates: {
+                //     header: ``,
+                    result: `
+                        <div data-view-name="ResultFoundResultsBodyView" class="clearfix" part="result">
+                            <%
+                                let imageUrl = data.hit.document.imageUrl || '',
+                                    validImage = window.annexSearch.StringUtils.validURL(imageUrl);
+                                if (validImage === true) {
+                            %>
+                                <div class="image" part="result-image">
+                                    <img src="<%- (imageUrl) %>" part="result-image-img" />
+                                </div>
+                            <%
+                                }
+                            %>
+                            <div class="content" part="result-content">
+                                <div class="title" part="result-content-title">{{{data?.hit?.highlight?.name?.snippet || data?.hit?.document?.name || '(unknown name)'}}}</div>
+                                <div class="body" part="result-content-body">{{{data?.hit?.highlight?.description?.snippet || data?.hit?.document?.description || '(unknown description)'}}}</div>
+                                <div class="price badge" part="result-content-price">\${{{data?.hit?.document?.price.toLocaleString() || '(unknown price)'}}}</div>
                             </div>
-                        <%
-                            }
-                        %>
-                        <div class="content" part="result-content">
-                            <div class="title" part="result-content-title">{{{data?.hit?.highlight?.name?.snippet || data?.hit?.document?.name || '(unknown name)'}}}</div>
-                            <div class="body" part="result-content-body">{{{data?.hit?.highlight?.description?.snippet || data?.hit?.document?.description || '(unknown description)'}}}</div>
-                            <div class="price badge" part="result-content-price">\${{{data?.hit?.document?.price.toLocaleString() || '(unknown price)'}}}</div>
-                        </div>
-                    </div>`
+                        </div>`,
+                // },
+                // sorting: {
+
+                // }
             },
             'webResource-v0.1.0': {
                 result: `
@@ -142,7 +149,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                         'shortTitle',
                         'subject',
                         'term',
-                        'text',
                         'title',
                         'titleText',
                     ],
@@ -168,26 +174,36 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                         'canonical',
                         'canonicalUri',
                         'canonicalUrl',
+
                         'endpoint',
                         'endpointUri',
                         'endpointUrl',
+
                         'fullUri',
                         'fullUrl',
+
                         'href',
+
                         'link',
                         'linkUri',
                         'linkUrl',
+
                         'pageUri',
                         'pageUrl',
+
                         'permalink',
                         'permalinkUri',
                         'permalinkUrl',
+
                         'redirectUri',
                         'redirectUrl',
+
                         'sourceUri',
                         'sourceUrl',
+
                         'targetUri',
                         'targetUrl',
+                        
                         'uri',
                         'url',
                     ],

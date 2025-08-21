@@ -29,13 +29,15 @@
     transform: rotate(45deg);
     background-color: var(--annex-search-header-hide-button-color);
     opacity: 0.30;
+/*    opacity: 0.00;*/
     cursor: pointer;
+/*    pointer-events: none;*/
     transition: 250ms all;
     -webkit-mask-size: 14px !important;
             mask-size: 14px !important;
 }
 [data-view-name="FieldHeaderView"] > div.clear:hover {
-    transform: scale(1.20) rotate(135deg);
+    transform: scale(1.20) rotate(45deg);
     opacity: 0.50;
 }
 [data-view-name="FieldHeaderView"] > div.input {
@@ -71,6 +73,8 @@
  * State
  * 
  */
-:host([data-annex-search-query]:not([data-annex-search-query=""])) [data-view-name="FieldHeaderView"] > div.clear {
-/*    display: block;*/
+:host([data-annex-search-query]:not([data-annex-search-query=""])) [data-searching="0"] [data-view-name="FieldHeaderView"] > div.clear {
+    display: block;
+/*    opacity: 0.30;*/
+/*    pointer-events: auto;*/
 }

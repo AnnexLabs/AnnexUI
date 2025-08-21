@@ -53,6 +53,13 @@
     -webkit-mask-image: var(--annex-search-icon-plus);
     mask-image: var(--annex-search-icon-plus);
 }
+:host .icon:not(img).icon-plus-circle.original {
+    background-image: var(--annex-search-icon-plus-circle);
+}
+:host .icon:not(img).icon-plus-circle:not(.original) {
+    -webkit-mask-image: var(--annex-search-icon-plus-circle);
+    mask-image: var(--annex-search-icon-plus-circle);
+}
 :host .icon:not(img).icon-spinner.original {
     background-image: var(--annex-search-icon-spinner);
 }

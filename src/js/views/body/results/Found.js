@@ -82,23 +82,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * #__mountResult
-         * 
-         * @note    Ordered
-         * @access  private
-         * @param   Object hit
-         * @return  Boolean
-         */
-        #__mountResult(hit) {
-            let view = new window.annexSearch.ResultFoundResultsBodyView(this._$annexSearchWidget),
-                $container = this._$element;
-            view.set('hit', hit);
-            this.#__results.push(view);
-            view.mount($container);
-            return true;
-        }
-
-        /**
          * #__handleScrollEvent
          * 
          * @access  private
@@ -112,6 +95,23 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 return false;
             }
             this.getView('root.header.field').loadMore();
+            return true;
+        }
+
+        /**
+         * #__mountResult
+         * 
+         * @note    Ordered
+         * @access  private
+         * @param   Object hit
+         * @return  Boolean
+         */
+        #__mountResult(hit) {
+            let view = new window.annexSearch.ResultFoundResultsBodyView(this._$annexSearchWidget),
+                $container = this._$element;
+            view.set('hit', hit);
+            this.#__results.push(view);
+            view.mount($container);
             return true;
         }
 

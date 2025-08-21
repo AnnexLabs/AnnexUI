@@ -13,6 +13,15 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
     window.annexSearch.InteractionUtils = window.annexSearch.InteractionUtils || class InteractionUtils extends window.annexSearch.BaseUtils {
 
         /**
+         * #__windowScrollDebounceDelay
+         * 
+         * @access  private
+         * @static
+         * @var     Number (default: 40)
+         */
+        static #__windowScrollDebounceDelay = 40;
+
+        /**
          * #__addDocumentClickEventListener
          * 
          * @access  private
@@ -23,6 +32,22 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             let $element = (document.body || document.head || document.documentElement),
                 handler = this.#__handleDocumentClickEvent.bind(this);
             $element.addEventListener('click', handler);
+            return true;
+        }
+
+        /**
+         * #__addWindowScrollClickEventListener
+         * 
+         * @access  private
+         * @static
+         * @return  Boolean
+         */
+        static #__addWindowScrollClickEventListener() {
+            let $eventTarget = window,
+                handler = this.#__handleWindowScrollEvent.bind(this),
+                delay = this.#__windowScrollDebounceDelay,
+                debounced = window.annexSearch.FunctionUtils.debounce(handler, delay);
+            $eventTarget.addEventListener('scroll', debounced);
             return true;
         }
 
@@ -254,6 +279,49 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
+         * #__handleWindowScrollEvent
+         * 
+         * @access  private
+         * @static
+         * @param   Object event
+         * @return  Boolean
+         */
+        static #__handleWindowScrollEvent(event) {
+            let $activeElement = document.activeElement || null;
+            if ($activeElement === null) {
+                let $visible = window.annexSearch.ElementUtils.getVisibleWebComponents();
+                if ($visible.length === 0) {
+                    return false;
+                }
+                let $annexSearchWidget = $visible[0];
+                if ($annexSearchWidget.getConfig('autoFocusOnScroll') === false) {
+                    return false;
+                }
+                if ($annexSearchWidget.getConfig('layout') === 'inline') {
+                    $annexSearchWidget.focus();
+                    return true;
+                }
+                return false;
+            }
+            if ($activeElement.matches('button, input, select, textarea') === true) {
+                return false;
+            }
+            let $visible = window.annexSearch.ElementUtils.getVisibleWebComponents();
+            if ($visible.length === 0) {
+                return false;
+            }
+            let $annexSearchWidget = $visible[0];
+            if ($annexSearchWidget.getConfig('autoFocusOnScroll') === false) {
+                return false;
+            }
+            if ($annexSearchWidget.getConfig('layout') === 'inline') {
+                $annexSearchWidget.focus();
+                return true;
+            }
+            return false;
+        }
+
+        /**
          * #__validEventTarget
          * 
          * @access  private
@@ -273,7 +341,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if ($target.matches(selector) === false) {
                 return false;
             }
-
+            if ($target.matches('annex-search-widget') === true) {
+                return false;
+            }
+// console.log(event.);
+// console.log($target, attributeName);
             // Valid target; prevent event
             event.preventDefault();
 
@@ -336,6 +408,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             let response = super.setup();
             if (response === true) {
                 this.#__addDocumentClickEventListener();
+                this.#__addWindowScrollClickEventListener();
                 return true;
             }
             let handler = window.annexSearch.InteractionUtils.setup.bind(window.annexSearch.InteractionUtils);

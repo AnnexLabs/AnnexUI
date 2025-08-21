@@ -2,16 +2,11 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - Index attribute bug: https://416.io/ss/f/n0bc1a
+ * @todo    - [Feedback from Adam]
+ * @todo    [DONE] -- Affix to the top?
+ * @todo    -- Modal slim version re:idle state?
  * 
- * @todo    - Different icons re:hide / clearInput
- * @todo    - Affix to the top?
- * @todo    - Modal slim version re:idle state?
- * 
- * @todo    - Auto focus on scrolling and it becoming visible
- * @todo    - Prevent auto focus due to page jacking..
- * @todo    - Add clear option; important for mobile
- * @todo    -- Complicated: does the X then close modal _after_ $input is cleared?)
+ * @todo    - SchemaUtils ????
  * 
  * @todo    - [Keyboard Shortcut]
  * @todo    -- Allow for keyboard shortcuts with inline (to focus)?
@@ -165,6 +160,19 @@
  * @todo    [PUNT] - Handle layout change via setConfig transitions
  * @todo    [PUNT] -- Right now, ugly do to triggering transform changes. Fix that via no-animate class
  * @todo    [DONE] - Bug w/ cleared input and header spinner still showing
+ * @todo    [PUNT] - 'affixed' or 'sticky' layout, which binds to a specific $container (using PopperJS)
+ * @todo    [DONE] - Auto focus on scrolling and it becoming visible
+ * @todo    [DONE] -- Or not, since it would take focus from other unrelated elements?
+ * @todo    [DONE] -- For now, I'm doing a check on $activeElement; might work; added Config option
+ * @todo    [DONE] -- Prevent auto focus due to page jacking..
+ * @todo    [DONE] --- Resolved via InteractionUtils.#__handleWindowScrollEvent
+ * @todo    [PUNT] - Index attribute bug: https://416.io/ss/f/n0bc1a
+ * @todo    [PUNT] -- This is more complicated than it seems, in that the ordering changes each time an $annexSearchWidget is focused/shown etc.
+ * @todo    [PUNT] -- Since this the attribute isn't currently being used (intial intention was around multi-modal shifting), punting for now
+ * @todo    [DONE] - Different icons re:hide / clearInput
+ * @todo    [DONE] - [Feedback from Adam]
+ * @todo    [DONE] -- Add clear option; important for mobile
+ * @todo    [DONE] --- Complicated: does the X then close modal _after_ $input is cleared?)
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -185,13 +193,13 @@ window.annexSearch.DependencyLoader.push([], function() {
         static #__$focused = null;
 
         /**
-         * #__registered
+         * #__$registered
          * 
          * @access  private
          * @static
          * @var     Array (default: [])
          */
-        static #__registered = [];
+        static #__$registered = [];
 
         /**
          * #__version
@@ -261,7 +269,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Array
          */
         static getRegistered() {
-            let registered = this.#__registered;
+            let registered = this.#__$registered;
             return registered;
         }
 
@@ -274,7 +282,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  null|window.annexSearch.AnnexSearchWidgetWebComponent
          */
         static getRegisteredById(id) {
-            let registered = this.#__registered;
+            let registered = this.#__$registered;
             for (let $annexSearchWidget of registered) {
                 if ($annexSearchWidget.getAttribute('data-annex-search-id') === id) {
                     return $annexSearchWidget;
@@ -291,14 +299,14 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Array
          */
         static getShowing() {
-            let registered = this.#__registered,
-                showing = [];
+            let registered = this.#__$registered,
+                $showing = [];
             for (let $annexSearchWidget of registered) {
                 if ($annexSearchWidget.showing() === true) {
-                    showing.push($annexSearchWidget);
+                    $showing.push($annexSearchWidget);
                 }
             }
-            return showing;
+            return $showing;
         }
 
         /**
@@ -323,15 +331,17 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         static register($annexSearchWidget) {
-            if (this.#__registered.includes($annexSearchWidget) === false) {
-                this.#__registered.push($annexSearchWidget);
+            if (this.#__$registered.includes($annexSearchWidget) === false) {
+                this.#__$registered.push($annexSearchWidget);
                 return true;
             }
+// console.log('nope');
 // console.log('again');
-            this.#__registered = this.#__registered.filter(function(item) {
+            this.#__$registered = this.#__$registered.filter(function(item) {
                 return item !== $annexSearchWidget;
             });
-            this.#__registered.push($annexSearchWidget);
+            this.#__$registered.push($annexSearchWidget);
+            // $annexSearchWidget.getHelper('webComponentUI').setAttributes();
             return true;
         }
 
@@ -344,6 +354,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         static setFocused($annexSearchWidget) {
+// console.log('dfg');
 // console.log('focusing: ' + $annexSearchWidget.getAttribute('data-annex-search-id'));
 // console.trace();
             this.#__$focused = $annexSearchWidget;
@@ -351,7 +362,7 @@ window.annexSearch.DependencyLoader.push([], function() {
                 return false;
             }
             this.register($annexSearchWidget);
-            // return true;
+            return true;
         }
 
         /**

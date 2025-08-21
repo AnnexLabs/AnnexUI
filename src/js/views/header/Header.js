@@ -151,6 +151,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
+         * mount
+         * 
+         * @access  public
+         * @param   HTMLElement $container
+         * @return  Boolean
+         */
+        mount($container) {
+            super.mount($container);
+            this.#__mountField();
+            this.#__mountMetaBar();
+            return true;
+        }
+
+        /**
          * hideSpinner
          * 
          * @access  public
@@ -189,20 +203,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             }
             this.#__showingSpinner = true;
             this.getView('root').setAttribute('data-searching', '1');
-            return true;
-        }
-
-        /**
-         * mount
-         * 
-         * @access  public
-         * @param   HTMLElement $container
-         * @return  Boolean
-         */
-        mount($container) {
-            super.mount($container);
-            this.#__mountField();
-            this.#__mountMetaBar();
             return true;
         }
     }

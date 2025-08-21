@@ -55,10 +55,13 @@ CSS_FILES=(
     
     "src/css/layouts/inline.css"
     "src/css/layouts/inline.responsive.css"
+    "src/css/layouts/inline.touch.css"
     "src/css/layouts/modal.css"
     "src/css/layouts/modal.responsive.css"
+    "src/css/layouts/modal.touch.css"
     "src/css/layouts/panel.css"
     "src/css/layouts/panel.responsive.css"
+    "src/css/layouts/panel.touch.css"
 )
 
 ## 

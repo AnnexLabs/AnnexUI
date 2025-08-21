@@ -1,0 +1,11 @@
+
+/**
+ * /src/css/layouts/modal.touch.css
+ * 
+ */
+
+@media (pointer: coarse) {
+    :host([data-annex-search-layout="modal"]) [data-view-name="HeaderView"] > [data-view-name="FieldHeaderView"] > div.label {
+        display: none;
+    }
+}

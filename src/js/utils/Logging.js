@@ -37,26 +37,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             args.unshift(styles);
             args.unshift(message);
             window.console && window.console.log && window.console.log.apply(window, args);
-// console.trace();
             return true;
         }
-
-        /**
-         * toast
-         * 
-         * @access  public
-         * @static
-         * @return  Boolean
-         */
-        // static toast() {
-        //     let message = '%c[' + (this.#__labels.error) + ']',
-        //         styles = 'color: red; font-weight: bold; font-family: monospace;',
-        //         args = Array.from(arguments);
-        //     args.unshift(styles);
-        //     args.unshift(message);
-        //     window.console && window.console.log && window.console.log.apply(window, args);
-        //     return true;
-        // }
 
         /**
          * setup

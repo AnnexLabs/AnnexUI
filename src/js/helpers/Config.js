@@ -34,6 +34,23 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             $container: null,
 
             /**
+             * autoFocusOnScroll
+             * 
+             * Whether a visible, enabled, inline $annexSearchWidget should
+             * automatically be focused when the user scrolls. Helpful from a UX
+             * point of view, but could cause conflicts in some integrations.
+             * 
+             * Note that it will not automatically focus on an
+             * $annexSearchWidget if the page's focus is already on a form
+             * input.
+             * 
+             * @access  private
+             * @var     Boolean (default: true)
+             */
+                        // autoFocusOnScroll: false,
+            autoFocusOnScroll: true,
+
+            /**
              * callbacks
              * 
              * Map of callbacks that can be used for custom logic.
@@ -211,6 +228,22 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * @var     String (default: 'modal')
              */
             layout: 'modal',
+
+            /**
+             * modalAlignment
+             * 
+             * Whether the modal should be fixed to the top (offset by a %
+             * defined via CSS), or whether it should be vertically aligned in
+             * the middle of the viewport.
+             * 
+             * When set to 'top', prevents a "jumping" within the UI before and
+             * after a search takes place (due to realignment of the "middle").
+             * 
+             * @access  private
+             * @var     String (default: 'middle')
+             */
+            modalAlignment: 'top',
+            // modalAlignment: 'middle',
 
             /**
              * resources

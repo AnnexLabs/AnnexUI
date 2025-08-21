@@ -13,6 +13,7 @@
 /**
  * Hide
  * 
+ * @see     https://chatgpt.com/c/68a62e0d-ff28-832e-a71c-2ffed89e85fe
  */
 [data-view-name="HeaderView"] > div.hide {
     position: absolute;
@@ -27,6 +28,7 @@
     transition: 250ms all;
     -webkit-mask-size: 14px !important;
             mask-size: 14px !important;
+    -webkit-tap-highlight-color: transparent;
 }
 [data-view-name="HeaderView"] > div.hide:hover {
     transform: scale(1.20) rotate(135deg);
@@ -41,6 +43,7 @@
     display: none;
     position: absolute;
     right: calc(14px);
+/*    right: calc(14px + 14px + 6px);*/
     top: calc((var(--annex-search-header-height) - 14px) / 2);
     height: 14px;
     width: 14px;

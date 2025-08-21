@@ -16,18 +16,15 @@
     bottom: 0;
     box-shadow: 0 20px 25px -5px #0000001a, 0 10px 10px -5px #0000000a;
 }
+:host([data-annex-search-layout^="panel"][data-annex-search-query]:not([data-annex-search-query=""])) [data-searching="0"] [data-view-name="HeaderView"] > div.hide {
+    display: none;
+}
 :host([data-annex-search-layout^="panel"]) [data-view-name="HeaderView"] {
     border-radius: 0;
 }
 :host([data-annex-search-layout^="panel"]) [data-view-name="FooterView"] {
     border-radius: 0;
 }
-@media (pointer: coarse) {
-    :host([data-annex-search-layout^="panel"]) [data-view-name="HeaderView"] > [data-view-name="FieldHeaderView"] > div.label {
-        display: none;
-    }
-}
-
 
 /**
  * Panel (left)

@@ -21,8 +21,6 @@
 }
 [data-view-name="EmptyResultsBodyView"] > div.graphic {
     background-repeat: no-repeat;
-    /*width: 128px;
-    height: 104px;*/
     height: 20%;
     min-height: 104px;
     width: 100%;

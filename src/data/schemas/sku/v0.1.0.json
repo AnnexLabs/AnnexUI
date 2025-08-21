@@ -9,26 +9,32 @@
                 "key": "name",
                 "type": "string",
                 "optional": false,
-                "dscription": "The name of the sku"
+                "description": "The name of the sku"
             },
             {
                 "key": "description",
                 "type": "string",
                 "optional": false,
-                "dscription": "The searchable description of the sku"
+                "description": "The searchable description of the sku"
             },
             {
                 "key": "price",
                 "type": "string",
                 "optional": false,
-                "dscription": "The price of the sku"
+                "description": "The price of the sku"
             },
             {
                 "key": "imageUrl",
                 "type": "string",
                 "optional": true,
-                "dscription": "Fully resolvable URL of an image representing the SKU"
+                "description": "Fully resolvable URL of an image representing the SKU"
             }
+        ],
+        "sorting": [
+            "price"
+        ],
+        "filter": [
+            "price"
         ]
     }
 }

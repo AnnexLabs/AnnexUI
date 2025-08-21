@@ -17,7 +17,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
     window.annexSearch.ElementUtils = window.annexSearch.ElementUtils || class ElementUtils extends window.annexSearch.BaseUtils {
 
         /**
-         * #__options
+         * #__templateOptions
          * 
          * @see     https://claude.ai/chat/617b9369-2714-47bf-9992-60f43718d2c5
          * @note    A number of the below properties appear to be the Lodash
@@ -25,7 +25,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @access  private
          * @var     Object
          */
-        static #__options = {
+        static #__templateOptions = {
 
             /**
              * escape
@@ -104,19 +104,19 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @static
          * @param   window.annexSearch.BaseView view
          * @param   null|Function mutator
-         * @return  HTMLElement
+         * @return  String
          */
         static #__getProcessedMarkup(view, mutator) {
             mutator = mutator || window.annexSearch.FunctionUtils.getPassThrough();
             let markup = this.#__getTemplateMarkup(view),
                 compiled = window.annexSearch.libs._.template(
                     this.#__replaceMarkupVariables(markup),
-                    this.#__options
+                    this.#__templateOptions
                 ),
                 data = this.#__getCompilerData(view),
                 response = compiled.apply(view, [data]),
-                mutated = mutator(response);
-            return mutated;
+                $mutated = mutator(response);
+            return $mutated;
         }
 
         /**
@@ -155,6 +155,50 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             response = response.replace(/\{\{\{([\s\S]+?)\}\}\}/g, '<%- $1 %>');
             response = response.replace(/\{\{([\s\S]+?)\}\}/g, '<%= $1 %>');
             return response;
+        }
+
+        /**
+         * getVisibleElementsByTag
+         * 
+         * @see     https://chatgpt.com/c/68a61095-5688-8326-adac-5ab8e7f0fb08
+         * @access  public
+         * @static
+         * @param   String tagName
+         * @return  Array
+         */
+        static getVisibleElementsByTag(tagName) {
+            let $elements = document.getElementsByTagName(tagName),
+                $visible = [];
+            for (let $element of $elements) {
+                if (this.visible($element) === false) {
+                    continue;
+                }
+                $visible.push($element);
+            }
+            return $visible;
+        }
+
+        /**
+         * getVisibleWebComponents
+         * 
+         * @access  public
+         * @static
+         * @return  Array
+         */
+        static getVisibleWebComponents() {
+            let tagName = 'annex-search-widget',
+                $webComponents = this.getVisibleElementsByTag(tagName),
+                $visible = [];
+            for (let $webComponent of $webComponents) {
+                if ($webComponent.showing() === false) {
+                    continue;
+                }
+                if ($webComponent.disabled() === true) {
+                    continue;
+                }
+                $visible.push($webComponent);
+            }
+            return $visible;
         }
 
         /**

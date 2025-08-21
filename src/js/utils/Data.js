@@ -50,7 +50,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @param   Object target
          * @param   Object source
          * @param   Function onReplace
-         * @return  Promise
+         * @return  Object
          */
         static deepMerge(target, source, onReplace) {
             function isPlainObject(value) {

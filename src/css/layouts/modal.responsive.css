@@ -7,13 +7,13 @@
     and (min-device-width: 320px)
     and (max-device-width: 960px) {
     :host([data-annex-search-layout="modal"]) [data-view-name="RootView"] > div.content {
-        width: 90%;
+        width: 92%;
         max-width: 640px;
         height: 90%;
-        max-height: 70%;
+        max-height: 75%;
     }
     :host([data-annex-search-layout="modal"]) [data-view-name="RootView"][data-state-key="results"] > div.content {
-        max-height: 70%;
+        max-height: 75%;
     }
     :host([data-annex-search-layout="modal"]) [data-view-name="HeaderView"] {
         border-radius: 6px 6px 0 0;

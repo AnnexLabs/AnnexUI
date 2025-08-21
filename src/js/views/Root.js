@@ -61,6 +61,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__addFocusinEventListener() {
             let handler = this.#__handleFocusinEvent.bind(this);
+// console.log('a');
             this.event('focusin', handler);
             return true;
         }

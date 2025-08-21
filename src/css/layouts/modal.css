@@ -9,25 +9,45 @@
     height: 70%;
     max-height: 400px;
     position: absolute;
-    top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     box-shadow: 0 20px 25px -5px #0000001a, 0 10px 10px -5px #0000000a;
-    transition: margin-top 350ms, margin-left 350ms;
+    transition: margin-top 350ms, margin-left 350ms, transform var(--annex-search-show-duration);
 }
+
+/**
+ * Modal Alignment
+ * 
+ */
+:host([data-annex-search-layout="modal"][data-annex-search-modal-alignment="top"]) [data-view-name="RootView"] > div.content {
+    top: 15%;
+    transform: translateX(-50%) scale(0.96);
+}
+:host([data-annex-search-layout="modal"][data-annex-search-modal-alignment="top"][data-annex-search-showing="1"]) [data-view-name="RootView"] > div.content {
+    transform: translateX(-50%) scale(1.00);
+}
+:host([data-annex-search-layout="modal"][data-annex-search-modal-alignment="middle"]) [data-view-name="RootView"] > div.content {
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.96);
+}
+:host([data-annex-search-layout="modal"][data-annex-search-modal-alignment="middle"][data-annex-search-showing="1"]) [data-view-name="RootView"] > div.content {
+    transform: translate(-50%, -50%) scale(1.00);
+}
+
+/**
+ * Content
+ * 
+ */
 :host([data-annex-search-layout="modal"]) [data-view-name="RootView"][data-state-key="results"] > div.content {
     max-height: 540px;
 }
-@media (pointer: coarse) {
-    :host([data-annex-search-layout="modal"]) [data-view-name="HeaderView"] > [data-view-name="FieldHeaderView"] > div.label {
-        display: none;
-    }
+:host([data-annex-search-layout="modal"][data-annex-search-query]:not([data-annex-search-query=""])) [data-searching="0"] [data-view-name="HeaderView"] > div.hide {
+    display: none;
 }
-/*:host([data-annex-search-layout="modal"][data-annex-search-modal-order]) [data-view-name="RootView"] > div.content {
-    background-color: red;
-    margin-top: calc(attr(data-annex-search-order integer, 0) * -10px);
-    margin-left: calc(attr(data-annex-search-order integer, 0) * -10px);
-}*/
+
+/**
+ * Stacking + shifting
+ * 
+ */
 :host([data-annex-search-layout="modal"][data-annex-search-modal-order="1"]) [data-view-name="RootView"] > div.content {
     margin-top: -20px;
     margin-left: -20px;

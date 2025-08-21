@@ -69,7 +69,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         let placeholder = data?.config?.copy?.field?.placeholder ?? 'Search...';
     %>
     <div class="label" part="field-label"><%- (label) %></div>
-    <div class="clear icon icon-plus icon-size-14" part="field-clear"></div>
+    <div class="clear icon icon-plus-circle icon-size-14" part="field-clear"></div>
     <div class="input" part="field-input">
         <input type="search" name="query" id="query" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="<%- (placeholder) %>" part="field-input-input" />
     </div>
@@ -122,6 +122,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__handleClearClickEvent(event) {
             event.preventDefault();
+            this.clear();
+            this._$annexSearchWidget.getHelper('webComponentUI').setQueryAttribute();
+            this.nullifyLastTypesenseSearchResponse();
+            this.getView('root.body.results.found').clearResults();
+            this.getView('root.body.results.found').getView('root').setStateKey('idle');
+            this._$annexSearchWidget.getHelper('config').triggerCallback('results.idle');
+            this._$annexSearchWidget.dispatchCustomEvent('results.idle');
 // console.log(event);
             return true;
         }
