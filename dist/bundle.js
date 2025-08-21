@@ -3665,6 +3665,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @return  Boolean
          */
         static #__handleWindowScrollEvent(event) {
+            if (window.annexSearch.ClientUtils.isTouchDevice() === true) {
+                return false;
+            }
             let $activeElement = document.activeElement || null;
             if ($activeElement === null) {
                 let $visible = window.annexSearch.ElementUtils.getVisibleWebComponents();
