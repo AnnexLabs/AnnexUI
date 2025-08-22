@@ -17,7 +17,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * _$element
          * 
          * @access  protected
-         * @var     null|HTMLElement (default: null)
+         * @var     null|EventTarget (default: null)
          */
         _$element = null;
 
@@ -41,6 +41,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
         constructor($annexSearchWidget) {
             super($annexSearchWidget,);
             this._$element = document.createElement('template');
+            this._$element.view = this;
         }
 
         /**
@@ -90,7 +91,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * 
          * @access  public
          * @param   String selector
-         * @return  null|HTMLElement
+         * @return  null|EventTarget
          */
         first(selector) {
             let $element = this._$element,
@@ -102,7 +103,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * getElement
          * 
          * @access  public
-         * @return  HTMLElement
+         * @return  EventTarget
          */
         getElement() {
             let $element = this._$element;
@@ -124,7 +125,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * mount
          * 
          * @access  public
-         * @param   HTMLElement $container
+         * @param   EventTarget $container
          * @return  Boolean
          */
         mount($container) {
@@ -168,6 +169,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          */
         render(mutator = null) {
             let $element = window.annexSearch.ElementUtils.renderViewElement(this, mutator);
+            $element.view = this;
             this._$element.replaceWith($element);
             this._$element = $element;
             return true;

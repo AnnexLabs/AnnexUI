@@ -87,8 +87,8 @@ window.annexSearch.DependencyLoader.push([], function() {
          * #__getContainer
          * 
          * @access  public
-         * @param   null|HTMLElement $container (default: null)
-         * @return  null|HTMLElement
+         * @param   null|EventTarget $container (default: null)
+         * @return  null|EventTarget
          */
         #__getContainer($container = null) {
             $container = $container || this.getConfig('$container') || null;
@@ -216,6 +216,7 @@ window.annexSearch.DependencyLoader.push([], function() {
             this.shadow = this.attachShadow({
                 mode: 'closed'
             });
+            this.#__helpers.webComponentUI.addFocusinEventListener();
             return true;
         }
 
@@ -398,7 +399,7 @@ window.annexSearch.DependencyLoader.push([], function() {
          * mount
          * 
          * @access  public
-         * @param   null|HTMLElement $container (default: null)
+         * @param   null|EventTarget $container (default: null)
          * @return  Promise
          */
         mount($container = null) {

@@ -290,38 +290,37 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (window.annexSearch.ClientUtils.isTouchDevice() === true) {
                 return false;
             }
-            let $activeElement = document.activeElement || null;
+            let $activeElement = document.activeElement || null,
+                handler = function() {
+                    let $visible = window.annexSearch.ElementUtils.getVisibleWebComponents();
+                    if ($visible.length === 0) {
+                        return false;
+                    }
+                    let $annexSearchWidget = $visible[0],
+                        $focused = $annexSearchWidget.getHelper('webComponentUI').getFocused();
+                    if ($focused !== null && $focused.view !== undefined && $focused.view !== null) {
+                        if ($focused.view.constructor === window.annexSearch.ResultFoundResultsBodyView) {
+                            // return false;
+                        }
+                    }
+                    if ($annexSearchWidget.getConfig('autoFocusOnScroll') === false) {
+                        return false;
+                    }
+                    if ($annexSearchWidget.getConfig('layout') === 'inline') {
+                        $annexSearchWidget.focus();
+                        return true;
+                    }
+                    return false;
+                };
             if ($activeElement === null) {
-                let $visible = window.annexSearch.ElementUtils.getVisibleWebComponents();
-                if ($visible.length === 0) {
-                    return false;
-                }
-                let $annexSearchWidget = $visible[0];
-                if ($annexSearchWidget.getConfig('autoFocusOnScroll') === false) {
-                    return false;
-                }
-                if ($annexSearchWidget.getConfig('layout') === 'inline') {
-                    $annexSearchWidget.focus();
-                    return true;
-                }
-                return false;
+                let response = handler();
+                return response;
             }
             if ($activeElement.matches('button, input, select, textarea') === true) {
                 return false;
             }
-            let $visible = window.annexSearch.ElementUtils.getVisibleWebComponents();
-            if ($visible.length === 0) {
-                return false;
-            }
-            let $annexSearchWidget = $visible[0];
-            if ($annexSearchWidget.getConfig('autoFocusOnScroll') === false) {
-                return false;
-            }
-            if ($annexSearchWidget.getConfig('layout') === 'inline') {
-                $annexSearchWidget.focus();
-                return true;
-            }
-            return false;
+            let response = handler();
+            return response;
         }
 
         /**

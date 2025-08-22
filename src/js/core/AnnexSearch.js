@@ -166,6 +166,8 @@
  * @todo    [DONE] -- For now, I'm doing a check on $activeElement; might work; added Config option
  * @todo    [DONE] -- Prevent auto focus due to page jacking..
  * @todo    [DONE] --- Resolved via InteractionUtils.#__handleWindowScrollEvent
+ * @todo    [PUNT] -- Handle case where user scrolls down, then back up where a $result was focused. It shouldn't go back to the $input, but rather the last $focused element?
+ * @todo    [PUNT] --- This will require tracking the last focused $element for each $annexSearchWidget
  * @todo    [PUNT] - Index attribute bug: https://416.io/ss/f/n0bc1a
  * @todo    [PUNT] -- This is more complicated than it seems, in that the ordering changes each time an $annexSearchWidget is focused/shown etc.
  * @todo    [PUNT] -- Since this the attribute isn't currently being used (intial intention was around multi-modal shifting), punting for now

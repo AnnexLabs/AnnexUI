@@ -211,7 +211,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @static
          * @param   window.annexSearch.BaseView view
          * @param   null|Function mutator (default: null)
-         * @return  HTMLElement
+         * @return  EventTarget
          */
         static renderViewElement(view, mutator = null) {
             let markup = this.#__getProcessedMarkup(view, mutator),

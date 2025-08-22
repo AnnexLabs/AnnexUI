@@ -16,7 +16,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseRequest'], fun
          * #__abortController
          * 
          * @access  private
-         * @var     AbortController|null (default: null)
+         * @var     null|AbortController (default: null)
          */
         #__abortController = null;
 
@@ -70,7 +70,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseRequest'], fun
          * #__query
          * 
          * @access  private
-         * @var     String|null (default: null)
+         * @var     null|String (default: null)
          */
         #__query = null;
 
@@ -78,7 +78,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseRequest'], fun
          * #__response
          * 
          * @access  private
-         * @var     Object|null (default: null)
+         * @var     null|Object (default: null)
          */
         #__response = null;
 

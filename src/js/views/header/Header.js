@@ -154,7 +154,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * mount
          * 
          * @access  public
-         * @param   HTMLElement $container
+         * @param   EventTarget $container
          * @return  Boolean
          */
         mount($container) {

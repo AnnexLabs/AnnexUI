@@ -23,6 +23,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         #__$activeElement = null;
 
         /**
+         * #__$focused
+         * 
+         * @access  private
+         * @var     null|EventTarget (default: null)
+         */
+        #__$focused = null;
+
+        /**
          * #__maxZIndex
          * 
          * @access  private
@@ -39,6 +47,19 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          */
         constructor($annexSearchWidget) {
             super($annexSearchWidget);
+        }
+
+        /**
+         * #__handleFocusinEvent
+         * 
+         * @access  private
+         * @param   Object event
+         * @return  Boolean
+         */
+        #__handleFocusinEvent(event) {
+            let $target = event.target;
+            this.#__$focused = $target || null;
+            return true;
         }
 
         /**
@@ -167,6 +188,19 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         }
 
         /**
+         * addFocusinEventListener
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        addFocusinEventListener() {
+            let $element = this._$annexSearchWidget.shadow,
+                handler = this.#__handleFocusinEvent.bind(this);
+            $element.addEventListener('focusin', handler);
+            return true;
+        }
+
+        /**
          * autoShow
          * 
          * @access  public
@@ -213,6 +247,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             $annexSearchWidget.removeAttribute('data-annex-search-disabled');
             window.annexSearch.ToastUtils.hideAll($annexSearchWidget);
             return true;
+        }
+
+        /**
+         * getFocused
+         * 
+         * @access  public
+         * @return  null|EventTarget
+         */
+        getFocused() {
+            let $focused = this.#__$focused;
+            return $focused;
         }
 
         /**

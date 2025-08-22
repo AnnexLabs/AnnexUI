@@ -29,7 +29,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * that order).
              * 
              * @access  private
-             * @var     null|HTMLElement (default: null)
+             * @var     null|EventTarget (default: null)
              */
             $container: null,
 
