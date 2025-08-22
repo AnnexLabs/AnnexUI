@@ -301,8 +301,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                     if ($visible.length === 0) {
                         return false;
                     }
-                    let $annexSearchWidget = $visible[0],
-                        $focused = $annexSearchWidget.getHelper('webComponentUI').getFocused();
+                    let $focused = window.annexSearch.AnnexSearch.getFocused();
+                    if ($focused !== null && $focused.getConfig('layout') === 'modal' && $focused.showing() === true) {
+                        return false;
+                    }
+                    if ($focused !== null && $focused.getConfig('layout') === 'panel-left' && $focused.showing() === true) {
+                        return false;
+                    }
+                    if ($focused !== null && $focused.getConfig('layout') === 'panel-right' && $focused.showing() === true) {
+                        return false;
+                    }
+                    let $annexSearchWidget = $visible[0];
+                    $focused = $annexSearchWidget.getHelper('webComponentUI').getFocused();
                     if ($focused !== null && $focused.view !== undefined && $focused.view !== null) {
                         if ($focused.view.constructor === window.annexSearch.ResultFoundResultsBodyView) {
                             // return false;

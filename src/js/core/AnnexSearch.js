@@ -175,6 +175,10 @@
  * @todo    [DONE] - [Feedback from Adam]
  * @todo    [DONE] -- Add clear option; important for mobile
  * @todo    [DONE] --- Complicated: does the X then close modal _after_ $input is cleared?)
+ * @todo    [PUNT] - Dynamic view mounting
+ * @todo    [PUNT] -- Upon the very first render, look for other views to render without having to do so manually
+ * @todo    [PUNT] -- Single view references can be stored dynamically
+ * @todo    [PUNT] -- More complicated when it comes to multiple views (e.g. results, chips)
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

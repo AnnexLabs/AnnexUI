@@ -42,7 +42,7 @@ to understand are:
 - The UI will be encapsulated within a `<annex-search-widget>` HTML tag
   - In docs, this will often be referenced as the `$annexSearchWidget` variable
 - Public methods to modify any "instance" will be through that custom
-`HTMLElement`
+`EventTarget`
 
 💪 Out the box, Annex supports the following:
 - Four (4) different layouts (`'inline'`, `'modal'`, `'panel-left'` and `'panel-right'`)
@@ -106,7 +106,7 @@ so.
 
 | Key                       | Type                  | Required   | Default value            | Description                                                                                               |
 | --------------------------| ----------------------| -----------| -------------------------| ----------------------------------------------------------------------------------------------------------|
-| $container                | `HTMLElement`         | ❌         | `null`                    | The `HTMLElement` that the `$annexSearchWidget` element should be appended to.                            |
+| $container                | `EventTarget`         | ❌         | `null`                    | The `EventTarget` that the `$annexSearchWidget` element should be appended to.                            |
 | callbacks                 | `Object`              | ❌         | (see ...)                 | Map of callback functions that will be triggered upon certain events.                                     |
 | cluster                   | `Object`              | ✅         | (n/a)                     | Map of Typesense related cluster auth properties.                                                         |
 | cluster.apiKey            | `String`              | ✅         | `null`                    | Typesense cluster search API key.                                                                         |
@@ -116,7 +116,7 @@ so.
 | copy                      | `Object`              | ❌         | (see ...)                 | Map of copy used in different `templates`.                                                                |
 | debug                     | `Boolean`             | ❌         | `false`                   | Whether debugging information should be logged to console.                                                |
 | keyboardShortcut          | `null` \|\| `String`  | ❌         | `'⌘k'`                    | The keyboard shortcut that should be used to toggle Annex (does not apply to `inline` instances).         |
-| highlightTagName          | `String`              | ❌         | `'MARK'`                  | The `HTMLElement` that should be rendered around query matches.                                           |
+| highlightTagName          | `String`              | ❌         | `'MARK'`                  | The `EventTarget` that should be rendered around query matches.                                           |
 | layout                    | `String`              | ❌         | `'modal'`                 | The layout for Annex. Can be: `'inline'`, `'modal'`, `'panel-left'` or `'panel-right'`.                   |
 | colorScheme               | `String`              | ❌         | `'auto'`                  | The color scheme for Annex. Can be: `'auto'`, `'light'` or `'dark'`.                                      |
 | name                      | `String`              | ❌         | `null`                    | The name of the instance. Useful for differentiating between multiple `$annexSearchWidget` instances.     |
@@ -124,7 +124,7 @@ so.
 | schemaKey                 | `String`              | ❌         | `'webResource-v0.1.0'`    | Name of the schema associated with the Typesense cluster. Valid values are: ...                           |
 | searchOptions             | `Object`              | ✅         | (see ...)                 | Map of search options that are passed in a Typesense search query.                                        |
 | searchRequestMethod       | `String`              | ❌         | `'lifo'`                  | The type of search handling. Currently limited to just `lifo` (last in first out)                         |
-| showOverlay               | `Boolean`             | ❌         | `true`                    | Whether the overlay `HTMLElement` should be rendered.                                                     |
+| showOverlay               | `Boolean`             | ❌         | `true`                    | Whether the overlay `EventTarget` should be rendered.                                                     |
 | templates                 | `Object`              | ❌         | (see ...)                 | Map of templates that should be used in Annex rendering.                                                  |
 <hr />
 
