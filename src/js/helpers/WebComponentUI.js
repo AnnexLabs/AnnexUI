@@ -276,7 +276,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             this.#__setModalOrderAttribute();
             let $activeElement = this.#__$activeElement;
             window.annexSearch.ElementUtils.waitForAnimation().then(function() {
-                $activeElement && $activeElement.focus();
+                $activeElement
+                    && window.annexSearch.ElementUtils.visible($activeElement)
+                    && $activeElement.focus();
             });
             return true;
         }

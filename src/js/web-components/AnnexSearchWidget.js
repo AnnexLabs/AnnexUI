@@ -607,5 +607,17 @@ window.annexSearch.DependencyLoader.push([], function() {
             let response = this.show();
             return response;
         }
+
+        /**
+         * visible
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        visible() {
+            let $element = this,
+                visible = window.annexSearch.ElementUtils.visible($element);
+            return visible;
+        }
     }
 });

@@ -48,6 +48,14 @@
 :host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] {
     height: calc(var(--annex-search-content-max-height) - var(--annex-search-header-height) - var(--annex-search-footer-height));
 }
+:host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ErrorBodyView"],
+:host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ErrorBodyView"] > div.content,
+:host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="IdleBodyView"],
+:host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ResultsBodyView"],
+:host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ResultsBodyView"] > [data-view-name="EmptyResultsBodyView"],
+:host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ResultsBodyView"] > [data-view-name="EmptyResultsBodyView"] > div.content {
+    height: inherit;
+}
 
 /**
  * Header

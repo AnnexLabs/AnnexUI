@@ -7,7 +7,7 @@
  * @todo    --- But don't show field.label?
  * @todo    -- Track order of "showing" modals in registered?
  * @todo    -- Fundametally need to get this sorted, and then revisit keyboard shortcut toggle work
- * @todo    -- Multiple-modal stacking (w/ offsets
+ * @todo    -- Multiple-modal stacking (w/ offsets)
  * 
  * @todo    [DONE] - dark mode
  * @todo    [DONE] - mobile
@@ -177,6 +177,9 @@
  * @todo    [DONE] -- Affix to the top?
  * @todo    [DONE] -- Modal slim version re:idle state?
  * @todo    [DONE] - SchemaUtils ????
+ * @todo    [DONE] - Middle alignment: https://416.io/ss/f/f9132o
+ * @todo    [DONE] - Scroll down; focus on dark mode, open panel, scroll up, close panel: focus pulls user down
+ * @todo    [DONE] -- $aciveElement was actually the $button; fixed
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
