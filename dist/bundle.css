@@ -961,6 +961,7 @@ max-height: 92px;
     color: var(--annex-search-header-label-color);
     float: left;
     opacity: 0.50;
+    user-select: none;
 }
 [data-view-name="FieldHeaderView"] > div.clear {
     display: none;
