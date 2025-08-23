@@ -5,8 +5,11 @@
  */
 [data-view-name="ResultsBodyView"] {
     display: none;
-    height: 100%;
+    max-height: inherit;
+    overflow: hidden;
+    min-height: inherit;
 }
 [data-view-name="RootView"][data-state-key="results"] [data-view-name="ResultsBodyView"] {
-    display: flex;
+/*    display: flex;*/
+    display: block;
 }

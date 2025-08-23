@@ -5,9 +5,9 @@
  */
 [data-view-name="BodyView"] {
     background-color: var(--annex-search-body-background-color);
-    height: calc(100% - var(--annex-search-header-height) - var(--annex-search-footer-height));
-    border-bottom: 1px solid var(--annex-search-border-color);
+    max-height: calc(var(--annex-search-content-max-height) - var(--annex-search-header-height) - var(--annex-search-footer-height));
+    min-height: inherit;
 }
 [data-view-name="RootView"][data-state-key="results"] [data-view-name="BodyView"] {
-    height: calc(100% - var(--annex-search-header-height) - var(--annex-search-footer-height) - var(--annex-search-metaBar-height));
+    max-height: calc(var(--annex-search-content-max-height) - var(--annex-search-header-height) - var(--annex-search-footer-height) - var(--annex-search-metaBar-height));
 }

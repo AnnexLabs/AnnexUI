@@ -5,26 +5,31 @@
  */
 [data-view-name="ErrorBodyView"] {
     display: none;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    flex-direction: column;
+    min-height: inherit;
 }
 [data-view-name="RootView"][data-state-key="error"] [data-view-name="ErrorBodyView"] {
-    display: flex;
+    display: block;
 }
-[data-view-name="ErrorBodyView"] > div.graphic {
+[data-view-name="ErrorBodyView"] > div.content {
+    padding: 32px 0 32px 0;
+    min-height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+[data-view-name="ErrorBodyView"] > div.content > div.graphic {
     background-repeat: no-repeat;
-    height: 20%;
-    min-height: 104px;
-    width: 100%;
+    width: 30%;
+    aspect-ratio: 16 / 9;
     background-position: center center;
     background-size: contain;
     background-image: var(--annex-search-image-broken-robot);
 }
-[data-view-name="ErrorBodyView"] > div.message {
-    font-size: 19px;
-    font-weight: 100;
+[data-view-name="ErrorBodyView"] > div.content > div.message {
+    font-size: 17px;
+    opacity: 0.70;
+    font-weight: 300;
     color: var(--annex-search-body-message-color);
     padding: 12px 0 0 0;
 }

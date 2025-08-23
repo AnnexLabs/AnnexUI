@@ -26,8 +26,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         let message = data?.config?.copy?.error?.message ?? 'Something went wrong...';
         message = message.trim();
     %>
-    <div class="graphic" part="error-graphic"></div>
-    <div class="message" part="error-message"><%= (message) %></div>
+    <div class="content" part="error-content">
+        <div class="graphic" part="error-content-graphic"></div>
+        <div class="message" part="error-content-message"><%= (message) %></div>
+    </div>
 </div>`;
     }
 });

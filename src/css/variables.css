@@ -71,10 +71,14 @@
      * Dimensions
      * 
      */
+    --annex-search-content-max-height:                          540px;
     --annex-search-header-height:                               58px;
     --annex-search-header-hide-button-size:                     24px;
     --annex-search-metaBar-height:                              28px;
     --annex-search-footer-height:                               40px;
+/*    --annex-search-root-min-height:                             calc(368px - var(--annex-search-header-height) - var(--annex-search-metaBar-height) - var(--annex-search-footer-height));*/
+/*    --annex-search-root-min-height:                             calc(368px - var(--annex-search-header-height) - var(--annex-search-footer-height));*/
+    --annex-search-root-min-height:                             auto;
 
     /**
      * Durations

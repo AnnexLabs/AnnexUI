@@ -14,6 +14,7 @@
     cursor: pointer;
     will-change: transform, opacity;
     opacity: 0.80;
+    float: left;
 }
 * [data-view-name="ChipView"]:not(:last-child) {
     margin: 0 4px 0 0;

@@ -61,8 +61,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         mount($container) {
             super.mount($container);
-            this.#__mountBrandingBar();
             this.#__mountStatusBar();
+            this.#__mountBrandingBar();
             return true;
         }
     }

@@ -4,11 +4,8 @@
  * 
  */
 [data-view-name="StatusBarFooterView"] {
-    float: left;
-    width: calc(100% - 172px);
-    height: var(--annex-search-footer-height);
-    line-height: var(--annex-search-footer-height);
+    text-align: left;
     padding: 0 12px 0 16px;
-    font-size: 12px;
+    font-size: 70%;
     color: var(--annex-search-statusBar-color);
 }

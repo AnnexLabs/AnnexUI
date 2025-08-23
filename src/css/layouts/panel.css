@@ -8,6 +8,14 @@
  * Panel
  * 
  */
+:host([data-annex-search-layout^="panel"]) {
+    --annex-search-content-max-height: 100vh;
+}
+
+/**
+ * Root
+ * 
+ */
 :host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content {
     width: 80%;
     max-width: 640px;
@@ -16,20 +24,6 @@
     bottom: 0;
     box-shadow: 0 20px 25px -5px #0000001a, 0 10px 10px -5px #0000000a;
 }
-:host([data-annex-search-layout^="panel"][data-annex-search-query]:not([data-annex-search-query=""])) [data-searching="0"] [data-view-name="HeaderView"] > div.hide {
-    display: none;
-}
-:host([data-annex-search-layout^="panel"]) [data-view-name="HeaderView"] {
-    border-radius: 0;
-}
-:host([data-annex-search-layout^="panel"]) [data-view-name="FooterView"] {
-    border-radius: 0;
-}
-
-/**
- * Panel (left)
- * 
- */
 :host([data-annex-search-layout="panel-left"]) [data-view-name="RootView"] > div.content {
     left: 0;
     transform: translateX(-100%);
@@ -38,11 +32,6 @@
 :host([data-annex-search-layout="panel-left"][data-annex-search-showing="1"]) [data-view-name="RootView"] > div.content {
     transform: translateX(0%);
 }
-
-/**
- * Panel (right)
- * 
- */
 :host([data-annex-search-layout="panel-right"]) [data-view-name="RootView"] > div.content {
     right: 0;
     transform: translateX(100%);
@@ -50,4 +39,31 @@
 }
 :host([data-annex-search-layout="panel-right"][data-annex-search-showing="1"]) [data-view-name="RootView"] > div.content {
     transform: translateX(0%);
+}
+
+/**
+ * Body
+ * 
+ */
+:host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] {
+    height: calc(var(--annex-search-content-max-height) - var(--annex-search-header-height) - var(--annex-search-footer-height));
+}
+
+/**
+ * Header
+ * 
+ */
+:host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="HeaderView"] {
+    border-radius: 0;
+}
+:host([data-annex-search-layout^="panel"][data-annex-search-query]:not([data-annex-search-query=""])) [data-view-name="RootView"][data-searching="0"] > div.content > [data-view-name="HeaderView"] > div.hide {
+    display: none;
+}
+
+/**
+ * Footer
+ * 
+ */
+:host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="FooterView"] {
+    border-radius: 0;
 }

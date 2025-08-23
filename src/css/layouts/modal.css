@@ -6,8 +6,6 @@
 :host([data-annex-search-layout="modal"]) [data-view-name="RootView"] > div.content {
     width: 80%;
     max-width: 640px;
-    height: 70%;
-    max-height: 400px;
     position: absolute;
     left: 50%;
     box-shadow: 0 20px 25px -5px #0000001a, 0 10px 10px -5px #0000000a;
@@ -38,9 +36,9 @@
  * 
  */
 :host([data-annex-search-layout="modal"]) [data-view-name="RootView"][data-state-key="results"] > div.content {
-    max-height: 540px;
+    max-height: var(--annex-search-content-max-height);
 }
-:host([data-annex-search-layout="modal"][data-annex-search-query]:not([data-annex-search-query=""])) [data-searching="0"] [data-view-name="HeaderView"] > div.hide {
+:host([data-annex-search-layout="modal"][data-annex-search-query]:not([data-annex-search-query=""])) [data-view-name="RootView"][data-searching="0"] > div.content > [data-view-name="HeaderView"] > div.hide {
     display: none;
 }
 

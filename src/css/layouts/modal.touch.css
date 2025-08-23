@@ -5,7 +5,7 @@
  */
 
 @media (pointer: coarse) {
-    :host([data-annex-search-layout="modal"]) [data-view-name="HeaderView"] > [data-view-name="FieldHeaderView"] > div.label {
+    :host([data-annex-search-layout="modal"]) [data-view-name="RootView"] > div.content > [data-view-name="HeaderView"] > [data-view-name="FieldHeaderView"] > div.label {
         display: none;
     }
 }

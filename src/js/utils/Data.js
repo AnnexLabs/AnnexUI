@@ -119,6 +119,22 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
+         * removeDuplicateObjects
+         * 
+         * @see     https://chatgpt.com/c/68a9057e-e3e8-8325-abb7-d7ca140cdeec
+         * @access  public
+         * @static
+         * @param   Array arr
+         * @return  Boolean
+         */
+        static removeDuplicateObjects(arr) {
+            let unique = Array.from(new Set(arr));
+            arr.length = 0;
+            arr.push.apply(arr, unique);
+            return true;
+        }
+
+        /**
          * setup
          * 
          * @access  public

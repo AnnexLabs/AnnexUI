@@ -240,7 +240,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * after a search takes place (due to realignment of the "middle").
              * 
              * @access  private
-             * @var     String (default: 'middle')
+             * @var     String (default: 'top')
              */
             modalAlignment: 'top',
             // modalAlignment: 'middle',
@@ -374,6 +374,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             let type = event.type,
                 chips = this._data.chips,
                 idle = chips.idle || [];
+            window.annexSearch.DataUtils.removeDuplicateObjects(idle);
             for (let index in idle) {
                 let chip = idle[index];
                 if (chip.constructor === String) {

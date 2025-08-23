@@ -5,20 +5,20 @@
  */
 [data-view-name="IdleBodyView"] {
     display: none;
+    min-height: inherit;
     position: relative;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    flex-direction: column;
 }
 [data-view-name="RootView"][data-state-key="idle"] [data-view-name="IdleBodyView"] {
+/*    display: block;*/
     display: flex;
+    flex-direction: column;
 }
 [data-view-name="IdleBodyView"] > div.chips {
-    position: absolute;
+    padding: 12px 32px 12px 16px;
+    flex: 1;
+/*    position: absolute;*/
     left: 0;
     top: 0;
-    padding: 12px 24px 0 16px;
 }
 [data-view-name="IdleBodyView"] > div.chips > div.label {
     font-size: 12px;
@@ -27,23 +27,27 @@
     height: 18px;
     line-height: 18px;
 }
-[data-view-name="IdleBodyView"] > div.chips > div.list {
-    display: inline-block;
-    height: 48px;
-    padding: 4px 0 0 0;
+[data-view-name="IdleBodyView"] > div.content {
+    padding: 16px 0 16px 0;
+    min-height: 204px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex: 1;
 }
-[data-view-name="IdleBodyView"] > div.graphic {
+[data-view-name="IdleBodyView"] > div.content > div.graphic {
     background-repeat: no-repeat;
-    height: 20%;
-    min-height: 104px;
-    width: 100%;
+    width: 30%;
+    aspect-ratio: 16 / 9;
     background-position: center center;
     background-size: contain;
     background-image: var(--annex-search-image-search);
 }
-[data-view-name="IdleBodyView"] > div.message {
-    font-size: 19px;
-    font-weight: 100;
+[data-view-name="IdleBodyView"] > div.content > div.message {
+    font-size: 17px;
+    opacity: 0.70;
+    font-weight: 300;
     color: var(--annex-search-body-message-color);
     padding: 12px 0 0 0;
 }

@@ -36,10 +36,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     %>
     <div class="chips">
         <div class="label"><%- (data?.config?.copy?.idle?.chips) %></div>
-        <div class="list"></div>
+        <div class="list clearfix"></div>
     </div>
-    <div class="graphic" part="idle-graphic"></div>
-    <div class="message" part="idle-message"><%- (message) %></div>
+    <div class="content" part="idle-content">
+        <div class="graphic" part="idle-content-graphic"></div>
+        <div class="message" part="idle-content-message"><%- (message) %></div>
+    </div>
 </div>`;
 
         /**

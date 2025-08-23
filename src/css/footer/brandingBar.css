@@ -4,14 +4,11 @@
  * 
  */
 [data-view-name="BrandingBarFooterView"] {
-    float: right;
-    width: 172px;
-    height: var(--annex-search-footer-height);
-    line-height: var(--annex-search-footer-height);
-    padding: 0 16px 0 0;
-    font-size: 12px;
-    color: var(--annex-search-brandingBar-color);
     text-align: right;
+    margin-left: auto;
+    padding: 0 16px 0 12px;
+    font-size: 70%;
+    color: var(--annex-search-brandingBar-color);
 }
 [data-view-name="BrandingBarFooterView"] > a {
     color: var(--annex-search-brandingBar-anchor-color);

@@ -4,12 +4,15 @@
  * 
  */
 [data-view-name="FooterView"] {
+    display: flex;
+    align-items: center;
     background-color: var(--annex-search-footer-background-color);
     height: var(--annex-search-footer-height);
 /*    position: fixed;*/
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+/*    position: absolute;*/
+/*    bottom: 0;*/
+/*    left: 0;*/
+/*    right: 0;*/
+    border-top: 1px solid var(--annex-search-border-color);
     border-radius: 0 0 12px 12px;
 }

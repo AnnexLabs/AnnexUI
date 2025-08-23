@@ -4,6 +4,9 @@
  * 
  */
 :host([data-annex-search-layout="inline"]) {
+    --annex-search-root-min-height: 100%;
+}
+:host([data-annex-search-layout="inline"]) {
     position: static;
     opacity: 1;
 }
@@ -11,23 +14,36 @@
     transition: none;
 }
 :host([data-annex-search-layout="inline"]) [data-view-name="RootView"] {
-    position: static;
+/*    position: static;*/
     height: 100%;
 }
 :host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content {
     position: relative;
     width: 100%;
     height: 100%;
+    min-height: auto;
 }
-:host([data-annex-search-layout="inline"]) [data-view-name="HeaderView"] {
+:host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content > [data-view-name="HeaderView"] {
     border-radius: 0;
 }
-:host([data-annex-search-layout="inline"]) [data-view-name="HeaderView"] > div.hide {
+:host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content > [data-view-name="HeaderView"] > div.hide {
     display: none;
 }
-:host([data-annex-search-layout="inline"]) [data-view-name="HeaderView"] > [data-view-name="FieldHeaderView"] > div.label {
+:host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content > [data-view-name="HeaderView"] > [data-view-name="FieldHeaderView"] > div.label {
     display: none;
 }
-:host([data-annex-search-layout="inline"]) [data-view-name="FooterView"] {
+:host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] {
+    height: calc(100% - var(--annex-search-header-height) - var(--annex-search-footer-height));
+}
+:host([data-annex-search-layout="inline"]) [data-view-name="RootView"][data-state-key="results"] > div.content > [data-view-name="BodyView"] {
+    height: calc(100% - var(--annex-search-header-height) - var(--annex-search-metaBar-height) - var(--annex-search-footer-height));
+}
+:host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ResultsBodyView"] {
+    height: 100%;
+}
+:host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ResultsBodyView"] > [data-view-name="FoundResultsBodyView"] {
+    height: inherit;
+}
+:host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content > [data-view-name="FooterView"] {
     border-radius: 0;
 }

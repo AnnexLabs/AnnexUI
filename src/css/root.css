@@ -21,6 +21,7 @@
 }
 [data-view-name="RootView"] > div.content {
     overflow: hidden;
+    min-height: var(--annex-search-root-min-height);
 }
 [data-view-name="RootView"] > div.content > div.disabled {
     opacity: 0.00;

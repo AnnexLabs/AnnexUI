@@ -2,10 +2,6 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - [Feedback from Adam]
- * @todo    [DONE] -- Affix to the top?
- * @todo    -- Modal slim version re:idle state?
- * 
  * @todo    - SchemaUtils ????
  * 
  * @todo    - [Keyboard Shortcut]
@@ -179,6 +175,9 @@
  * @todo    [PUNT] -- Upon the very first render, look for other views to render without having to do so manually
  * @todo    [PUNT] -- Single view references can be stored dynamically
  * @todo    [PUNT] -- More complicated when it comes to multiple views (e.g. results, chips)
+ * @todo    [DONE] - [Feedback from Adam]
+ * @todo    [DONE] -- Affix to the top?
+ * @todo    [DONE] -- Modal slim version re:idle state?
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

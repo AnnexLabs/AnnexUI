@@ -4,8 +4,10 @@
  * 
  */
 [data-view-name="FoundResultsBodyView"] {
-    margin: 2px 2px 2px 2px;
     padding: 8px 10px 8px 10px;
-    width: 100%;
     overflow: auto;
+    max-height: inherit;
+    border-top: 2px solid transparent;
+    border-right: 2px solid transparent;
+    border-bottom: 2px solid transparent;
 }
