@@ -164,7 +164,7 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    --- But don't show field.label?
  * @todo    -- Track order of "showing" modals in registered?
  * @todo    -- Fundametally need to get this sorted, and then revisit keyboard shortcut toggle work
- * @todo    -- Multiple-modal stacking (w/ offsets
+ * @todo    -- Multiple-modal stacking (w/ offsets)
  * 
  * @todo    [DONE] - dark mode
  * @todo    [DONE] - mobile
@@ -334,6 +334,9 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    [DONE] -- Affix to the top?
  * @todo    [DONE] -- Modal slim version re:idle state?
  * @todo    [DONE] - SchemaUtils ????
+ * @todo    [DONE] - Middle alignment: https://416.io/ss/f/f9132o
+ * @todo    [DONE] - Scroll down; focus on dark mode, open panel, scroll up, close panel: focus pulls user down
+ * @todo    [DONE] -- $aciveElement was actually the $button; fixed
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -1857,7 +1860,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             this.#__setModalOrderAttribute();
             let $activeElement = this.#__$activeElement;
             window.annexSearch.ElementUtils.waitForAnimation().then(function() {
-                $activeElement && $activeElement.focus();
+                $activeElement
+                    && window.annexSearch.ElementUtils.visible($activeElement)
+                    && $activeElement.focus();
             });
             return true;
         }
@@ -8788,6 +8793,18 @@ window.annexSearch.DependencyLoader.push([], function() {
             }
             let response = this.show();
             return response;
+        }
+
+        /**
+         * visible
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        visible() {
+            let $element = this,
+                visible = window.annexSearch.ElementUtils.visible($element);
+            return visible;
         }
     }
 });

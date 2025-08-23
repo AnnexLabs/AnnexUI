@@ -488,17 +488,25 @@
 }
 [data-view-name="IdleBodyView"] > div.chips {
     padding: 12px 32px 12px 16px;
-    flex: 1;
+    /*    flex: 1;*/
 /*    position: absolute;*/
-    left: 0;
-    top: 0;
+/*    left: 0;*/
+/*    top: 0;*/
 }
 [data-view-name="IdleBodyView"] > div.chips > div.label {
     font-size: 12px;
     color: var(--annex-search-body-message-color);
     display: block;
-    height: 18px;
-    line-height: 18px;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 0 2px 0;
+}
+[data-view-name="IdleBodyView"] > div.chips > div.list {
+/*    display: grid;*/
+/*    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));*/
+/*      grid-template-columns: repeat(3, 1fr); /* 3 items per row */*/
+
+/*    gap: 4px;*/
 }
 [data-view-name="IdleBodyView"] > div.content {
     padding: 16px 0 16px 0;
@@ -731,9 +739,11 @@ max-height: 92px;
     will-change: transform, opacity;
     opacity: 0.80;
     float: left;
+    margin: 0 4px 4px 0;
 }
-* [data-view-name="ChipView"]:not(:last-child) {
-    margin: 0 4px 0 0;
+/** [data-view-name="ChipView"]:not(:last-child) {*/
+* [data-view-name="ChipView"]:last-child {
+    margin: 0 0 4px 0;
 }
 [data-view-name="ChipView"]:hover {
     border-color: var(--annex-search-chip-border-color-hover);
@@ -961,7 +971,7 @@ max-height: 92px;
     color: var(--annex-search-header-label-color);
     float: left;
     opacity: 0.50;
-    user-select: none;
+/*    user-select: none;*/
 }
 [data-view-name="FieldHeaderView"] > div.clear {
     display: none;
@@ -1258,6 +1268,14 @@ max-height: 92px;
  */
 :host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] {
     height: calc(var(--annex-search-content-max-height) - var(--annex-search-header-height) - var(--annex-search-footer-height));
+}
+:host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ErrorBodyView"],
+:host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ErrorBodyView"] > div.content,
+:host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="IdleBodyView"],
+:host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ResultsBodyView"],
+:host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ResultsBodyView"] > [data-view-name="EmptyResultsBodyView"],
+:host([data-annex-search-layout^="panel"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ResultsBodyView"] > [data-view-name="EmptyResultsBodyView"] > div.content {
+    height: inherit;
 }
 
 /**
