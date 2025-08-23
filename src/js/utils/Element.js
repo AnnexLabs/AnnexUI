@@ -132,7 +132,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         static #__getTemplateMarkup(view, mutator = null) {
             let $annexSearchWidget = view.getWebComponent(),
                 key = this.#__getConfigTemplateKey(view),
-                markup = $annexSearchWidget.getHelper('config').get('templates')[key] || view.getMarkup();
+                markup = $annexSearchWidget.getHelper('config').get('templates')[key]
+                    || window.annexSearch.TemplateUtils.getTemplate('auto-v0.1.0', key)
+                    || view.getMarkup();
             if (typeof markup === 'function') {
                 let data = this.#__getCompilerData(view);
                 markup = markup.apply(view, [data]);

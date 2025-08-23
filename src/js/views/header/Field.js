@@ -62,7 +62,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @var     String
          */
         _markup = `
-<div class="clearfix" data-view-name="FieldHeaderView" part="field">
+<div data-view-name="FieldHeaderView" part="field" class="clearfix">
     <%
         let label = data?.config?.keyboardShortcut ?? '';
         label = label.toUpperCase();

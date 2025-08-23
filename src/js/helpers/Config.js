@@ -265,25 +265,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             },
 
             /**
-             * schemaKey
-             * 
-             * The key of the Annex Search defined schema that is being adhered
-             * to. This is useful for quicker "out of the box" setup, whereby
-             * the ResultFoundResultsBodyView template used will adhere to the
-             * fields defined in the schema JSON file.
-             * 
-             * Valid options currently are:
-             * - auto-v0.1.0
-             * - custom
-             * - sku-v0.1.0
-             * - webResource-v0.1.0
-             * 
-             * @access  private
-             * @var     String (default: 'auto-v0.1.0')
-             */
-            schemaKey: 'auto-v0.1.0',
-
-            /**
              * searchOptions
              * 
              * @access  private
@@ -324,7 +305,34 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * @access  private
              * @var     Object (default: {})
              */
-            templates: {}
+            templates: {},
+
+            /**
+             * templateSetKey
+             * 
+             * A key which defines the template set you want to use for your
+             * Annex UI. By default, this is set to 'auto-v0.1.0' which means
+             * Annex will do it's best to try and figure out what the title,
+             * body and URI of your search result is (based on Typesense
+             * responses).
+             * 
+             * If you'd like to define your own $result template, set this to
+             * 'custom'.
+             * 
+             * If you'd like to adhere to one of our pre-defined template sets
+             * (e.g. a crawler for your website via 'webResource-v0.1.0') set
+             * the key value here to that.
+             * 
+             * Valid options currently are:
+             * - auto-v0.1.0
+             * - custom
+             * - sku-v0.1.0
+             * - webResource-v0.1.0
+             * 
+             * @access  private
+             * @var     String (default: 'auto-v0.1.0')
+             */
+            // templateSetKey: 'auto-v0.1.0',
         };
 
         /**

@@ -30,18 +30,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
 </a>`;
 
         /**
-         * constructor
-         * 
-         * @access  public
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
-         * @return  void
-         */
-        constructor($annexSearchWidget) {
-            super($annexSearchWidget);
-            this._markup = window.annexSearch.SchemaUtils.getMarkup('result', this) || this._markup;
-        }
-
-        /**
          * #__addClickEventListener
          * 
          * @access  private

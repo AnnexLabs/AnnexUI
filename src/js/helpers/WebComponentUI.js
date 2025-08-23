@@ -292,15 +292,15 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
                 colorScheme = this.getHelper('config').get('colorScheme'),
                 id = this.getHelper('config').get('id'),
                 // index = window.annexSearch.AnnexSearch.getRegistered().indexOf($annexSearchWidget),
-                layout = this.getHelper('config').get('layout'),
-                schemaKey = this.getHelper('config').get('schemaKey');
+                layout = this.getHelper('config').get('layout');
+                // schemaKey = this.getHelper('config').get('schemaKey');
             $annexSearchWidget.setAttribute('data-annex-search-color-scheme', colorScheme);
             $annexSearchWidget.setAttribute('data-annex-search-id', id);
             // $annexSearchWidget.setAttribute('data-annex-search-index', index);
 // console.log(index, $annexSearchWidget);
             $annexSearchWidget.setAttribute('data-annex-search-layout', layout);
             $annexSearchWidget.setAttribute('data-annex-search-ready', '1');
-            $annexSearchWidget.setAttribute('data-annex-search-schema-key', schemaKey);
+            // $annexSearchWidget.setAttribute('data-annex-search-schema-key', schemaKey);
             this.#__setModalAlignmentAttribute();
             this.#__setOverlayAttribute();
             this.#__setShowingAttribute();

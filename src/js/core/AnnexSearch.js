@@ -2,8 +2,6 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - SchemaUtils ????
- * 
  * @todo    - [Keyboard Shortcut]
  * @todo    -- Allow for keyboard shortcuts with inline (to focus)?
  * @todo    --- But don't show field.label?
@@ -178,6 +176,7 @@
  * @todo    [DONE] - [Feedback from Adam]
  * @todo    [DONE] -- Affix to the top?
  * @todo    [DONE] -- Modal slim version re:idle state?
+ * @todo    [DONE] - SchemaUtils ????
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

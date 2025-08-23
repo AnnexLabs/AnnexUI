@@ -1,34 +1,50 @@
 
 /**
- * /src/js/utils/Schema.js
+ * /src/js/utils/Template.js
  * 
  */
 window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], function() {
 
     /**
-     * window.annexSearch.SchemaUtils
+     * window.annexSearch.TemplateUtils
      * 
      * @access  public
      */
-    window.annexSearch.SchemaUtils = window.annexSearch.SchemaUtils || class SchemaUtils extends window.annexSearch.BaseUtils {
+    window.annexSearch.TemplateUtils = window.annexSearch.TemplateUtils || class TemplateUtils extends window.annexSearch.BaseUtils {
 
         /**
          * #__markup
          * 
-         * @access  protected
+         * @access  private
          * @static
          * @var     Object
          */
         static #__markup = {
-            // 'default': {
+
+            /**
+             * auto-v0.1.0
+             * 
+             * @access  private
+             * @static
+             * @var     Object
+             */
             'auto-v0.1.0': {
-                result: this.#__getAutoSchemaKeyMarkup()
+                templates: {
+                    resultFoundResultsBody: this.#__getAutoSchemaKeyMarkup()
+                }
             },
+
+            /**
+             * sku-v0.1.0
+             * 
+             * @access  private
+             * @static
+             * @var     Object
+             */
             'sku-v0.1.0': {
-                // templates: {
-                //     header: ``,
-                    result: `
-                        <div data-view-name="ResultFoundResultsBodyView" class="clearfix" part="result">
+                templates: {
+                    resultFoundResultsBody: `
+                        <div data-view-name="ResultFoundResultsBodyView" part="result" class="clearfix">
                             <%
                                 let imageUrl = data.hit.document.imageUrl || '',
                                     validImage = window.annexSearch.StringUtils.validURL(imageUrl);
@@ -45,32 +61,39 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                                 <div class="body" part="result-content-body">{{{data?.hit?.highlight?.description?.snippet || data?.hit?.document?.description || '(unknown description)'}}}</div>
                                 <div class="price badge" part="result-content-price">\${{{data?.hit?.document?.price.toLocaleString() || '(unknown price)'}}}</div>
                             </div>
-                        </div>`,
-                // },
-                // sorting: {
-
-                // }
+                        </div>`
+                }
             },
+
+            /**
+             * webResource-v0.1.0
+             * 
+             * @access  private
+             * @static
+             * @var     Object
+             */
             'webResource-v0.1.0': {
-                result: `
-                    <a data-view-name="ResultFoundResultsBodyView" href="{{data.hit.document.uri}}" class="clearfix" part="result">
-                        <%
-                            let imageUrl = data.hit.document.imageUrl || '',
-                                validImage = window.annexSearch.StringUtils.validURL(imageUrl);
-                            if (validImage === true) {
-                        %>
-                            <div class="image" part="result-content-image">
-                                <img src="<%- (imageUrl) %>" part="result-content-image-img" />
+                templates: {
+                    resultFoundResultsBody: `
+                        <a data-view-name="ResultFoundResultsBodyView" href="{{data.hit.document.uri}}" part="result" class="clearfix">
+                            <%
+                                let imageUrl = data.hit.document.imageUrl || '',
+                                    validImage = window.annexSearch.StringUtils.validURL(imageUrl);
+                                if (validImage === true) {
+                            %>
+                                <div class="image" part="result-content-image">
+                                    <img src="<%- (imageUrl) %>" part="result-content-image-img" />
+                                </div>
+                            <%
+                                }
+                            %>
+                            <div class="content" part="result-content">
+                                <div class="title" part="result-content-title">{{{data?.hit?.highlight?.title?.snippet || data?.hit?.document?.title || '(unknown title)'}}}</div>
+                                <div class="body" part="result-content-body">{{{data?.hit?.highlight?.body?.snippet || data?.hit?.document?.body || '(unknown body)'}}}</div>
+                                <div class="uri truncate" part="result-content-uri">{{data.hit.document.uri}}</div>
                             </div>
-                        <%
-                            }
-                        %>
-                        <div class="content" part="result-content">
-                            <div class="title" part="result-content-title">{{{data?.hit?.highlight?.title?.snippet || data?.hit?.document?.title || '(unknown title)'}}}</div>
-                            <div class="body" part="result-content-body">{{{data?.hit?.highlight?.body?.snippet || data?.hit?.document?.body || '(unknown body)'}}}</div>
-                            <div class="uri truncate" part="result-content-uri">{{data.hit.document.uri}}</div>
-                        </div>
-                    </a>`
+                        </a>`
+                }
             }
         };
 
@@ -273,22 +296,34 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
-         * getMarkup
+         * getTemplate
          * 
          * @access  public
          * @static
-         * @param   String key
-         * @param   window.annexSearch.BaseView view
+         * @param   String templateSetKey
+         * @param   String viewKey
          * @return  null|String
          */
-        static getMarkup(key, view) {
-            let $annexSearchWidget = view.getWebComponent(),
-                schemaKey = $annexSearchWidget.getHelper('config').get('schemaKey');
-            if (this.#__markup[schemaKey] === undefined) {
-                return null;
-            }
-            let markup = this.#__markup[schemaKey][key];
-            return markup;
+        static getTemplate(templateSetKey, viewKey) {
+            let template = this.#__markup[templateSetKey]?.templates?.[viewKey] || null;
+            return template;
+        }
+
+        /**
+         * getTemplates
+         * 
+         * @access  public
+         * @static
+         * @param   String templateSetKey
+         * @param   Object templates (default: {})
+         * @return  Object
+         */
+        static getTemplates(templateSetKey, templates = {}) {
+            window.annexSearch.DataUtils.deepMerge(
+                templates,
+                this.#__markup[templateSetKey]?.templates || {}
+            );
+            return templates;
         }
 
         /**
