@@ -92,8 +92,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          */
         static #__getConfigTemplateKey(view) {
             let key = view.constructor.name;
+// console.log('1', key, view);
             key = key.replace(/View$/, '');
+// console.log('2', key);
             key = key.charAt(0).toLowerCase() + key.slice(1);
+// console.log('3', key);
             return key;
         }
 
@@ -135,6 +138,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 markup = $annexSearchWidget.getHelper('config').get('templates')[key]
                     || window.annexSearch.TemplateUtils.getTemplate('auto-v0.1.0', key)
                     || view.getMarkup();
+// console.log(view.name);//, markup);
             if (typeof markup === 'function') {
                 let data = this.#__getCompilerData(view);
                 markup = markup.apply(view, [data]);

@@ -220,6 +220,7 @@ echo "Minifying JS via API..."
 ## Minification
 curl -s -X POST https://www.toptal.com/developers/javascript-minifier/api/raw \
     --data-urlencode "input@$UNMINIFIED_JS_FILEPATH" \
+    --data-urlencode 'config={"compress":{"keep_classnames":true},"mangle":{"keep_classnames":true}}' \
     -o "$MINIFIED_JS_FILEPATH"
 
 
