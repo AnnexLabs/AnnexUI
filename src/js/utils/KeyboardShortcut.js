@@ -13,13 +13,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
     window.annexSearch.KeyboardShortcutUtils = window.annexSearch.KeyboardShortcutUtils || class KeyboardShortcutUtils extends window.annexSearch.BaseUtils {
 
         /**
-         * #__active
+         * #__controls
          * 
          * @access  private
          * @static
          * @var     Object
          */
-        static #__active = {
+        static #__controls = {
 
             /**
              * documentCatchAll
@@ -187,18 +187,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
-         * #__getRegisteredWebComponents
-         * 
-         * @access  private
-         * @static
-         * @return  Array
-         */
-        static #__getRegisteredWebComponents() {
-            let registered = window.annexSearch.AnnexSearch.getRegistered();
-            return registered;
-        }
-
-        /**
          * #__getField
          * 
          * @access  private
@@ -225,6 +213,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
+         * #__getRegisteredWebComponents
+         * 
+         * @access  private
+         * @static
+         * @return  Array
+         */
+        static #__getRegisteredWebComponents() {
+            let $registered = window.annexSearch.AnnexSearch.getRegistered();
+            return $registered;
+        }
+
+        /**
          * #__handleDocumentCatchAllKeydownEvent
          * 
          * @note    The key length check is to handle things like the "Meta" key
@@ -236,11 +236,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @return  Boolean
          */
         static #__handleDocumentCatchAllKeydownEvent(event) {
-            if (this.#__active.documentCatchAll === false) {
+            if (this.#__controls.documentCatchAll === false) {
                 return false;
             }
             let $annexSearchWidget = this.#__getFocusedWebComponent();
             if ($annexSearchWidget === null) {
+                return false;
+            }
+            if ($annexSearchWidget.disabled() === true) {
                 return false;
             }
             if ($annexSearchWidget.showing() === false) {
@@ -261,34 +264,28 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             }
             let $activeElement = $annexSearchWidget.shadow.activeElement,
                 field = this.#__getField(),
-                found = this.#__getFound();
+                found = this.#__getFound(),
+                handler = function() {
+                    field.focus();
+                    field.clear();
+                    field.nullifyLastTypesenseSearchResponse();
+                    field.append(key);
+                    found.smoothScrollToTop();
+                    found.resetFocusedIndex();
+                    field.first('input').dispatchEvent(new Event('input', {
+                        bubbles: true,
+                        shiftKey: event.shiftKey
+                    }));
+                };
             if ($activeElement === null) {
-                field.focus();
-                field.clear();
-                field.nullifyLastTypesenseSearchResponse();
-                field.append(key);
-                found.smoothScrollToTop();
-                found.resetFocusedIndex();
-                field.first('input').dispatchEvent(new Event('input', {
-                    bubbles: true,
-                    shiftKey: event.shiftKey
-                }));
-                return true;
+                let response = handler();
+                return response;
             }
             if ($activeElement.matches('input') === true) {
                 return false;
             }
-            field.focus();
-            field.clear();
-            field.nullifyLastTypesenseSearchResponse();
-            field.append(key);
-            found.smoothScrollToTop();
-            found.resetFocusedIndex();
-            field.first('input').dispatchEvent(new Event('input', {
-                bubbles: true,
-                shiftKey: event.shiftKey
-            }));
-            return true;
+            let response = handler();
+            return response;
         }
 
         /**
@@ -342,30 +339,26 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             let $annexSearchWidget = this.#__getFocusedWebComponent(),
                 $activeElement = $annexSearchWidget.shadow.activeElement,
                 field = this.#__getField(),
-                found = this.#__getFound();
+                found = this.#__getFound(),
+                handler = function() {
+                    field.focus();
+                    field.decrement();
+                    field.nullifyLastTypesenseSearchResponse();
+                    found.smoothScrollToTop();
+                    found.resetFocusedIndex();
+                    field.first('input').dispatchEvent(new Event('input', {
+                        bubbles: true
+                    }));
+                };
             if ($activeElement === null) {
-                field.focus();
-                field.decrement();
-                field.nullifyLastTypesenseSearchResponse();
-                found.smoothScrollToTop();
-                found.resetFocusedIndex();
-                field.first('input').dispatchEvent(new Event('input', {
-                    bubbles: true
-                }));
-                return true;
+                let response = handler();
+                return response;
             }
             if ($activeElement.matches('input') === true) {
                 return false;
             }
-            field.focus();
-            field.decrement();
-            field.nullifyLastTypesenseSearchResponse();
-            found.smoothScrollToTop();
-            found.resetFocusedIndex();
-            field.first('input').dispatchEvent(new Event('input', {
-                bubbles: true
-            }));
-            return true;
+            let response = handler();
+            return response;
         }
 
         /**
@@ -431,7 +424,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 found.next();
                 return true;
             }
-            found.previous() || this.#__getFocusedWebComponent().getView('root').focus();
+            // found.previous() || this.#__getFocusedWebComponent().getView('root').focus();
+            found.previous() || this.#__getFocusedWebComponent().focus();
             return true;
         }
 
@@ -444,14 +438,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @return  Boolean
          */
         static #__handleDocumentKeyboardShortcutKeydownEvent(event) {
-            if (this.#__active.documentKeyboardShortcut === false) {
+            if (this.#__controls.documentKeyboardShortcut === false) {
                 return false;
             }
-            let registered = this.#__getRegisteredWebComponents();
-            for (let $annexSearchWidget of registered) {
-                // if ($annexSearchWidget.getConfig('layout') === 'inline') {
-                //     continue;
-                // }
+            let $registered = this.#__getRegisteredWebComponents();
+            for (let $annexSearchWidget of $registered) {
                 let keyboardShortcut = $annexSearchWidget.getHelper('config').get('keyboardShortcut');
                 if (keyboardShortcut === null) {
                     continue
@@ -468,33 +459,29 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 }
                 let key = event.key.toLowerCase(),
                     character = keyboardShortcut.charAt(1);
-                if (key === character) {
-                    event.preventDefault();
-                    if ($annexSearchWidget.getConfig('layout') === 'inline') {
-    // console.log('a');
-                        $annexSearchWidget.focus();
-                        return true;
-                    }
-                    if ($annexSearchWidget.showing() === true) {
-                        if ($annexSearchWidget.focused() === true) {
-                            // console.log('showing & focused');
-                            $annexSearchWidget.toggle();
-                            if (window.annexSearch.AnnexSearch.getShowing().length > 0) {
-                                // console.log('Others still showing');
-                                window.annexSearch.AnnexSearch.getShowing()[0].focus();
-                                return true;
-                            }
-                            return true;
-                        }
-                        // console.log('showing & not focused');
-                        $annexSearchWidget.getHelper('webComponentUI').setZIndex();
-                        $annexSearchWidget.focus();
-                        return true;
-                    }
-                    // console.log('not showing');
+                if (key !== character) {
+                    continue;
+                }
+                event.preventDefault();
+                if ($annexSearchWidget.getConfig('layout') === 'inline') {
+                    $annexSearchWidget.focus();
+                    return true;
+                }
+                if ($annexSearchWidget.showing() === false) {
                     $annexSearchWidget.toggle();
                     return true;
                 }
+                if ($annexSearchWidget.focused() === true) {
+                    $annexSearchWidget.toggle();
+                    if (window.annexSearch.AnnexSearch.getShowing().length > 0) {
+                        window.annexSearch.AnnexSearch.getShowing()[0].focus();
+                        return true;
+                    }
+                    return true;
+                }
+                $annexSearchWidget.getHelper('webComponentUI').setZIndex();
+                $annexSearchWidget.focus();
+                return true;
             }
             return false;
         }
@@ -516,11 +503,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 return false;
             }
             let $annexSearchWidget = this.#__getFocusedWebComponent();
+            if ($annexSearchWidget.disabled() === true) {
+                return false;
+            }
             if ($annexSearchWidget.showing() === false) {
                 return false;
             }
-            let configKey = 'documentPaste';
-            if (this.#__active[configKey] === false) {
+            let controlKey = 'documentPaste';
+            if (this.#__controls[controlKey] === false) {
                 return false;
             }
             let pastedText = event.clipboardData.getData('text');
@@ -533,32 +523,27 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             }
             let $activeElement = $annexSearchWidget.shadow.activeElement,
                 field = this.#__getField(),
-                found = this.#__getFound();
+                found = this.#__getFound(),
+                handler = function() {
+                    field.focus();
+                    field.clear();
+                    field.nullifyLastTypesenseSearchResponse();
+                    field.append(pastedText);
+                    found.smoothScrollToTop();
+                    found.resetFocusedIndex();
+                    field.first('input').dispatchEvent(new Event('input', {
+                        bubbles: true,
+                    }));
+                };
             if ($activeElement === null) {
-                field.focus();
-                field.clear();
-                field.nullifyLastTypesenseSearchResponse();
-                field.append(pastedText);
-                found.smoothScrollToTop();
-                found.resetFocusedIndex();
-                field.first('input').dispatchEvent(new Event('input', {
-                    bubbles: true,
-                }));
-                return true;
+                let response = handler();
+                return response;
             }
             if ($activeElement.matches('input') === true) {
                 return false;
             }
-            field.focus();
-            field.clear();
-            field.nullifyLastTypesenseSearchResponse();
-            field.append(pastedText);
-            found.smoothScrollToTop();
-            found.resetFocusedIndex();
-            field.first('input').dispatchEvent(new Event('input', {
-                bubbles: true,
-            }));
-            return true;
+            let response = handler();
+            return response;
         }
 
         /**
@@ -700,7 +685,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @return  Boolean
          */
         static #__handleKeydownEvent(event) {
-// console.log(event);
             if (this.#__getRegisteredWebComponents().length === 0) {
                 return false;
             }
@@ -734,7 +718,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__handleDocumentCatchAllKeydownEvent(event) === true) {
                 return true;
             }
-// console.log('hmm');
             return true;
         }
 
@@ -747,7 +730,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @return  Boolean
          */
         static #__isModifierCombo() {
-            let mac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+            let mac = window.annexSearch.ClientUtils.isMac();
             if (mac === true) {
                 if (event.metaKey === true) {
                     return true;
@@ -766,11 +749,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @access  private
          * @static
          * @param   Object event
-         * @param   String configKey
+         * @param   String controlKey
          * @param   String|Array validKeys
          * @return  Boolean
          */
-        static #__validKeydownEvent(event, configKey, validKeys) {
+        static #__validKeydownEvent(event, controlKey, validKeys) {
             if (this.#__getRegisteredWebComponents().length === 0) {
                 return false;
             }
@@ -781,10 +764,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if ($annexSearchWidget === undefined) {
                 return false;
             }
+            if ($annexSearchWidget.disabled() === true) {
+                return false;
+            }
             if ($annexSearchWidget.showing() === false) {
                 return false;
             }
-            if (this.#__active[configKey] === false) {
+            if (this.#__controls[controlKey] === false) {
                 return false;
             }
             validKeys = [].concat(validKeys);

@@ -109,8 +109,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let hit = this.get('hit'),
                 $result = this._$element,
                 detail = {$result, event, hit};
-            this.getWebComponent().getHelper('config').triggerCallback('result.click', detail);
-            this.getWebComponent().dispatchCustomEvent('result.click', detail);
+            this._$annexSearchWidget.getHelper('config').triggerCallback('result.click', detail);
+            this._$annexSearchWidget.dispatchCustomEvent('result.click', detail);
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             return true;
         }
@@ -126,8 +126,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let hit = this.get('hit'),
                 $result = this._$element,
                 detail = {$result, event, hit};
-            this.getWebComponent().getHelper('config').triggerCallback('result.focus', detail);
-            this.getWebComponent().dispatchCustomEvent('result.focus', detail);
+            this._$annexSearchWidget.getHelper('config').triggerCallback('result.focus', detail);
+            this._$annexSearchWidget.dispatchCustomEvent('result.focus', detail);
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             this.getView('root.body.results.found').clearFocused();
 // console.log(this._$element);
@@ -221,8 +221,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let hit = this.get('hit'),
                 $result = this._$element,
                 detail = {$result, event, hit};
-            this.getWebComponent().getHelper('config').triggerCallback('result.copy', detail);
-            this.getWebComponent().dispatchCustomEvent('result.copy', detail);
+            this._$annexSearchWidget.getHelper('config').triggerCallback('result.copy', detail);
+            this._$annexSearchWidget.dispatchCustomEvent('result.copy', detail);
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             return true;
         }

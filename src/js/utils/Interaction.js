@@ -13,6 +13,35 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
     window.annexSearch.InteractionUtils = window.annexSearch.InteractionUtils || class InteractionUtils extends window.annexSearch.BaseUtils {
 
         /**
+         * #__controls
+         * 
+         * @access  private
+         * @static
+         * @var     Object
+         */
+        static #__controls = {
+
+            /**
+             * scrollFocus
+             * 
+             * Whether a scroll event on the document should attempt to focus
+             * on an $annexSearchWidget.
+             * 
+             * It attempts to do this safely to prevent unintended behaviour.
+             * This includes (not is not limited to):
+             * - Not executing on touch devices
+             * - Not executing when another valid $element has focus
+             * - The $annexSearchWidget is visible within the viewport
+             * - config.autoFocusOnScroll is set to true
+             * 
+             * @static
+             * @access  private
+             * @var     Boolean (default: true)
+             */
+            scrollFocus: true,
+        };
+
+        /**
          * #__windowScrollDebounceDelay
          * 
          * @access  private
@@ -47,7 +76,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 handler = this.#__handleWindowScrollEvent.bind(this),
                 delay = this.#__windowScrollDebounceDelay,
                 debounced = window.annexSearch.FunctionUtils.debounce(handler, delay);
-            $eventTarget.addEventListener('scroll', debounced);
+            ['touchmove', 'wheel'].forEach(function(type) {
+                $eventTarget.addEventListener(type, debounced);
+            });
             return true;
         }
 
@@ -201,16 +232,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 return response;
             }
             if (interactionKey === 'hide') {
-                let response = $annexSearchWidget.hide();
-                return response;
+                let promise = $annexSearchWidget.hide();
+                return true;
             }
             if (interactionKey === 'show') {
-                let response = $annexSearchWidget.show();
-                return response;
+                let promise = $annexSearchWidget.show();
+                return true;
             }
             if (interactionKey === 'toggle') {
-                let response = $annexSearchWidget.toggle();
-                return response;
+                let promise = $annexSearchWidget.toggle();
+                return true;
             }
             return false;
         }
@@ -295,9 +326,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (window.annexSearch.ClientUtils.isTouchDevice() === true) {
                 return false;
             }
+            if (this.#__controls.scrollFocus === false) {
+                return false;
+            }
             let $activeElement = document.activeElement || null,
                 handler = function() {
-                    let $visible = window.annexSearch.ElementUtils.getVisibleWebComponents();
+                    let fullyVisible = false,
+                        $visible = window.annexSearch.ElementUtils.getVisibleWebComponents(fullyVisible);
                     if ($visible.length === 0) {
                         return false;
                     }
@@ -312,12 +347,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                         return false;
                     }
                     let $annexSearchWidget = $visible[0];
-                    $focused = $annexSearchWidget.getHelper('webComponentUI').getFocused();
-                    if ($focused !== null && $focused.view !== undefined && $focused.view !== null) {
-                        if ($focused.view.constructor === window.annexSearch.ResultFoundResultsBodyView) {
-                            // return false;
-                        }
-                    }
                     if ($annexSearchWidget.getConfig('autoFocusOnScroll') === false) {
                         return false;
                     }
@@ -361,14 +390,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if ($target.matches('annex-search-widget') === true) {
                 return false;
             }
-// console.log(event.);
-// console.log($target, attributeName);
+
             // Valid target; prevent event
             event.preventDefault();
 
             // Nothing registered
-            let registered = window.annexSearch.AnnexSearch.getRegistered();
-            if (registered.length === 0) {
+            let $registered = window.annexSearch.AnnexSearch.getRegistered();
+            if ($registered.length === 0) {
                 let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.zeroRegistered');
                 window.annexSearch.LoggingUtils.error(message);
                 return false;
@@ -392,7 +420,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (id === null) {
 
                 // Valid (since only one that could be the target)
-                if (registered.length === 1) {
+                if ($registered.length === 1) {
                     return true;
                 }
 

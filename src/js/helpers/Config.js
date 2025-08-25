@@ -186,17 +186,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             env: 'local',
 
             /**
-             * keyboardShortcut
-             * 
-             * The keyboard combination which when pressed, toggles the web
-             * component to be shown or hidden. If null, no listener is created.
-             * 
-             * @access  private
-             * @var     null|String (default: '⌘k')
-             */
-            keyboardShortcut: '⌘k',
-
-            /**
              * highlightTagName
              * 
              * @access  private
@@ -214,6 +203,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * @var     String (default: window.annexSearch.StringUtils.generateUUID())
              */
             id: window.annexSearch.StringUtils.generateUUID(),
+
+            /**
+             * keyboardShortcut
+             * 
+             * The keyboard combination which when pressed, toggles the web
+             * component to be shown or hidden. If null, no listener is created.
+             * 
+             * @access  private
+             * @var     null|String (default: '⌘k')
+             */
+            keyboardShortcut: '⌘k',
 
             /**
              * layout
@@ -443,8 +443,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          * @return  Promise
          */
         #__loadStylesheets($annexSearchWidget) {
-// console.log($annexSearchWidget.shadow);
-// console.log(this.get());
             let $shadow = $annexSearchWidget.shadow,
                 errorHandler = this.#__handleStylesheetErrorLoadEvent.bind(this),
                 successfulHandler = this.#__handleStylesheetSuccessfulLoadEvent.bind(this),

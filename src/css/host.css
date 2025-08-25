@@ -53,7 +53,7 @@
     pointer-events: none;
 }
 :host([data-annex-search-disabled="1"]) [data-view-name="RootView"] > div.content > div.disabled {
-    opacity: 1.00;
+    opacity: 0.75;
 }
 :host([data-annex-search-disabled="1"][data-annex-search-showing="1"]) [data-view-name="RootView"] > div.overlay {
     pointer-events: auto;

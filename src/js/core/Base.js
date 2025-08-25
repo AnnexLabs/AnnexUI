@@ -215,8 +215,8 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  window.annexSearch.AnnexSearchWidgetWebComponent
          */
         getWebComponent() {
-            let webComponent = this._$annexSearchWidget;
-            return webComponent;
+            let $webComponent = this._$annexSearchWidget;
+            return $webComponent;
         }
 
         /**

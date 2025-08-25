@@ -85,7 +85,7 @@
      * 
      */
     --annex-search-show-duration:                               400ms;
-    --annex-search-show-panel-duration:                         540ms;
+    --annex-search-show-panel-duration:                         420ms;
     --annex-search-spinner-duration:                            2050ms;
     --annex-search-timer-duration:                              400ms;
     --annex-search-toast-duration:                              400ms;

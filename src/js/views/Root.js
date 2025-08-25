@@ -14,6 +14,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.RootView = window.annexSearch.RootView || class RootView extends window.annexSearch.BaseView {
 
         /**
+         * #__$focused
+         * 
+         * @access  private
+         * @var     null|EventTarget (default: null)
+         */
+        #__$focused = null;
+
+        /**
          * _markup
          * 
          * @access  protected
@@ -61,7 +69,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__addFocusinEventListener() {
             let handler = this.#__handleFocusinEvent.bind(this);
-// console.log('a');
             this.event('focusin', handler);
             return true;
         }
@@ -86,8 +93,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleClickEvent(event) {
-            let $annexSearchWidget = this.getWebComponent();
-            window.annexSearch.AnnexSearch.setFocused($annexSearchWidget);
+            let $annexSearchWidget = this._$annexSearchWidget;
+            // window.annexSearch.AnnexSearch.setFocused($annexSearchWidget);
             $annexSearchWidget.focus();
             return true;
         }
@@ -100,8 +107,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleFocusinEvent(event) {
-            let $annexSearchWidget = this.getWebComponent();
-            window.annexSearch.AnnexSearch.setFocused($annexSearchWidget);
+            let $target = event.target,
+                $annexSearchWidget = this._$annexSearchWidget;
+            this.#__$focused = $target;
+            $annexSearchWidget.focus();
+            // window.annexSearch.AnnexSearch.setFocused($annexSearchWidget);
             return true;
         }
 
@@ -187,12 +197,37 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         /**
          * focus
          * 
+         * @see     https://chatgpt.com/c/68ac9354-94e0-8320-beba-7538d46813f4
          * @access  public
-         * @return  Boolean
+         * @return  Promise
          */
         focus() {
-            let response = this.getView('header').focus();
-            return response;
+            if (this._$annexSearchWidget.disabled() === true) {
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(false);
+                return promise;
+            }
+            let $focused = this.#__$focused;
+            if ($focused === null) {
+                let promise = this.getView('header').focus();
+                return promise;
+            }
+            if (this._$annexSearchWidget.shadow.contains($focused) === false) {
+                let promise = this.getView('header').focus();
+                return promise;
+            }
+            let promise = window.annexSearch.ElementUtils.focus($focused);
+            return promise;
+        }
+
+        /**
+         * getFocused
+         * 
+         * @access  public
+         * @return  null|EventTarget
+         */
+        getFocused() {
+            let $focused = this.#__$focused;
+            return $focused;
         }
 
         /**

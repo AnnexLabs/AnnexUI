@@ -12,6 +12,9 @@
     :host([data-annex-search-layout="modal"]) [data-view-name="RootView"] > div.content {
         width: 92%;
     }
+    :host([data-annex-search-layout="modal"]) [data-view-name="RootView"] > div.content > div.disabled {
+        border-radius: 6px 6px 6px 6px;
+    }
     :host([data-annex-search-layout="modal"]) [data-view-name="RootView"] > div.content > [data-view-name="HeaderView"] {
         border-radius: 6px 6px 0 0;
     }

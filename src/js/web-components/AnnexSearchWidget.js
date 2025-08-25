@@ -136,7 +136,6 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         #__handleRenderEvent() {
             try {
-// console.log('render');
                 this.#__mountRoot();
                 this.#__helpers.webComponentUI.setupConfigHelperCustomEventListeners();
                 this.#__helpers.webComponentUI.setAttributes();
@@ -214,9 +213,36 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         #__setupShadow() {
             this.shadow = this.attachShadow({
-                mode: 'closed'
+                mode: 'closed',
+                // delegatesFocus: true
             });
-            this.#__helpers.webComponentUI.addFocusinEventListener();
+            // this.#__helpers.webComponentUI.addFocusinEventListener();
+            return true;
+        }
+
+        /**
+         * #__validMountAttempt
+         * 
+         * @access  private
+         * @return  Boolean
+         */
+        #__validMountAttempt() {
+            let $registered = window.annexSearch.AnnexSearch.getRegistered();
+            for (let $annexSearchWidget of $registered) {
+                if (this === $annexSearchWidget) {
+                    continue;
+                }
+                let keyboardShortcut = this.getConfig('keyboardShortcut');
+                if (keyboardShortcut === null) {
+                    continue;
+                }
+                if (keyboardShortcut === $annexSearchWidget.getConfig('keyboardShortcut')) {
+                    this.setConfig('keyboardShortcut', null);
+                    let message = window.annexSearch.ErrorUtils.getMessage('annexSearchWidget.keyboardShortcut.reserved', keyboardShortcut);
+                    this.#__helpers.webComponentUI.error(message);
+                    break;
+                }
+            }
             return true;
         }
 
@@ -302,17 +328,20 @@ window.annexSearch.DependencyLoader.push([], function() {
          * focus
          * 
          * @access  public
-         * @return  Boolean
+         * @return  Promise
          */
         focus() {
             let focused = this.focused();
             if (focused === true) {
-// console.log('0');
-                return false;
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(this);
+                return promise;
             }
-// console.log('1');
-            let response = this.getView('root').focus();
-            return response;
+            window.annexSearch.AnnexSearch.setFocused(this);
+            let $annexSearchWidget = this,
+                promise = this.getView('root').focus().then(function() {
+                    return $annexSearchWidget;
+                });
+            return promise;
         }
 
         /**
@@ -327,6 +356,18 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * fullyVisible
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        // fullyVisible() {
+        //     let $element = this,
+        //         fullyVisible = window.annexSearch.ElementUtils.fullyVisible($element);
+        //     return fullyVisible;
+        // }
+
+        /**
          * getConfig
          * 
          * @access  public
@@ -336,6 +377,18 @@ window.annexSearch.DependencyLoader.push([], function() {
         getConfig(key) {
             let value = this.#__helpers.config.get(key);
             return value;
+        }
+
+        /**
+         * getFocused
+         * 
+         * @access  public
+         * @return  null|EventTarget
+         */
+        getFocused() {
+            let root = this.getView('root'),
+                $focused = root.getFocused();
+            return $focused;
         }
 
         /**
@@ -380,19 +433,21 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @see     https://chatgpt.com/c/688faa3b-3b2c-832c-a55b-96d1ab15acbe
          * @access  public
-         * @return  Boolean
+         * @return  Promise
          */
         hide() {
             if (this.getConfig('layout') === 'inline') {
-                return false;
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(this);
+                return promise;
             }
             if (this.#__showing === false) {
-                return false;
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(this);
+                return promise;
             }
             this.#__showing = false;
             window.annexSearch.AnnexSearch.clearFocused();
-            this.#__helpers.webComponentUI.hide();
-            return true;
+            let promise = this.#__helpers.webComponentUI.hide();
+            return promise;
         }
 
         /**
@@ -403,10 +458,13 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Promise
          */
         mount($container = null) {
-//             let schemaKey = this.getConfig('schemaKey');
-// console.log(schemaKey);
             $container = this.#__getContainer($container);
             if ($container === null) {
+                this.#__mounted = false;
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(this);
+                return promise;
+            }
+            if (this.#__validMountAttempt() === false) {
                 this.#__mounted = false;
                 let promise = window.annexSearch.FunctionUtils.getEmptyPromise(this);
                 return promise;
@@ -438,6 +496,18 @@ window.annexSearch.DependencyLoader.push([], function() {
         //         response = this.addEventListener(... args);
         //     return response;
         // }
+
+        /**
+         * partiallyVisible
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        partiallyVisible() {
+            let $element = this,
+                partiallyVisible = window.annexSearch.ElementUtils.partiallyVisible($element);
+            return partiallyVisible;
+        }
 
         /**
          * query
@@ -525,16 +595,19 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @note    The logic below is to ensure state is preserved between
          *          openings.
          * @access  public
-         * @return  Boolean
+         * @return  Promise
          */
         show() {
             if (this.#__showing === true) {
-                return false;
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(this);
+                return promise;
             }
             this.#__showing = true;
-            window.annexSearch.AnnexSearch.setFocused(this);
-            this.#__helpers.webComponentUI.show();
-            return true;
+            let $annexSearchWidget = this,
+                promise = this.#__helpers.webComponentUI.show().then(function() {
+                    return $annexSearchWidget;
+                });
+            return promise;
         }
 
         /**
@@ -583,41 +656,16 @@ window.annexSearch.DependencyLoader.push([], function() {
          * toggle
          * 
          * @access  public
-         * @return  Boolean
+         * @return  Promise
          */
         toggle() {
             this.#__helpers.webComponentUI.toggle();
             if (this.#__showing === true) {
-                let response = this.hide();
-                return response;
-//                 let registered = window.annexSearch.AnnexSearch.getRegistered();
-//                 if (registered.length === 1) {
-//                     let response = this.hide();
-//                     return response;
-//                 }
-// console.log('sdf', window.annexSearch.AnnexSearch.getFocused());
-//                 if (this === window.annexSearch.AnnexSearch.getFocused()) {
-// console.log('sdf2');
-//                     let response = this.hide();
-//                     return response;
-//                 }
-//                 this.#__helpers.webComponentUI.__setZIndex();
-//                 return false;
+                let promise = this.hide();
+                return promise;
             }
-            let response = this.show();
-            return response;
-        }
-
-        /**
-         * visible
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        visible() {
-            let $element = this,
-                visible = window.annexSearch.ElementUtils.visible($element);
-            return visible;
+            let promise = this.show();
+            return promise;
         }
     }
 });

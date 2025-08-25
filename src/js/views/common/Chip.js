@@ -71,7 +71,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             event.preventDefault();
             let chip = this.get('chip'),
                 query = chip.query,
-                $annexSearchWidget = this.getWebComponent();
+                $annexSearchWidget = this._$annexSearchWidget;
             $annexSearchWidget.query(query);
             return true;
         }

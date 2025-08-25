@@ -92,11 +92,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          */
         static #__getConfigTemplateKey(view) {
             let key = view.constructor.name;
-// console.log('1', key, view);
             key = key.replace(/View$/, '');
-// console.log('2', key);
             key = key.charAt(0).toLowerCase() + key.slice(1);
-// console.log('3', key);
             return key;
         }
 
@@ -138,13 +135,37 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 markup = $annexSearchWidget.getHelper('config').get('templates')[key]
                     || window.annexSearch.TemplateUtils.getTemplate('auto-v0.1.0', key)
                     || view.getMarkup();
-// console.log(view.name);//, markup);
             if (typeof markup === 'function') {
                 let data = this.#__getCompilerData(view);
                 markup = markup.apply(view, [data]);
             }
             markup = markup || view.getMarkup();
             return markup;
+        }
+
+        /**
+         * #__getVisibleElementsByTag
+         * 
+         * @see     https://chatgpt.com/c/68a61095-5688-8326-adac-5ab8e7f0fb08
+         * @access  private
+         * @static
+         * @param   String tagName
+         * @param   Boolean fullyVisible (default: true)
+         * @return  Array
+         */
+        static #__getVisibleElementsByTag(tagName, fullyVisible = true) {
+            let $elements = document.getElementsByTagName(tagName),
+                $visible = [];
+            for (let $element of $elements) {
+                if (fullyVisible === true && this.fullyVisible($element) === false) {
+                    continue;
+                }
+                if (fullyVisible === false && this.partiallyVisible($element) === false) {
+                    continue;
+                }
+                $visible.push($element);
+            }
+            return $visible;
         }
 
         /**
@@ -164,24 +185,57 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
-         * getVisibleElementsByTag
+         * focus
          * 
-         * @see     https://chatgpt.com/c/68a61095-5688-8326-adac-5ab8e7f0fb08
          * @access  public
          * @static
-         * @param   String tagName
-         * @return  Array
+         * @param   mixed $eventTarget
+         * @return  Promise
          */
-        static getVisibleElementsByTag(tagName) {
-            let $elements = document.getElementsByTagName(tagName),
-                $visible = [];
-            for (let $element of $elements) {
-                if (this.visible($element) === false) {
-                    continue;
-                }
-                $visible.push($element);
+        static focus($eventTarget) {
+            if ($eventTarget === null) {
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(false);
+                return promise;
             }
-            return $visible;
+            if ($eventTarget === undefined) {
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(false);
+                return promise;
+            }
+            if (window.annexSearch.ElementUtils.partiallyVisible($eventTarget) === false) {
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(false);
+                return promise;
+            }
+            if (window.annexSearch.ClientUtils.isTouchDevice() === true) {
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(false);
+                return promise;
+            }
+            let promise = window.annexSearch.ElementUtils.waitForAnimation().then(function() {
+                $eventTarget.focus({
+                    preventScroll: true
+                });
+                return true;
+            });
+            return promise;
+        }
+
+        /**
+         * fullyVisible
+         *
+         * @see     https://chatgpt.com/c/689f96f3-20fc-8332-b530-e8693299801b
+         * @access  public
+         * @static
+         * @param   EventTarget $eventTarget
+         * @return  Boolean
+         */
+        static fullyVisible($eventTarget) {
+            let rect = $eventTarget.getBoundingClientRect(),
+                fullyVisible = (
+                    rect.top >= 0
+                    && rect.right <= window.innerWidth
+                    && rect.bottom <= window.innerHeight
+                    && rect.left >= 0
+                );
+            return fullyVisible;
         }
 
         /**
@@ -189,11 +243,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * 
          * @access  public
          * @static
+         * @param   Boolean fullyVisible (default: true)
          * @return  Array
          */
-        static getVisibleWebComponents() {
+        static getVisibleWebComponents(fullyVisible = true) {
             let tagName = 'annex-search-widget',
-                $webComponents = this.getVisibleElementsByTag(tagName),
+                $webComponents = this.#__getVisibleElementsByTag(tagName, fullyVisible),
                 $visible = [];
             for (let $webComponent of $webComponents) {
                 if ($webComponent.showing() === false) {
@@ -205,6 +260,26 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 $visible.push($webComponent);
             }
             return $visible;
+        }
+
+        /**
+         * partiallyVisible
+         *
+         * @see     https://chatgpt.com/c/689f96f3-20fc-8332-b530-e8693299801b
+         * @access  public
+         * @static
+         * @param   EventTarget $eventTarget
+         * @return  Boolean
+         */
+        static partiallyVisible($eventTarget) {
+            let rect = $eventTarget.getBoundingClientRect(),
+                visible = (
+                    rect.top < window.innerHeight
+                    && rect.right > 0
+                    && rect.bottom > 0
+                    && rect.left < window.innerWidth
+                );
+            return visible;
         }
 
         /**
@@ -229,23 +304,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
-         * visible
-         *
-         * @see     https://chatgpt.com/c/689f96f3-20fc-8332-b530-e8693299801b
+         * setup
+         * 
          * @access  public
          * @static
-         * @param   EventTarget $eventTarget
          * @return  Boolean
          */
-        static visible($eventTarget) {
-            let rect = $eventTarget.getBoundingClientRect(),
-                visible = (
-                    rect.top < window.innerHeight
-                    && rect.bottom > 0
-                    && rect.left < window.innerWidth
-                    && rect.right > 0
-                );
-            return visible;
+        static setup() {
+            return true;
         }
 
         /**
@@ -265,17 +331,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 });
             });
             return promise;
-        }
-
-        /**
-         * setup
-         * 
-         * @access  public
-         * @static
-         * @return  Boolean
-         */
-        static setup() {
-            return true;
         }
     }
 });

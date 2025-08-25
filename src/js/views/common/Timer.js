@@ -14,20 +14,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.TimerView = window.annexSearch.TimerView || class TimerView extends window.annexSearch.BaseView {
 
         /**
-         * #__showing
-         * 
-         * @access  private
-         * @var     Boolean (default: false)
-         */
-        #__showing = false;
-
-        /**
          * #__interval
          * 
          * @access  private
          * @var     null|Number (default: null)
          */
         #__interval = null;
+
+        /**
+         * #__showing
+         * 
+         * @access  private
+         * @var     Boolean (default: false)
+         */
+        #__showing = false;
 
         /**
          * _markup

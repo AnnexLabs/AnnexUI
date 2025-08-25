@@ -35,6 +35,15 @@
  * Content
  * 
  */
+:host([data-annex-search-layout="modal"]) [data-view-name="RootView"] > div.content > div.disabled {
+    border-radius: 12px 12px 12px 12px;
+}
+:host([data-annex-search-layout="modal"]) [data-view-name="RootView"] > div.content > [data-view-name="HeaderView"] {
+    border-radius: 12px 12px 0 0;
+}
+:host([data-annex-search-layout="modal"]) [data-view-name="RootView"] > div.content > [data-view-name="FooterView"] {
+    border-radius: 0 0 12px 12px;
+}
 :host([data-annex-search-layout="modal"]) [data-view-name="RootView"][data-state-key="results"] > div.content {
     max-height: var(--annex-search-content-max-height);
 }

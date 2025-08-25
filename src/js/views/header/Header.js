@@ -96,7 +96,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleHideClickEvent(event) {
-            this.getWebComponent().hide();
+            this._$annexSearchWidget.hide();
             return false;
         }
 
@@ -143,7 +143,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * focus
          * 
          * @access  public
-         * @return  Boolean
+         * @return  Promise
          */
         focus() {
             let response = this.getView('field').focus();

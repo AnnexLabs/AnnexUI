@@ -15,20 +15,12 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
     window.annexSearch.WebComponentUIHelper = window.annexSearch.WebComponentUIHelper || class WebComponentUIHelper extends window.annexSearch.BaseHelper {
 
         /**
-         * #__$activeElement
+         * #__$lastActiveElement
          * 
          * @access  private
          * @var     null|EventTarget (default: null)
          */
-        #__$activeElement = null;
-
-        /**
-         * #__$focused
-         * 
-         * @access  private
-         * @var     null|EventTarget (default: null)
-         */
-        #__$focused = null;
+        #__$lastActiveElement = null;
 
         /**
          * #__maxZIndex
@@ -47,19 +39,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          */
         constructor($annexSearchWidget) {
             super($annexSearchWidget);
-        }
-
-        /**
-         * #__handleFocusinEvent
-         * 
-         * @access  private
-         * @param   Object event
-         * @return  Boolean
-         */
-        #__handleFocusinEvent(event) {
-            let $target = event.target;
-            this.#__$focused = $target || null;
-            return true;
         }
 
         /**
@@ -93,16 +72,16 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          * @return  Boolean
          */
         #__setModalAlignmentAttribute() {
-            let registered = window.annexSearch.AnnexSearch.getRegistered();
-            if (registered.length === 0) {
+            let $registered = window.annexSearch.AnnexSearch.getRegistered();
+            if ($registered.length === 0) {
                 return false;
             }
-            if (registered.length === 1) {
+            if ($registered.length === 1) {
                 return false;
             }
             let $annexSearchWidget = this.getWebComponent();
-            for (let index in registered) {
-                let $webComponent = registered[index];
+            for (let index in $registered) {
+                let $webComponent = $registered[index];
                 $webComponent.removeAttribute('data-annex-search-modal-alignment');
                 if ($webComponent.getHelper('config').get('layout') !== 'modal') {
                     continue;
@@ -120,17 +99,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          * @return  Boolean
          */
         #__setModalOrderAttribute() {
-            let registered = window.annexSearch.AnnexSearch.getRegistered();
-            if (registered.length === 0) {
+            let $registered = window.annexSearch.AnnexSearch.getRegistered();
+            if ($registered.length === 0) {
                 return false;
             }
-            if (registered.length === 1) {
+            if ($registered.length === 1) {
                 return false;
             }
             let $annexSearchWidget = this.getWebComponent(),
                 order = 0;
-            for (let index in registered.reverse()) {
-                let $webComponent = registered[index];
+            for (let index in $registered.reverse()) {
+                let $webComponent = $registered[index];
                 $webComponent.removeAttribute('data-annex-search-modal-order');
                 // if ($webComponent === $annexSearchWidget) {
                 //     continue;
@@ -188,19 +167,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         }
 
         /**
-         * addFocusinEventListener
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        addFocusinEventListener() {
-            let $element = this._$annexSearchWidget.shadow,
-                handler = this.#__handleFocusinEvent.bind(this);
-            $element.addEventListener('focusin', handler);
-            return true;
-        }
-
-        /**
          * autoShow
          * 
          * @access  public
@@ -250,21 +216,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         }
 
         /**
-         * getFocused
-         * 
-         * @access  public
-         * @return  null|EventTarget
-         */
-        getFocused() {
-            let $focused = this.#__$focused;
-            return $focused;
-        }
-
-        /**
          * hide
          * 
+         * @see     https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus
          * @access  public
-         * @return  Boolean
+         * @return  Promise
          */
         hide() {
             let $annexSearchWidget = this.getWebComponent();
@@ -274,13 +230,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             this.#__setShowingAttribute();
             this.#__setInertAttribute();
             this.#__setModalOrderAttribute();
-            let $activeElement = this.#__$activeElement;
-            window.annexSearch.ElementUtils.waitForAnimation().then(function() {
-                $activeElement
-                    && window.annexSearch.ElementUtils.visible($activeElement)
-                    && $activeElement.focus();
-            });
-            return true;
+            let $lastActiveElement = this.#__$lastActiveElement,
+                promise = window.annexSearch.ElementUtils.focus($lastActiveElement);
+            return promise;
         }
 
         /**
@@ -293,16 +245,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             let $annexSearchWidget = this.getWebComponent(),
                 colorScheme = this.getHelper('config').get('colorScheme'),
                 id = this.getHelper('config').get('id'),
-                // index = window.annexSearch.AnnexSearch.getRegistered().indexOf($annexSearchWidget),
                 layout = this.getHelper('config').get('layout');
-                // schemaKey = this.getHelper('config').get('schemaKey');
             $annexSearchWidget.setAttribute('data-annex-search-color-scheme', colorScheme);
             $annexSearchWidget.setAttribute('data-annex-search-id', id);
-            // $annexSearchWidget.setAttribute('data-annex-search-index', index);
-// console.log(index, $annexSearchWidget);
             $annexSearchWidget.setAttribute('data-annex-search-layout', layout);
             $annexSearchWidget.setAttribute('data-annex-search-ready', '1');
-            // $annexSearchWidget.setAttribute('data-annex-search-schema-key', schemaKey);
             this.#__setModalAlignmentAttribute();
             this.#__setOverlayAttribute();
             this.#__setShowingAttribute();
@@ -366,18 +313,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          * @return  Boolean
          */
         setZIndex() {
-            let registered = window.annexSearch.AnnexSearch.getRegistered();
-            if (registered.length === 0) {
+            let $registered = window.annexSearch.AnnexSearch.getRegistered();
+            if ($registered.length === 0) {
                 return false;
             }
-            if (registered.length === 1) {
+            if ($registered.length === 1) {
                 return false;
             }
             let maxZIndex = this.#__maxZIndex,
                 $annexSearchWidget = this.getWebComponent();
             $annexSearchWidget.style.zIndex = maxZIndex;
-            for (let index in registered) {
-                let $webComponent = registered[index];
+            for (let index in $registered) {
+                let $webComponent = $registered[index];
                 if ($webComponent === $annexSearchWidget) {
                     continue;
                 }
@@ -394,10 +341,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          * show
          * 
          * @access  public
-         * @return  Boolean
+         * @return  Promise
          */
         show() {
-            this.#__$activeElement = document.activeElement || null;
+            this.#__$lastActiveElement = document.activeElement || null;
             let $annexSearchWidget = this.getWebComponent();
             this.getHelper('config').triggerCallback('root.show');
             $annexSearchWidget.dispatchCustomEvent('root.show');
@@ -405,22 +352,23 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             this.#__removeInertAttribute();
             this.#__setModalOrderAttribute();
             this.setZIndex();
-            let found = $annexSearchWidget.getView('root').getView('root.body.results.found'),
-                results = found.getResults();
-            if (results.length === 0) {
-                $annexSearchWidget.getView('root').focus();
-                return true;
+            if ($annexSearchWidget.getConfig('layout') === 'inline') {
+                let promise = $annexSearchWidget.focus();
+                return promise;
             }
-            let focusedIndex = found.getFocusedIndex();
-            if (focusedIndex === null) {
-                focusedIndex = 0;
+            if ($annexSearchWidget.getConfig('layout') === 'modal') {
+                let promise = $annexSearchWidget.focus();
+                return promise;
             }
-            let result = results[focusedIndex];
-            if (result === undefined) {
-                return true;
-            }
-            result.focus();
-            return true;
+            let promise = new Promise(function(resolve, reject) {
+                var handler = $annexSearchWidget.focus.bind($annexSearchWidget);
+                $annexSearchWidget.addEventListener('transitionend', function() {
+                    return handler().then(resolve);
+                }, {
+                    once: true
+                });
+            });
+            return promise;
         }
 
         /**

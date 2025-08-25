@@ -24,8 +24,6 @@
  * @todo    [PUNT] - Error handling for failed XHRs
  * @todo    [PUNT] -- Tooltip class for communicating error messages
  * @todo    [PUNT] -- https://claude.ai/chat/b775bedd-d31a-464e-8e10-49c42a5a3644
- * @todo    [PUNT] - On toggle, restore $input focus state if focused
- * @todo    [PUNT] -- This is important to reinforce statefulness and UX focus
  * @todo    [PUNT] - thumbnails
  * @todo    [PUNT] - Look into CSV fields and commas being encoded in XHRs
  * @todo    [DONE] - loadMore bug re:adding and not clearing
@@ -180,6 +178,8 @@
  * @todo    [DONE] - Middle alignment: https://416.io/ss/f/f9132o
  * @todo    [DONE] - Scroll down; focus on dark mode, open panel, scroll up, close panel: focus pulls user down
  * @todo    [DONE] -- $aciveElement was actually the $button; fixed
+ * @todo    [DONE] - On toggle, restore $input focus state if focused
+ * @todo    [DONE] -- This is important to reinforce statefulness and UX focus
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -276,8 +276,8 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Array
          */
         static getRegistered() {
-            let registered = this.#__$registered;
-            return registered;
+            let $registered = this.#__$registered;
+            return $registered;
         }
 
         /**
@@ -289,8 +289,8 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  null|window.annexSearch.AnnexSearchWidgetWebComponent
          */
         static getRegisteredById(id) {
-            let registered = this.#__$registered;
-            for (let $annexSearchWidget of registered) {
+            let $registered = this.#__$registered;
+            for (let $annexSearchWidget of $registered) {
                 if ($annexSearchWidget.getAttribute('data-annex-search-id') === id) {
                     return $annexSearchWidget;
                 }
@@ -306,9 +306,9 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Array
          */
         static getShowing() {
-            let registered = this.#__$registered,
+            let $registered = this.#__$registered,
                 $showing = [];
-            for (let $annexSearchWidget of registered) {
+            for (let $annexSearchWidget of $registered) {
                 if ($annexSearchWidget.showing() === true) {
                     $showing.push($annexSearchWidget);
                 }
@@ -342,8 +342,6 @@ window.annexSearch.DependencyLoader.push([], function() {
                 this.#__$registered.push($annexSearchWidget);
                 return true;
             }
-// console.log('nope');
-// console.log('again');
             this.#__$registered = this.#__$registered.filter(function(item) {
                 return item !== $annexSearchWidget;
             });
@@ -361,9 +359,6 @@ window.annexSearch.DependencyLoader.push([], function() {
          * @return  Boolean
          */
         static setFocused($annexSearchWidget) {
-// console.log('dfg');
-// console.log('focusing: ' + $annexSearchWidget.getAttribute('data-annex-search-id'));
-// console.trace();
             this.#__$focused = $annexSearchWidget;
             if ($annexSearchWidget === null) {
                 return false;

@@ -7,7 +7,6 @@
     height: var(--annex-search-header-height);
     background-color: var(--annex-search-header-background-color);
     position: relative;
-    border-radius: 12px 12px 0 0;
 }
 
 /**

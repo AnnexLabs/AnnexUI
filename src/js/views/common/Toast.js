@@ -132,7 +132,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__hideOpenToasts() {
-            let $annexSearchWidget = this.getWebComponent(),
+            let $annexSearchWidget = this._$annexSearchWidget,
                 toasts = window.annexSearch.ToastUtils.get($annexSearchWidget);
             for (let toast of toasts) {
                 if (toast === this) {
