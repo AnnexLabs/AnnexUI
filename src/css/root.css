@@ -3,13 +3,6 @@
  * /src/css/root.css
  * 
  */
-[data-view-name="RootView"] {
-/*    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;*/
-}
 [data-view-name="RootView"] > div.overlay {
     content: '';
     background-color: var(--annex-search-root-overlay-color);

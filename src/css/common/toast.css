@@ -37,7 +37,5 @@
 [data-view-name="ToastView"] > div.message {
     color: var(--annex-search-toast-message-color);
     font-size: 12.5px;
-/*    line-height: 22px;*/
     line-height: 1.30em;
-/*    min-height: 22px;*/
 }

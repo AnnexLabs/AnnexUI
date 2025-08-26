@@ -33,14 +33,6 @@
     -webkit-mask-repeat: no-repeat;
             mask-repeat: no-repeat;
 }
-/*:host .icon.icon-size-14:not(img):not(.original) {
-    -webkit-mask-size: 14px;
-            mask-size: 14px;
-}
-:host .icon.icon-size-16:not(img):not(.original) {
-    -webkit-mask-size: 16px;
-            mask-size: 16px;
-}*/
 
 /**
  * Icons (general)

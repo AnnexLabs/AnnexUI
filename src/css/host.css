@@ -58,6 +58,3 @@
 :host([data-annex-search-disabled="1"][data-annex-search-showing="1"]) [data-view-name="RootView"] > div.overlay {
     pointer-events: auto;
 }
-/*:host([data-annex-search-disabled="1"][data-annex-search-showing="1"]) [data-view-name="RootView"] > div.disabled {
-    pointer-events: auto;
-}*/

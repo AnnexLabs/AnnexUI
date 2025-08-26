@@ -42,7 +42,6 @@
     display: none;
     position: absolute;
     right: calc(14px);
-/*    right: calc(14px + 14px + 6px);*/
     top: calc((var(--annex-search-header-height) - 14px) / 2);
     height: 14px;
     width: 14px;

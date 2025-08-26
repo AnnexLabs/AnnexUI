@@ -17,7 +17,6 @@
     float: left;
     margin: 0 4px 4px 0;
 }
-/** [data-view-name="ChipView"]:not(:last-child) {*/
 * [data-view-name="ChipView"]:last-child {
     margin: 0 0 4px 0;
 }
