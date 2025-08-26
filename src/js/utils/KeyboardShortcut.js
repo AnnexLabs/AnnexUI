@@ -473,10 +473,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 }
                 if ($annexSearchWidget.focused() === true) {
                     $annexSearchWidget.toggle();
-                    if (window.annexSearch.AnnexSearch.getShowing().length > 0) {
-                        window.annexSearch.AnnexSearch.getShowing()[0].focus();
-                        return true;
-                    }
                     return true;
                 }
                 $annexSearchWidget.getHelper('webComponentUI').setZIndex();

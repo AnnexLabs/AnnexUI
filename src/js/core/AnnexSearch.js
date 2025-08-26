@@ -6,7 +6,7 @@
  * @todo    -- Allow for keyboard shortcuts with inline (to focus)?
  * @todo    --- But don't show field.label?
  * @todo    -- Track order of "showing" modals in registered?
- * @todo    -- Fundametally need to get this sorted, and then revisit keyboard shortcut toggle work
+ * @todo    -- Fundamentally need to get this sorted, and then revisit keyboard shortcut toggle work
  * @todo    -- Multiple-modal stacking (w/ offsets)
  * 
  * @todo    [DONE] - dark mode
