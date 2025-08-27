@@ -1122,7 +1122,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              */
             resources: {
                 css: [
-                    'https://cdn.jsdelivr.net/gh/annex-search/AnnexUI@0.1.0-dev/dist/bundle.min.css',
+                    'https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.0-dev/dist/bundle.min.css',
                 ],
             },
 
