@@ -14,7 +14,6 @@ It's currently in early-development.
 3. [Quick intro](#quick-intro)
 3. [Quick start](#quick-start)
 4. [Config](#config)
-5. [Config overriding](#config-overriding)
 6. [Attribute-based events](#attribute-based-events)
 7. [Events](#events)
 8. [Methods](#methods)
@@ -76,9 +75,9 @@ Typesense cluster settings.
 
 ``` html
 <script
-  type="text/javascript"
-  src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.2-dev/dist/bundle.min.js"
-  defer></script>
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.2-dev/dist/bundle.min.js"
+    defer></script>
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
         let $annexSearchWidget = document.createElement('annex-search-widget');
@@ -144,7 +143,7 @@ so.
 <hr />
 
 
-### Config overriding
+#### Config overriding
 Below are examples showing how configuration options can be set. Worth noting is
 the flexibility around the `key` (e.g. can contain a `.` as a delimter).
 
