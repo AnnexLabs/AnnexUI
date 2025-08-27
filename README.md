@@ -330,12 +330,13 @@ robust templating logic.
 
 #### Preset without config options
 The code below shows the simplest example of Annex. By specifying a `presetName`
-your Typesense cluster knows how to perform the query. Along with that, the
-default config options (e.g. `'⌘k'` for the keyboard shortcut, `layout` being
+value, your Typesense cluster knows how to perform the query. Along with that,
+the default config options (e.g. `'⌘k'` for the keyboard shortcut, `layout` being
 `'modal'`, etc.) are good enough to get going.
 
-This also assumes your Typesense collection schema is consistent enough with
-Annex's best-attempt and rendering results.
+This does assume your Typesense collection schema is "simple enough" that Annex
+can determine what the title, body and URL of the result ought to be (during
+rendering).
 
 ``` html
 <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.2-stable/dist/bundle.min.js" defer></script>
