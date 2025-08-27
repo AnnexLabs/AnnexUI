@@ -2,13 +2,6 @@
 /**
  * /src/js/core/AnnexSearch.js
  * 
- * @todo    - [Keyboard Shortcut]
- * @todo    -- Allow for keyboard shortcuts with inline (to focus)?
- * @todo    --- But don't show field.label?
- * @todo    -- Track order of "showing" modals in registered?
- * @todo    -- Fundamentally need to get this sorted, and then revisit keyboard shortcut toggle work
- * @todo    -- Multiple-modal stacking (w/ offsets)
- * 
  * @todo    [DONE] - dark mode
  * @todo    [DONE] - mobile
  * @todo    [DONE] - Panels: https://416.io/ss/f/50li0m
@@ -181,6 +174,14 @@
  * @todo    [DONE] - On toggle, restore $input focus state if focused
  * @todo    [DONE] -- This is important to reinforce statefulness and UX focus
  * @todo    [DONE] - Inline min height re:empty results
+ * @todo    [DONE] - [Keyboard Shortcut]
+ * @todo    [DONE] -- Allow for keyboard shortcuts with inline (to focus)?
+ * @todo    [DONE] --- But don't show field.label?
+ * @todo    [DONE] -- Track order of "showing" modals in registered?
+ * @todo    [DONE] -- Fundamentally need to get this sorted, and then revisit keyboard shortcut toggle work
+ * @todo    [DONE] -- Multiple-modal stacking (w/ offsets)
+ * @todo    [PUNT] - There are some complicated show/hide/toggle/focus issues when multiple web components are open
+ * @todo    [PUNT] -- These only really present themselves through keyboard shortcut toggling etc; leave for now and revisit based on feedback
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
