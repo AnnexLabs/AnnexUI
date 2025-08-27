@@ -373,9 +373,9 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  private
          * @static
-         * @var     String (default: '0.1.2-dev')
+         * @var     String (default: '0.1.2-stable')
          */
-        static #__version = '0.1.2-dev';
+        static #__version = '0.1.2-stable';
 
         /**
          * #__setupUtils
@@ -1123,7 +1123,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              */
             resources: {
                 css: [
-                    'https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.2-dev/dist/bundle.min.css',
+                    'https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.2-stable/dist/bundle.min.css',
                 ],
             },
 
