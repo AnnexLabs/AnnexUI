@@ -1,8 +1,9 @@
 # AnnexUI
 AnnexUI is a MIT licensed UI library for [Typesense](https://typesense.org/).
 It's designed to be a clean, UX focused library that gets developers up and
-running in a few minutes. Just include a link to the JS, set your Typesense
-cluster settings, and then press `⌘k` to see Annex up and running.
+running in a few minutes. Include a link to the CDN-hosted JavaScript bundle,
+set your Typesense cluster settings, and then press `⌘k` to see Annex up and
+running.
 
 It's currently in early-development.
 <hr />
@@ -72,8 +73,8 @@ interact with it (e.g. `show`, `hide`, `focus`, etc)
 
 
 ### Quick start
-Below you'll find a few lines to get up and running quickly. Just swap out your
-Typesense cluster settings.
+Below you'll find a few lines to get up and running quickly (remember to swap in
+your Typesense cluster settings).
 
 ``` html
 <script
