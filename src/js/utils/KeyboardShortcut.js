@@ -448,6 +448,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 if (key !== character) {
                     continue;
                 }
+                if ($annexSearchWidget.mounted() === false) {
+                    continue;
+                }
                 event.preventDefault();
                 if ($annexSearchWidget.getConfig('layout') === 'inline') {
                     if ($annexSearchWidget.focused() === true) {
