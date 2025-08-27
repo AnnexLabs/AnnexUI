@@ -12,11 +12,12 @@ It's currently in early-development.
 1. [Quick demos](#quick-demos)
 2. [Quick preview](#quick-preview)
 3. [Quick intro](#quick-intro)
-3. [Quick start](#quick-start)
-4. [Config](#config)
+4. [Quick start](#quick-start)
+5. [Config](#config)
 6. [Attribute-based events](#attribute-based-events)
 7. [Events](#events)
 8. [Methods](#methods)
+9. [Templates](#templates)
 <hr />
 
 
@@ -144,6 +145,7 @@ so.
 #### Config overriding
 Below are examples showing how configuration options can be set. Worth noting is
 the flexibility around the `key` (e.g. can contain a `.` as a delimter).
+
 ``` javascript
 $('annex-search-widget').setConfig('$container', document.body);
 $('annex-search-widget').setConfig('searchOptions.snippet_threshold', 20);
@@ -258,50 +260,49 @@ element, only the ones below are currently supported.
 <hr />
 
 
-### Template variables
-- `{{response.found}}`
-- `{{response.out_of}}`
-- `{{response.page}}`
-- `{{response.search_time_ms}}`
+### Templates
+While Annex does it's best to work (to some degree) "out of the box", any
+meaningful implementation will require developers to define their own templates.
+
+In practice, this means passing in `String` values for the different web
+component states (along with defining your own styles).
+
+This part of Annex is a work-in-progress, and more documentation will be added
+soon, however until then use the table below as a guide to the available
+template keys that can be overridden.
+
+
+| Config property key               | Description                                                                                       | `data` properties                         |
+| ----------------------------------| --------------------------------------------------------------------------------------------------|-------------------------------------------|
+| `root`                            | The "root" of the search UI. Broadly, a container for other containers.                           | `config`                                  |
+| `body`                            | Contains the body of search results, including errors, idle states and empty result states.       | `config`                                  |
+| `chip`                            | An anchor element that when clicked performs a query.                                             | `config`, `chip`                          |
+| `errorBody`                       | Element that communicates an error took place during search.                                      | `config` ⚠️                               |
+| `idleBody`                        | Element that communicates that no search has taken place yet.                                     | `config`                                  |
+| `emptyResultsBody`                | Element that communicates no matching search results were found.                                  | `config` ⚠️                               |
+| `foundResultsBody`                | Element that contains a list of results.                                                          | `config`                                  |
+| `resultFoundResultsBody`          | The result element itself. **This is likely what you want to start with.**                        | `config`, `hit                            |
+| `resultsBody`                     | A container for the broad concept of results.                                                     | `config`                                  |
+| `toast`                           | An element to communicate an alert.                                                               | `config`, `title`, `message`              |
+| `brandingBarFooter`               | Element that communicates the Annex brand.                                                        | `config`                                  |
+| `footer`                          | Container element for footer elements.                                                            | `config`                                  |
+| `statusBarFooter`                 | Element that communicates some status around the search UX.                                       | `config`                                  |
+| `fieldHeader`                     | Element that contains the keyboard shortcut, input field, hide button and spinner.                | `config`                                  |
+| `timer`                           | An element that counts down from a certain number of seconds.                                     | `config`, `remaining`                     |
+| `header`                          | Element that contains the `$fieldHeader` element.                                                 | `config`                                  |
+| `metaBarHeader`                   | Element that communicates meta data about a search (if any).                                      | `config`, `typesenseSearchResponse`       |
 <hr />
 
 
-### Overriding templates
+### Additional Notes
+Below are some additional notes that may prove useful to developers. Please feel
+free to open a PR on this `README.md` file with anything else you think would be
+useful to others.
 
-Template functions receive a single `data` object. Where specified (see below)
-the `data` object may contain properties beyond the `object.config` object.
+#### Styling (using vars)
+While docs related to styling will come soon, below you'll see a quick example
+of how styling can be executed against an Annex instance.
 
-
-| Config property key               | Description                                                                                       | `data` properties                 |
-| ----------------------------------| --------------------------------------------------------------------------------------------------|-----------------------------------|
-| `root`                            | The "root" of the search UI. Broadly, a container for other containers.                           | `config`                          |
-| `body`                            | Contains the body of search results, including errors, idle states and empty result states.       | `config`                          |
-| `errorBody`                       | Element that communicates an error took place during search.                                      | `config` ⚠️                       |
-| `idleBody`                        | Element that communicates that no search has taken place yet.                                     | `config`                          |
-| `emptyResultsBody`                | Element that communicates no matching search results were found.                                  | `config` ⚠️                       |
-| `foundResultsBody`                | Element that contains a list of results.                                                          | `config`                          |
-| `resultFoundResultsBody`          | The result element itself.                                                                        | `config, hit                      |
-| `resultsBody`                     | A container for the broad concept of results.                                                     | `config, response`                |
-| `toast`                           | An element to communicate an alert.                                                               | `config, `title`, `message`       |
-| `brandingBarFooter`               | Element that communicates the Annex brand.                                                        | `config`                          |
-| `footer`                          | Container element for footer elements.                                                            | `config`                          |
-| `statusBarFooter`                 | Element that communicates some status around the search UX.                                       | `config`                          |
-| `fieldHeader`                     | Element that contains the keyboard shortcut, input field, hide button and spinner.                | `config`                          |
-| `header`                          | Element that contains the `$fieldHeader` element.                                                 | `config`                          |
-| `metaBarHeader`                   | Element that communicates meta data about a search (if any).                                      | `config, response`                |
-<hr />
-
-
-### Common problems / gotchas
-Below are a list of possible issues developers may run into, along with possible
-causes.
-
-- You've defined your cluster settings correctly, but your searches are failing
-  - Ensure your `cluster.apiKey` is associated with an `apiKey` that has permission to perform queries
-<hr />
-
-
-### Styling (using vars)
 ```html
 <style type="text/css">
     annex-search-widget {
@@ -319,28 +320,25 @@ causes.
     }
 </style>
 ```
-<hr />
 
+#### Vendors
+Currently, the only 3rd party vendor included in Annex is
+[Lodash v4.17.21](https://github.com/lodash/lodash). This is to facilitate more
+robust templating logic.
 
-### Vendors
-- Lodash
-<hr />
-
-
-### More examples
-<hr />
-
-
-### Preset without config options
+#### Preset without config options
 The code below shows the simplest example of Annex. By specifying a `presetName`
-Annex knows how to perform the query. Along with that, the default config
-options (e.g. `'⌘k'` for the keyboard shortcut, `layout` being `'modal'`, etc.)
-are good enough to get going.
+your Typesense cluster knows how to perform the query. Along with that, the
+default config options (e.g. `'⌘k'` for the keyboard shortcut, `layout` being
+`'modal'`, etc.) are good enough to get going.
+
+This also assumes your Typesense collection schema is consistent enough with
+Annex's best-attempt and rendering results.
 
 ``` html
-<script type="text/javascript" src="https://local.annexsearch.com/ts/js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.2-dev/dist/bundle.min.js" defer></script>
 <script type="text/javascript">
-    (function() {
+    document.addEventListener('DOMContentLoaded', function() {
         let $annexSearchWidget = document.createElement('annex-search-widget');
         $annexSearchWidget.setConfig({
             cluster: {
@@ -351,11 +349,11 @@ are good enough to get going.
             }
         });
         $annexSearchWidget.mount();
-    })();
+    });
 </script>
 ```
-<hr />
 
-
-### Edge cases considered
+#### Edge cases considered
 - High-resolution monitors that immediately ought to trigger a loadMore flow (because there's not scrollbar)
+- Aborting Typesense cluster queries when the search input value changes
+- Prevention of mobile zooming when the search input is focused on
