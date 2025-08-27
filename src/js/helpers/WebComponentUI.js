@@ -61,24 +61,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          * @return  Boolean
          */
         #__setModalAlignmentAttribute() {
-            let $registered = window.annexSearch.AnnexSearch.getRegistered();
-            if ($registered.length === 0) {
-                return false;
-            }
-            if ($registered.length === 1) {
-                return false;
-            }
             let $annexSearchWidget = this.getWebComponent();
-            for (let index in $registered) {
-                let $webComponent = $registered[index];
-                $webComponent.removeAttribute('data-annex-search-modal-alignment');
-                if ($webComponent.getHelper('config').get('layout') !== 'modal') {
-                    continue;
-                }
+            $annexSearchWidget.removeAttribute('data-annex-search-modal-alignment');
+            if ($annexSearchWidget.getHelper('config').get('layout') === 'modal') {
                 let modalAlignment = $annexSearchWidget.getConfig('modalAlignment');
-                $webComponent.setAttribute('data-annex-search-modal-alignment', modalAlignment);
+                $annexSearchWidget.setAttribute('data-annex-search-modal-alignment', modalAlignment);
+                return true;
             }
-            return true;
+            return false;
         }
 
         /**
