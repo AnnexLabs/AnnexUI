@@ -14,7 +14,6 @@ It's currently in early-development.
 3. [Quick intro](#quick-intro)
 3. [Quick start](#quick-start)
 4. [Config](#config)
-5. Debugging
 6. `$annexSearchWidget` interactions
 7. Config overriding
 8. Events
@@ -112,38 +111,36 @@ Typesense cluster settings.
 
 ### Config
 Below you'll find a high-level breakdown of configuration options that can be
-customized. See [Config overriding](#config-overriding) for details on how to do
+changed. See [Config overriding](#config-overriding) for details on how to do
 so.
 
-| Key                       | Type                  | Required   | Default value            | Description                                                                                               |
-| --------------------------| ----------------------| -----------| -------------------------| ----------------------------------------------------------------------------------------------------------|
-| $container                | `EventTarget`         | ❌         | `null`                    | The `EventTarget` that the `$annexSearchWidget` element should be appended to.                            |
-| callbacks                 | `Object`              | ❌         | (see ...)                 | Map of callback functions that will be triggered upon certain events.                                     |
-| cluster                   | `Object`              | ✅         | (n/a)                     | Map of Typesense related cluster auth properties.                                                         |
-| cluster.apiKey            | `String`              | ✅         | `null`                    | Typesense cluster search API key.                                                                         |
-| cluster.collectionName    | `String`              | ✅         | `null`                    | Typesense cluster collection name.                                                                        |
-| cluster.hostname          | `String`              | ✅         | `null`                    | Typesense cluster hostname.                                                                               |
-| cluster.presetName        | `null` \|\| `String`  | ❌         | `null`                    | Typesense cluster search preset name.                                                                     |
-| copy                      | `Object`              | ❌         | (see ...)                 | Map of copy used in different `templates`.                                                                |
-| debug                     | `Boolean`             | ❌         | `false`                   | Whether debugging information should be logged to console.                                                |
-| keyboardShortcut          | `null` \|\| `String`  | ❌         | `'⌘k'`                    | The keyboard shortcut that should be used to toggle Annex (does not apply to `inline` instances).         |
-| highlightTagName          | `String`              | ❌         | `'MARK'`                  | The `EventTarget` that should be rendered around query matches.                                           |
-| layout                    | `String`              | ❌         | `'modal'`                 | The layout for Annex. Can be: `'inline'`, `'modal'`, `'panel-left'` or `'panel-right'`.                   |
-| colorScheme               | `String`              | ❌         | `'auto'`                  | The color scheme for Annex. Can be: `'auto'`, `'light'` or `'dark'`.                                      |
-| name                      | `String`              | ❌         | `null`                    | The name of the instance. Useful for differentiating between multiple `$annexSearchWidget` instances.     |
-| paths                     | `Object`              | ❌         | (see ...)                 | Map of `css` and `template` URLs that are loaded for an `$annexSearchWidget`.                             |
-| schemaKey                 | `String`              | ❌         | `'webResource-v0.1.0'`    | Name of the schema associated with the Typesense cluster. Valid values are: ...                           |
-| searchOptions             | `Object`              | ✅         | (see ...)                 | Map of search options that are passed in a Typesense search query.                                        |
-| searchRequestMethod       | `String`              | ❌         | `'lifo'`                  | The type of search handling. Currently limited to just `lifo` (last in first out)                         |
-| showOverlay               | `Boolean`             | ❌         | `true`                    | Whether the overlay `EventTarget` should be rendered.                                                     |
-| templates                 | `Object`              | ❌         | (see ...)                 | Map of templates that should be used in Annex rendering.                                                  |
-<hr />
-
-
-### Debugging
-Annex tries to communicate installation and instantiation errors clealy through
-DevTools console. During integration, ensure you have your console open to view
-tips on how to get your integration working properly.
+| Key                       | Type                          | Required      | Default value                     | Description                                                                                               |
+| --------------------------| ------------------------------| --------------| ----------------------------------| ----------------------------------------------------------------------------------------------------------|
+| $container                | `null` \|\| EventTarget`      | ❌             | `null`                            | The `EventTarget` that the `$annexSearchWidget` element should be appended to.                            |
+| autoFocusOnScroll         | `Boolean`                     | ❌             | `true`                            | Whether the web component should receive focus when it's scrolled into the viewport.                      |
+| callbacks                 | `Object`                      | ❌             | (see [Events](#events))           | Map of callback functions that will be triggered upon certain events.                                     |
+| chips                     | `Object`                      | ❌             | (n/a)                             | Map of arrays of "chip" strings.                                                                          |
+| chips.idle                | `Array`                       | ❌             | `[]`                              | Array of strings which are show as the default chips when the web component is shown.                     |
+| cluster                   | `Object`                      | ✅             | (n/a)                             | Map of Typesense related cluster auth properties.                                                         |
+| cluster.apiKey            | `String`                      | ✅             | `null`                            | Typesense cluster search API key.                                                                         |
+| cluster.collectionName    | `String`                      | ✅             | `null`                            | Typesense cluster collection name.                                                                        |
+| cluster.hostname          | `String`                      | ✅             | `null`                            | Typesense cluster hostname.                                                                               |
+| cluster.presetName        | `null` \|\| `String`          | ❌             | `null`                            | Typesense cluster search preset name.                                                                     |
+| colorScheme               | `String`                      | ❌             | `'auto'`                          | The color scheme for Annex. Can be: `'auto'`, `'light'` or `'dark'`.                                      |
+| copy                      | `Object`                      | ❌             | `Object`                          | Map of copy used in different `templates`.                                                                |
+| debug                     | `Boolean`                     | ❌             | `false`                           | Whether debugging information should be logged to console.                                                |
+| env                       | `String`                      | ❌             | `'prod'`                          | String which can be set to provide insights on the env you're operating in.                               |
+| highlightTagName          | `String`                      | ❌             | `'MARK'`                          | The `EventTarget` that should be rendered around query matches.                                           |
+| id                        | `String`                      | ❌             | `null`                            | The id of the instance. Useful for differentiating between multiple `$annexSearchWidget` instances.       |
+| keyboardShortcut          | `null` \|\| `String`          | ❌             | `'⌘k'`                            | The keyboard shortcut that should be used to toggle Annex (does not apply to `inline` instances).         |
+| layout                    | `String`                      | ❌             | `'modal'`                         | The layout for Annex. Can be: `'inline'`, `'modal'`, `'panel-left'` or `'panel-right'`.                   |
+| modalAlignment            | `String`                      | ❌             | `'top'`                           | Whether a modal instance of Annex should be fixed to the top, or float in the middle of the viewport.     |
+| resources                 | `Object`                      | ❌             | `Object`                          | Map of `css` URLs that are loaded for an `$annexSearchWidget`.                                            |
+| schemaKey                 | `String`                      | ❌             | `'webResource-v0.1.0'`            | Name of the schema associated with the Typesense cluster. Valid values are: ...                           |
+| searchOptions             | `Object`                      | ✅             | `Object`                          | Map of search options that are passed in a Typesense search query.                                        |
+| searchRequestMethod       | `String`                      | ❌             | `'lifo'`                          | The type of search handling. Currently limited to just `lifo` (last in first out)                         |
+| showOverlay               | `Boolean`                     | ❌             | `true`                            | Whether the overlay `EventTarget` should be rendered.                                                     |
+| templates                 | `Object`                      | ❌             | (see [Templates](#templates))     | Map of templates that should be used in Annex rendering.                                                  |
 <hr />
 
 
