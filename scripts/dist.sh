@@ -180,7 +180,6 @@ VERSION=$(grep -o "static #__version = '[^']*'" "$UNMINIFIED_JS_FILEPATH" | sed 
 # Make replacements
 if [ -n "$VERSION" ]; then
     echo "Found version: $VERSION"
-    # https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@v0.1.0-dev/dist/bundle.min.css
     sed -i.bak "s|https://local\.annexsearch\.com/ts/css|https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@$VERSION/dist/bundle.min.css|g" "$UNMINIFIED_JS_FILEPATH"
     # sed -i.bak "s|https://local\.annexsearch\.com/ts/css|https://local.annexsearch.com/bundle.min.css|g" "$UNMINIFIED_JS_FILEPATH"
     rm -f "$UNMINIFIED_JS_FILEPATH.bak"
