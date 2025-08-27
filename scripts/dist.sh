@@ -180,8 +180,8 @@ VERSION=$(grep -o "static #__version = '[^']*'" "$UNMINIFIED_JS_FILEPATH" | sed 
 # Make replacements
 if [ -n "$VERSION" ]; then
     echo "Found version: $VERSION"
-    # https://cdn.jsdelivr.net/gh/annex-search/AnnexUI@v0.1.0-dev/dist/bundle.min.css
-    sed -i.bak "s|https://local\.annexsearch\.com/ts/css|https://cdn.jsdelivr.net/gh/annex-search/AnnexUI@$VERSION/dist/bundle.min.css|g" "$UNMINIFIED_JS_FILEPATH"
+    # https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@v0.1.0-dev/dist/bundle.min.css
+    sed -i.bak "s|https://local\.annexsearch\.com/ts/css|https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@$VERSION/dist/bundle.min.css|g" "$UNMINIFIED_JS_FILEPATH"
     # sed -i.bak "s|https://local\.annexsearch\.com/ts/css|https://local.annexsearch.com/bundle.min.css|g" "$UNMINIFIED_JS_FILEPATH"
     rm -f "$UNMINIFIED_JS_FILEPATH.bak"
     echo "Replaced URL with: http://website.com/$VERSION/bundle.min.js"
@@ -231,10 +231,10 @@ curl -s -X POST https://www.toptal.com/developers/javascript-minifier/api/raw \
 ## 
 echo ""
 echo "/dist URLs"
-echo "https://cdn.jsdelivr.net/gh/annex-search/AnnexUI@$VERSION/dist/bundle.css"
-echo "https://cdn.jsdelivr.net/gh/annex-search/AnnexUI@$VERSION/dist/bundle.min.css"
-echo "https://cdn.jsdelivr.net/gh/annex-search/AnnexUI@$VERSION/dist/bundle.js"
-echo "https://cdn.jsdelivr.net/gh/annex-search/AnnexUI@$VERSION/dist/bundle.min.js"
+echo "https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@$VERSION/dist/bundle.css"
+echo "https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@$VERSION/dist/bundle.min.css"
+echo "https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@$VERSION/dist/bundle.js"
+echo "https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@$VERSION/dist/bundle.min.js"
 
 
 ## 
