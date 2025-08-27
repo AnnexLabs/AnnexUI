@@ -101,7 +101,6 @@ your Typesense cluster settings).
                 hostname: 'b3487cx0hrdu1y6kp-1.a1.typesense.net',
                 presetName: 'prod:::tcprkee8nnvp:::crawlerResourceSearch:::v0.1.0',
             },
-            id: 'modal',
             keyboardShortcut: '⌘k',
             layout: 'modal',
         });
