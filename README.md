@@ -9,7 +9,7 @@ It's currently in early-development.
 
 
 ### Quick links
-1. Quick demos
+1. [Quick demos](#quick-demos)
 2. Quick preview
 3. Quick intro
 3. Quick start
