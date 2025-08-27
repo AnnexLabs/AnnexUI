@@ -10,10 +10,10 @@ It's currently in early-development.
 
 ### Quick links
 1. [Quick demos](#quick-demos)
-2. Quick preview
-3. Quick intro
-3. Quick start
-4. Config
+2. [Quick preview](#quick-preview)
+3. [Quick intro](#quick-intro)
+3. [Quick start](#quick-start)
+4. [Config](#config)
 5. Debugging
 6. `$annexSearchWidget` interactions
 7. Config overriding
