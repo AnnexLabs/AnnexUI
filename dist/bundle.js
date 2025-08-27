@@ -373,9 +373,9 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  private
          * @static
-         * @var     String (default: '0.1.1-dev')
+         * @var     String (default: '0.1.2-dev')
          */
-        static #__version = '0.1.1-dev';
+        static #__version = '0.1.2-dev';
 
         /**
          * #__setupUtils
@@ -1123,7 +1123,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              */
             resources: {
                 css: [
-                    'https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.1-dev/dist/bundle.min.css',
+                    'https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.2-dev/dist/bundle.min.css',
                 ],
             },
 
@@ -4332,6 +4332,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 let key = event.key.toLowerCase(),
                     character = keyboardShortcut.charAt(1);
                 if (key !== character) {
+                    continue;
+                }
+                if ($annexSearchWidget.mounted() === false) {
                     continue;
                 }
                 event.preventDefault();
