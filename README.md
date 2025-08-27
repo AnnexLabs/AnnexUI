@@ -14,7 +14,7 @@ It's currently in early-development.
 3. [Quick intro](#quick-intro)
 3. [Quick start](#quick-start)
 4. [Config](#config)
-6. [Element-attribute-based events](#element-attribute-based-events)
+6. [Attribute-based events](#attribute-based-events)
 7. Config overriding
 8. Events
 <hr />
@@ -143,9 +143,9 @@ so.
 <hr />
 
 
-### Element-attribute-based events
-Below is a list of supported attributes, which when found applied to an element,
-will trigger behaviour against the associated web component.
+### Attribute-based events
+Below is a list of supported attributes, which when found on an element, will
+trigger behaviour against the related web component.
 
 **Notes**:
 1. When there is a single web component on the page, the `id` does not need to be specified in the attribute value
@@ -160,6 +160,7 @@ will trigger behaviour against the associated web component.
 | enable                | `<a data-annex-search="enable">test</a>`      | All                       | Enables the `$annexSearchWidget` if it's currently disabled.                  |
 | focus                 | `<a data-annex-search="focus">test</a>`       | All                       | Focuses on `$annexSearchWidget` if it's currently showing.                    |
 | hide                  | `<a data-annex-search="hide">test</a>`        | All (except `'inline'`)   | Hides the `$annexSearchWidget` if it's not currently hidden.                  |
+| query                 | `<a data-annex-search-query="apple">test</a>` | All                       | Performs a query based on the attribute value.                                |
 | show                  | `<a data-annex-search="show">test</a>`        | All (except `'inline'`)   | Shows the `$annexSearchWidget` if it's currently hidden.                      |
 | toggle                | `<a data-annex-search="toggle">test</a>`      | All (except `'inline'`)   | Shows or hides the `$annexSearchWidget` depending on it's current state.      |
 
@@ -167,8 +168,8 @@ will trigger behaviour against the associated web component.
 #### Examples (without `id`)
 ``` html
 <a href="#test" data-annex-search="clear">clear the $annexSearchWidget $input</a>
-<a href="#test" data-annex-search="disable">disable the $annexSearchWidget $input</a>
-<a href="#test" data-annex-search="enable">enable the $annexSearchWidget $input</a>
+<a href="#test" data-annex-search="disable">disable the $annexSearchWidget</a>
+<a href="#test" data-annex-search="enable">enable the $annexSearchWidget</a>
 <a href="#test" data-annex-search="focus">focus on the $annexSearchWidget</a>
 <a href="#test" data-annex-search="hide">hide the $annexSearchWidget</a>
 <a href="#test" data-annex-search="show">show the $annexSearchWidget</a>
