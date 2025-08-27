@@ -172,9 +172,9 @@ trigger behaviour against the related web component.
 <a href="#test" data-annex-search="enable">enable the $annexSearchWidget</a>
 <a href="#test" data-annex-search="focus">focus on the $annexSearchWidget</a>
 <a href="#test" data-annex-search="hide">hide the $annexSearchWidget</a>
+<a href="#test" data-annex-search-query="search query">show the $annexSearchWidget, insert query and search</a>
 <a href="#test" data-annex-search="show">show the $annexSearchWidget</a>
 <a href="#test" data-annex-search="toggle">toggle the $annexSearchWidget</a>
-<a href="#test" data-annex-search-query="search query">show the $annexSearchWidget, insert query and search</a>
 ````
 
 #### Examples (with `id`)
@@ -184,9 +184,9 @@ trigger behaviour against the related web component.
 <a href="#test" data-annex-search="id:enable">enable on the $annexSearchWidget</a>
 <a href="#test" data-annex-search="id:focus">focus on the $annexSearchWidget</a>
 <a href="#test" data-annex-search="id:hide">hide the $annexSearchWidget</a>
+<a href="#test" data-annex-search-query="id:search query">show the $annexSearchWidget, insert query and search</a>
 <a href="#test" data-annex-search="id:show">show the $annexSearchWidget</a>
 <a href="#test" data-annex-search="id:toggle">toggle the $annexSearchWidget</a>
-<a href="#test" data-annex-search-query="id:search query">show the $annexSearchWidget, insert query and search</a>
 ````
 <hr />
 
