@@ -181,7 +181,7 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    [PUNT] - Error handling for failed XHRs
  * @todo    [PUNT] -- Tooltip class for communicating error messages
  * @todo    [PUNT] -- https://claude.ai/chat/b775bedd-d31a-464e-8e10-49c42a5a3644
- * @todo    [PUNT] - thumbnails
+ * @todo    [DONE] - thumbnails
  * @todo    [PUNT] - Look into CSV fields and commas being encoded in XHRs
  * @todo    [DONE] - loadMore bug re:adding and not clearing
  * @todo    [PUNT] - Missing truncation dots: https://416.io/ss/f/7wtusv
@@ -207,13 +207,13 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    [DONE] -- See getBoundingClientRect
  * @todo    [DONE] -- div.content with overflow: hidden;
  * @todo    [DONE] - Further cleanup of error handling (e.g. don't define messages in TypesenseHelper?)
- * @todo    [PUNT] - UI for customizing and storing it on a server
+ * @todo    [PUNT] - UI for customizing and storing it on a server (oh.. config settings? like Serg's demo?)
  * @todo    [DONE] - Arch cleanup to ensure object instances are directly tied to the respective $annexSearchWidget
  * @todo    [DONE] -- Right now, this is messy. Should be standardized
  * @todo    [DONE] - Error logging cleanup
  * @todo    [DONE] - Re-architect things so that config template functions receive data object(s)
- * @todo    [PUNT] - CacheUtils for /css and /templates lookups to speed things up (?)
- * @todo    [PUNT] -- Only for /templates since /css is direct linked (?)
+ * @todo    [NOPE] - CacheUtils for /css and /templates lookups to speed things up (?)
+ * @todo    [NOPE] -- Only for /templates since /css is direct linked (?)
  * @todo    [PUNT] - Hook escape key to toasts (introduce escape utils class)
  * @todo    [DONE] - Problem w/ css dist file (min.css but maybe also non-min?)
  * @todo    [DONE] -- Possible issue w/ vars not being defined at top?
@@ -243,7 +243,7 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    [PUNT] - Revert to .tmpl files and include them in build script?
  * @todo    [PUNT] - Hook up all config properties with respective custom event listeners (e.g. placeholder swapping)
  * @todo    [PUNT] -- This will require re-rendering of views (which should be fine now..)
- * @todo    [PUNT] - Test CSS vars (see panel-right.inc.php)
+ * @todo    [DONE] - Test CSS vars (see panel-right.inc.php)
  * @todo    [DONE] - Add in logic to prevent accidental infinite XHR when scrollbar is missing but shouldn't be?
  * @todo    [DONE] - Kill logic/UX/UI
  * @todo    [DONE] -- Toast to kill UI?
@@ -256,8 +256,8 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    [DONE] -- See here: https://416.io/ss/f/93p03u
  * @todo    [PUNT] - Define custom results that are always inserted (at top initially)
  * @todo    [PUNT] - setConfig on global window.annexSearch.AnnexSearch class, which trickles down (but can be overridden) to web components
- * @todo    [PUNT] - Attempting to re-focus when multiple web components is limited to the $this itself; can't focus in on $result
- * @todo    [PUNT] -- Would need to internally track this, and pass it down via $annexWebComponent.focus call
+ * @todo    [DONE] - Attempting to re-focus when multiple web components is limited to the $this itself; can't focus in on $result
+ * @todo    [DONE] -- Would need to internally track this, and pass it down via $annexWebComponent.focus call
  * @todo    [DONE] - Bug with multiple open and query-ing
  * @todo    [DONE] - Multiple bugs (various)
  * @todo    [DONE] -- Focus/click
@@ -272,10 +272,10 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    [DONE] -- Image fading in after load
  * @todo    [DONE] - When multiple open, have keyboard shortcut "bring to front" an already open web component that has a lower z-index value
  * @todo    [DONE] -- See: https://416.io/ss/f/b8x7qp
- * @todo    [PUNT] - Add support for more than > 2 showing with toggling/hiding
- * @todo    [PUNT] -- See: https://416.io/ss/f/zl6bct
+ * @todo    [DONE] - Add support for more than > 2 showing with toggling/hiding
+ * @todo    [DONE] -- See: https://416.io/ss/f/zl6bct
  * @todo    [PUNT] - Allow for Command+up/down, which should go to top of scrollable area
- * @todo    [PUNT] -- It seems like I can get this to work natively by blurring the $input after a null-click / focus
+ * @todo    [PUNT] -- It seems like I can get this to work natively by blurring the $input after a null-click / focus (e.g. click on toast)
  * @todo    [DONE] - Thumbs broken on tall images: https://416.io/ss/f/26alrd
  * @todo    [DONE] -- I thought this was fixed, but new issues with stupid flex box
  * @todo    [DONE] -- Likely better to just go back to original
@@ -288,8 +288,8 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    [DONE] - Timer UI
  * @todo    [PUNT] - Have mobile modal stacking be transform/zoom based?
  * @todo    [PUNT] -- Possibly also for desktop?
- * @todo    [PUNT] - What to do w/ defined/default keyboard shortcuts on touch devices?
- * @todo    [PUNT] -- At least hide the label?
+ * @todo    [DONE] - What to do w/ defined/default keyboard shortcuts on touch devices?
+ * @todo    [DONE] -- At least hide the label?
  * @todo    [PUNT] - Should root.{type} event be moved to $webComponent?
  * @todo    [PUNT] - Add support for $idle $chips keyboard navigation
  * @todo    [DONE] - Hide keyboard shortcut label on mobile (since can't be triggered)
@@ -315,8 +315,8 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    [DONE] -- For now, I'm doing a check on $activeElement; might work; added Config option
  * @todo    [DONE] -- Prevent auto focus due to page jacking..
  * @todo    [DONE] --- Resolved via InteractionUtils.#__handleWindowScrollEvent
- * @todo    [PUNT] -- Handle case where user scrolls down, then back up where a $result was focused. It shouldn't go back to the $input, but rather the last $focused element?
- * @todo    [PUNT] --- This will require tracking the last focused $element for each $annexSearchWidget
+ * @todo    [DONE] -- Handle case where user scrolls down, then back up where a $result was focused. It shouldn't go back to the $input, but rather the last $focused element?
+ * @todo    [DONE] --- This will require tracking the last focused $element for each $annexSearchWidget
  * @todo    [PUNT] - Index attribute bug: https://416.io/ss/f/n0bc1a
  * @todo    [PUNT] -- This is more complicated than it seems, in that the ordering changes each time an $annexSearchWidget is focused/shown etc.
  * @todo    [PUNT] -- Since this the attribute isn't currently being used (intial intention was around multi-modal shifting), punting for now
@@ -337,6 +337,7 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    [DONE] -- $aciveElement was actually the $button; fixed
  * @todo    [DONE] - On toggle, restore $input focus state if focused
  * @todo    [DONE] -- This is important to reinforce statefulness and UX focus
+ * @todo    [DONE] - Inline min height re:empty results
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -852,17 +853,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
      * @extends window.annexSearch.Base
      */
     window.annexSearch.BaseHelper = window.annexSearch.BaseHelper || class BaseHelper extends window.annexSearch.Base {
-
-        /**
-         * constructor
-         * 
-         * @access  public
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
-         * @return  void
-         */
-        constructor($annexSearchWidget) {
-            super($annexSearchWidget);
-        }
     }
 });
 
@@ -905,7 +895,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * 
              * Whether a visible, enabled, inline $annexSearchWidget should
              * automatically be focused when the user scrolls. Helpful from a UX
-             * point of view, but could cause conflicts in some integrations.
+             * point of view, but could cause conflicts with some integrations.
              * 
              * Note that it will not automatically focus on an
              * $annexSearchWidget if the page's focus is already on a form
@@ -914,7 +904,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * @access  private
              * @var     Boolean (default: true)
              */
-                        // autoFocusOnScroll: false,
             autoFocusOnScroll: true,
 
             /**
@@ -992,6 +981,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
 
             /**
              * colorScheme
+             * 
+             * Options:
+             * - 'auto' detects light/dark color scheme through device
+             * - 'light'
+             * - 'dark'
              * 
              * @access  private
              * @var     String (default: 'auto')
@@ -1422,17 +1416,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         #__requests = [];
 
         /**
-         * constructor
-         * 
-         * @access  public
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
-         * @return  void
-         */
-        constructor($annexSearchWidget) {
-            super($annexSearchWidget);
-        }
-
-        /**
          * #__validSearchOptions
          * 
          * @see     https://416.io/ss/f/fm0aua
@@ -1557,14 +1540,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          */
         search(query, options = {}) {
             this.abortLastRequest();
-// console.log('searching');
             let $annexSearchWidget = this.getWebComponent(),
                 request = new window.annexSearch.TypesenseSearchRequest($annexSearchWidget);
             request.setQuery(query);
-            // query);
             request.setOptions(options);
             if (this.#__validSearchOptions(request) === false) {
-                // let promise = window.annexSearch.FunctionUtils.getEmptyPromise($annexSearchWidget, request);
                 let promise = window.annexSearch.FunctionUtils.getEmptyPromise(request);
                 return promise;
             }
@@ -1606,17 +1586,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          * @var     Number (default: 2147483647)
          */
         #__maxZIndex = 2147483647;
-
-        /**
-         * constructor
-         * 
-         * @access  public
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
-         * @return  void
-         */
-        constructor($annexSearchWidget) {
-            super($annexSearchWidget);
-        }
 
         /**
          * #__removeInertAttribute
@@ -1760,6 +1729,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         }
 
         /**
+         * blur
+         * 
+         * @access  public
+         * @return  Promise
+         */
+        blur() {
+            let $annexSearchWidget = this.getWebComponent();
+            $annexSearchWidget.getView('root').blur();
+            let $lastActiveElement = this.#__$lastActiveElement,
+                promise = window.annexSearch.ElementUtils.focus($lastActiveElement);
+            return promise;
+        }
+
+        /**
          * disable
          * 
          * @access  public
@@ -1793,6 +1776,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         }
 
         /**
+         * focus
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        focus() {
+            this.#__$lastActiveElement = document.activeElement || null;
+            this.setZIndex();
+            return true;
+        }
+
+        /**
          * hide
          * 
          * @see     https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus
@@ -1808,8 +1803,19 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             this.#__setInertAttribute();
             this.#__setModalOrderAttribute();
             let $lastActiveElement = this.#__$lastActiveElement,
-                promise = window.annexSearch.ElementUtils.focus($lastActiveElement);
+                promise = new Promise(function(resolve, reject) {
+                    $annexSearchWidget.addEventListener('transitionend', function() {
+                        window.annexSearch.ElementUtils.focus($lastActiveElement).then(function() {
+                            resolve(true);
+                        });
+                    }, {
+                        once: true
+                    });
+                });
             return promise;
+            // let $lastActiveElement = this.#__$lastActiveElement,
+            //     promise = window.annexSearch.ElementUtils.focus($lastActiveElement);
+            // return promise;
         }
 
         /**
@@ -1921,27 +1927,34 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          * @return  Promise
          */
         show() {
-            this.#__$lastActiveElement = document.activeElement || null;
-// console.log(this.#__$lastActiveElement.getAttribute('data-annex-search-id'));
             let $annexSearchWidget = this.getWebComponent();
-            this.getHelper('config').triggerCallback('root.show');
-            $annexSearchWidget.dispatchCustomEvent('root.show');
             this.#__setShowingAttribute();
             this.#__removeInertAttribute();
             this.#__setModalOrderAttribute();
-            this.setZIndex();
             if ($annexSearchWidget.getConfig('layout') === 'inline') {
-                let promise = $annexSearchWidget.focus();
+                let promise = $annexSearchWidget.focus().then(function(success) {
+                    $annexSearchWidget.getHelper('config').triggerCallback('root.show');
+                    $annexSearchWidget.dispatchCustomEvent('root.show');
+                    return success;
+                });
                 return promise;
             }
             if ($annexSearchWidget.getConfig('layout') === 'modal') {
-                let promise = $annexSearchWidget.focus();
+                let promise = $annexSearchWidget.focus().then(function(success) {
+                    $annexSearchWidget.getHelper('config').triggerCallback('root.show');
+                    $annexSearchWidget.dispatchCustomEvent('root.show');
+                    return success;
+                });
                 return promise;
             }
             let promise = new Promise(function(resolve, reject) {
                 var handler = $annexSearchWidget.focus.bind($annexSearchWidget);
                 $annexSearchWidget.addEventListener('transitionend', function() {
-                    return handler().then(resolve);
+                    handler().then(function(success) {
+                        $annexSearchWidget.getHelper('config').triggerCallback('root.show');
+                        $annexSearchWidget.dispatchCustomEvent('root.show');
+                        resolve(success);
+                    });
                 }, {
                     once: true
                 });
@@ -2780,35 +2793,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         /**
          * deepMerge
          * 
-         * @see     https://claude.ai/chat/1af14a8b-4076-4d73-ad69-69aa4ee03c7a
-         * @access  public
-         * @static
-         * @param   Object target
-         * @param   Object source
-         * @return  Promise
-         */
-        // static deepMerge_(target, source) {
-        //     const result = { ...target };
-        //     for (const key in source) {
-        //         if (source.hasOwnProperty(key)) {
-        //             if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
-        //                 if (result[key] && typeof result[key] === 'object' && !Array.isArray(result[key])) {
-        //                     result[key] = this.deepMerge(result[key], source[key]);
-        //                 } else {
-        //                     result[key] = this.deepMerge({}, source[key]);
-        //                 }
-        //             } else {
-        //                 // console.log('w00t', key);
-        //                 result[key] = source[key];
-        //             }
-        //         }
-        //     }
-        //     return result;
-        // }
-
-        /**
-         * deepMerge
-         * 
          * @see     https://chatgpt.com/c/689bb7c4-cd40-8332-a1bd-a585ad5eef06
          * @access  public
          * @static
@@ -3403,21 +3387,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             };
             return fn;
         }
-
-        /**
-         * getPromise
-         * 
-         * @access  public
-         * @static
-         * @return  Promise
-         */
-        // static getPromise() {
-        //     let args = Array.from(arguments),
-        //         promise = new Promise(function(resolve, reject) {
-        //             resolve.apply(window, args);
-        //         });
-        //     return promise;
-        // }
 
         /**
          * limitReached
@@ -4058,20 +4027,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         };
 
         /**
-         * #__addDocumentCopyEventListener
-         * 
-         * @access  private
-         * @static
-         * @return  Boolean
-         */
-        // static #__addDocumentCopyEventListener() {
-        //     let $element = document,
-        //         handler = this.__handleDocumentCopyKeydownEvent.bind(this);
-        //     $element.addEventListener('copy', handler);
-        //     return true;
-        // }
-
-        /**
          * #__addDocumentPasteEventListener
          * 
          * @access  private
@@ -4389,6 +4344,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 }
                 event.preventDefault();
                 if ($annexSearchWidget.getConfig('layout') === 'inline') {
+                    if ($annexSearchWidget.focused() === true) {
+                        $annexSearchWidget.blur();
+                        return true;
+                    }
                     $annexSearchWidget.focus();
                     return true;
                 }
@@ -4400,7 +4359,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                     $annexSearchWidget.toggle();
                     return true;
                 }
-                $annexSearchWidget.getHelper('webComponentUI').setZIndex();
                 $annexSearchWidget.focus();
                 return true;
             }
@@ -4528,7 +4486,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__validKeydownEvent(event, 'fieldEnter', 'enter') === false) {
                 return false;
             }
-            if (window.annexSearch.ClientUtils.isTouchDevice() === true) {
+            if (window.annexSearch.ClientUtils.isTouchDevice() === true) {// Hide keyboard..
                 // event.preventDefault();
                 document.activeElement && document.activeElement.blur()
                 return false;
@@ -5286,18 +5244,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         static #__toasts = [];
 
         /**
-         * all
-         * 
-         * @access  public
-         * @static
-         * @return  Array
-         */
-        // static all() {
-        //     let toasts = this.#__toasts;
-        //     return toasts;
-        // }
-
-        /**
          * build
          * 
          * @access  public
@@ -6010,8 +5956,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         clearFocused() {
-// console.log('clearing');
-// console.trace();
             let $focused = this.find('.focused');
             for (let $result of $focused) {
                 $result.classList.remove('focused');
@@ -6026,7 +5970,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         clearResults() {
-// console.log('clearing', this);
             this.#__results = [];
             while (this._$element.firstChild) {
                 this._$element.removeChild(this._$element.firstChild);
@@ -6095,7 +6038,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         next() {
-// console.log('a');
             if (this.#__results.length === 0) {
                 return false;
             }
@@ -6138,17 +6080,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * resetFocusedIndex
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        resetFocusedIndex() {
-            let response = this.setFocusedIndex(null);
-            return response;
-        }
-
-        /**
          * render
          * 
          * @access  public
@@ -6158,6 +6089,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             super.render();
             this.#__addEvents();
             return true;
+        }
+
+        /**
+         * resetFocusedIndex
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        resetFocusedIndex() {
+            let response = this.setFocusedIndex(null);
+            return response;
         }
 
         /**
@@ -6349,7 +6291,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this._$annexSearchWidget.dispatchCustomEvent('result.focus', detail);
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             this.getView('root.body.results.found').clearFocused();
-// console.log(this._$element);
             this._$element.classList.add('focused');
             return true;
         }
@@ -6446,15 +6387,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             return true;
         }
 
-        // /**
-        //  * _remo
-        //  * 
-        //  * @access  public
-        //  * @return  Boolean
-        //  */
-        // _remo() {
-        // }
-
         /**
          * focus
          * 
@@ -6464,11 +6396,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         focus() {
             this._$element.focus();
-            // this._$element.scrollIntoView({
-            //     behavior: 'smooth',
-            //     block: 'center',
-            //     inline: 'nearest'
-            // });
             let $element = this._$element,
                 $container = this.getView('root.body.results.found').getElement();
             $container.scrollTo({
@@ -6612,18 +6539,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
 </a>`;
 
         /**
-         * constructor
-         * 
-         * @access  public
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
-         * @param   Object options
-         * @return  void
-         */
-        constructor($annexSearchWidget, options) {
-            super($annexSearchWidget);
-        }
-
-        /**
          * #__addClickEventListener
          * 
          * @access  private
@@ -6754,7 +6669,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__destroy() {
             this._$element.remove();
             window.annexSearch.TimerUtils.remove(this);
-            // this.dispatchCustomEvent('complete');
             return true;
         }
 
@@ -6804,7 +6718,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             clearTimeout(this.#__interval);
             var handler = this.#__destroy.bind(this);
             this.once('transitionend', handler);
-            // this.dispatchCustomEvent('hide');
             return true;
         }
 
@@ -6834,7 +6747,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             }
             this.#__showing = true;
             this.#__setInterval();
-            // this.#__handleTickEvent();
             let $element = this._$element;
             window.annexSearch.ElementUtils.waitForAnimation().then(function() {
                 $element.classList.add('visible');
@@ -7000,7 +6912,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__setTimeout() {
             if (this.#__duration === null) {
-// console.log('a');
                 return false;
             }
             let handler = this.hide.bind(this),
@@ -7229,14 +7140,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.FieldHeaderView = window.annexSearch.FieldHeaderView || class FieldHeaderView extends window.annexSearch.BaseView {
 
         /**
-         * #__lastTypesenseSearchRequest
-         * 
-         * @access  private
-         * @var     null|window.annexSearch.TypesenseSearchRequest (default: null)
-         */
-        // #__lastTypesenseSearchRequest = null;
-
-        /**
          * #__lastTypesenseSearchResponse
          * 
          * @access  private
@@ -7258,7 +7161,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @access  private
          * @var     Number (default: 60)
          */
-        // #__searchDebounceDelay = 600;
         #__searchDebounceDelay = 60;
 
         /**
@@ -7483,7 +7385,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleTypesenseSearchResponse(options = {}, typesenseSearchRequest) {
-            // this.#__lastTypesenseSearchRequest = typesenseSearchRequest;
             let error = typesenseSearchRequest.getError();
             if (error === null) {
                 let header = this.getView('root.header');
@@ -7573,33 +7474,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         clear() {
-            // this.nullifyLastTypesenseSearchResponse();
-            // this.#__lastTypesenseSearchResponse = null;
             let $input = this.first('input');
             $input.value = '';
-
-// function blockOnce(e) {
-//   e.stopImmediatePropagation(); // stops other listeners
-//   e.preventDefault();           // cancels default behavior
-//   this.removeEventListener('input', blockOnce, true);
-// }
-
-// $input.addEventListener('input', blockOnce, true);
-
-
-//     $input.select();
-//     document.execCommand('delete');
-            return true;
-        }
-
-        /**
-         * nullifyLastTypesenseSearchResponse
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        nullifyLastTypesenseSearchResponse() {
-            this.#__lastTypesenseSearchResponse = null;
             return true;
         }
 
@@ -7662,6 +7538,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let options = {};
             options.page = page;
             this.#__searchTypesense(options);
+            return true;
+        }
+
+        /**
+         * nullifyLastTypesenseSearchResponse
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        nullifyLastTypesenseSearchResponse() {
+            this.#__lastTypesenseSearchResponse = null;
             return true;
         }
 
@@ -8315,7 +8202,7 @@ window.annexSearch.DependencyLoader.push([], function() {
         /**
          * #__getContainer
          * 
-         * @access  public
+         * @access  private
          * @param   null|EventTarget $container (default: null)
          * @return  null|EventTarget
          */
@@ -8333,8 +8220,6 @@ window.annexSearch.DependencyLoader.push([], function() {
                 $container = (document.body || document.head || document.documentElement);
                 return $container;
             }
-            // let message = window.annexSearch.ErrorUtils.getMessage('annexSearchWidget.container.notNull');
-            // this.#__helpers.webComponentUI.error(message);
             return $container;
         }
 
@@ -8476,6 +8361,24 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * blur
+         * 
+         * @access  public
+         * @return  Promise
+         */
+        blur() {
+            let focused = this.focused();
+            if (focused === false) {
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(this);
+                return promise;
+            }
+            window.annexSearch.AnnexSearch.setFocused(null);
+            let $annexSearchWidget = this,
+                promise = this.#__helpers.webComponentUI.blur();
+            return promise;
+        }
+
+        /**
          * clear
          * 
          * @access  public
@@ -8565,8 +8468,8 @@ window.annexSearch.DependencyLoader.push([], function() {
                 let promise = window.annexSearch.FunctionUtils.getEmptyPromise(this);
                 return promise;
             }
-// console.log('focusing', this);
             window.annexSearch.AnnexSearch.setFocused(this);
+            this.#__helpers.webComponentUI.focus();
             let $annexSearchWidget = this,
                 promise = this.getView('root').focus().then(function() {
                     return $annexSearchWidget;
@@ -8584,18 +8487,6 @@ window.annexSearch.DependencyLoader.push([], function() {
             let focused = window.annexSearch.AnnexSearch.getFocused() === this;
             return focused;
         }
-
-        /**
-         * fullyVisible
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        // fullyVisible() {
-        //     let $element = this,
-        //         fullyVisible = window.annexSearch.ElementUtils.fullyVisible($element);
-        //     return fullyVisible;
-        // }
 
         /**
          * getConfig
@@ -8667,11 +8558,11 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         hide() {
             if (this.getConfig('layout') === 'inline') {
-                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(this);
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(false);
                 return promise;
             }
             if (this.#__showing === false) {
-                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(this);
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(false);
                 return promise;
             }
             this.#__showing = false;
@@ -8714,18 +8605,6 @@ window.annexSearch.DependencyLoader.push([], function() {
             let mounted = this.#__mounted;
             return mounted;
         }
-
-        /**
-         * on
-         * 
-         * @access  public
-         * @return  undefined
-         */
-        // on() {
-        //     let args = Array.from(arguments),
-        //         response = this.addEventListener(... args);
-        //     return response;
-        // }
 
         /**
          * partiallyVisible
@@ -8829,14 +8708,12 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         show() {
             if (this.#__showing === true) {
-                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(this);
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(false);
                 return promise;
             }
             this.#__showing = true;
             let $annexSearchWidget = this,
-                promise = this.#__helpers.webComponentUI.show().then(function() {
-                    return $annexSearchWidget;
-                });
+                promise = this.#__helpers.webComponentUI.show();
             return promise;
         }
 
