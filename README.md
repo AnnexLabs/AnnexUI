@@ -116,7 +116,7 @@ so.
 
 | Key                       | Type                          | Required      | Default value                     | Description                                                                                               |
 | --------------------------| ------------------------------| --------------| ----------------------------------| ----------------------------------------------------------------------------------------------------------|
-| $container                | `null` \|\| EventTarget`      | ❌             | `null`                            | The `EventTarget` that the `$annexSearchWidget` element should be appended to.                            |
+| $container                | `null` \|\| `EventTarget`     | ❌             | `null`                            | The `EventTarget` that the `$annexSearchWidget` element should be appended to.                            |
 | autoFocusOnScroll         | `Boolean`                     | ❌             | `true`                            | Whether the web component should receive focus when it's scrolled into the viewport.                      |
 | callbacks                 | `Object`                      | ❌             | (see [Events](#events))           | Map of callback functions that will be triggered upon certain events.                                     |
 | chips                     | `Object`                      | ❌             | (n/a)                             | Map of arrays of "chip" strings.                                                                          |
