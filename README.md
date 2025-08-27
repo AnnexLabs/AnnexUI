@@ -16,7 +16,8 @@ It's currently in early-development.
 4. [Config](#config)
 5. [Config overriding](#config-overriding)
 6. [Attribute-based events](#attribute-based-events)
-7. Events
+7. [Events](#events)
+8. [Methods](#methods)
 <hr />
 
 
@@ -206,8 +207,8 @@ trigger behaviour against the related web component.
 
 
 ### Events
-Events can be processed either through the config options passed in during
-instantiation, or via native event listeners (e.g.
+Events can be processed either through the config options set via `setConfig` or
+via native event listeners (e.g.
 `$annexSearchWidget.addEventListener('result.click', handler)`). Below you'll
 find a list of supported events.
 
@@ -217,6 +218,7 @@ accessible via the `event.detail` property.
 | Event Name            | Description                                                                                                               |
 | ----------------------| --------------------------------------------------------------------------------------------------------------------------|
 | `result.click`        | Dispatched when a result is clicked.                                                                                      |
+| `result.copy`         | Dispatched when the user attempts to copy to their clipboard (e.g. via Command + C).                                      |
 | `result.focus`        | Dispatched when a result is focused.                                                                                      |
 | `results.empty`       | Dispatched when a search results in an empy state (no results found).                                                     |
 | `results.error`       | Dispatched when a search results in an error.                                                                             |
@@ -225,6 +227,14 @@ accessible via the `event.detail` property.
 | `root.hide`           | Dispatched when the `$annexSearchWidget` is hidden.                                                                       |
 | `root.show`           | Dispatched when the `$annexSearchWidget` is shown.                                                                        |
 | `root.toggle`         | Dispatched when the `$annexSearchWidget` is toggled.                                                                      |
+
+#### Example "native" event handling
+``` javascript
+$('annex-search-widget').addEventListener('root.show', function(customEvent) {
+    console.log(customEvent);
+    console.log(customEvent.detail);
+});
+```
 <hr />
 
 
@@ -235,36 +245,20 @@ element, only the ones below are currently supported.
 
 | Method name       | Return value      | Description                                                                                                       |
 | ------------------| ------------------|-------------------------------------------------------------------------------------------------------------------| 
-| `focus`           | `Boolean`         | Focuses on the `$annexSearchWidget` search query input.                                                           |
+| `disable`         | `Promise`         | Disables the `$annexSearchWidget` (if enabled).                                                                   |
+| `enable`          | `Promise`         | Enables the `$annexSearchWidget` (if disabled).                                                                   |
+| `focus`           | `Promise`         | Focuses on the `$annexSearchWidget` search query input.                                                           |
 | `getConfig`       | `Boolean`         | Returns an object representing the config options for the `$annexSearchWidget`.                                   |
-| `hide`            | `Boolean`         | Hides the `$annexSearchWidget` if it's currently showing.                                                         |
-| `mount`           | `Boolean`         | Mounts the `$annexSearchWidget` to the `$container` config option.                                                |
+| `hide`            | `Promise`         | Hides the `$annexSearchWidget` if it's currently showing.                                                         |
+| `mount`           | `Promise`         | Mounts the `$annexSearchWidget` to the `$container` config option.                                                |
 | `query`           | `Boolean`         | Shows the `$annexSearchWidget` if it's currently hidden, and performs a query (based on the passed in value).     |
 | `ready`           | `Promise`         | Returns a promise when the `$annexSearchWidget` is ready for interaction.                                         |
 | `setConfig`       | `Boolean`         | Sets `$annexSearchWidget` config options.                                                                         |
-| `show`            | `Boolean`         | Shows the `$annexSearchWidget` if it's currently hidden.                                                          |
+| `setMutator`      | `Boolean`         | Sets a mutator `Function` which is used to modify data. Useful for Typesense response normalization.              |
+| `show`            | `Promise`         | Shows the `$annexSearchWidget` if it's currently hidden.                                                          |
 | `showing`         | `Boolean`         | Returns whether or not the `$annexSearchWidget` is currently showing.                                             |
-| `showToast`       | `Boolean`         | Shows a toast in the search UI, accepting `title`, `message` and `hideTimeoutDuration` params.                    |
-| `toggle`          | `Boolean`         | Shows or hides the `$annexSearchWidget` depending on it's currently state.                                        |
-<hr />
-
-
-### Supported callback handling
-``` javascript
-function(...args) {
-    console.log(arguments);
-}
-```
-<hr />
-
-
-### Supported `$annexSearchWidget` event handling
-``` javascript
-$('annex-search-widget').addEventListener('root.show', function(customEvent) {
-    console.log(customEvent);
-    console.log(customEvent.detail);
-});
-```
+| `showToast`       | `BaseView`        | Shows a toast in the search UI, accepting `title`, `message` and `hideTimeoutDuration` params.                    |
+| `toggle`          | `Promise`         | Shows or hides the `$annexSearchWidget` depending on it's currently state.                                        |
 <hr />
 
 

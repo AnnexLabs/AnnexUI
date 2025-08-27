@@ -585,8 +585,6 @@ window.annexSearch.DependencyLoader.push([], function() {
         /**
          * show
          * 
-         * @note    The logic below is to ensure state is preserved between
-         *          openings.
          * @access  public
          * @return  Promise
          */
