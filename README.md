@@ -22,10 +22,13 @@ It's currently in early-development.
 
 
 ### Quick demos
-1. Inline: <a href="https://local.annexsearch.com/demos/inline" target="_blank">https://local.annexsearch.com/demos/inline</a>
-2. Modal: <a href="https://local.annexsearch.com/demos/modal" target="_blank">https://local.annexsearch.com/demos/modal</a>
-3. Panel (left): <a href="https://local.annexsearch.com/demos/panel-left" target="_blank">https://local.annexsearch.com/demos/panel-left</a>
-4. Panel (right): <a href="https://local.annexsearch.com/demos/panel-right" target="_blank">https://local.annexsearch.com/demos/panel-right</a>
+1. Inline layout: <a href="https://annexsearch.com/#inline-demo-1" target="_blank">https://annexsearch.com/#inline-demo-1</a>
+2. Modal layout: <a href="https://annexsearch.com/#modal-demo-1" target="_blank">https://annexsearch.com/#modal-demo-1</a>
+3. Left panel layout: <a href="https://annexsearch.com/#panel-left-demo-1" target="_blank">https://annexsearch.com/#panel-left-demo-1</a>
+4. Right panel layout: <a href="https://annexsearch.com/#panel-right-demo-1" target="_blank">https://annexsearch.com/#panel-right-demo-1</a>
+5. Inline layout (dark mode): <a href="https://annexsearch.com/#inline-demo-2" target="_blank">https://annexsearch.com/#inline-demo-2</a>
+6. Multiple modal layouts: <a href="https://annexsearch.com/#modal-demo-3" target="_blank">https://annexsearch.com/#modal-demo-3</a>
+7. Inline layout (using sku-v0.1.0 templates): <a href="https://annexsearch.com/#inline-demo-5" target="_blank">https://annexsearch.com/#inline-demo-5</a>
 <hr />
 
 
@@ -41,8 +44,8 @@ to understand are:
 
 - The UI will be encapsulated within a `<annex-search-widget>` HTML tag
   - In docs, this will often be referenced as the `$annexSearchWidget` variable
-- Public methods to modify any "instance" will be through that custom
-`EventTarget`
+- This web component exposes a number of methods that developers can use to
+interact with it (e.g. `show`, `hide`, `focus`, etc)
 
 💪 Out the box, Annex supports the following:
 - Four (4) different layouts (`'inline'`, `'modal'`, `'panel-left'` and `'panel-right'`)
@@ -58,7 +61,7 @@ to understand are:
 - No data is stored in cookies or localStorage
 - Queries are only sent to your Typesense cluster; no middleware is present
 - Images are base64-encoded and not requested remotely
-- The remote CDN used is [UNPKG](https://unpkg.com/)
+- The remote CDN used is [jsDelivr](https://www.jsdelivr.com/)
 
 ⚡️ Performance considerations:
 - Annex currently employs a "Last in, first out" approach to queries
@@ -72,28 +75,36 @@ Below you'll find a few lines to get up and running quickly. Just swap out your
 Typesense cluster settings.
 
 ``` html
-<script type="text/javascript" src="https://local.annexsearch.com/ts/js"></script>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.2-dev/dist/bundle.min.js"
+  defer></script>
 <script type="text/javascript">
-    (function() {
+    document.addEventListener('DOMContentLoaded', function() {
         let $annexSearchWidget = document.createElement('annex-search-widget');
+        $annexSearchWidget.setMutator('typesenseSearchResponse', function(typesenseSearchRequest) {
+            let hits = typesenseSearchRequest.getResponse().hits;
+            for (let hit of hits) {
+                hit.document.uri = 'https://' + (hit.document.hostname) + (hit.document.relativeURL);
+                hit.document.imageUrl = hit.document.thumbnailURL;
+            }
+        });
         $annexSearchWidget.setConfig({
+            chips: {
+                idle: ['aws', 'fotos', 'layers', 'google', 'figma']
+            },
             cluster: {
                 apiKey: '606o4DjqwBhFNZ2NKgSiqFsqdMNCbcKx',
                 collectionName: 'prod:::tpclwpqz62hq:::crawlerResourceSearch:::v0.1.0',
                 hostname: 'b3487cx0hrdu1y6kp-1.a1.typesense.net',
+                presetName: 'prod:::tcprkee8nnvp:::crawlerResourceSearch:::v0.1.0',
             },
-            searchOptions: {
-                highlight_full_fields: 'title,body',
-                highlight_affix_num_tokens: '10',
-                query_by: 'title,body',
-                snippet_threshold: '20',
-            }
+            id: 'modal',
+            keyboardShortcut: '⌘k',
+            layout: 'modal',
         });
         $annexSearchWidget.mount();
-        $annexSearchWidget.ready().then(function($annexSearchWidget) {
-            // $annexSearchWidget.show();
-        });
-    })();
+    });
 </script>
 ```
 <hr />
