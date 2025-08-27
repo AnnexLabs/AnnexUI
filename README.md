@@ -19,7 +19,7 @@ It's currently in early-development.
 7. [Events](#events)
 8. [Methods](#methods)
 9. [Templates](#templates)
-9. [Additional Notes](#additional-notes)
+9. [Additional notes](#additional-notes)
 <hr />
 
 
@@ -296,7 +296,7 @@ template keys that can be overridden.
 <hr />
 
 
-### Additional Notes
+### Additional notes
 Below are some additional notes that may prove useful to developers. Please feel
 free to open a PR on this `README.md` file with anything else you think would be
 useful to others.
