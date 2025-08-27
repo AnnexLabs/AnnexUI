@@ -339,6 +339,7 @@ window.annexSearch.DependencyLoader = (function() {
  * @todo    [DONE] -- Multiple-modal stacking (w/ offsets)
  * @todo    [PUNT] - There are some complicated show/hide/toggle/focus issues when multiple web components are open
  * @todo    [PUNT] -- These only really present themselves through keyboard shortcut toggling etc; leave for now and revisit based on feedback
+ * @todo    [PUNT] - When dev mode on, load unmiified css
  */
 window.annexSearch.DependencyLoader.push([], function() {
 
@@ -372,9 +373,9 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  private
          * @static
-         * @var     String (default: '0.1.0-dev')
+         * @var     String (default: '0.1.1-dev')
          */
-        static #__version = '0.1.0-dev';
+        static #__version = '0.1.1-dev';
 
         /**
          * #__setupUtils
@@ -1122,7 +1123,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              */
             resources: {
                 css: [
-                    'https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.0-dev/dist/bundle.min.css',
+                    'https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.1-dev/dist/bundle.min.css',
                 ],
             },
 
