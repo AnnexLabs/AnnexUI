@@ -140,13 +140,10 @@ so.
 | searchRequestMethod       | `String`                      | ❌             | `'lifo'`                          | The type of search handling. Currently limited to just `lifo` (last in first out)                         |
 | showOverlay               | `Boolean`                     | ❌             | `true`                            | Whether the overlay `EventTarget` should be rendered.                                                     |
 | templates                 | `Object`                      | ❌             | (see [Templates](#templates))     | Map of templates that should be used in Annex rendering.                                                  |
-<hr />
-
 
 #### Config overriding
 Below are examples showing how configuration options can be set. Worth noting is
 the flexibility around the `key` (e.g. can contain a `.` as a delimter).
-
 ``` javascript
 $('annex-search-widget').setConfig('$container', document.body);
 $('annex-search-widget').setConfig('searchOptions.snippet_threshold', 20);
