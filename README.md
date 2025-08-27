@@ -297,8 +297,8 @@ template keys that can be overridden.
 
 
 ### Additional notes
-Below are some additional notes that may prove useful to developers. Please feel
-free to open a PR on this `README.md` file with anything else you think would be
+Below are some additional notes that may prove useful to developers. Feel free
+to open a PR on this `README.md` file with anything else you think would be
 useful to others.
 
 #### Styling (using vars)
