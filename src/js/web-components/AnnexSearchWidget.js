@@ -211,10 +211,8 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         #__setupShadow() {
             this.shadow = this.attachShadow({
-                mode: 'closed',
-                // delegatesFocus: true
+                mode: 'closed'
             });
-            // this.#__helpers.webComponentUI.addFocusinEventListener();
             return true;
         }
 

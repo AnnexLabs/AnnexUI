@@ -9,7 +9,8 @@
  * 
  */
 :host([data-annex-search-layout^="panel"]) {
-    --annex-search-content-max-height: 100vh;
+/*    --annex-search-content-max-height: 100vh;*/
+    --annex-search-content-max-height: 100dvh;
 }
 
 /**
