@@ -15,7 +15,7 @@ It's currently in early-development.
 3. [Quick start](#quick-start)
 4. [Config](#config)
 6. [Attribute-based events](#attribute-based-events)
-7. Config overriding
+7. [Config overriding](#config-overriding)
 8. Events
 <hr />
 
