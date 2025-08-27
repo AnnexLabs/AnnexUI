@@ -120,7 +120,7 @@ so.
 | autoFocusOnScroll         | `Boolean`                     | ❌             | `true`                            | Whether the web component should receive focus when it's scrolled into the viewport.                      |
 | callbacks                 | `Object`                      | ❌             | (see [Events](#events))           | Map of callback functions that will be triggered upon certain events.                                     |
 | chips                     | `Object`                      | ❌             | (n/a)                             | Map of arrays of "chip" strings.                                                                          |
-| chips.idle                | `Array`                       | ❌             | `[]`                              | Array of strings which are show as the default chips when the web component is shown.                     |
+| chips.idle                | `Array`                       | ❌             | `[]`                              | Array of strings which are shown as the default chips when the web component is shown.                    |
 | cluster                   | `Object`                      | ✅             | (n/a)                             | Map of Typesense related cluster auth properties.                                                         |
 | cluster.apiKey            | `String`                      | ✅             | `null`                            | Typesense cluster search API key.                                                                         |
 | cluster.collectionName    | `String`                      | ✅             | `null`                            | Typesense cluster collection name.                                                                        |
@@ -136,7 +136,6 @@ so.
 | layout                    | `String`                      | ❌             | `'modal'`                         | The layout for Annex. Can be: `'inline'`, `'modal'`, `'panel-left'` or `'panel-right'`.                   |
 | modalAlignment            | `String`                      | ❌             | `'top'`                           | Whether a modal instance of Annex should be fixed to the top, or float in the middle of the viewport.     |
 | resources                 | `Object`                      | ❌             | `Object`                          | Map of `css` URLs that are loaded for an `$annexSearchWidget`.                                            |
-| schemaKey                 | `String`                      | ❌             | `'webResource-v0.1.0'`            | Name of the schema associated with the Typesense cluster. Valid values are: ...                           |
 | searchOptions             | `Object`                      | ✅             | `Object`                          | Map of search options that are passed in a Typesense search query.                                        |
 | searchRequestMethod       | `String`                      | ❌             | `'lifo'`                          | The type of search handling. Currently limited to just `lifo` (last in first out)                         |
 | showOverlay               | `Boolean`                     | ❌             | `true`                            | Whether the overlay `EventTarget` should be rendered.                                                     |
