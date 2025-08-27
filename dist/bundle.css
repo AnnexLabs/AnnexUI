@@ -1144,7 +1144,7 @@
     and (min-device-width: 320px)
     and (max-device-width: 960px) {
     :host([data-annex-search-layout="modal"]) {
-        --annex-search-content-max-height: 75vh;
+        --annex-search-content-max-height: 75dvh;
     }
     :host([data-annex-search-layout="modal"]) [data-view-name="RootView"] > div.content {
         width: 92%;
@@ -1181,7 +1181,8 @@
  * 
  */
 :host([data-annex-search-layout^="panel"]) {
-    --annex-search-content-max-height: 100vh;
+/*    --annex-search-content-max-height: 100vh;*/
+    --annex-search-content-max-height: 100dvh;
 }
 
 /**
