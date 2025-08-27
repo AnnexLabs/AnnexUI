@@ -18,6 +18,7 @@ It's currently in early-development.
 7. [Events](#events)
 8. [Methods](#methods)
 9. [Templates](#templates)
+9. [Additional Notes](#additional-notes)
 <hr />
 
 
