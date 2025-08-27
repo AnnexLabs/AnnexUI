@@ -79,7 +79,7 @@ your Typesense cluster settings).
 ``` html
 <script
     type="text/javascript"
-    src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.2-dev/dist/bundle.min.js"
+    src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.2-stable/dist/bundle.min.js"
     defer></script>
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
@@ -338,7 +338,7 @@ This also assumes your Typesense collection schema is consistent enough with
 Annex's best-attempt and rendering results.
 
 ``` html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.2-dev/dist/bundle.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.2-stable/dist/bundle.min.js" defer></script>
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
         let $annexSearchWidget = document.createElement('annex-search-widget');
