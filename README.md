@@ -14,9 +14,9 @@ It's currently in early-development.
 3. [Quick intro](#quick-intro)
 3. [Quick start](#quick-start)
 4. [Config](#config)
+5. [Config overriding](#config-overriding)
 6. [Attribute-based events](#attribute-based-events)
-7. [Config overriding](#config-overriding)
-8. Events
+7. Events
 <hr />
 
 
@@ -143,6 +143,20 @@ so.
 <hr />
 
 
+### Config overriding
+Below are examples showing how configuration options can be set. Worth noting is
+the flexibility around the `key` (e.g. can contain a `.` as a delimter).
+
+``` javascript
+$('annex-search-widget').setConfig('$container', document.body);
+$('annex-search-widget').setConfig('searchOptions.snippet_threshold', 20);
+$('annex-search-widget').setConfig('searchOptions', {
+    snippet_threshold: 20
+});
+```
+<hr />
+
+
 ### Attribute-based events
 Below is a list of supported attributes, which when found on an element, will
 trigger behaviour against the related web component.
@@ -188,20 +202,6 @@ trigger behaviour against the related web component.
 <a href="#test" data-annex-search="id:show">show the $annexSearchWidget</a>
 <a href="#test" data-annex-search="id:toggle">toggle the $annexSearchWidget</a>
 ````
-<hr />
-
-
-### Config overriding
-Below are examples of code that can be executed against a `$annexSearchWidget`
-which overrides and/or defines config values.
-
-``` javascript
-$('annex-search-widget').setConfig('$container', document.body);
-$('annex-search-widget').setConfig('searchOptions.snippet_threshold', 20);
-$('annex-search-widget').setConfig('searchOptions', {
-    snippet_threshold: 20
-});
-```
 <hr />
 
 
