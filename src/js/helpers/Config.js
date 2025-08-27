@@ -38,7 +38,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * 
              * Whether a visible, enabled, inline $annexSearchWidget should
              * automatically be focused when the user scrolls. Helpful from a UX
-             * point of view, but could cause conflicts in some integrations.
+             * point of view, but could cause conflicts with some integrations.
              * 
              * Note that it will not automatically focus on an
              * $annexSearchWidget if the page's focus is already on a form
@@ -47,7 +47,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              * @access  private
              * @var     Boolean (default: true)
              */
-                        // autoFocusOnScroll: false,
             autoFocusOnScroll: true,
 
             /**
@@ -125,6 +124,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
 
             /**
              * colorScheme
+             * 
+             * Options:
+             * - 'auto' detects light/dark color scheme through device
+             * - 'light'
+             * - 'dark'
              * 
              * @access  private
              * @var     String (default: 'auto')

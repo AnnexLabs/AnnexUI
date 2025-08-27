@@ -14,14 +14,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
     window.annexSearch.FieldHeaderView = window.annexSearch.FieldHeaderView || class FieldHeaderView extends window.annexSearch.BaseView {
 
         /**
-         * #__lastTypesenseSearchRequest
-         * 
-         * @access  private
-         * @var     null|window.annexSearch.TypesenseSearchRequest (default: null)
-         */
-        // #__lastTypesenseSearchRequest = null;
-
-        /**
          * #__lastTypesenseSearchResponse
          * 
          * @access  private
@@ -43,7 +35,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @access  private
          * @var     Number (default: 60)
          */
-        // #__searchDebounceDelay = 600;
         #__searchDebounceDelay = 60;
 
         /**
@@ -268,7 +259,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         #__handleTypesenseSearchResponse(options = {}, typesenseSearchRequest) {
-            // this.#__lastTypesenseSearchRequest = typesenseSearchRequest;
             let error = typesenseSearchRequest.getError();
             if (error === null) {
                 let header = this.getView('root.header');
@@ -358,33 +348,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         clear() {
-            // this.nullifyLastTypesenseSearchResponse();
-            // this.#__lastTypesenseSearchResponse = null;
             let $input = this.first('input');
             $input.value = '';
-
-// function blockOnce(e) {
-//   e.stopImmediatePropagation(); // stops other listeners
-//   e.preventDefault();           // cancels default behavior
-//   this.removeEventListener('input', blockOnce, true);
-// }
-
-// $input.addEventListener('input', blockOnce, true);
-
-
-//     $input.select();
-//     document.execCommand('delete');
-            return true;
-        }
-
-        /**
-         * nullifyLastTypesenseSearchResponse
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        nullifyLastTypesenseSearchResponse() {
-            this.#__lastTypesenseSearchResponse = null;
             return true;
         }
 
@@ -447,6 +412,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             let options = {};
             options.page = page;
             this.#__searchTypesense(options);
+            return true;
+        }
+
+        /**
+         * nullifyLastTypesenseSearchResponse
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        nullifyLastTypesenseSearchResponse() {
+            this.#__lastTypesenseSearchResponse = null;
             return true;
         }
 

@@ -72,21 +72,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
-         * getPromise
-         * 
-         * @access  public
-         * @static
-         * @return  Promise
-         */
-        // static getPromise() {
-        //     let args = Array.from(arguments),
-        //         promise = new Promise(function(resolve, reject) {
-        //             resolve.apply(window, args);
-        //         });
-        //     return promise;
-        // }
-
-        /**
          * limitReached
          * 
          * @see     https://claude.ai/chat/40050455-7300-4a08-bae1-7c0fe3347885

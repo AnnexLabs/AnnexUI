@@ -32,17 +32,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         #__requests = [];
 
         /**
-         * constructor
-         * 
-         * @access  public
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
-         * @return  void
-         */
-        constructor($annexSearchWidget) {
-            super($annexSearchWidget);
-        }
-
-        /**
          * #__validSearchOptions
          * 
          * @see     https://416.io/ss/f/fm0aua
@@ -167,14 +156,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          */
         search(query, options = {}) {
             this.abortLastRequest();
-// console.log('searching');
             let $annexSearchWidget = this.getWebComponent(),
                 request = new window.annexSearch.TypesenseSearchRequest($annexSearchWidget);
             request.setQuery(query);
-            // query);
             request.setOptions(options);
             if (this.#__validSearchOptions(request) === false) {
-                // let promise = window.annexSearch.FunctionUtils.getEmptyPromise($annexSearchWidget, request);
                 let promise = window.annexSearch.FunctionUtils.getEmptyPromise(request);
                 return promise;
             }

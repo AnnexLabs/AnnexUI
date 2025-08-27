@@ -15,35 +15,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         /**
          * deepMerge
          * 
-         * @see     https://claude.ai/chat/1af14a8b-4076-4d73-ad69-69aa4ee03c7a
-         * @access  public
-         * @static
-         * @param   Object target
-         * @param   Object source
-         * @return  Promise
-         */
-        // static deepMerge_(target, source) {
-        //     const result = { ...target };
-        //     for (const key in source) {
-        //         if (source.hasOwnProperty(key)) {
-        //             if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
-        //                 if (result[key] && typeof result[key] === 'object' && !Array.isArray(result[key])) {
-        //                     result[key] = this.deepMerge(result[key], source[key]);
-        //                 } else {
-        //                     result[key] = this.deepMerge({}, source[key]);
-        //                 }
-        //             } else {
-        //                 // console.log('w00t', key);
-        //                 result[key] = source[key];
-        //             }
-        //         }
-        //     }
-        //     return result;
-        // }
-
-        /**
-         * deepMerge
-         * 
          * @see     https://chatgpt.com/c/689bb7c4-cd40-8332-a1bd-a585ad5eef06
          * @access  public
          * @static

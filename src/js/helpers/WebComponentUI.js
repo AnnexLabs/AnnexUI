@@ -31,17 +31,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         #__maxZIndex = 2147483647;
 
         /**
-         * constructor
-         * 
-         * @access  public
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
-         * @return  void
-         */
-        constructor($annexSearchWidget) {
-            super($annexSearchWidget);
-        }
-
-        /**
          * #__removeInertAttribute
          * 
          * @access  private
@@ -183,6 +172,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         }
 
         /**
+         * blur
+         * 
+         * @access  public
+         * @return  Promise
+         */
+        blur() {
+            let $annexSearchWidget = this.getWebComponent();
+            $annexSearchWidget.getView('root').blur();
+            let $lastActiveElement = this.#__$lastActiveElement,
+                promise = window.annexSearch.ElementUtils.focus($lastActiveElement);
+            return promise;
+        }
+
+        /**
          * disable
          * 
          * @access  public
@@ -216,6 +219,18 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
         }
 
         /**
+         * focus
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        focus() {
+            this.#__$lastActiveElement = document.activeElement || null;
+            this.setZIndex();
+            return true;
+        }
+
+        /**
          * hide
          * 
          * @see     https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus
@@ -231,8 +246,19 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
             this.#__setInertAttribute();
             this.#__setModalOrderAttribute();
             let $lastActiveElement = this.#__$lastActiveElement,
-                promise = window.annexSearch.ElementUtils.focus($lastActiveElement);
+                promise = new Promise(function(resolve, reject) {
+                    $annexSearchWidget.addEventListener('transitionend', function() {
+                        window.annexSearch.ElementUtils.focus($lastActiveElement).then(function() {
+                            resolve(true);
+                        });
+                    }, {
+                        once: true
+                    });
+                });
             return promise;
+            // let $lastActiveElement = this.#__$lastActiveElement,
+            //     promise = window.annexSearch.ElementUtils.focus($lastActiveElement);
+            // return promise;
         }
 
         /**
@@ -344,26 +370,34 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
          * @return  Promise
          */
         show() {
-            this.#__$lastActiveElement = document.activeElement || null;
             let $annexSearchWidget = this.getWebComponent();
-            this.getHelper('config').triggerCallback('root.show');
-            $annexSearchWidget.dispatchCustomEvent('root.show');
             this.#__setShowingAttribute();
             this.#__removeInertAttribute();
             this.#__setModalOrderAttribute();
-            this.setZIndex();
             if ($annexSearchWidget.getConfig('layout') === 'inline') {
-                let promise = $annexSearchWidget.focus();
+                let promise = $annexSearchWidget.focus().then(function(success) {
+                    $annexSearchWidget.getHelper('config').triggerCallback('root.show');
+                    $annexSearchWidget.dispatchCustomEvent('root.show');
+                    return success;
+                });
                 return promise;
             }
             if ($annexSearchWidget.getConfig('layout') === 'modal') {
-                let promise = $annexSearchWidget.focus();
+                let promise = $annexSearchWidget.focus().then(function(success) {
+                    $annexSearchWidget.getHelper('config').triggerCallback('root.show');
+                    $annexSearchWidget.dispatchCustomEvent('root.show');
+                    return success;
+                });
                 return promise;
             }
             let promise = new Promise(function(resolve, reject) {
                 var handler = $annexSearchWidget.focus.bind($annexSearchWidget);
                 $annexSearchWidget.addEventListener('transitionend', function() {
-                    return handler().then(resolve);
+                    handler().then(function(success) {
+                        $annexSearchWidget.getHelper('config').triggerCallback('root.show');
+                        $annexSearchWidget.dispatchCustomEvent('root.show');
+                        resolve(success);
+                    });
                 }, {
                     once: true
                 });

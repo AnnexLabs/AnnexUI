@@ -24,7 +24,7 @@
  * @todo    [PUNT] - Error handling for failed XHRs
  * @todo    [PUNT] -- Tooltip class for communicating error messages
  * @todo    [PUNT] -- https://claude.ai/chat/b775bedd-d31a-464e-8e10-49c42a5a3644
- * @todo    [PUNT] - thumbnails
+ * @todo    [DONE] - thumbnails
  * @todo    [PUNT] - Look into CSV fields and commas being encoded in XHRs
  * @todo    [DONE] - loadMore bug re:adding and not clearing
  * @todo    [PUNT] - Missing truncation dots: https://416.io/ss/f/7wtusv
@@ -50,13 +50,13 @@
  * @todo    [DONE] -- See getBoundingClientRect
  * @todo    [DONE] -- div.content with overflow: hidden;
  * @todo    [DONE] - Further cleanup of error handling (e.g. don't define messages in TypesenseHelper?)
- * @todo    [PUNT] - UI for customizing and storing it on a server
+ * @todo    [PUNT] - UI for customizing and storing it on a server (oh.. config settings? like Serg's demo?)
  * @todo    [DONE] - Arch cleanup to ensure object instances are directly tied to the respective $annexSearchWidget
  * @todo    [DONE] -- Right now, this is messy. Should be standardized
  * @todo    [DONE] - Error logging cleanup
  * @todo    [DONE] - Re-architect things so that config template functions receive data object(s)
- * @todo    [PUNT] - CacheUtils for /css and /templates lookups to speed things up (?)
- * @todo    [PUNT] -- Only for /templates since /css is direct linked (?)
+ * @todo    [NOPE] - CacheUtils for /css and /templates lookups to speed things up (?)
+ * @todo    [NOPE] -- Only for /templates since /css is direct linked (?)
  * @todo    [PUNT] - Hook escape key to toasts (introduce escape utils class)
  * @todo    [DONE] - Problem w/ css dist file (min.css but maybe also non-min?)
  * @todo    [DONE] -- Possible issue w/ vars not being defined at top?
@@ -86,7 +86,7 @@
  * @todo    [PUNT] - Revert to .tmpl files and include them in build script?
  * @todo    [PUNT] - Hook up all config properties with respective custom event listeners (e.g. placeholder swapping)
  * @todo    [PUNT] -- This will require re-rendering of views (which should be fine now..)
- * @todo    [PUNT] - Test CSS vars (see panel-right.inc.php)
+ * @todo    [DONE] - Test CSS vars (see panel-right.inc.php)
  * @todo    [DONE] - Add in logic to prevent accidental infinite XHR when scrollbar is missing but shouldn't be?
  * @todo    [DONE] - Kill logic/UX/UI
  * @todo    [DONE] -- Toast to kill UI?
@@ -99,8 +99,8 @@
  * @todo    [DONE] -- See here: https://416.io/ss/f/93p03u
  * @todo    [PUNT] - Define custom results that are always inserted (at top initially)
  * @todo    [PUNT] - setConfig on global window.annexSearch.AnnexSearch class, which trickles down (but can be overridden) to web components
- * @todo    [PUNT] - Attempting to re-focus when multiple web components is limited to the $this itself; can't focus in on $result
- * @todo    [PUNT] -- Would need to internally track this, and pass it down via $annexWebComponent.focus call
+ * @todo    [DONE] - Attempting to re-focus when multiple web components is limited to the $this itself; can't focus in on $result
+ * @todo    [DONE] -- Would need to internally track this, and pass it down via $annexWebComponent.focus call
  * @todo    [DONE] - Bug with multiple open and query-ing
  * @todo    [DONE] - Multiple bugs (various)
  * @todo    [DONE] -- Focus/click
@@ -115,10 +115,10 @@
  * @todo    [DONE] -- Image fading in after load
  * @todo    [DONE] - When multiple open, have keyboard shortcut "bring to front" an already open web component that has a lower z-index value
  * @todo    [DONE] -- See: https://416.io/ss/f/b8x7qp
- * @todo    [PUNT] - Add support for more than > 2 showing with toggling/hiding
- * @todo    [PUNT] -- See: https://416.io/ss/f/zl6bct
+ * @todo    [DONE] - Add support for more than > 2 showing with toggling/hiding
+ * @todo    [DONE] -- See: https://416.io/ss/f/zl6bct
  * @todo    [PUNT] - Allow for Command+up/down, which should go to top of scrollable area
- * @todo    [PUNT] -- It seems like I can get this to work natively by blurring the $input after a null-click / focus
+ * @todo    [PUNT] -- It seems like I can get this to work natively by blurring the $input after a null-click / focus (e.g. click on toast)
  * @todo    [DONE] - Thumbs broken on tall images: https://416.io/ss/f/26alrd
  * @todo    [DONE] -- I thought this was fixed, but new issues with stupid flex box
  * @todo    [DONE] -- Likely better to just go back to original
@@ -131,8 +131,8 @@
  * @todo    [DONE] - Timer UI
  * @todo    [PUNT] - Have mobile modal stacking be transform/zoom based?
  * @todo    [PUNT] -- Possibly also for desktop?
- * @todo    [PUNT] - What to do w/ defined/default keyboard shortcuts on touch devices?
- * @todo    [PUNT] -- At least hide the label?
+ * @todo    [DONE] - What to do w/ defined/default keyboard shortcuts on touch devices?
+ * @todo    [DONE] -- At least hide the label?
  * @todo    [PUNT] - Should root.{type} event be moved to $webComponent?
  * @todo    [PUNT] - Add support for $idle $chips keyboard navigation
  * @todo    [DONE] - Hide keyboard shortcut label on mobile (since can't be triggered)
@@ -158,8 +158,8 @@
  * @todo    [DONE] -- For now, I'm doing a check on $activeElement; might work; added Config option
  * @todo    [DONE] -- Prevent auto focus due to page jacking..
  * @todo    [DONE] --- Resolved via InteractionUtils.#__handleWindowScrollEvent
- * @todo    [PUNT] -- Handle case where user scrolls down, then back up where a $result was focused. It shouldn't go back to the $input, but rather the last $focused element?
- * @todo    [PUNT] --- This will require tracking the last focused $element for each $annexSearchWidget
+ * @todo    [DONE] -- Handle case where user scrolls down, then back up where a $result was focused. It shouldn't go back to the $input, but rather the last $focused element?
+ * @todo    [DONE] --- This will require tracking the last focused $element for each $annexSearchWidget
  * @todo    [PUNT] - Index attribute bug: https://416.io/ss/f/n0bc1a
  * @todo    [PUNT] -- This is more complicated than it seems, in that the ordering changes each time an $annexSearchWidget is focused/shown etc.
  * @todo    [PUNT] -- Since this the attribute isn't currently being used (intial intention was around multi-modal shifting), punting for now
@@ -180,6 +180,7 @@
  * @todo    [DONE] -- $aciveElement was actually the $button; fixed
  * @todo    [DONE] - On toggle, restore $input focus state if focused
  * @todo    [DONE] -- This is important to reinforce statefulness and UX focus
+ * @todo    [DONE] - Inline min height re:empty results
  */
 window.annexSearch.DependencyLoader.push([], function() {
 

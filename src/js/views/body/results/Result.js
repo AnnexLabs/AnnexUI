@@ -130,7 +130,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             this._$annexSearchWidget.dispatchCustomEvent('result.focus', detail);
             this.getView('root.body.results.found').setFocusedIndexByResultView(this);
             this.getView('root.body.results.found').clearFocused();
-// console.log(this._$element);
             this._$element.classList.add('focused');
             return true;
         }
@@ -227,15 +226,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             return true;
         }
 
-        // /**
-        //  * _remo
-        //  * 
-        //  * @access  public
-        //  * @return  Boolean
-        //  */
-        // _remo() {
-        // }
-
         /**
          * focus
          * 
@@ -245,11 +235,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         focus() {
             this._$element.focus();
-            // this._$element.scrollIntoView({
-            //     behavior: 'smooth',
-            //     block: 'center',
-            //     inline: 'nearest'
-            // });
             let $element = this._$element,
                 $container = this.getView('root.body.results.found').getElement();
             $container.scrollTo({

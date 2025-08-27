@@ -7,7 +7,5 @@
     and (min-device-width: 320px)
     and (max-device-width: 960px) {
     :host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content {
-/*        width: 85%;*/
-/*        max-width: 640px;*/
     }
 }

@@ -133,20 +133,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         };
 
         /**
-         * #__addDocumentCopyEventListener
-         * 
-         * @access  private
-         * @static
-         * @return  Boolean
-         */
-        // static #__addDocumentCopyEventListener() {
-        //     let $element = document,
-        //         handler = this.__handleDocumentCopyKeydownEvent.bind(this);
-        //     $element.addEventListener('copy', handler);
-        //     return true;
-        // }
-
-        /**
          * #__addDocumentPasteEventListener
          * 
          * @access  private
@@ -464,6 +450,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 }
                 event.preventDefault();
                 if ($annexSearchWidget.getConfig('layout') === 'inline') {
+                    if ($annexSearchWidget.focused() === true) {
+                        $annexSearchWidget.blur();
+                        return true;
+                    }
                     $annexSearchWidget.focus();
                     return true;
                 }
@@ -475,7 +465,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                     $annexSearchWidget.toggle();
                     return true;
                 }
-                $annexSearchWidget.getHelper('webComponentUI').setZIndex();
                 $annexSearchWidget.focus();
                 return true;
             }
@@ -603,7 +592,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__validKeydownEvent(event, 'fieldEnter', 'enter') === false) {
                 return false;
             }
-            if (window.annexSearch.ClientUtils.isTouchDevice() === true) {
+            if (window.annexSearch.ClientUtils.isTouchDevice() === true) {// Hide keyboard..
                 // event.preventDefault();
                 document.activeElement && document.activeElement.blur()
                 return false;

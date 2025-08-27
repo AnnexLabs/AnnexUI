@@ -77,7 +77,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         #__destroy() {
             this._$element.remove();
             window.annexSearch.TimerUtils.remove(this);
-            // this.dispatchCustomEvent('complete');
             return true;
         }
 
@@ -127,7 +126,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             clearTimeout(this.#__interval);
             var handler = this.#__destroy.bind(this);
             this.once('transitionend', handler);
-            // this.dispatchCustomEvent('hide');
             return true;
         }
 
@@ -157,7 +155,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             }
             this.#__showing = true;
             this.#__setInterval();
-            // this.#__handleTickEvent();
             let $element = this._$element;
             window.annexSearch.ElementUtils.waitForAnimation().then(function() {
                 $element.classList.add('visible');

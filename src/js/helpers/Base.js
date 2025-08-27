@@ -12,16 +12,5 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
      * @extends window.annexSearch.Base
      */
     window.annexSearch.BaseHelper = window.annexSearch.BaseHelper || class BaseHelper extends window.annexSearch.Base {
-
-        /**
-         * constructor
-         * 
-         * @access  public
-         * @param   window.annexSearch.AnnexSearchWidgetWebComponent $annexSearchWidget
-         * @return  void
-         */
-        constructor($annexSearchWidget) {
-            super($annexSearchWidget);
-        }
     }
 });

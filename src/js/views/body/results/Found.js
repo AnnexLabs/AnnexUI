@@ -122,8 +122,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         clearFocused() {
-// console.log('clearing');
-// console.trace();
             let $focused = this.find('.focused');
             for (let $result of $focused) {
                 $result.classList.remove('focused');
@@ -138,7 +136,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         clearResults() {
-// console.log('clearing', this);
             this.#__results = [];
             while (this._$element.firstChild) {
                 this._$element.removeChild(this._$element.firstChild);
@@ -207,7 +204,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          * @return  Boolean
          */
         next() {
-// console.log('a');
             if (this.#__results.length === 0) {
                 return false;
             }
@@ -250,17 +246,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
         }
 
         /**
-         * resetFocusedIndex
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        resetFocusedIndex() {
-            let response = this.setFocusedIndex(null);
-            return response;
-        }
-
-        /**
          * render
          * 
          * @access  public
@@ -270,6 +255,17 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
             super.render();
             this.#__addEvents();
             return true;
+        }
+
+        /**
+         * resetFocusedIndex
+         * 
+         * @access  public
+         * @return  Boolean
+         */
+        resetFocusedIndex() {
+            let response = this.setFocusedIndex(null);
+            return response;
         }
 
         /**

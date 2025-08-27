@@ -86,7 +86,7 @@ window.annexSearch.DependencyLoader.push([], function() {
         /**
          * #__getContainer
          * 
-         * @access  public
+         * @access  private
          * @param   null|EventTarget $container (default: null)
          * @return  null|EventTarget
          */
@@ -104,8 +104,6 @@ window.annexSearch.DependencyLoader.push([], function() {
                 $container = (document.body || document.head || document.documentElement);
                 return $container;
             }
-            // let message = window.annexSearch.ErrorUtils.getMessage('annexSearchWidget.container.notNull');
-            // this.#__helpers.webComponentUI.error(message);
             return $container;
         }
 
@@ -247,6 +245,24 @@ window.annexSearch.DependencyLoader.push([], function() {
         }
 
         /**
+         * blur
+         * 
+         * @access  public
+         * @return  Promise
+         */
+        blur() {
+            let focused = this.focused();
+            if (focused === false) {
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(this);
+                return promise;
+            }
+            window.annexSearch.AnnexSearch.setFocused(null);
+            let $annexSearchWidget = this,
+                promise = this.#__helpers.webComponentUI.blur();
+            return promise;
+        }
+
+        /**
          * clear
          * 
          * @access  public
@@ -337,6 +353,7 @@ window.annexSearch.DependencyLoader.push([], function() {
                 return promise;
             }
             window.annexSearch.AnnexSearch.setFocused(this);
+            this.#__helpers.webComponentUI.focus();
             let $annexSearchWidget = this,
                 promise = this.getView('root').focus().then(function() {
                     return $annexSearchWidget;
@@ -354,18 +371,6 @@ window.annexSearch.DependencyLoader.push([], function() {
             let focused = window.annexSearch.AnnexSearch.getFocused() === this;
             return focused;
         }
-
-        /**
-         * fullyVisible
-         * 
-         * @access  public
-         * @return  Boolean
-         */
-        // fullyVisible() {
-        //     let $element = this,
-        //         fullyVisible = window.annexSearch.ElementUtils.fullyVisible($element);
-        //     return fullyVisible;
-        // }
 
         /**
          * getConfig
@@ -437,11 +442,11 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         hide() {
             if (this.getConfig('layout') === 'inline') {
-                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(this);
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(false);
                 return promise;
             }
             if (this.#__showing === false) {
-                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(this);
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(false);
                 return promise;
             }
             this.#__showing = false;
@@ -484,18 +489,6 @@ window.annexSearch.DependencyLoader.push([], function() {
             let mounted = this.#__mounted;
             return mounted;
         }
-
-        /**
-         * on
-         * 
-         * @access  public
-         * @return  undefined
-         */
-        // on() {
-        //     let args = Array.from(arguments),
-        //         response = this.addEventListener(... args);
-        //     return response;
-        // }
 
         /**
          * partiallyVisible
@@ -599,14 +592,12 @@ window.annexSearch.DependencyLoader.push([], function() {
          */
         show() {
             if (this.#__showing === true) {
-                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(this);
+                let promise = window.annexSearch.FunctionUtils.getEmptyPromise(false);
                 return promise;
             }
             this.#__showing = true;
             let $annexSearchWidget = this,
-                promise = this.#__helpers.webComponentUI.show().then(function() {
-                    return $annexSearchWidget;
-                });
+                promise = this.#__helpers.webComponentUI.show();
             return promise;
         }
 

@@ -94,7 +94,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__handleClickEvent(event) {
             let $annexSearchWidget = this._$annexSearchWidget;
-            // window.annexSearch.AnnexSearch.setFocused($annexSearchWidget);
             $annexSearchWidget.focus();
             return true;
         }
@@ -111,7 +110,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
                 $annexSearchWidget = this._$annexSearchWidget;
             this.#__$focused = $target;
             $annexSearchWidget.focus();
-            // window.annexSearch.AnnexSearch.setFocused($annexSearchWidget);
             return true;
         }
 

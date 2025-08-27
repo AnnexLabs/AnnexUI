@@ -151,7 +151,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseView'], functi
          */
         #__setTimeout() {
             if (this.#__duration === null) {
-// console.log('a');
                 return false;
             }
             let handler = this.hide.bind(this),

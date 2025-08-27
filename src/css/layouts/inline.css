@@ -14,7 +14,6 @@
     transition: none;
 }
 :host([data-annex-search-layout="inline"]) [data-view-name="RootView"] {
-/*    position: static;*/
     height: 100%;
 }
 :host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content {
@@ -38,9 +37,13 @@
 :host([data-annex-search-layout="inline"]) [data-view-name="RootView"][data-state-key="results"] > div.content > [data-view-name="BodyView"] {
     height: calc(100% - var(--annex-search-header-height) - var(--annex-search-metaBar-height) - var(--annex-search-footer-height));
 }
-:host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ResultsBodyView"] {
+:host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ResultsBodyView"],
+:host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ErrorBodyView"] {
     height: 100%;
 }
+:host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ErrorBodyView"] > div.content,
+:host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ResultsBodyView"] > [data-view-name="EmptyResultsBodyView"],
+:host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ResultsBodyView"] > [data-view-name="EmptyResultsBodyView"] > div.content,
 :host([data-annex-search-layout="inline"]) [data-view-name="RootView"] > div.content > [data-view-name="BodyView"] > [data-view-name="ResultsBodyView"] > [data-view-name="FoundResultsBodyView"] {
     height: inherit;
 }

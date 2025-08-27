@@ -31,18 +31,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         static #__toasts = [];
 
         /**
-         * all
-         * 
-         * @access  public
-         * @static
-         * @return  Array
-         */
-        // static all() {
-        //     let toasts = this.#__toasts;
-        //     return toasts;
-        // }
-
-        /**
          * build
          * 
          * @access  public
