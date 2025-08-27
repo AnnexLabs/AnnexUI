@@ -14,7 +14,7 @@ It's currently in early-development.
 3. [Quick intro](#quick-intro)
 3. [Quick start](#quick-start)
 4. [Config](#config)
-6. `$annexSearchWidget` interactions
+6. [Element-attribute-based events](#element-attribute-based-events)
 7. Config overriding
 8. Events
 <hr />
@@ -143,27 +143,32 @@ so.
 <hr />
 
 
-### `$annexSearchWidget` interactions
-Below is a list of supported actions which can be bound to elements on a page.
-When found, Annex will process them.
+### Element-attribute-based events
+Below is a list of supported attributes, which when found applied to an element,
+will trigger behaviour against the associated web component.
 
 **Notes**:
-1. Interactions will not work if there is more than one `$annexSearchWidget` instance instantiated on a page.
-2. Not all layouts support all interactions. For example, an `inline` `$annexSearchWidget` cannot be "shown" or "hidden"
+1. When there is a single web component on the page, the `id` does not need to be specified in the attribute value
+2. When there are multiple web components on the page, the `id` must be specified in the attribute value
+3. Not all layouts support all interactions. For example, an `inline` `$annexSearchWidget` cannot be "shown" or "hidden"
 
-Note #2: 
-
-| Interaction name      | Example                                       | Layout Support            | Description                                                                   |
+#### Behaviour
+| Behaviour name        | Example                                       | Layout Support            | Description                                                                   |
 | ----------------------|-----------------------------------------------|---------------------------|-------------------------------------------------------------------------------|
 | clear                 | `<a data-annex-search="clear">test</a>`       | All                       | Clears the search query input value from the `$annexSearchWidget`.            |
+| disable               | `<a data-annex-search="disable">test</a>`     | All                       | Disables the `$annexSearchWidget` if it's currently enabled.                  |
+| enable                | `<a data-annex-search="enable">test</a>`      | All                       | Enables the `$annexSearchWidget` if it's currently disabled.                  |
 | focus                 | `<a data-annex-search="focus">test</a>`       | All                       | Focuses on `$annexSearchWidget` if it's currently showing.                    |
-| hide                  | `<a data-annex-search="hide">test</a>`        | All except `'inline'`     | Hides the `$annexSearchWidget` if it's not currently hidden.                   |
-| show                  | `<a data-annex-search="show">test</a>`        | All except `'inline'`     | Shows the `$annexSearchWidget` if it's currently hidden.                      |
-| toggle                | `<a data-annex-search="toggle">test</a>`      | All except `'inline'`     | Shows or hides the `$annexSearchWidget` depending on it's current state.      |
+| hide                  | `<a data-annex-search="hide">test</a>`        | All (except `'inline'`)   | Hides the `$annexSearchWidget` if it's not currently hidden.                  |
+| show                  | `<a data-annex-search="show">test</a>`        | All (except `'inline'`)   | Shows the `$annexSearchWidget` if it's currently hidden.                      |
+| toggle                | `<a data-annex-search="toggle">test</a>`      | All (except `'inline'`)   | Shows or hides the `$annexSearchWidget` depending on it's current state.      |
 
 
+#### Examples (without `id`)
 ``` html
 <a href="#test" data-annex-search="clear">clear the $annexSearchWidget $input</a>
+<a href="#test" data-annex-search="disable">disable the $annexSearchWidget $input</a>
+<a href="#test" data-annex-search="enable">enable the $annexSearchWidget $input</a>
 <a href="#test" data-annex-search="focus">focus on the $annexSearchWidget</a>
 <a href="#test" data-annex-search="hide">hide the $annexSearchWidget</a>
 <a href="#test" data-annex-search="show">show the $annexSearchWidget</a>
@@ -171,8 +176,11 @@ Note #2:
 <a href="#test" data-annex-search-query="search query">show the $annexSearchWidget, insert query and search</a>
 ````
 
+#### Examples (with `id`)
 ``` html
 <a href="#test" data-annex-search="id:clear">clear the $annexSearchWidget $input</a>
+<a href="#test" data-annex-search="id:disable">disable on the $annexSearchWidget</a>
+<a href="#test" data-annex-search="id:enable">enable on the $annexSearchWidget</a>
 <a href="#test" data-annex-search="id:focus">focus on the $annexSearchWidget</a>
 <a href="#test" data-annex-search="id:hide">hide the $annexSearchWidget</a>
 <a href="#test" data-annex-search="id:show">show the $annexSearchWidget</a>
