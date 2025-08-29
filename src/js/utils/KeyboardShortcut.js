@@ -411,7 +411,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 return true;
             }
             // found.previous() || this.#__getFocusedWebComponent().getView('root').focus();
-            found.previous() || this.#__getFocusedWebComponent().focus();
+            // found.previous() || this.#__getFocusedWebComponent().focus();
+            found.previous() || this.#__getFocusedWebComponent().getView('root').getView('root.header.field').focus();
             return true;
         }
 
