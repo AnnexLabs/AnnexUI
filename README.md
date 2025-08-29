@@ -79,7 +79,7 @@ your Typesense cluster settings).
 ``` html
 <script
     type="text/javascript"
-    src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.3-stable/dist/bundle.min.js"
+    src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.4-stable/dist/bundle.min.js"
     defer></script>
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
@@ -338,7 +338,7 @@ can determine what the title, body and URL of the result ought to be (during
 rendering).
 
 ``` html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.3-stable/dist/bundle.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.4-stable/dist/bundle.min.js" defer></script>
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
         let $annexSearchWidget = document.createElement('annex-search-widget');

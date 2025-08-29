@@ -373,9 +373,9 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  private
          * @static
-         * @var     String (default: '0.1.3-stable')
+         * @var     String (default: '0.1.4-stable')
          */
-        static #__version = '0.1.3-stable';
+        static #__version = '0.1.4-stable';
 
         /**
          * #__setupUtils
@@ -1123,7 +1123,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              */
             resources: {
                 css: [
-                    'https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.3-stable/dist/bundle.min.css',
+                    'https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.4-stable/dist/bundle.min.css',
                 ],
             },
 
@@ -4136,7 +4136,8 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
                 return true;
             }
             // found.previous() || this.#__getFocusedWebComponent().getView('root').focus();
-            found.previous() || this.#__getFocusedWebComponent().focus();
+            // found.previous() || this.#__getFocusedWebComponent().focus();
+            found.previous() || this.#__getFocusedWebComponent().getView('root').getView('root.header.field').focus();
             return true;
         }
 
