@@ -193,14 +193,14 @@ trigger behaviour against the related web component.
 
 #### Examples (with `id`)
 ``` html
-<a href="#test" data-annex-search="id:clear">clear the $annexSearchWidget $input</a>
-<a href="#test" data-annex-search="id:disable">disable on the $annexSearchWidget</a>
-<a href="#test" data-annex-search="id:enable">enable on the $annexSearchWidget</a>
-<a href="#test" data-annex-search="id:focus">focus on the $annexSearchWidget</a>
-<a href="#test" data-annex-search="id:hide">hide the $annexSearchWidget</a>
-<a href="#test" data-annex-search-query="id:search query">show the $annexSearchWidget, insert query and search</a>
-<a href="#test" data-annex-search="id:show">show the $annexSearchWidget</a>
-<a href="#test" data-annex-search="id:toggle">toggle the $annexSearchWidget</a>
+<a href="#test" data-annex-search="{id}:clear">clear the $annexSearchWidget $input</a>
+<a href="#test" data-annex-search="{id}:disable">disable on the $annexSearchWidget</a>
+<a href="#test" data-annex-search="{id}:enable">enable on the $annexSearchWidget</a>
+<a href="#test" data-annex-search="{id}:focus">focus on the $annexSearchWidget</a>
+<a href="#test" data-annex-search="{id}:hide">hide the $annexSearchWidget</a>
+<a href="#test" data-annex-search-query="{id}:search query">show the $annexSearchWidget, insert query and search</a>
+<a href="#test" data-annex-search="{id}:show">show the $annexSearchWidget</a>
+<a href="#test" data-annex-search="{id}:toggle">toggle the $annexSearchWidget</a>
 ````
 <hr />
 
@@ -282,7 +282,7 @@ template keys that can be overridden.
 | `idleBody`                        | Element that communicates that no search has taken place yet.                                     | `config`                                  |
 | `emptyResultsBody`                | Element that communicates no matching search results were found.                                  | `config` ⚠️                               |
 | `foundResultsBody`                | Element that contains a list of results.                                                          | `config`                                  |
-| `resultFoundResultsBody`          | The result element itself. **This is likely what you want to start with.**                        | `config`, `hit                            |
+| `resultFoundResultsBody`          | The result element itself. **This is likely what you want to start with.**                        | `config`, `hit`                           |
 | `resultsBody`                     | A container for the broad concept of results.                                                     | `config`                                  |
 | `toast`                           | An element to communicate an alert.                                                               | `config`, `title`, `message`              |
 | `brandingBarFooter`               | Element that communicates the Annex brand.                                                        | `config`                                  |
