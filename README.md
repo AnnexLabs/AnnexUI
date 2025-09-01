@@ -79,7 +79,7 @@ your Typesense cluster settings).
 ``` html
 <script
     type="text/javascript"
-    src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.9-release/dist/bundle.min.js"
+    src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.11-stable/dist/bundle.min.js"
     defer></script>
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
@@ -338,7 +338,7 @@ can determine what the title, body and URL of the result ought to be (during
 rendering).
 
 ``` html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.9-release/dist/bundle.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.11-stable/dist/bundle.min.js" defer></script>
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
         let $annexSearchWidget = document.createElement('annex-search-widget');
@@ -362,8 +362,8 @@ rendering).
 
 #### Releases
 Below are a few notes on commands used to create a release tag and push that
-release tag. Thereafter, a release can be created via
+release tag. Thereafter a release can be created via
 [/releases](https://github.com/AnnexLabs/AnnexUI/releases/new).
 
-- `git tag -a 0.1.10-release -m "New release"`
-- `git push origin 0.1.10-release`
+- `git tag -a 0.1.11-stable -m "Release based tag"`
+- `git push origin 0.1.11-stable`
