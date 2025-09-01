@@ -362,7 +362,7 @@ rendering).
 
 #### Releases
 Below are a few notes on commands used to create a release tag and push that
-release tag. Thereafter, release can be created via
+release tag. Thereafter, a release can be created via
 [/releases](https://github.com/AnnexLabs/AnnexUI/releases/new).
 
 - `git tag -a 0.1.10-release -m "New release"`
