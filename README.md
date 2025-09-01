@@ -35,7 +35,7 @@ It's currently in early-development.
 
 
 ### Quick preview
-![demo-01-sep-2025-01](https://github.com/user-attachments/assets/34da58c7-54a3-4a0f-ae44-6d826fac6e3b)
+![](https://416.io/ss/f/x43xuv/r)
 <hr />
 
 
