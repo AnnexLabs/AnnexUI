@@ -359,3 +359,7 @@ rendering).
 - High-resolution monitors that immediately ought to trigger a loadMore flow (because there's not scrollbar)
 - Aborting Typesense cluster queries when the search input value changes
 - Prevention of mobile zooming when the search input is focused on
+
+#### Releases
+- `git tag -a 0.1.10-release -m "New release"`
+- `git push origin 0.1.10-release`
