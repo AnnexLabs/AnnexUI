@@ -24,13 +24,13 @@ It's currently in early-development.
 
 
 ### Quick demos
-1. Inline layout: <a href="https://annexsearch.com/#inline-demo-1" target="_blank">https://annexsearch.com/#inline-demo-1</a>
-2. Modal layout: <a href="https://annexsearch.com/#modal-demo-1" target="_blank">https://annexsearch.com/#modal-demo-1</a>
-3. Left panel layout: <a href="https://annexsearch.com/#panel-left-demo-1" target="_blank">https://annexsearch.com/#panel-left-demo-1</a>
-4. Right panel layout: <a href="https://annexsearch.com/#panel-right-demo-1" target="_blank">https://annexsearch.com/#panel-right-demo-1</a>
-5. Inline layout (dark mode): <a href="https://annexsearch.com/#inline-demo-2" target="_blank">https://annexsearch.com/#inline-demo-2</a>
-6. Multiple modal layouts: <a href="https://annexsearch.com/#modal-demo-3" target="_blank">https://annexsearch.com/#modal-demo-3</a>
-7. Inline layout (using `sku-v0.1.0` templates): <a href="https://annexsearch.com/#inline-demo-5" target="_blank">https://annexsearch.com/#inline-demo-5</a>
+1. Inline layout: <a href="https://annexsearch.com/#inline-demo-01" target="_blank">https://annexsearch.com/#inline-demo-01</a>
+2. Modal layout: <a href="https://annexsearch.com/#modal-demo-01" target="_blank">https://annexsearch.com/#modal-demo-01</a>
+3. Left panel layout: <a href="https://annexsearch.com/#panel-left-demo-01" target="_blank">https://annexsearch.com/#panel-left-demo-01</a>
+4. Right panel layout: <a href="https://annexsearch.com/#panel-right-demo-01" target="_blank">https://annexsearch.com/#panel-right-demo-01</a>
+5. Inline layout (dark mode): <a href="https://annexsearch.com/#inline-demo-02" target="_blank">https://annexsearch.com/#inline-demo-02</a>
+6. Multiple modal layouts: <a href="https://annexsearch.com/#modal-demo-03" target="_blank">https://annexsearch.com/#modal-demo-03</a>
+7. Inline layout (using `sku-v0.1.0` templates): <a href="https://annexsearch.com/#inline-demo-05" target="_blank">https://annexsearch.com/#inline-demo-05</a>
 <hr />
 
 
