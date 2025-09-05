@@ -361,7 +361,7 @@ rendering).
 - Prevention of mobile zooming when the search input is focused on
 
 #### Releases
-Below are a few notes on commands used to create a release tag and push that
+Below are a couple notes on commands used to create a release tag and push that
 release tag. Thereafter a release can be created via
 [/releases](https://github.com/AnnexLabs/AnnexUI/releases/new).
 
