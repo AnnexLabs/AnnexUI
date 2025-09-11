@@ -322,10 +322,13 @@ of how styling can be executed against an Annex instance.
 </style>
 ```
 
-#### Vendors
+#### Vendors / Dependencies
 Currently, the only 3rd party vendor included in Annex is
-[Lodash v4.17.21](https://github.com/lodash/lodash). This is to facilitate more
-robust templating logic.
+[Lodash v4.17.21](https://github.com/lodash/lodash). Lodash is used to
+facilitate more robust templating logic.
+
+This minification of vendors / dependencies is by design, in large part to
+lower the likelihood of supply chain attacks.
 
 #### Preset without config options
 The code below shows the simplest example of Annex. By specifying a `presetName`
