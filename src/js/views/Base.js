@@ -39,7 +39,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * @return  void
          */
         constructor($annexSearchWidget) {
-            super($annexSearchWidget,);
+            super($annexSearchWidget);
             this._$element = document.createElement('template');
             this._$element.view = this;
         }
