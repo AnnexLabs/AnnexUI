@@ -373,9 +373,9 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  private
          * @static
-         * @var     String (default: '0.1.11-stable')
+         * @var     String (default: '0.1.13-stable')
          */
-        static #__version = '0.1.11-stable';
+        static #__version = '0.1.13-stable';
 
         /**
          * #__setupUtils
@@ -1123,7 +1123,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              */
             resources: {
                 css: [
-                    'https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.11-stable/dist/bundle.min.css',
+                    'https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.13-stable/dist/bundle.min.css',
                 ],
             },
 
@@ -4153,6 +4153,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__controls.documentKeyboardShortcut === false) {
                 return false;
             }
+            if (event.shiftKey === true) {// Might need to smarter if/when key-case-sensitivity is considered
+                return false;
+            }
             let $registered = this.#__getRegisteredWebComponents();
             for (let $annexSearchWidget of $registered) {
                 let keyboardShortcut = $annexSearchWidget.getHelper('config').get('keyboardShortcut');
@@ -5254,7 +5257,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.Base'], function()
          * @return  void
          */
         constructor($annexSearchWidget) {
-            super($annexSearchWidget,);
+            super($annexSearchWidget);
             this._$element = document.createElement('template');
             this._$element.view = this;
         }
