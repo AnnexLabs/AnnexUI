@@ -428,6 +428,9 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if (this.#__controls.documentKeyboardShortcut === false) {
                 return false;
             }
+            if (event.shiftKey === true) {// Might need to smarter if/when key-case-sensitivity is considered
+                return false;
+            }
             let $registered = this.#__getRegisteredWebComponents();
             for (let $annexSearchWidget of $registered) {
                 let keyboardShortcut = $annexSearchWidget.getHelper('config').get('keyboardShortcut');
