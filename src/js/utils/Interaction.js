@@ -175,7 +175,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
          * @param   mixed $target
          * @param   Object event
          * @param   String attributeName
-         * @return  HTMLElement
+         * @return  null|HTMLElement
          */
         static #__getValidEventTarget($target, event, attributeName) {
 
