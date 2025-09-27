@@ -373,9 +373,9 @@ window.annexSearch.DependencyLoader.push([], function() {
          * 
          * @access  private
          * @static
-         * @var     String (default: '0.1.13-stable')
+         * @var     String (default: '0.1.14-stable')
          */
-        static #__version = '0.1.13-stable';
+        static #__version = '0.1.14-stable';
 
         /**
          * #__setupUtils
@@ -1123,7 +1123,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseHelper'], func
              */
             resources: {
                 css: [
-                    'https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.13-stable/dist/bundle.min.css',
+                    'https://cdn.jsdelivr.net/gh/AnnexLabs/AnnexUI@0.1.14-stable/dist/bundle.min.css',
                 ],
             },
 
@@ -3429,6 +3429,82 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
+         * #__getValidEventTarget
+         * 
+         * @access  private
+         * @static
+         * @param   mixed $target
+         * @param   Object event
+         * @param   String attributeName
+         * @return  null|HTMLElement
+         */
+        static #__getValidEventTarget($target, event, attributeName) {
+
+            // Invalid $target
+            // let $target = event.target || null;
+            if ($target === null) {
+                return null;
+            }
+            let selector = '[' + (attributeName) + ']';
+            if ($target.matches(selector) === false) {
+                return null;
+            }
+            if ($target.matches('annex-search-widget') === true) {
+                return null;
+            }
+
+            // Valid target; prevent event
+            event.preventDefault();
+
+            // Nothing registered
+            let $registered = window.annexSearch.AnnexSearch.getRegistered();
+            if ($registered.length === 0) {
+                let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.zeroRegistered');
+                window.annexSearch.LoggingUtils.error(message);
+                return null;
+            }
+
+            // Value checks (existence)
+            let value = $target.getAttribute(attributeName);
+            if (value === null) {
+                return null;
+            }
+            if (value === undefined) {
+                return null;
+            }
+            value = value.trim();
+            if (value === '') {
+                return null;
+            }
+
+            // No id defined
+            let id = this.#__getAttributeDefinedId(value);
+            if (id === null) {
+
+                // Valid (since only one that could be the target)
+                if ($registered.length === 1) {
+                    return $target;
+                }
+
+                // Invalid
+                let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.multipleRegistered');
+                window.annexSearch.LoggingUtils.error(message);
+                return null;
+            }
+
+            // Id defined; invalid
+            let $annexSearchWidget = window.annexSearch.AnnexSearch.getRegisteredById(id);
+            if ($annexSearchWidget === null) {
+                let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.unknownId');
+                window.annexSearch.LoggingUtils.error(message);
+                return null;
+            }
+
+            // Valid
+            return $target;
+        }
+
+        /**
          * #__handleBehaviorInteraction
          * 
          * @access  private
@@ -3439,13 +3515,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         static #__handleBehaviorInteraction(event) {
 
             // Broadly invalid
-            if (this.#__validEventTarget(event, 'data-annex-search') === false) {
+            let $target = this.#__getValidEventTarget(event.target, event, 'data-annex-search')
+                || this.#__getValidEventTarget(event.target.closest('[data-annex-search]'), event, 'data-annex-search');
+            if ($target === null) {
                 return false;
             }
 
             // Invalid layout (clear is always supported)
-            let $target = event.target,
-                value = $target.getAttribute('data-annex-search'),
+            let value = $target.getAttribute('data-annex-search'),
                 $annexSearchWidget = this.#__getRegisteredById(value) || window.annexSearch.AnnexSearch.getRegistered()[0],
                 interactionKey = this.#__getBehaviorInteractionKey(value);
             if ($annexSearchWidget.getConfig('layout') === 'inline') {
@@ -3556,13 +3633,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         static #__handleQueryInteraction(event) {
 
             // Broadly invalid
-            if (this.#__validEventTarget(event, 'data-annex-search-query') === false) {
+            let $target = this.#__getValidEventTarget(event.target, event, 'data-annex-search-query');
+            if ($target === null) {
                 return false;
             }
 
             // Invalid value
-            let $target = event.target,
-                value = $target.getAttribute('data-annex-search-query'),
+            let value = $target.getAttribute('data-annex-search-query'),
                 $annexSearchWidget = this.#__getRegisteredById(value) || window.annexSearch.AnnexSearch.getRegistered()[0];
             if ($annexSearchWidget.disabled() === true) {
                 let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.disabled');
@@ -3626,81 +3703,6 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             }
             let response = handler();
             return response;
-        }
-
-        /**
-         * #__validEventTarget
-         * 
-         * @access  private
-         * @static
-         * @param   Object event
-         * @param   String attributeName
-         * @return  Boolean
-         */
-        static #__validEventTarget(event, attributeName) {
-
-            // Invalid $target
-            let $target = event.target || null;
-            if ($target === null) {
-                return false;
-            }
-            let selector = '[' + (attributeName) + ']';
-            if ($target.matches(selector) === false) {
-                return false;
-            }
-            if ($target.matches('annex-search-widget') === true) {
-                return false;
-            }
-
-            // Valid target; prevent event
-            event.preventDefault();
-
-            // Nothing registered
-            let $registered = window.annexSearch.AnnexSearch.getRegistered();
-            if ($registered.length === 0) {
-                let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.zeroRegistered');
-                window.annexSearch.LoggingUtils.error(message);
-                return false;
-            }
-
-            // Value checks (existence)
-            let value = $target.getAttribute(attributeName);
-            if (value === null) {
-                return false;
-            }
-            if (value === undefined) {
-                return false;
-            }
-            value = value.trim();
-            if (value === '') {
-                return false;
-            }
-
-            // No id defined
-            let id = this.#__getAttributeDefinedId(value);
-            if (id === null) {
-
-                // Valid (since only one that could be the target)
-                if ($registered.length === 1) {
-                    return true;
-                }
-
-                // Invalid
-                let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.multipleRegistered');
-                window.annexSearch.LoggingUtils.error(message);
-                return false;
-            }
-
-            // Id defined; invalid
-            let $annexSearchWidget = window.annexSearch.AnnexSearch.getRegisteredById(id);
-            if ($annexSearchWidget === null) {
-                let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.unknownId');
-                window.annexSearch.LoggingUtils.error(message);
-                return false;
-            }
-
-            // Valid
-            return true;
         }
 
         /**
