@@ -178,13 +178,14 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         static #__handleBehaviorInteraction(event) {
 
             // Broadly invalid
-            if (this.#__validEventTarget(event, 'data-annex-search') === false) {
+            let $target = this.#__getValidEventTarget(event.target, event, 'data-annex-search')
+                || this.#__getValidEventTarget(event.target.closest('[data-annex-search]'), event, 'data-annex-search');
+            if ($target === null) {
                 return false;
             }
 
             // Invalid layout (clear is always supported)
-            let $target = event.target,
-                value = $target.getAttribute('data-annex-search'),
+            let value = $target.getAttribute('data-annex-search'),
                 $annexSearchWidget = this.#__getRegisteredById(value) || window.annexSearch.AnnexSearch.getRegistered()[0],
                 interactionKey = this.#__getBehaviorInteractionKey(value);
             if ($annexSearchWidget.getConfig('layout') === 'inline') {
@@ -295,13 +296,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         static #__handleQueryInteraction(event) {
 
             // Broadly invalid
-            if (this.#__validEventTarget(event, 'data-annex-search-query') === false) {
+            let $target = this.#__getValidEventTarget(event.target, event, 'data-annex-search-query');
+            if ($target === null) {
                 return false;
             }
 
             // Invalid value
-            let $target = event.target,
-                value = $target.getAttribute('data-annex-search-query'),
+            let value = $target.getAttribute('data-annex-search-query'),
                 $annexSearchWidget = this.#__getRegisteredById(value) || window.annexSearch.AnnexSearch.getRegistered()[0];
             if ($annexSearchWidget.disabled() === true) {
                 let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.disabled');
@@ -368,27 +369,28 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
         }
 
         /**
-         * #__validEventTarget
+         * #__getValidEventTarget
          * 
          * @access  private
          * @static
+         * @param   mixed $target
          * @param   Object event
          * @param   String attributeName
-         * @return  Boolean
+         * @return  HTMLElement
          */
-        static #__validEventTarget(event, attributeName) {
+        static #__getValidEventTarget($target, event, attributeName) {
 
             // Invalid $target
-            let $target = event.target || null;
+            // let $target = event.target || null;
             if ($target === null) {
-                return false;
+                return null;
             }
             let selector = '[' + (attributeName) + ']';
             if ($target.matches(selector) === false) {
-                return false;
+                return null;
             }
             if ($target.matches('annex-search-widget') === true) {
-                return false;
+                return null;
             }
 
             // Valid target; prevent event
@@ -399,20 +401,20 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if ($registered.length === 0) {
                 let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.zeroRegistered');
                 window.annexSearch.LoggingUtils.error(message);
-                return false;
+                return null;
             }
 
             // Value checks (existence)
             let value = $target.getAttribute(attributeName);
             if (value === null) {
-                return false;
+                return null;
             }
             if (value === undefined) {
-                return false;
+                return null;
             }
             value = value.trim();
             if (value === '') {
-                return false;
+                return null;
             }
 
             // No id defined
@@ -421,13 +423,13 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
 
                 // Valid (since only one that could be the target)
                 if ($registered.length === 1) {
-                    return true;
+                    return $target;
                 }
 
                 // Invalid
                 let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.multipleRegistered');
                 window.annexSearch.LoggingUtils.error(message);
-                return false;
+                return null;
             }
 
             // Id defined; invalid
@@ -435,11 +437,11 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseUtils'], funct
             if ($annexSearchWidget === null) {
                 let message = window.annexSearch.ErrorUtils.getMessage('interactionUtils.unknownId');
                 window.annexSearch.LoggingUtils.error(message);
-                return false;
+                return null;
             }
 
             // Valid
-            return true;
+            return $target;
         }
 
         /**
