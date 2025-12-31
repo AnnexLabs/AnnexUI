@@ -112,8 +112,10 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseRequest'], fun
             }
             if (typeof obj === 'string') {
                 return obj
-                    .replace(/\{\{/g, '\\{\\{')
-                    .replace(/\}\}/g, '\\}\\}');
+                    // .replace(/\{\{/g, '\\{\\{')
+                    // .replace(/\}\}/g, '\\}\\}');
+                    .replace(/\{\{/g, '&#123;&#123;')
+                    .replace(/\}\}/g, '&#125;&#125;');
             }
             if (Array.isArray(obj) === true) {
                 let handler = this.#__escapeTemplateVariableStrings.bind(this);
