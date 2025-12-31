@@ -96,10 +96,10 @@ your Typesense cluster settings).
                 idle: ['aws', 'fotos', 'layers', 'google', 'figma']
             },
             cluster: {
-                apiKey: '606o4DjqwBhFNZ2NKgSiqFsqdMNCbcKx',
-                collectionName: 'prod:::tpclwpqz62hq:::crawlerResourceSearch:::v0.1.0',
+                apiKey: 'ZYVykB8YEkUbydvPANbQGUWgezfINr9U',
+                collectionName: 'prod:::tpclpybteij8:::crawlerResourceSearch:::v0.1.0',
                 hostname: 'b3487cx0hrdu1y6kp-1.a1.typesense.net',
-                presetName: 'prod:::tcprkee8nnvp:::crawlerResourceSearch:::v0.1.0',
+                presetName: 'prod:::tcprequ7pht7:::crawlerResourceSearch:::v0.1.0',
             },
             keyboardShortcut: '⌘k',
             layout: 'modal',
@@ -347,10 +347,10 @@ rendering).
         let $annexSearchWidget = document.createElement('annex-search-widget');
         $annexSearchWidget.setConfig({
             cluster: {
-                apiKey: '606o4DjqwBhFNZ2NKgSiqFsqdMNCbcKx',
-                collectionName: 'prod:::tpclwpqz62hq:::crawlerResourceSearch:::v0.1.0',
+                apiKey: 'ZYVykB8YEkUbydvPANbQGUWgezfINr9U',
+                collectionName: 'prod:::tpclpybteij8:::crawlerResourceSearch:::v0.1.0',
                 hostname: 'b3487cx0hrdu1y6kp-1.a1.typesense.net',
-                presetName: 'prod:::tcprkee8nnvp:::crawlerResourceSearch:::v0.1.0',
+                presetName: 'prod:::tcprequ7pht7:::crawlerResourceSearch:::v0.1.0',
             }
         });
         $annexSearchWidget.mount();
