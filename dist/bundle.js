@@ -2095,20 +2095,40 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseRequest'], fun
 //         }
 
         /**
-         * setQuery
+         * #__escapeTemplateVariableStrings
          * 
+         * @see     https://claude.ai/chat/8bd18268-d28c-4006-81a1-c8c95c2ef163
          * @access  private
-         * @param   String query
-         * @return  Boolean
+         * @param   Object obj
+         * @return  Object
          */
-        setQuery(query) {
-            this.#__query = query;
-            this.#__options.q = query;
-// console.log(this, this.getHelper);//, this.getHelper('typesense'));
-// console.log(this);
-            this.#__options.highlight_end_tag = this.getHelper('typesense').getHighlightEndTag();
-            this.#__options.highlight_start_tag = this.getHelper('typesense').getHighlightStartTag();
-            return true;
+        #__escapeTemplateVariableStrings(obj) {
+            if (obj === null || obj === undefined) {
+                return obj;
+            }
+            if (typeof obj === 'string') {
+                return obj
+                    // .replace(/\{\{/g, '\\{\\{')
+                    // .replace(/\}\}/g, '\\}\\}');
+                    .replace(/\{\{/g, '&#123;&#123;')
+                    .replace(/\}\}/g, '&#125;&#125;');
+            }
+            if (Array.isArray(obj) === true) {
+                let handler = this.#__escapeTemplateVariableStrings.bind(this);
+                return obj.map(function(item) {
+                    return handler(item);
+                });
+            }
+            if (typeof obj === 'object') {
+                const result = {};
+                for (const key in obj) {
+                    if (obj.hasOwnProperty(key) === true) {
+                        result[key] = this.#__escapeTemplateVariableStrings(obj[key]);
+                    }
+                }
+                return result;
+            }
+            return obj;
         }
 
         /**
@@ -2252,6 +2272,7 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseRequest'], fun
          * @return  Promise
          */
         #__handleSuccessfulRequestJSONDecoding(json) {
+            json = this.#__escapeTemplateVariableStrings(json);
             this.#__response = json;
             let message = json?.message;
             if (message !== undefined) {
@@ -2484,6 +2505,23 @@ window.annexSearch.DependencyLoader.push(['window.annexSearch.BaseRequest'], fun
                 this.getHelper('config').get('searchOptions'),
                 options,
             );
+            return true;
+        }
+
+        /**
+         * setQuery
+         * 
+         * @access  public
+         * @param   String query
+         * @return  Boolean
+         */
+        setQuery(query) {
+            this.#__query = query;
+            this.#__options.q = query;
+// console.log(this, this.getHelper);//, this.getHelper('typesense'));
+// console.log(this);
+            this.#__options.highlight_end_tag = this.getHelper('typesense').getHighlightEndTag();
+            this.#__options.highlight_start_tag = this.getHelper('typesense').getHighlightStartTag();
             return true;
         }
     }
