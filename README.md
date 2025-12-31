@@ -374,5 +374,5 @@ Thereafter a release can be created via
 - `cd TurtlePHP/application/vendors/submodules/AnnexUI/`
 - `./scripts/dist.sh`
 - `git add . && git commit -m "Version bump" && git push`
-- `git tag -a 0.1.14-stable -m "Release based tag"`
-- `git push origin 0.1.14-stable`
+- `git tag -a 0.1.15-stable -m "Release based tag"`
+- `git push origin 0.1.15-stable`
